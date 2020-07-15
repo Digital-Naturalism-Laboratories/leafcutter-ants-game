@@ -168,6 +168,22 @@ function lerpVec2(vec2_a, vec2_b, amount)
 	return new Vector2((1.0 - amount) * vec2_a.x + amount * vec2_b.x, (1.0 - amount) * vec2_a.y + amount * vec2_b.y);
 }
 
+function rotateAroundPoint(pointToRotate, fixedPoint, angle)
+{
+  var s = Math.sin(angle);
+  var c = Math.cos(angle);
+
+  pointToRotate.x -= fixedPoint.x;
+  pointToRotate.y -= fixedPoint.y;
+
+  var xnew = pointToRotate.x * c - pointToRotate.y * s;
+  var ynew = pointToRotate.x * s + pointToRotate.y * c;
+  
+  pointToRotate.x = xnew + fixedPoint.x;
+  pointToRotate.y = ynew + fixedPoint.y;
+  return pointToRotate;
+}
+
 function drawRect(renderer, pos, size, doFill, color, roundedRadius)
 {
   doFill = typeof doFill == "undefined" ? false : doFill;
