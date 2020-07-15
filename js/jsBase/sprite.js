@@ -13,7 +13,7 @@ class ImageObject
         {
             this.image.onload = function()
             {
-                me.loaded = true;
+                this.loaded = true;
                 imagesLoadingLeft--;
             };
         }

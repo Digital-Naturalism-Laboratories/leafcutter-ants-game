@@ -1,4 +1,6 @@
 
+sizeFactor = 0;
+
 function init()
 {
     canvas = document.getElementById("gameCanvas");
@@ -14,7 +16,6 @@ function init()
     gameWidth = window.innerWidth;
     gameHeight = window.innerHeight;
 
-    sizeFactor = 0;
     if(gameWidth + (gameHeight/4) > gameHeight)
     {
         sizeFactor = gameHeight;
