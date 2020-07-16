@@ -1,4 +1,6 @@
 
+var maxDistancePixelCheck = 100;
+
 class Ant
 {
     constructor()
@@ -11,10 +13,17 @@ class Ant
             new ImageObject("images/jaw2.png", vec2(32,32)));
         this.leadingJawSprite = new Sprite(tr(vec2(),vec2(pixelSize,pixelSize)),
             new ImageObject("images/jaw1.png", vec2(32,32)));
+
         this.rotatePoint = vec2(200, 200);
         this.cutPointLines = [];
         this.cutPointDelay = 250.0;
         this.cutPointTimer = this.cutPointDelay;
+
+        this.legImage = new ImageObject("images/legPart.png", vec2(3, 32));
+
+        this.foreleg = new Sprite(tr(vec2(700, 100),vec2(pixelSize/2,pixelSize)), this.legImage);
+        this.leg = new Sprite(tr(vec2(700, 100 + ((64*pixelSize)/2)),vec2(pixelSize/2,pixelSize)), this.legImage);
+        this.legAhead = false;
     }
 
     event()
@@ -31,28 +40,37 @@ class Ant
     draw(deltaTime)
     {
         var underJawPointPixel = renderer.getImageData(this.jawPoint.x, this.jawPoint.y, 1, 1).data;
+
         if(underJawPointPixel[1] < 50) //i.e not green means no more on leaf
         {
             this.bodyPoint = rotateAroundPoint(this.bodyPoint, this.rotatePoint, 0.005);
 
-            renderer.fillStyle = "black";
-            renderer.beginPath();
-            if(this.cutPointLines.length > 0)
-            {
-                renderer.moveTo(this.cutPointLines[0].x, this.cutPointLines[0].y);
-                for(let i = 0; i < this.cutPointLines.length; i++)
-                    renderer.lineTo(this.cutPointLines[i].x, this.cutPointLines[i].y)
-            }
-            renderer.fill();
+            var farPixel1 = renderer.getImageData(this.jawPoint.x+maxDistancePixelCheck, this.jawPoint.y, 1, 1).data;
+            var farPixel2 = renderer.getImageData(this.jawPoint.x-maxDistancePixelCheck, this.jawPoint.y, 1, 1).data;
+            var farPixel3 = renderer.getImageData(this.jawPoint.x, this.jawPoint.y+maxDistancePixelCheck, 1, 1).data;
+            var farPixel4 = renderer.getImageData(this.jawPoint.x, this.jawPoint.y-maxDistancePixelCheck, 1, 1).data;
 
-            if(this.cutPointTimer <= 0)
+            if(farPixel1[1] > 50 || farPixel2[1] > 50 || farPixel3[1] > 50 || farPixel4[1] > 50)
             {
-                this.cutPointLines.push(this.jawPoint);
-                this.cutPointTimer = this.cutPointDelay * 4;
-            }
-            else
-            {
-                this.cutPointTimer -= deltaTime;
+                renderer.fillStyle = "black";
+                renderer.beginPath();
+                if(this.cutPointLines.length > 0)
+                {
+                    renderer.moveTo(this.cutPointLines[0].x, this.cutPointLines[0].y);
+                    for(let i = 0; i < this.cutPointLines.length; i++)
+                        renderer.lineTo(this.cutPointLines[i].x, this.cutPointLines[i].y)
+                }
+                renderer.fill();
+
+                if(this.cutPointTimer <= 0)
+                {
+                    this.cutPointLines.push(this.jawPoint);
+                    this.cutPointTimer = this.cutPointDelay * 4;
+                }
+                else
+                {
+                    this.cutPointTimer -= deltaTime;
+                }
             }
         }
         else
@@ -76,12 +94,6 @@ class Ant
             }
         }
 
-        /*drawLine(renderer, this.bodyPoint, this.rotatePoint, "white");
-        drawLine(renderer, this.bodyPoint, this.jawPoint, "white");
-        drawCircle(renderer, this.rotatePoint, 3, false, "red", 2);
-        drawCircle(renderer, this.bodyPoint, 3, false, "red", 2);
-        drawCircle(renderer, this.jawPoint, 3, false, "red", 2);*/
-
         var ang = this.bodyPoint.angle(this.rotatePoint) + Math.PI/1.5;
         this.jawPoint = this.bodyPoint.add(vec2(Math.cos(ang) * 60.0, Math.sin(ang) * 60.0));
         ang -= Math.PI/2;
@@ -95,5 +107,60 @@ class Ant
         this.leadingJawSprite.transform.position = this.jawPoint.subtract(vec2(Math.cos(ang) * 15.0, Math.sin(ang) * 15.0));
         this.leadingJawSprite.transform.rotation = ang + Math.PI/2;
         this.leadingJawSprite.drawScRot();
+
+        this.foreleg.transform.position = this.bodyPoint.add(vec2(-16,0));
+
+        this.foreleg.transform.origin = vec2(16, 0);
+        if(!this.legAhead)
+        {
+            if(this.leg.transform.rotation < Math.PI)
+                this.leg.transform.rotation += 0.1;
+            
+            if(this.foreleg.transform.rotation < Math.PI/1.5)
+                this.foreleg.transform.rotation += 0.05;
+            else
+            {
+                this.foreleg.transform.rotation = Math.PI/1.5;
+                this.leg.transform.rotation = Math.PI;
+                this.legAhead = true;
+            }
+        }
+        else
+        {
+            if(this.leg.transform.rotation > -Math.PI/8)
+                this.leg.transform.rotation -= 0.1;
+
+            if(this.foreleg.transform.rotation > Math.PI/4)
+                this.foreleg.transform.rotation -= 0.05;
+            else
+            {
+                this.foreleg.transform.rotation = Math.PI/4;
+                this.leg.transform.rotation = -Math.PI/8;
+                this.legAhead = false;
+            }
+        }
+        //this.foreleg.transform.rotation = Math.PI/4;
+        //this.foreleg.transform.rotation = Math.PI/1.5;
+        this.foreleg.transform.rotation += Math.PI + ang;
+        this.leg.transform.position = this.foreleg.transform.position.add(vec2(16, 0)).add(vec2(Math.cos(this.foreleg.transform.rotation-29.8) * -32, Math.sin(this.foreleg.transform.rotation-29.8) * -32));
+        this.leg.transform.position = this.leg.transform.position.subtract(vec2(16,0));
+        this.foreleg.drawScRot();
+        this.foreleg.transform.rotation -= Math.PI + ang;
+
+        this.leg.transform.origin = vec2(16, 0);
+        //this.leg.transform.rotation = -Math.PI/8;
+        //this.leg.transform.rotation = Math.PI*2.9;
+        this.leg.transform.rotation += Math.PI + ang;
+        this.leg.drawScRot();
+        this.leg.transform.rotation -= Math.PI + ang;
+
+        drawCircle(renderer, this.foreleg.transform.position.add(vec2(16, 0)), 3, false, "red", 2);
+        drawCircle(renderer, this.leg.transform.position.add(vec2(16,0)), 3, false, "red", 2);
+
+        drawLine(renderer, this.bodyPoint, this.rotatePoint, "white");
+        drawLine(renderer, this.bodyPoint, this.jawPoint, "white");
+        drawCircle(renderer, this.rotatePoint, 3, false, "red", 2);
+        drawCircle(renderer, this.bodyPoint, 3, false, "red", 2);
+        drawCircle(renderer, this.jawPoint, 3, false, "red", 2);
     }
 }
