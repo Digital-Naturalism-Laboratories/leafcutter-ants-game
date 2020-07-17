@@ -9,6 +9,7 @@ function events(deltaTime)
     switch(ui.stateIndex)
     {
         case GAMEPLAYUI: gameplayUICustomEvents(deltaTime); break;
+        case FLIGHTGAMEUI: flightGameUICustomEvents(deltaTime); break;
     }
     ui.event();
 }
@@ -26,6 +27,7 @@ function draw(deltaTime)
     switch(ui.stateIndex)
     {
         case GAMEPLAYUI: gameplayUICustomDraw(deltaTime); break;
+        case FLIGHTGAMEUI: flightGameUICustomDraw(deltaTime); break;
     }
     ui.draw();
     displayMouseCoords(renderer);

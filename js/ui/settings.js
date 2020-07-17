@@ -3,9 +3,11 @@ function uiInit()
 {
     uiSettings();
     setupGameplayUI();
+    setupFlightGameUI();
 
     uistates = [];
     uistates.push(new UIState(gameplayUI));
+    uistates.push(new UIState(flightGameUI));
     ui = new UI(uistates, GAMEPLAYUI);
 }
 
