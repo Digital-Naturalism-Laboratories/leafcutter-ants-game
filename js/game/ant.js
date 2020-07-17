@@ -5,8 +5,8 @@ class Ant
 {
     constructor()
     {
-        this.jawPoint = vec2(100, 100);
-        this.bodyPoint = vec2(100, 100);
+        this.jawPoint = vec2(140, 140);
+        this.bodyPoint = vec2(140, 140);
         this.bodySprite = new Sprite(tr(vec2(),vec2(pixelSize,pixelSize)),
             new ImageObject("images/body.png", vec2(64, 64)));
         this.cuttingJawSprite = new Sprite(tr(vec2(),vec2(pixelSize,pixelSize)),
@@ -18,12 +18,6 @@ class Ant
         this.cutPointLines = [];
         this.cutPointDelay = 250.0;
         this.cutPointTimer = this.cutPointDelay;
-
-        this.legImage = new ImageObject("images/legPart.png", vec2(3, 32));
-
-        this.foreleg = new Sprite(tr(vec2(700, 100),vec2(pixelSize/2,pixelSize)), this.legImage);
-        this.leg = new Sprite(tr(vec2(700, 100 + ((64*pixelSize)/2)),vec2(pixelSize/2,pixelSize)), this.legImage);
-        this.legAhead = false;
     }
 
     event()
@@ -94,7 +88,7 @@ class Ant
             }
         }
 
-        var ang = this.bodyPoint.angle(this.rotatePoint) + Math.PI/1.5;
+        var ang = this.bodyPoint.angle(this.rotatePoint) + Math.PI*2.2;
         this.jawPoint = this.bodyPoint.add(vec2(Math.cos(ang) * 60.0, Math.sin(ang) * 60.0));
         ang -= Math.PI/2;
 
@@ -107,55 +101,6 @@ class Ant
         this.leadingJawSprite.transform.position = this.jawPoint.subtract(vec2(Math.cos(ang) * 15.0, Math.sin(ang) * 15.0));
         this.leadingJawSprite.transform.rotation = ang + Math.PI/2;
         this.leadingJawSprite.drawScRot();
-
-        this.foreleg.transform.position = this.bodyPoint.add(vec2(-16,0));
-
-        this.foreleg.transform.origin = vec2(16, 0);
-        if(!this.legAhead)
-        {
-            if(this.leg.transform.rotation < Math.PI)
-                this.leg.transform.rotation += 0.1;
-            
-            if(this.foreleg.transform.rotation < Math.PI/1.5)
-                this.foreleg.transform.rotation += 0.05;
-            else
-            {
-                this.foreleg.transform.rotation = Math.PI/1.5;
-                this.leg.transform.rotation = Math.PI;
-                this.legAhead = true;
-            }
-        }
-        else
-        {
-            if(this.leg.transform.rotation > -Math.PI/8)
-                this.leg.transform.rotation -= 0.1;
-
-            if(this.foreleg.transform.rotation > Math.PI/4)
-                this.foreleg.transform.rotation -= 0.05;
-            else
-            {
-                this.foreleg.transform.rotation = Math.PI/4;
-                this.leg.transform.rotation = -Math.PI/8;
-                this.legAhead = false;
-            }
-        }
-        //this.foreleg.transform.rotation = Math.PI/4;
-        //this.foreleg.transform.rotation = Math.PI/1.5;
-        this.foreleg.transform.rotation += Math.PI + ang;
-        this.leg.transform.position = this.foreleg.transform.position.add(vec2(16, 0)).add(vec2(Math.cos(this.foreleg.transform.rotation-29.8) * -32, Math.sin(this.foreleg.transform.rotation-29.8) * -32));
-        this.leg.transform.position = this.leg.transform.position.subtract(vec2(16,0));
-        this.foreleg.drawScRot();
-        this.foreleg.transform.rotation -= Math.PI + ang;
-
-        this.leg.transform.origin = vec2(16, 0);
-        //this.leg.transform.rotation = -Math.PI/8;
-        //this.leg.transform.rotation = Math.PI*2.9;
-        this.leg.transform.rotation += Math.PI + ang;
-        this.leg.drawScRot();
-        this.leg.transform.rotation -= Math.PI + ang;
-
-        drawCircle(renderer, this.foreleg.transform.position.add(vec2(16, 0)), 3, false, "red", 2);
-        drawCircle(renderer, this.leg.transform.position.add(vec2(16,0)), 3, false, "red", 2);
 
         drawLine(renderer, this.bodyPoint, this.rotatePoint, "white");
         drawLine(renderer, this.bodyPoint, this.jawPoint, "white");
