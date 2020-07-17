@@ -1,5 +1,6 @@
 
-var maxDistancePixelCheck = 100;
+var maxDistancePixelCheck = 120;
+var cutLeafRoughness = 5;
 
 class Ant
 {
@@ -16,8 +17,10 @@ class Ant
 
         this.rotatePoint = vec2(200, 200);
         this.cutPointLines = [];
-        this.cutPointDelay = 250.0;
+        this.cutPointDelay = 100.0;
         this.cutPointTimer = this.cutPointDelay;
+
+        this.voidAreas = [];
     }
 
     event()
@@ -33,11 +36,25 @@ class Ant
 
     draw(deltaTime)
     {
+        for(let i = 0; i < this.voidAreas.length; i++)
+        {
+            renderer.fillStyle = "black";
+            renderer.beginPath();
+            if(this.voidAreas[i].length > 1)
+            {
+                renderer.moveTo(this.voidAreas[i][0].x, this.voidAreas[i][0].y);
+                for(let n = 0; n < this.voidAreas[i].length; n++)
+                    renderer.lineTo(this.voidAreas[i][n].x, this.voidAreas[i][n].y)
+            }
+            renderer.fill();
+        }
+        
+
         var underJawPointPixel = renderer.getImageData(this.jawPoint.x, this.jawPoint.y, 1, 1).data;
 
         if(underJawPointPixel[1] < 50) //i.e not green means no more on leaf
         {
-            this.bodyPoint = rotateAroundPoint(this.bodyPoint, this.rotatePoint, 0.005);
+            this.bodyPoint = rotateAroundPoint(this.bodyPoint, this.rotatePoint, 0.05);
 
             var farPixel1 = renderer.getImageData(this.jawPoint.x+maxDistancePixelCheck, this.jawPoint.y, 1, 1).data;
             var farPixel2 = renderer.getImageData(this.jawPoint.x-maxDistancePixelCheck, this.jawPoint.y, 1, 1).data;
@@ -46,15 +63,16 @@ class Ant
 
             if(farPixel1[1] > 50 || farPixel2[1] > 50 || farPixel3[1] > 50 || farPixel4[1] > 50)
             {
-                renderer.fillStyle = "black";
-                renderer.beginPath();
-                if(this.cutPointLines.length > 0)
+                this.bodyPoint = rotateAroundPoint(this.bodyPoint, this.rotatePoint, -0.04);
+
+                if(this.cutPointLines.length > 1)
                 {
-                    renderer.moveTo(this.cutPointLines[0].x, this.cutPointLines[0].y);
+                    this.cutPointLines.push(vec2(this.rotatePoint.x, this.rotatePoint.y));
+                    this.voidAreas.push([]);
                     for(let i = 0; i < this.cutPointLines.length; i++)
-                        renderer.lineTo(this.cutPointLines[i].x, this.cutPointLines[i].y)
+                        this.voidAreas[this.voidAreas.length-1].push(vec2(this.cutPointLines[i].x, this.cutPointLines[i].y));
+                    this.cutPointLines = [];
                 }
-                renderer.fill();
 
                 if(this.cutPointTimer <= 0)
                 {
@@ -79,7 +97,7 @@ class Ant
 
             if(this.cutPointTimer <= 0)
             {
-                this.cutPointLines.push(this.jawPoint.add(vec2(Math.random()*pixelSize*10, Math.random()*pixelSize*10)));
+                this.cutPointLines.push(this.jawPoint.add(vec2(Math.random()*pixelSize*cutLeafRoughness, Math.random()*pixelSize*cutLeafRoughness)));
                 this.cutPointTimer = this.cutPointDelay;
             }
             else
@@ -102,10 +120,10 @@ class Ant
         this.leadingJawSprite.transform.rotation = ang + Math.PI/2;
         this.leadingJawSprite.drawScRot();
 
-        drawLine(renderer, this.bodyPoint, this.rotatePoint, "white");
-        drawLine(renderer, this.bodyPoint, this.jawPoint, "white");
+        //drawLine(renderer, this.bodyPoint, this.rotatePoint, "white");
+        //drawLine(renderer, this.bodyPoint, this.jawPoint, "white");
         drawCircle(renderer, this.rotatePoint, 3, false, "red", 2);
         drawCircle(renderer, this.bodyPoint, 3, false, "red", 2);
-        drawCircle(renderer, this.jawPoint, 3, false, "red", 2);
+        //drawCircle(renderer, this.jawPoint, 3, false, "red", 2);
     }
 }

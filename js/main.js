@@ -28,6 +28,7 @@ function draw(deltaTime)
         case GAMEPLAYUI: gameplayUICustomDraw(deltaTime); break;
     }
     ui.draw();
+    displayMouseCoords(renderer);
 }
 
 function frame()
