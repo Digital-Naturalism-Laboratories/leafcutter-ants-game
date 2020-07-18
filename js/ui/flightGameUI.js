@@ -7,7 +7,7 @@ var flyingQueen;
 
 function setupFlightGameUI()
 {
-    flyingQueen = new FlyingQueen();
+    flyingQueen = new FlyingQueen(250, 250);
 }
 
 function flightGameUICustomDraw(deltaTime)
