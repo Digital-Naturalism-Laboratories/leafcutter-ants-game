@@ -20,5 +20,5 @@ function gameplayUICustomDraw(deltaTime)
 
 function gameplayUICustomEvents(deltaTime)
 {
-
+    ant.event();
 }

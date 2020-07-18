@@ -552,3 +552,8 @@ function displayMouseCoords(renderer, color)
 {
   drawText(renderer, touchPos[0].x.toString() + ", " + touchPos[0].y.toString(), vec2(10,10), typeof color == "undefined" ? "white" : color);
 }
+
+function isPointInCircle(p, circleP, radius)
+{
+  return (p.distance(circleP) < radius);
+}
