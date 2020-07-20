@@ -13,6 +13,8 @@ function init()
 
     gameWidth = window.innerWidth;
     gameHeight = window.innerHeight;
+    canvasStartX = 0;
+    canvasStartY = 0;
 
     sizeFactor = 0;
     if(gameWidth + (gameHeight/4) > gameHeight)
@@ -31,8 +33,10 @@ function init()
     canvas.width = gameWidth;
     canvas.height = gameHeight;
     canvas.style.position = "absolute";
-    canvas.style.top = ((window.innerHeight/2) - (gameHeight/2)).toString() + "px";
-    canvas.style.left = ((window.innerWidth/2) - (gameWidth/2)).toString() + "px";
+    canvasStartY = (window.innerHeight/2) - (gameHeight/2);
+    canvas.style.top = canvasStartY.toString() + "px";
+    canvasStartX = (window.innerWidth/2) - (gameWidth/2);
+    canvas.style.left = canvasStartX.toString() + "px";
 
     //Custom Initialization START
     uiInit();
