@@ -8,6 +8,7 @@ function uiInit()
     uistates = [];
     uistates.push(new UIState(gameplayUI));
     uistates.push(new UIState(flightGameUI));
+    uistates.push(new UIState(colonyGameUI));
     ui = new UI(uistates, GAMEPLAYUI);
 }
 

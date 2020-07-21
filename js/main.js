@@ -10,6 +10,7 @@ function events(deltaTime)
     {
         case GAMEPLAYUI: gameplayUICustomEvents(deltaTime); break;
         case FLIGHTGAMEUI: flightGameUICustomEvents(deltaTime); break;
+        case COLONYGAMEUI: colonyGameUICustomEvents(deltaTime); break;
     }
     ui.event();
 }
@@ -28,6 +29,7 @@ function draw(deltaTime)
     {
         case GAMEPLAYUI: gameplayUICustomDraw(deltaTime); break;
         case FLIGHTGAMEUI: flightGameUICustomDraw(deltaTime); break;
+        case COLONYGAMEUI: colonyGameUICustomDraw(deltaTime); break;
     }
     ui.draw();
     displayMouseCoords(renderer);
