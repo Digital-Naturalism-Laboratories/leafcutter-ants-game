@@ -2,6 +2,9 @@
 const COLONYGAMEUI = 2;
 var colonyGameUI = [];
 
+var groundBG = document.createElement('img');
+groundBG.src = 'Visual Assets/Ground_Cross_Section.png';
+
 function setupColonyGameUI()
 {
 
@@ -9,8 +12,9 @@ function setupColonyGameUI()
 
 function colonyGameUICustomDraw(deltaTime)
 {
-    renderer.fillStyle = 'sienna';
-    renderer.fillRect(0, 150, gameWidth, gameHeight);
+
+    renderer.drawImage(groundBG, 0, 0, gameWidth, gameHeight);
+
 }
 
 function colonyGameUICustomEvents(deltaTime)
