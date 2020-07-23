@@ -10,8 +10,8 @@ function uiInit()
     uistates.push(new UIState(gameplayUI));
     uistates.push(new UIState(flightGameUI));
     uistates.push(new UIState(colonyGameUI));
-    //ui = new UI(uistates, GAMEPLAYUI);
-    ui = new UI(uistates, COLONYGAMEUI);
+    ui = new UI(uistates, GAMEPLAYUI);
+    //ui = new UI(uistates, COLONYGAMEUI);
 }
 
 function uiSettings()

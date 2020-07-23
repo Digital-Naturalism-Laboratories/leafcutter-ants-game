@@ -18,6 +18,11 @@ function gameplayUICustomDraw(deltaTime)
     ant.draw(deltaTime);
 }
 
+function gameplayUICustomUpdate(deltaTime)
+{
+    ant.update(deltaTime);
+}
+
 function gameplayUICustomEvents(deltaTime)
 {
     ant.event();
