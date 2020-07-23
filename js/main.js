@@ -2,6 +2,12 @@ window.onload = function()
 {
     init();
     setInterval(frame, 1000 / 60);
+
+    var bgm1 = document.createElement('audio');
+    bgm1.setAttribute('src', 'audio/Main Nest Scene B.wav');
+    bgm1.setAttribute('autoplay', 'autoplay');
+    bgm1.loop = true;
+    bgm1.Play(); 
 };
 
 function events(deltaTime)
@@ -15,8 +21,14 @@ function events(deltaTime)
     ui.event();
 }
 
-function update()
+function update(deltaTime)
 {
+    switch(ui.stateIndex)
+    {
+        case GAMEPLAYUI: gameplayUICustomUpdate(deltaTime); break;
+        //case FLIGHTGAMEUI: flightGameUICustomUpdate(deltaTime); break;
+        //case COLONYGAMEUI: colonyGameUICustomUpdate(deltaTime); break;
+    }
     ui.update();
 }
 
@@ -41,7 +53,7 @@ function frame()
     {
         var deltaTime = getDeltaTime();
         events(deltaTime);
-        update();
+        update(deltaTime);
         draw(deltaTime);
     }
 }
