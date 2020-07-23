@@ -56,6 +56,9 @@ class FlyingMale {
     }
 
     draw() {
+        renderer.save();
+        renderer.translate(-camPanX,0);
         this.sprite.drawSc();
+        renderer.restore();
     }
 }

@@ -10,6 +10,15 @@ var flyingMales = [];
 var energyBarLength = 100;
 var diversityBarLength = 0;
 
+var placeholder_BG = document.createElement('img');
+placeholder_BG.src = 'Visual Assets/placeholder_BG.png';
+var BG_image_width = placeholder_BG.width;
+var totalSeconds = 0;
+
+var camPanX = 0.0;
+const PLAYER_DIST_FROM_CENTER_BEFORE_CAMERA_PAN_X = 10;
+
+
 function setupFlightGameUI()
 {
     flyingQueen = new FlyingQueen(50, 250);
@@ -23,6 +32,20 @@ function setupFlightGameUI()
 
 function flightGameUICustomDraw(deltaTime)
 {
+   
+    totalSeconds += deltaTime;
+    var vx = 1;
+    var numImages = 2;
+    var xpos = totalSeconds * vx % gameWidth;
+   
+    renderer.save();
+    renderer.translate(-xpos, 0);
+    for (var i = 0; i < numImages; i++) {
+        renderer.drawImage(placeholder_BG, i * gameWidth, 0, gameWidth, gameHeight);
+    }
+    renderer.restore();
+
+
     flyingQueen.draw(deltaTime);
 
     renderer.fillStyle = "white";
@@ -52,5 +75,22 @@ function flightGameUICustomEvents(deltaTime)
     if (flyingQueen.movementState == flyingQueen.movementStates.FLYING){
         energyBarLength -= 0.15;
     }
+
+    cameraFollow();
     
 }
+
+function cameraFollow() {
+    var cameraFocusCenterX = camPanX + gameWidth/2;
+
+    var playerDistFromCameraFocusX = Math.abs(flyingQueen.sprite.transform.position.x - cameraFocusCenterX);
+
+    if(playerDistFromCameraFocusX > PLAYER_DIST_FROM_CENTER_BEFORE_CAMERA_PAN_X) {
+      if(cameraFocusCenterX < flyingQueen.sprite.transform.position.x)  {
+        camPanX += flyingQueen.horizontalSpeed;
+      } else {
+        camPanX -= flyingQueen.horizontalSpeed;
+      }
+    }
+
+  }
