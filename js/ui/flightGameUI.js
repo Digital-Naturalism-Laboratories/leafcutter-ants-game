@@ -76,7 +76,7 @@ function flightGameUICustomEvents(deltaTime)
         energyBarLength -= 0.15;
     }
 
-    cameraFollow();
+    //cameraFollow();
     
 }
 

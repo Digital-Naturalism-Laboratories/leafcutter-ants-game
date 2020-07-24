@@ -21,6 +21,8 @@ class FlyingQueen {
     event() {
 
         if (isTouched) {
+            this.horizontalSpeed = (touchPos[0].x - canvas.getBoundingClientRect().left) - this.sprite.transform.position.x;
+            this.horizontalSpeed = (this.horizontalSpeed / gameWidth) * 10;
             this.movementState = this.movementStates.FLYING;
         } else {
             this.movementState = this.movementStates.FALLING;
@@ -44,6 +46,8 @@ class FlyingQueen {
                 }
                 break;
         }
+
+        this.sprite.transform.position.x = clamp(this.sprite.transform.position.x, 0, gameWidth);
 
     }
 
