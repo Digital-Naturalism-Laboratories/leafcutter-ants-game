@@ -5,7 +5,7 @@ class FlyingMale {
         this.y = y;
         this.horizontalSpeed = 1;
         this.verticalSpeed = 2;
-        this.sprite = new Sprite(tr(vec2(this.x * pixelSize, this.y * pixelSize), vec2(pixelSize / 4, pixelSize / 4)), new ImageObject("Visual Assets/8bit-Queen-right.png", vec2(96, 96)));
+        this.sprite = new Sprite(tr(vec2(this.x * pixelSize, this.y * pixelSize), vec2(pixelSize / 4, pixelSize / 4)), new ImageObject("Visual Assets/8bit-queen-right.png", vec2(96, 96)));
         this.movementStates = {
             FLYING: "flying",
             FALLING: "falling"
