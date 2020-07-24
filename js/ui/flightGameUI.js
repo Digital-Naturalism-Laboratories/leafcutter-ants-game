@@ -5,7 +5,7 @@ var flightGameUI = [];
 mateCount = 0;
 
 var flyingQueen;
-var flyingMaleCount = 6;
+var flyingMaleCount = 20;
 var flyingMales = [];
 var energyBarLength = 100;
 var diversityBarLength = 0;

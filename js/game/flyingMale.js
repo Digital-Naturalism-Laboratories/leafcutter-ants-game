@@ -3,7 +3,7 @@ class FlyingMale {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.horizontalSpeed = 1;
+        this.horizontalSpeed = 5;
         this.verticalSpeed = 2;
         this.sprite = new Sprite(tr(vec2(this.x * pixelSize, this.y * pixelSize), vec2(pixelSize / 4, pixelSize / 4)), new ImageObject("Visual Assets/eightbit-Male.png", vec2(96, 96)));
         this.movementStates = {
@@ -43,6 +43,10 @@ class FlyingMale {
                     this.sprite.transform.position.y += this.verticalSpeed;
                 }
                 break;
+        }
+
+        if (this.sprite.transform.position.x > gameWidth || this.sprite.transform.position.x < 0){
+            this.horizontalSpeed = -this.horizontalSpeed;
         }
 
         this.sprite.transform.position.x += this.horizontalSpeed;
