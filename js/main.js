@@ -4,7 +4,7 @@ window.onload = function()
     setInterval(frame, 1000 / 60);
 
     var bgm1 = document.createElement('audio');
-    bgm1.setAttribute('src', 'audio/Main Nest Scene B.wav');
+    bgm1.setAttribute('src', 'audio/Main Nest Scene B.mp3');
     bgm1.setAttribute('autoplay', 'autoplay');
     bgm1.loop = true;
 };
