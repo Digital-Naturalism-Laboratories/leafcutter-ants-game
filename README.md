@@ -9,4 +9,6 @@ Art design by Kitty Quitmeyer
 
 Scientific advising by Dr. Hannah Marti
 
+Test code live here: https://digital-naturalism-laboratories.github.io/leafcutter-ants-game/
+
 
