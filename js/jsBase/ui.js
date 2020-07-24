@@ -138,7 +138,6 @@ function defUIEvent(output, transform, touchId)
         else if (hover(transform))
         {
             output = UIOUTPUT_HOVER;
-            showTooltip(this.tooltip);
         }
         else
         {
@@ -307,7 +306,6 @@ class Button extends UIObject
                 {
                     this.btnColor = this.hoverColor;
                     this.output = UIOUTPUT_HOVER;
-                    showTooltip(this.tooltip);
                 }
                 else if (this.output == UIOUTPUT_DISABLED)
                 {

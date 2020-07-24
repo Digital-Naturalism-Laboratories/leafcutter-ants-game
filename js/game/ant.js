@@ -146,7 +146,6 @@ class Ant
         this.leadingJawSprite.drawScRot();
         this.cuttingJawSprite.drawScRot();
         this.drawLeafCuttingPoints();
-        //drawCircle(renderer, this.cutPoint, 5, false, "red", 2);
         this.drawJawControls();
     }
 

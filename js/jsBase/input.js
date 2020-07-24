@@ -146,6 +146,9 @@ function inputSetup()
     window.addEventListener("keyup", onKeyUp);
 }
 
+var canvasStartX = 0;
+var canvasStartY = 0;
+
 function touched(transform) //or sprite
 {
     if (isTouched)
@@ -153,9 +156,9 @@ function touched(transform) //or sprite
         for(let i = 0; i < 5; i++)
         {
             if(transform.position.x != 0 && transform.position.y != 0
-            && touchPos[i].x != 0 && touchPos[i].y != 0)
+            && touchPos[i].x - canvasStartX != 0 && touchPos[i].y - canvasStartY != 0)
             {
-                var p = transform.relPointInside(touchPos[i]);
+                var p = transform.relPointInside(touchPos[i].subtract(vec2(canvasStartX, canvasStartY)));
 
                 if (p.x != -1 && p.y != -1)
                     return i;
@@ -172,7 +175,7 @@ function hover(transform) //or sprite
     {
         for(let i = 0; i < 5; i++)
         {
-            var p = transform.relPointInside(touchPos[i]);
+            var p = transform.relPointInside(touchPos[i].subtract(vec2(canvasStartX, canvasStartY)));
         
             if(p.x != -1 && p.y != -1)
                 return true;
@@ -190,7 +193,7 @@ function dragMove(transform, lerpAmount, limitPoint1, limitPoint2)
     {
         if (dragMoveObj == null)
         {
-            var p = transform.relPointInside(touchPos[0]);
+            var p = transform.relPointInside(touchPos[0].subtract(vec2(canvasStartX, canvasStartY)));
 
             if (p.x != -1 && p.y != -1)
             {
@@ -203,7 +206,7 @@ function dragMove(transform, lerpAmount, limitPoint1, limitPoint2)
             if(dragMoveObj == transform)
 			{
 				lerpAmount = typeof lerpAmount == "undefined" ? 1.0 : lerpAmount;
-                transform.position = lerpVec2(transform.position, touchPos[0].add(dragMoveRelPos), lerpAmount);
+                transform.position = lerpVec2(transform.position, touchPos[0].add(dragMoveRelPos).subtract(vec2(canvasStartX, canvasStartY)), lerpAmount);
                 
                 if(typeof limitPoint1 == "undefined") return;
                 

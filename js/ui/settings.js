@@ -2,16 +2,17 @@
 function uiInit()
 {
     uiSettings();
-    setupGameplayUI();
+    setupMainMenuUI();
     setupFlightGameUI();
     setupColonyGameUI();
+    setupLeafcuttingUI();
 
     uistates = [];
-    uistates.push(new UIState(gameplayUI));
+    uistates.push(new UIState(mainMenuUI));
     uistates.push(new UIState(flightGameUI));
     uistates.push(new UIState(colonyGameUI));
-    ui = new UI(uistates, GAMEPLAYUI);
-    //ui = new UI(uistates, COLONYGAMEUI);
+    uistates.push(new UIState(leafcuttingUI));
+    ui = new UI(uistates, MAINMENUUI);
 }
 
 function uiSettings()

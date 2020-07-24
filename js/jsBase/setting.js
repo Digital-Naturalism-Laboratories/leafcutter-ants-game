@@ -13,8 +13,6 @@ function init()
 
     gameWidth = window.innerWidth;
     gameHeight = window.innerHeight;
-    canvasStartX = 0;
-    canvasStartY = 0;
 
     sizeFactor = 0;
     if(gameWidth + (gameHeight/4) > gameHeight)

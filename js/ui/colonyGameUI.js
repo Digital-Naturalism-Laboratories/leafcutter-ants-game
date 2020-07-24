@@ -72,7 +72,7 @@ function colonyGameUICustomEvents(deltaTime)
 {
     if (isTouched){
         if (getDistBtwVec2(vec2(tunnel_vertical.width * 10, tunnel_vertical.height * 8 + 10), vec2(touchPos[0].x - canvas.getBoundingClientRect().left, touchPos[0].y - canvas.getBoundingClientRect().top)) < 40){
-            ui.stateIndex = GAMEPLAYUI;
+            ui.stateIndex = LEAFCUTTINGUI;
         } 
     }
 

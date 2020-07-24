@@ -7,16 +7,16 @@ window.onload = function()
     bgm1.setAttribute('src', 'audio/Main Nest Scene B.wav');
     bgm1.setAttribute('autoplay', 'autoplay');
     bgm1.loop = true;
-    bgm1.Play(); 
 };
 
 function events(deltaTime)
 {
     switch(ui.stateIndex)
     {
-        case GAMEPLAYUI: gameplayUICustomEvents(deltaTime); break;
+        case MAINMENUUI: mainMenuUICustomEvents(deltaTime); break;
         case FLIGHTGAMEUI: flightGameUICustomEvents(deltaTime); break;
         case COLONYGAMEUI: colonyGameUICustomEvents(deltaTime); break;
+        case LEAFCUTTINGUI: leafcuttingUICustomEvents(deltaTime); break;
     }
     ui.event();
 }
@@ -25,9 +25,10 @@ function update(deltaTime)
 {
     switch(ui.stateIndex)
     {
-        case GAMEPLAYUI: gameplayUICustomUpdate(deltaTime); break;
+        case MAINMENUUI: mainMenuUICustomUpdate(deltaTime); break;
         //case FLIGHTGAMEUI: flightGameUICustomUpdate(deltaTime); break;
         //case COLONYGAMEUI: colonyGameUICustomUpdate(deltaTime); break;
+        case LEAFCUTTINGUI: leafcuttingUICustomUpdate(deltaTime); break;
     }
     ui.update();
 }
@@ -39,12 +40,13 @@ function draw(deltaTime)
     drawRect(renderer, vec2(0, 0), vec2(gameWidth, gameHeight), true, "#000000");
     switch(ui.stateIndex)
     {
-        case GAMEPLAYUI: gameplayUICustomDraw(deltaTime); break;
+        case MAINMENUUI: mainMenuUICustomDraw(deltaTime); break;
         case FLIGHTGAMEUI: flightGameUICustomDraw(deltaTime); break;
         case COLONYGAMEUI: colonyGameUICustomDraw(deltaTime); break;
+        case LEAFCUTTINGUI: leafcuttingUICustomDraw(deltaTime); break;
     }
     ui.draw();
-    displayMouseCoords(renderer);
+    //displayMouseCoords(renderer);
 }
 
 function frame()
