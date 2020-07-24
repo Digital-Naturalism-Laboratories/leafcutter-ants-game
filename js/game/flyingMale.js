@@ -1,10 +1,10 @@
 class FlyingMale {
 
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.horizontalSpeed = 5;
-        this.verticalSpeed = 2;
+    constructor() {
+        this.x = Math.random() * gameWidth;
+        this.y = Math.random() * gameHeight;
+        this.horizontalSpeed = (Math.random() * 8) + 0.2 ;
+        this.verticalSpeed = (Math.random() * 3) + .25;
         this.sprite = new Sprite(tr(vec2(this.x * pixelSize, this.y * pixelSize), vec2(pixelSize / 4, pixelSize / 4)), new ImageObject("Visual Assets/eightbit-Male.png", vec2(96, 96)));
         this.movementStates = {
             FLYING: "flying",

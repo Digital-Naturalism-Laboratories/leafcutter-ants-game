@@ -25,7 +25,7 @@ function setupFlightGameUI()
     flyingMale = new FlyingMale(350, 250);
 
     for (i = 0; i < flyingMaleCount; i++) {
-        flyingMales[i] = new FlyingMale(Math.random() * gameWidth, Math.random() * gameHeight);
+        flyingMales[i] = new FlyingMale();
     }
 
 }
