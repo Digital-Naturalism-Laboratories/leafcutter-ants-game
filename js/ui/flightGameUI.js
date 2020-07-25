@@ -7,6 +7,8 @@ mateCount = 0;
 var flyingQueen;
 var flyingMaleCount = 20;
 var flyingMales = [];
+var rivalQueenCount = 2;
+var rivalQueens = [];
 var energyBarLength = 100;
 var diversityBarLength = 0;
 
@@ -21,12 +23,14 @@ const PLAYER_DIST_FROM_CENTER_BEFORE_CAMERA_PAN_X = 10;
 
 function setupFlightGameUI()
 {
-    flyingQueen = new FlyingQueen(50, 250);
-    flyingMale = new FlyingMale(350, 250);
+    flyingQueen = new FlyingQueen(50, 250, true);
 
     for (i = 0; i < flyingMaleCount; i++) {
         flyingMales[i] = new FlyingMale();
     }
+    for (i = 0; i < rivalQueenCount; i++) {
+      rivalQueens[i] = new FlyingQueen(Math.random() * gameWidth, Math.random() * gameHeight, false);
+  }
 
 }
 

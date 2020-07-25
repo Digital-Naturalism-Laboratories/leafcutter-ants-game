@@ -55,7 +55,14 @@ class FlyingMale {
             mateCount++;
             diversityBarLength += 20;
             this.sprite.transform.position.y = 10000;
-        } 
+        }
+
+        for (var i = 0; i < rivalQueens.length; i++){
+            console.log(rivalQueens[i]);
+            if (getDistBtwVec2(rivalQueens[i].sprite.transform.position, this.sprite.transform.position) < rivalQueens[i].collisionRadius + this.collisionRadius){
+                this.sprite.transform.position.y = 10000;
+            }
+        }
         
     }
 
