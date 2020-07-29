@@ -138,6 +138,7 @@ class Ant
     draw(deltatime)
     {
         this.drawVoidAreas();
+        this.getLeafBorders(18*pixelSize, 16*pixelSize);
         for(let i = 0; i < this.cutPointLines.length-1; i++)
         {
             drawLine(renderer, this.cutPointLines[i], this.cutPointLines[i+1], "black");
@@ -228,5 +229,44 @@ class Ant
         this.rotationMode = false;
         this.pointsToCutLeaf[this.pointIndex] = vec2(-1000, -1000);
         this.pointIndex = -1;
+    }
+
+    getLeafBorders(borderTestResolutionFactor, borderPixelComparionDistance)
+    {
+        for(let y = borderPixelComparionDistance; y < gameHeight-borderPixelComparionDistance; y+=borderTestResolutionFactor)
+        {
+            for(let x = borderPixelComparionDistance; x < gameWidth-borderPixelComparionDistance; x+=borderTestResolutionFactor)
+            {
+                var thisPixel = renderer.getImageData(x, y, 1, 1).data;
+                var leftPixel = renderer.getImageData(x-borderPixelComparionDistance, y, 1, 1).data;
+                var rightPixel = renderer.getImageData(x+borderPixelComparionDistance, y, 1, 1).data;
+                var upPixel = renderer.getImageData(x, y-borderPixelComparionDistance, 1, 1).data;
+                var downPixel = renderer.getImageData(x, y+borderPixelComparionDistance, 1, 1).data;
+
+                //if the pixel is not black
+                if(thisPixel[0] > 10 || thisPixel[1] > 10 || thisPixel[2] > 10)
+                {
+                    //...and any of the surrounding pixels is black
+                    if(
+                           (leftPixel[0] < 10 && leftPixel[1] < 10 && leftPixel[2] < 10)
+                        || (rightPixel[0] < 10 && rightPixel[1] < 10 && rightPixel[2] < 10)
+                        || (upPixel[0] < 10 && upPixel[1] < 10 && upPixel[2] < 10)
+                        || (downPixel[0] < 10 && downPixel[1] < 10 && downPixel[2] < 10)
+                    )
+                    {
+                        //then, it is a border pixel.
+                        drawCircle(renderer, vec2(x,y), 5, true, "red", 1);
+                    }
+                    else
+                    {
+                        drawCircle(renderer, vec2(x,y), 3, false, "white", 1);
+                    }
+                }
+                else
+                {
+                    drawCircle(renderer, vec2(x,y), 1, false, "blue", 1);
+                }
+            }
+        }
     }
 }
