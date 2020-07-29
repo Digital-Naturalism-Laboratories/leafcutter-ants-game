@@ -233,6 +233,7 @@ class Ant
         this.pointIndex = -1;
         this.updateLeafborders = true;
         this.alternateRotation = !this.alternateRotation;
+        leafcuttingScore += 100;
     }
 
     getLeafBorders(borderTestResolutionFactor)
