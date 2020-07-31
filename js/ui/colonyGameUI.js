@@ -1,23 +1,16 @@
 const COLONYGAMEUI = 2;
 var colonyGameUI = [];
 
-var groundBG = document.createElement('img');
-var fungusNest = document.createElement('img');
-var tunnel_vertical = document.createElement('img');
-var tunnel_horizontal = document.createElement('img');
-var tunnel_tile = document.createElement('img');
-var worker_right = document.createElement('img');
-groundBG.src = 'Visual Assets/Ground_Cross_Section.png';
-fungusNest.src = 'Visual Assets/Fungus_Nest.png';
-tunnel_vertical.src = 'Visual Assets/tunnel_tile_vert.png';
-tunnel_horizontal.src = 'Visual Assets/tunnel_tile_hor.png';
-tunnel_tile.src = 'Visual Assets/dirt_tile.png';
-worker_right.src = 'Visual Assets/8bit-just-Worker-Right.png';
-
 const COLONY_W = 40;
 const COLONY_H = 40;
 const COLONY_COLS = 20;
 const COLONY_ROWS = 15;
+
+var groundBG = document.createElement('img');
+var fungusNest = document.createElement('img');
+var worker_right = document.createElement('img');
+
+var colonyTiles = [];
 
 var colonyGrid = [  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -26,9 +19,9 @@ var colonyGrid = [  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                     0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                     0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                     0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0,
-                    0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 3, 2, 2, 2, 2, 3, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 3, 2, 2, 2, 2, 0, 0, 0,
+                    0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
                     0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
@@ -49,6 +42,8 @@ var larvaeCount = 0;
 var population = 0;
 
 function setupColonyGameUI() {
+
+    loadImages();
     queen = new Queen(400, 220);
 }
 
@@ -59,7 +54,7 @@ function colonyGameUICustomDraw(deltaTime) {
     drawColonyTiles();
     renderer.drawImage(fungusNest, gameWidth * 0.66, gameHeight * 0.35);
 
-    renderer.drawImage(worker_right, tunnel_vertical.width * 10, tunnel_vertical.height * 7 + 10, worker_right.width / 2, worker_right.height / 2);
+    renderer.drawImage(worker_right, colonyTiles[COLONY_TUNNEL_VERT].width * 10, colonyTiles[COLONY_TUNNEL_VERT].height * 7 + 10, worker_right.width / 2, worker_right.height / 2);
 
     renderer.fillStyle = 'black';
     renderer.fillRect(0, gameHeight - 120, gameWidth, 120);
@@ -79,7 +74,7 @@ function colonyGameUICustomDraw(deltaTime) {
 
 function colonyGameUICustomEvents(deltaTime) {
     if (isTouched) {
-        if (getDistBtwVec2(vec2(tunnel_vertical.width * 10, tunnel_vertical.height * 8 + 10), vec2(touchPos[0].x - canvas.getBoundingClientRect().left, touchPos[0].y - canvas.getBoundingClientRect().top)) < 40) {
+        if (getDistBtwVec2(vec2(colonyTiles[COLONY_TUNNEL_VERT].width * 10, colonyTiles[COLONY_TUNNEL_VERT].height * 7 + 10), vec2(touchPos[0].x - canvas.getBoundingClientRect().left, touchPos[0].y - canvas.getBoundingClientRect().top)) < 40) {
             ui.stateIndex = LEAFCUTTINGUI;
         }
     }
@@ -117,10 +112,10 @@ function drawColonyTiles() {
 
         for (var eachCol = 0; eachCol < COLONY_COLS; eachCol++) {
 
-            //var colonyTypeHere = colonyGrid[colonyIndex];
-            //renderer.drawImage(colonyPics[colonyTypeHere], colonyLeftEdgeX, colonyTopEdgeY);
-            if (colonyGrid[colonyIndex] === COLONY_TUNNEL_VERT) {
-                renderer.drawImage(tunnel_vertical, colonyLeftEdgeX, colonyTopEdgeY);
+            var colonyTypeHere = colonyGrid[colonyIndex];
+
+            if (colonyGrid[colonyIndex] != COLONY_WALL) {
+                renderer.drawImage(colonyTiles[colonyTypeHere], colonyLeftEdgeX, colonyTopEdgeY);
             }
 
             colonyIndex++;
@@ -131,4 +126,37 @@ function drawColonyTiles() {
         colonyTopEdgeY += COLONY_H;
 
     }
+}
+
+function beginLoadingImage(imgVar, fileName) {
+  imgVar.src="Visual Assets/"+fileName;
+}
+
+function loadImageForTrackCode(tunnelCode, fileName) {
+    colonyTiles[tunnelCode] = document.createElement("img");
+  beginLoadingImage(colonyTiles[tunnelCode],fileName);
+}
+
+function loadImages() {
+
+  var imageList = [
+    {varName:groundBG, fileName:"Ground_Cross_Section.png"},
+    {varName:fungusNest, fileName:"Fungus_Nest.png"},
+    {varName:worker_right, fileName:"8bit-just-Worker-Right.png"},
+    
+    {tunnelType:COLONY_TUNNEL_VERT, fileName:"tunnel_tile_vert.png"},
+    {tunnelType:COLONY_TUNNEL_HOR, fileName:"tunnel_tile_hor.png"},
+    {tunnelType:COLONY_TUNNEL_4WAY, fileName:"dirt_tile.png"}
+    ];
+
+  picsToLoad = imageList.length;
+
+  for(var i=0;i<imageList.length;i++) {
+    if(imageList[i].tunnelType != undefined) {
+      loadImageForTrackCode(imageList[i].tunnelType, imageList[i].fileName);
+    } else {
+      beginLoadingImage(imageList[i].varName, imageList[i].fileName);
+    }
+  }
+
 }

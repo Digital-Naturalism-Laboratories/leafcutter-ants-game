@@ -16,7 +16,6 @@ class Queen {
                 ui.stateIndex = FLIGHTGAMEUI;
             } 
 
-            console.log(getDistBtwVec2(this.sprite.transform.position, touchPos[0]));
         }
 
     }
