@@ -37,16 +37,16 @@ function Background()
 
 		if (defenseGame.timeLeft < 16 && defenseGame.timeLeft > 0)
 		{
-			this.fungusNestXCoordinate -= defenseGame.canvas.width * 0.001;
+			this.fungusNestXCoordinate -= gameWidth * 0.001;
 		}
 
-		if (this.groundImage1xCoordinate + defenseGame.canvas.width < 0)
+		if (this.groundImage1xCoordinate + gameWidth < 0)
 		{
-			this.groundImage1xCoordinate = defenseGame.canvas.width;
+			this.groundImage1xCoordinate = gameWidth;
 		}
-		if (this.groundImage2xCoordinate + defenseGame.canvas.width< 0)
+		if (this.groundImage2xCoordinate + gameWidth < 0)
 		{
-			this.groundImage2xCoordinate = defenseGame.canvas.width;
+			this.groundImage2xCoordinate = gameWidth;
 		}
 	
 	}
@@ -59,22 +59,16 @@ function Background()
 	this.draw = function()
 	{
 		
-		// console.log('this.skyImage: ' + this.skyImage);
-		// console.log('renderer.canvas.width: ' + renderer.canvas.width);
-		// console.log('renderer.canvas.height: ' + renderer.canvas.height);
-		//console.log('inside draw function of fly defense background');
-		// renderer.fillStyle = 'blue';
-		// renderer.fillRect(0,0, gameWidth,gameHeight);
 		renderer.drawImage(this.skyImage, 0,0, gameWidth,gameHeight);
-		// renderer.drawImage(this.groundImage1, this.groundImage1xCoordinate,renderer.canvas.height*0.2, renderer.canvas.width*1.01,renderer.canvas.height);
-		// renderer.drawImage(this.groundImage2, this.groundImage2xCoordinate,renderer.canvas.height*0.2, renderer.canvas.width*1.01,renderer.canvas.height);
+		renderer.drawImage(this.groundImage1, this.groundImage1xCoordinate,renderer.canvas.height*0.2, renderer.canvas.width*1.01,renderer.canvas.height);
+		renderer.drawImage(this.groundImage2, this.groundImage2xCoordinate,renderer.canvas.height*0.2, renderer.canvas.width*1.01,renderer.canvas.height);
 	
 		// defenseGame.canvasContext.drawImage(this.leftArrowButtonImage, 0,0, defenseGame.canvas.width,defenseGame.canvas.height);
 		// defenseGame.canvasContext.drawImage(this.rightArrowButtonImage, 0,0, defenseGame.canvas.width,defenseGame.canvas.height);
 		// defenseGame.canvasContext.drawImage(this.swatButtonImage, 0,0, defenseGame.canvas.width,defenseGame.canvas.height);
 
 		
-		// renderer.drawImage(this.fungusNestImage, this.fungusNestXCoordinate,renderer.canvas.height*0.33, 
-		// 										   renderer.canvas.width*0.6,renderer.canvas.height*0.6);
+		renderer.drawImage(this.fungusNestImage, this.fungusNestXCoordinate,renderer.canvas.height*0.33, 
+												   renderer.canvas.width*0.6,renderer.canvas.height*0.6);
 	}
 }

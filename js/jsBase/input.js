@@ -118,6 +118,22 @@ function onKeyPress(ev)
     //keysPressed is a custom event
     /*if(keysPressed.indexOf(ev.key) == -1)
         keysPressed.push(ev.key);*/
+        switch(ev.keyCode)
+      {
+        case 100://d
+        console.log(defenseGame.debugOn);
+        if (defenseGame.debugOn === false)
+        {
+            defenseGame.debugOn = true;
+            console.log('debug on');
+        }
+        else
+        {
+            defenseGame.debugOn = false;
+            console.log('debug off');
+        }
+        break;
+      }
 }
 
 function onKeyUp(ev)

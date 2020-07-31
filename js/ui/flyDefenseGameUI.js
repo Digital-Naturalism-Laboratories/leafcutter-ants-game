@@ -7,8 +7,17 @@ defenseGame.initialize = function()
 
 	loadDefenseGameImages();
 
+	this.debugOn = false;
+
+	this.timeLeft = 30;
+	this.decreaseCounter = function() {if (defenseGame.timeLeft > 0) {defenseGame.timeLeft--;}};
+    this.countdownInterval = new frameInterval(defenseGame.decreaseCounter,1000);
+
 	defenseGame.background = new Background();
 	defenseGame.background.initialize();
+
+	this.parentAntObject = new ParentAntObject();
+	this.parentAntObject.initialize();
 
 	// console.log('defense game init called');
 	this.events = function()
@@ -18,12 +27,13 @@ defenseGame.initialize = function()
 
 	this.update = function()
 	{
-		// console.log('inside custom update');
+		defenseGame.background.update();
 	}
 
 	this.draw = function()
 	{
 		//console.log('inside draw function of defense game');
 		defenseGame.background.draw();
+		defenseGame.parentAntObject.draw();
 	}
 }

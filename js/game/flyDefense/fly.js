@@ -35,7 +35,7 @@ function Fly(name,status)
 		defenseGame.canvasContext.drawImage(this.eggImage, this.eggX,this.eggY, this.eggWidth,this.eggHeight);
 
 		//collision box
-		if (defenseGame.inputManager.debugOn)
+		if (defenseGame.debugOn)
 		{
 			defenseGame.canvasContext.lineWidth = 5;
 			defenseGame.canvasContext.strokeStyle = 'red';

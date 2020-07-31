@@ -51,7 +51,7 @@ function NPCBigAnt(x)
 	this.drawLeaf = function()
 	{
 		defenseGame.canvasContext.drawImage(this.leafImage, this.leafX,this.leafY, this.leafWidth,this.leafHeight);
-		if (defenseGame.inputManager.debugOn === true)
+		if (defenseGame.debugOn === true)
 		{
 			defenseGame.canvasContext.strokeStyle = 'red';
 			defenseGame.canvasContext.lineWidth = 5;
@@ -100,7 +100,7 @@ function NPCBigAnt(x)
 		{
 					defenseGame.parentAntObject.swatInterval.start();
 					defenseGame.canvasContext.drawImage(this.currentSwatImage, this.smallAntX,this.smallAntY, this.smallAntHeight,this.smallAntWidth);
-					if (defenseGame.inputManager.debugOn)
+					if (defenseGame.debugOn)
 					{
 						defenseGame.canvasContext.lineWidth = 5;
 						defenseGame.canvasContext.strokeStyle = 'red';
