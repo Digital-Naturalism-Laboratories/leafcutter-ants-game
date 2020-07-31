@@ -1,12 +1,15 @@
 window.onload = function()
 {
     init();
+    
     setInterval(frame, 1000 / 60);
 
     var bgm1 = document.createElement('audio');
     bgm1.setAttribute('src', 'audio/Main Nest Scene B.mp3');
     bgm1.setAttribute('autoplay', 'autoplay');
     bgm1.loop = true;
+
+
 };
 
 function events(deltaTime)
@@ -17,8 +20,12 @@ function events(deltaTime)
         case FLIGHTGAMEUI: flightGameUICustomEvents(deltaTime); break;
         case COLONYGAMEUI: colonyGameUICustomEvents(deltaTime); break;
         case LEAFCUTTINGUI: leafcuttingUICustomEvents(deltaTime); break;
+        
     }
-    ui.event();
+    if (ui.stateIndex !== DEFENSEGAMEUI)
+    {
+        ui.event();
+    }
 }
 
 function update(deltaTime)
@@ -29,8 +36,16 @@ function update(deltaTime)
         //case FLIGHTGAMEUI: flightGameUICustomUpdate(deltaTime); break;
         //case COLONYGAMEUI: colonyGameUICustomUpdate(deltaTime); break;
         case LEAFCUTTINGUI: leafcuttingUICustomUpdate(deltaTime); break;
+        
     }
-    ui.update();
+    if (ui.stateIndex !== DEFENSEGAMEUI)
+    {
+        ui.update();
+    }
+    else
+    {
+        defenseGame.update();
+    }
 }
 
 function draw(deltaTime)
@@ -44,8 +59,17 @@ function draw(deltaTime)
         case FLIGHTGAMEUI: flightGameUICustomDraw(deltaTime); break;
         case COLONYGAMEUI: colonyGameUICustomDraw(deltaTime); break;
         case LEAFCUTTINGUI: leafcuttingUICustomDraw(deltaTime); break;
+        
     }
-    ui.draw();
+    if (ui.stateIndex !== DEFENSEGAMEUI)
+    {
+        ui.draw();
+    }
+    else 
+    {
+        defenseGame.draw();
+    }
+    
     //displayMouseCoords(renderer);
 }
 

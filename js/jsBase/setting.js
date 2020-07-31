@@ -36,6 +36,8 @@ function init()
     canvasStartX = (window.innerWidth/2) - (gameWidth/2);
     canvas.style.left = canvasStartX.toString() + "px";
 
+    
+    
     //Custom Initialization START
     uiInit();
     //Custom Initialization END

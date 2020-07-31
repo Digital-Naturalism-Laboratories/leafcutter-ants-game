@@ -49,7 +49,7 @@ class UI
     getActiveState()
     {
         if(this.stateIndex < 0 || this.stateIndex >= this.uiStates.length) return null;
-
+        // console.log('this.uiStates[this.stateIndex]: ' + this.uiStates[this.stateIndex]);
         return this.uiStates[this.stateIndex];
     }
 
@@ -65,6 +65,7 @@ class UI
 
     draw()
     {
+        // console.log('this.getActiveState: ' + this.getActiveState());
         this.getActiveState().draw();
     }
     

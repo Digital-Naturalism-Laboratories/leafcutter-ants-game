@@ -37,8 +37,6 @@ function setupMainMenuUI()
         new Button(tr(), "#ffffffff", "#99ff99ff", "#bbffbbff"), 
         "");
     menuButtons.push(defenseBtn);
-    
-    console.log('menuButtons: ' + menuButtons);
 
 // FlexGroup constructor(transform, subState, isAxisVertical, gridSpace, gridSize, scaleFlex)
 //function tr(pos, sc, rot, orig) { return new Transform(pos, sc, rot, orig); }
@@ -72,14 +70,14 @@ function mainMenuUICustomEvents(deltaTime)
         ui.stateIndex = FLIGHTGAMEUI;
         flightBtn.button.resetOutput();
     }
-    else if(defenseBtn.button.output == UIOUTPUT_SELECT)
-    {
-        ui.stateIndex = DEFENSEGAMEUI;
-        defenseBtn.button.resetOutput();
-    }
     else if(colonyBtn.button.output == UIOUTPUT_SELECT)
     {
         ui.stateIndex = COLONYGAMEUI;
         colonyBtn.button.resetOutput();
+    }
+    else if(defenseBtn.button.output == UIOUTPUT_SELECT)
+    {
+        ui.stateIndex = DEFENSEGAMEUI;
+        defenseBtn.button.resetOutput();
     }
 }

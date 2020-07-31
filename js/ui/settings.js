@@ -6,12 +6,14 @@ function uiInit()
     setupFlightGameUI();
     setupColonyGameUI();
     setupLeafcuttingUI();
+    defenseGame.initialize();
 
     uistates = [];
     uistates.push(new UIState(mainMenuUI));
     uistates.push(new UIState(flightGameUI));
     uistates.push(new UIState(colonyGameUI));
     uistates.push(new UIState(leafcuttingUI));
+    uistates.push(new UIState(defenseGame.arrayOfUIObjects))
     ui = new UI(uistates, MAINMENUUI);
 }
 
