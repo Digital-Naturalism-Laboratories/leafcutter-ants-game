@@ -33,12 +33,33 @@ function removeKeyPressed(key)
 }
 function resetKeyPressed() { keysPressed = []; }
 
+var touchstartCoordinates = {x:undefined,y:undefined};
+function calculateTouchStartCoordinates(ev)
+{
+        var rect = renderer.canvas.getBoundingClientRect();
+        var root = document.documentElement;
+        var touch = ev.touches[0];
+        var x = touch.clientX - rect.left - root.scrollLeft;
+        var y = touch.clientY - rect.top - root.scrollTop;
+        touchstartCoordinates.x = x;
+        touchstartCoordinates.y = y;
+}
+
 function onTouchStart(ev)
 {
     isTouched = true;
 
     for (let i = 0; i < ev.touches.length; i++)
         touchPos[i] = vec2(ev.touches[i].clientX, ev.touches[i].clientY);
+
+    if (ui.stateIndex = DEFENSEGAMEUI)
+    {
+        calculateTouchStartCoordinates(ev);
+        defenseGame.parentAntObject.handleTouchstart();
+        console.log('touchstartCoordinates.x: ' + touchstartCoordinates.x);
+        console.log('touchstartCoordinates.y: ' + touchstartCoordinates.y);
+    }
+    
 }
 
 function onTouchMove(ev)

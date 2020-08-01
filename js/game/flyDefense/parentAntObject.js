@@ -439,16 +439,22 @@ function ParentAntObject()
 				this.smallAntX += this.antVelocity;
 				this.smallAntSwattingColliderBoxX += this.antVelocity;
 				this.mouthColliderBoxX += this.antVelocity;
-				if (Math.abs(this.smallAntX  + this.smallAntWidth/2 - this.currentMovementTargetFromTouchInput.x) < defenseGame.canvas.width*0.005)
+				this.smallAntMidPoint.x = this.smallAntX + this.smallAntWidth/2;
+				this.smallAntMidPoint.y = this.smallAntY + this.smallAntHeight/2;	
+				if (Math.abs(this.smallAntX  + this.smallAntWidth/2 - this.currentMovementTargetFromTouchInput.x) < renderer.canvas.width*0.005)
 				{//prevent jitter
 					this.currentMovementTargetFromTouchInput.x = undefined;
 				}
 
-				if (this.smallAntX + this.smallAntWidth > this.leafX + this.leafWidth * 0.9)//prevent from going off leaf
+				if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
+					this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
 					{
-						this.smallAntX = this.leafX + (this.leafWidth * 0.9) - this.smallAntWidth;
-						this.smallAntSwattingColliderBoxX = this.leafX + (this.leafWidth * 0.9) - this.smallAntWidth;
-						this.mouthColliderBoxX = this.smallAntX + this.smallAntWidth/2;
+						this.smallAntX = this.smallAntPreviousX;
+						this.smallAntY = this.smallAntPreviousY;
+						this.mouthColliderBoxX = this.smallAntPreviousMouthColliderX;
+						this.mouthColliderBoxY = this.smallAntPreviousMouthColliderY;	
+						this.smallAntMidPoint.x = this.smallAntPreviousX + this.smallAntWidth/2;
+						this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;		
 						this.currentMovementTargetFromTouchInput.x = undefined;
 					}
 			}
@@ -457,17 +463,23 @@ function ParentAntObject()
 				this.smallAntX -= this.antVelocity;
 				this.smallAntSwattingColliderBoxX -= this.antVelocity;
 				this.mouthColliderBoxX -= this.antVelocity;
+				this.smallAntMidPoint.x = this.smallAntX + this.smallAntWidth/2;
+				this.smallAntMidPoint.y = this.smallAntY + this.smallAntHeight/2;	
 
-				if (Math.abs(this.smallAntX  + this.smallAntWidth/2 - this.currentMovementTargetFromTouchInput.x) < defenseGame.canvas.width*0.005)
+				if (Math.abs(this.smallAntX  + this.smallAntWidth/2 - this.currentMovementTargetFromTouchInput.x) < renderer.canvas.width*0.005)
 				{
 					this.currentMovementTargetFromTouchInput.x = undefined;
 				}
 
-				if (this.smallAntX < this.leafX)//prevent from going off leaf
+				if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
+					this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
 				{
-					this.smallAntX = this.leafX;
-					this.smallAntSwattingColliderBoxX = this.leafX;
-					this.mouthColliderBoxX = this.smallAntX + this.smallAntWidth/2;
+					this.smallAntX = this.smallAntPreviousX;
+					this.smallAntY = this.smallAntPreviousY;
+					this.mouthColliderBoxX = this.smallAntPreviousMouthColliderX;
+					this.mouthColliderBoxY = this.smallAntPreviousMouthColliderY;	
+					this.smallAntMidPoint.x = this.smallAntPreviousX + this.smallAntWidth/2;
+					this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;		
 					this.currentMovementTargetFromTouchInput.x = undefined;
 					this.currentMovementTargetFromTouchInput.y = undefined;
 				}
@@ -480,16 +492,23 @@ function ParentAntObject()
 			{
 				this.smallAntY += this.antVelocity;
 				this.mouthColliderBoxY += this.antVelocity;
+				this.smallAntMidPoint.x = this.smallAntX + this.smallAntWidth/2;
+				this.smallAntMidPoint.y = this.smallAntY + this.smallAntHeight/2;
 
-				if (Math.abs(this.smallAntY - this.currentMovementTargetFromTouchInput.y) < defenseGame.canvas.width*0.005)
+				if (Math.abs(this.smallAntY - this.currentMovementTargetFromTouchInput.y) < renderer.canvas.width*0.005)
 				{
 					this.currentMovementTargetFromTouchInput.y = undefined;
 				}
 
-				if (this.smallAntY + this.smallAntHeight > this.leafY + this.leafHeight)//prevent from going off leaf
+				if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
+					this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
 				{
-					this.smallAntY = this.leafY + this.leafHeight - this.smallAntHeight;
-					this.mouthColliderBoxY = this.smallAntY*1.025;
+					this.smallAntX = this.smallAntPreviousX;
+					this.smallAntY = this.smallAntPreviousY;
+					this.mouthColliderBoxX = this.smallAntPreviousMouthColliderX;
+					this.mouthColliderBoxY = this.smallAntPreviousMouthColliderY;
+					this.smallAntMidPoint.x = this.smallAntPreviousX + this.smallAntWidth/2;
+					this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;		
 					this.currentMovementTargetFromTouchInput.x = undefined;
 					this.currentMovementTargetFromTouchInput.y = undefined;
 				}
@@ -498,16 +517,23 @@ function ParentAntObject()
 			{
 				this.smallAntY -= this.antVelocity;
 				this.mouthColliderBoxY -= this.antVelocity;
+				this.smallAntMidPoint.x = this.smallAntX + this.smallAntWidth/2;
+				this.smallAntMidPoint.y = this.smallAntY + this.smallAntHeight/2;
 
-				if (Math.abs(this.smallAntY - this.currentMovementTargetFromTouchInput.y) < defenseGame.canvas.width*0.005)
+				if (Math.abs(this.smallAntY - this.currentMovementTargetFromTouchInput.y) < renderer.canvas.width*0.005)
 				{
 					this.currentMovementTargetFromTouchInput.y = undefined;
 				}
 
-				if (this.smallAntY < this.leafY)//prevent from going off leaf
+				if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
+					this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
 				{
-					this.smallAntY = this.leafY;
-					this.mouthColliderBoxY = this.smallAntY*1.025;
+					this.smallAntX = this.smallAntPreviousX;
+					this.smallAntY = this.smallAntPreviousY;
+					this.mouthColliderBoxX = this.smallAntPreviousMouthColliderX;
+					this.mouthColliderBoxY = this.smallAntPreviousMouthColliderY;
+					this.smallAntMidPoint.x = this.smallAntPreviousX + this.smallAntWidth/2;
+					this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;		
 					this.currentMovementTargetFromTouchInput.x = undefined;
 					this.currentMovementTargetFromTouchInput.y = undefined;
 				}
@@ -544,7 +570,7 @@ function ParentAntObject()
 	this.currentMovementTargetFromTouchInput = {x:undefined,y:undefined};
 	this.handleTouchstart = function()
 	{
-		this.currentMovementTargetFromTouchInput = defenseGame.inputManager.touchCoordinates;
+		this.currentMovementTargetFromTouchInput = touchstartCoordinates;
 	}
 
 	this.update = function()
