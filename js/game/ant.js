@@ -50,50 +50,8 @@ class Ant
         if(isTouched && this.noTouchCounter > 10)
         {
             this.noTouchCounter = 0;
-
-            var lastDist = 999999.9;
-            for(let i = 0; i < this.pointsToCutLeaf.length; i++)
-            {
-                var dist = this.pointsToCutLeaf[i].distance(vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY));
-                if(dist < lastDist)
-                {
-                    lastDist = dist;
-
-                    if(dist < this.leafBorderTouchMinimumDistance)
-                    {
-                        this.destinationPoint = this.pointsToCutLeaf[i];
-                        this.pointIndex = i;
-                    }
-                }
-            }
-
-            if(isPointInCircle(vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY), this.cuttingJawControlPos, 45 * pixelSize))
-            {
-                if(this.isCuttingJawLed)
-                {
-                    this.cutTimer = this.cutDuration;
-                    this.isCuttingJawLed = false;
-                    leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_JAWS];
-                }
-                else
-                {
-                    this.cutPointLines = [];
-                    leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_FAIL];
-                }
-            }
-            else if(isPointInCircle(vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY), this.leadingJawControlPos, 45 * pixelSize))
-            {
-                if(!this.isCuttingJawLed)
-                {
-                    this.isCuttingJawLed = true;
-                    leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_JAWS];
-                }
-                else
-                {
-                    this.cutPointLines = [];
-                    leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_FAIL];
-                }
-            }
+            this.leafBorderTouchInput();
+            this.jawButtonsInput();
         }
         else
         {
@@ -118,35 +76,7 @@ class Ant
         }
         else if(this.rotationMode && this.cutTimer > 0)
         {
-            do
-            {
-                if(!this.alternateRotation)
-                    this.bodySprite.transform.rotation -= 0.025/2;
-                else
-                    this.bodySprite.transform.rotation += 0.025/2;
-                
-                moveInDir(this.bodySprite, 1/2);
-                this.updatingJawTransform();
-
-                var pixelData = renderer.getImageData(this.cutPoint.x, this.cutPoint.y, 1, 1).data;
-
-                if(this.cutPointTimer <= 0)
-                {
-                    var newPoint = this.cutPoint.add(vec2(Math.random() * 5, Math.random() * 5));
-                    this.cutPointLines.push(newPoint);
-                    if(this.addVoidAreaWhenPointsConnect(newPoint))
-                    {
-                        this.onLeafCutSuccess();
-                    }
-                    this.cutPointTimer = this.cutPointDelay;
-                }
-                else
-                {
-                    this.cutPointTimer -= deltaTime;
-                }
-            }
-            while ((pixelData[0] == bgRGB[0] && pixelData[1] == bgRGB[1] && pixelData[2] == bgRGB[2])
-            || (this.cutPoint.x < 0 || this.cutPoint.y < 0 || this.cutPoint.x > gameWidth || this.cutPoint.y > gameHeight));
+            this.rotationMechanic(deltaTime);
             this.cutTimer -= deltaTime;
         }
     }
@@ -291,5 +221,90 @@ class Ant
             if(leafPointsRemoved > 0) leafcuttingScore += leafPointsRemoved * 10;
             this.updateLeafPoints = false;
         }
+    }
+
+    leafBorderTouchInput()
+    {
+        var lastDist = 999999.9;
+        for(let i = 0; i < this.pointsToCutLeaf.length; i++)
+        {
+            var dist = this.pointsToCutLeaf[i].distance(vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY));
+            if(dist < lastDist)
+            {
+                lastDist = dist;
+
+                if(dist < this.leafBorderTouchMinimumDistance)
+                {
+                    this.destinationPoint = this.pointsToCutLeaf[i];
+                    this.pointIndex = i;
+                }
+            }
+        }
+    }
+
+    jawButtonsInput()
+    {
+        if(this.rotationMode)
+        {
+            if(isPointInCircle(vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY), this.cuttingJawControlPos, 45 * pixelSize))
+            {
+                if(this.isCuttingJawLed)
+                {
+                    this.cutTimer = this.cutDuration;
+                    this.isCuttingJawLed = false;
+                }
+                else
+                {
+                    this.cutPointLines = [];
+                    leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_FAIL];
+                }
+            }
+            else if(isPointInCircle(vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY), this.leadingJawControlPos, 45 * pixelSize))
+            {
+                if(!this.isCuttingJawLed)
+                {
+                    this.isCuttingJawLed = true;
+                    leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_JAWS];
+                }
+                else
+                {
+                    this.cutPointLines = [];
+                    leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_FAIL];
+                }
+            }
+        }
+    }
+
+    rotationMechanic(deltaTime)
+    {
+        do
+        {
+            if(!this.alternateRotation)
+                this.bodySprite.transform.rotation -= 0.025/2;
+            else
+                this.bodySprite.transform.rotation += 0.025/2;
+            
+            moveInDir(this.bodySprite, 1/2);
+            this.updatingJawTransform();
+
+            var pixelData = renderer.getImageData(this.cutPoint.x, this.cutPoint.y, 1, 1).data;
+
+            if(this.cutPointTimer <= 0)
+            {
+                var newPoint = this.cutPoint.add(vec2(Math.random() * 5, Math.random() * 5));
+                this.cutPointLines.push(newPoint);
+                if(this.addVoidAreaWhenPointsConnect(newPoint))
+                {
+                    this.onLeafCutSuccess();
+                }
+                this.cutPointTimer = this.cutPointDelay;
+            }
+            else
+            {
+                this.cutPointTimer -= deltaTime;
+            }
+        }
+        while ((pixelData[0] == bgRGB[0] && pixelData[1] == bgRGB[1] && pixelData[2] == bgRGB[2])
+        || (this.cutPoint.x < 0 || this.cutPoint.y < 0 || this.cutPoint.x > gameWidth || this.cutPoint.y > gameHeight));
     }
 }
