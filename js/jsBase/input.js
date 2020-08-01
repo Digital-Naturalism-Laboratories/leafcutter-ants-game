@@ -56,8 +56,6 @@ function onTouchStart(ev)
     {
         calculateTouchStartCoordinates(ev);
         defenseGame.parentAntObject.handleTouchstart();
-        console.log('touchstartCoordinates.x: ' + touchstartCoordinates.x);
-        console.log('touchstartCoordinates.y: ' + touchstartCoordinates.y);
     }
     
 }
@@ -132,8 +130,6 @@ function onKeyDown(ev)
 {
     if(keysDown.indexOf(ev.key) == -1)
         keysDown.push(ev.key);
-
-    console.log('keyCode: ' + ev.keyCode);
 
     switch(ev.keyCode)
     {

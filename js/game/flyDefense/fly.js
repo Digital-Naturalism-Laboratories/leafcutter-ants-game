@@ -127,6 +127,7 @@ function Fly(name,status)
 				this.currentTarget.canBeTargeted = false;
 				this.eggHasBeenPlanted = true;
 				defenseGame.eggHasBeenPlanted = true;
+				alert('Ant infected by a parasite. You lose!')
 				if (defenseGame.testFly1.eggHasBeenPlanted && defenseGame.testFly2.eggHasBeenPlanted && defenseGame.testFly3.eggHasBeenPlanted)
 				{
 					//alert('You Lose!');

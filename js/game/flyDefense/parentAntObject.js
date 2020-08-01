@@ -236,7 +236,7 @@ function ParentAntObject()
 		// }
 
 		
-		for (let i = 0; i < 200; i++)
+		for (let i = 0; i < 5; i++)
 		{
 			let potentialFungusPoint = {x:Math.floor(getRandomIntInclusive(this.leafX,this.leafX + this.leafWidth)),
 											  y:Math.floor(getRandomIntInclusive(this.leafY,this.leafY + this.leafHeight))};
@@ -354,15 +354,12 @@ function ParentAntObject()
 			if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
 				this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
 			{
-				console.log('leaf border collision detected');
-				console.log('this.smallAntPreviousX: ' + this.smallAntPreviousX);
 				this.smallAntX = this.smallAntPreviousX;
 				this.smallAntY = this.smallAntPreviousY;
 				this.mouthColliderBoxX = this.smallAntPreviousMouthColliderX;
 				this.mouthColliderBoxY = this.smallAntPreviousMouthColliderY;
 				this.smallAntMidPoint.x = this.smallAntPreviousX + this.smallAntWidth/2;
 				this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;	
-				console.log('this.smallAntX: ' + this.smallAntX);	
 			}
 		}
 		else if (upArrowIsBeingHeld)

@@ -49,6 +49,15 @@ defenseGame.initialize = function()
 		defenseGame.background.update();
 		this.flyManager.updateFlies();
 		this.parentAntObject.update();
+
+		if (this.timeLeft === 0 && this.parentAntObject.arrayOfFungusSpores.length > 0)
+	    {
+	      alert("You're leaf is still fungusy. You Lose!");
+	    }
+	    else if (this.timeLeft === 0 && this.parentAntObject.arrayOfFungusSpores.length === 0)
+	    {
+	      alert("You made it back without being infected and with a clean leaf. You win!");
+	    }
 	}
 
 	this.draw = function()
@@ -59,6 +68,10 @@ defenseGame.initialize = function()
 
 		this.NPCBigAnt1.draw();
 		this.NPCBigAnt2.draw();
+
+		renderer.font = '60px Helvetica';
+      	let timerNumberConvertedToString = defenseGame.timeLeft.toString();
+      	renderer.fillText(timerNumberConvertedToString, renderer.canvas.width * 0.85,renderer.canvas.height * 0.2);
 
 		this.flyManager.drawFlies();
 	}
