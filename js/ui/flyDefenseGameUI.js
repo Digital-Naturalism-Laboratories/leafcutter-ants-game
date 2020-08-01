@@ -19,6 +19,9 @@ defenseGame.initialize = function()
 	this.parentAntObject = new ParentAntObject();
 	this.parentAntObject.initialize();
 
+	this.NPCBigAnt1 = new NPCBigAnt(-renderer.canvas.width*0.33)
+	this.NPCBigAnt2 = new NPCBigAnt(renderer.canvas.width - renderer.canvas.width*0.33);
+
 	// console.log('defense game init called');
 	this.events = function()
 	{
@@ -35,5 +38,8 @@ defenseGame.initialize = function()
 		//console.log('inside draw function of defense game');
 		defenseGame.background.draw();
 		defenseGame.parentAntObject.draw();
+
+		this.NPCBigAnt1.draw();
+		this.NPCBigAnt2.draw();
 	}
 }

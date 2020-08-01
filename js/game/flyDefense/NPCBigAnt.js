@@ -1,12 +1,12 @@
 function NPCBigAnt(x)
 {
-	this.bigAntHeight = defenseGame.canvas.height*0.25;
-	this.bigAntWidth = defenseGame.canvas.width*0.4;
+	this.bigAntHeight = renderer.canvas.height*0.25;
+	this.bigAntWidth = renderer.canvas.width*0.4;
 	this.bigAntX = x;
-	this.bigAntY = defenseGame.canvas.height*0.6;
+	this.bigAntY = renderer.canvas.height*0.6;
 	
 	this.x = this.bigAntX;
-	this.y = defenseGame.canvas.height*0.6;
+	this.y = renderer.canvas.height*0.6;
 
 	this.leafImage = leafImage;
 	this.currentBigAntImage = bigAntNeutralImage;
@@ -39,7 +39,7 @@ function NPCBigAnt(x)
 	
 	this.drawBigAnt = function()
 	{
-		defenseGame.canvasContext.drawImage(this.currentBigAntImage, this.bigAntX,this.bigAntY, this.bigAntWidth,this.bigAntHeight);
+		renderer.drawImage(this.currentBigAntImage, this.bigAntX,this.bigAntY, this.bigAntWidth,this.bigAntHeight);
 	}
 
 	
@@ -50,12 +50,12 @@ function NPCBigAnt(x)
 	
 	this.drawLeaf = function()
 	{
-		defenseGame.canvasContext.drawImage(this.leafImage, this.leafX,this.leafY, this.leafWidth,this.leafHeight);
+		renderer.drawImage(this.leafImage, this.leafX,this.leafY, this.leafWidth,this.leafHeight);
 		if (defenseGame.debugOn === true)
 		{
-			defenseGame.canvasContext.strokeStyle = 'red';
-			defenseGame.canvasContext.lineWidth = 5;
-			defenseGame.canvasContext.strokeRect(this.leafX,this.leafY, this.leafWidth,this.leafHeight);
+			renderer.strokeStyle = 'red';
+			renderer.lineWidth = 5;
+			renderer.strokeRect(this.leafX,this.leafY, this.leafWidth,this.leafHeight);
 		}
 	}
 
@@ -92,79 +92,79 @@ function NPCBigAnt(x)
 	
 	this.drawSmallAnt = function()
 	{
-		if (!defenseGame.inputManager.swatIsBeingHeld)
-		{
-					defenseGame.canvasContext.drawImage(this.currentSmallAntImage, this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
-		}
-		else
-		{
-					defenseGame.parentAntObject.swatInterval.start();
-					defenseGame.canvasContext.drawImage(this.currentSwatImage, this.smallAntX,this.smallAntY, this.smallAntHeight,this.smallAntWidth);
-					if (defenseGame.debugOn)
-					{
-						defenseGame.canvasContext.lineWidth = 5;
-						defenseGame.canvasContext.strokeStyle = 'red';
-						defenseGame.canvasContext.strokeRect(this.smallAntSwattingColliderBoxX,this.smallAntSwattingColliderBoxY, 
-																this.smallAntSwattingColliderBoxWidth,this.smallAntSwattingColliderBoxHeight);
-					}
-		}
+		// if (!defenseGame.inputManager.swatIsBeingHeld)
+		// {
+		// 			defenseGame.canvasContext.drawImage(this.currentSmallAntImage, this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
+		// }
+		// else
+		// {
+		// 			defenseGame.parentAntObject.swatInterval.start();
+		// 			defenseGame.canvasContext.drawImage(this.currentSwatImage, this.smallAntX,this.smallAntY, this.smallAntHeight,this.smallAntWidth);
+		// 			if (defenseGame.debugOn)
+		// 			{
+		// 				defenseGame.canvasContext.lineWidth = 5;
+		// 				defenseGame.canvasContext.strokeStyle = 'red';
+		// 				defenseGame.canvasContext.strokeRect(this.smallAntSwattingColliderBoxX,this.smallAntSwattingColliderBoxY, 
+		// 														this.smallAntSwattingColliderBoxWidth,this.smallAntSwattingColliderBoxHeight);
+		// 			}
+		// }
 	}
 
 
 
-	this.antVelocity = defenseGame.canvas.width*0.0075;
+	this.antVelocity = renderer.canvas.width*0.0075;
 	
 	this.moveSmallAnt = function()
 	{
-		if (defenseGame.inputManager.moveLeftIsBeingHeld)
-		{
-			this.smallAntX -= this.antVelocity;
-			this.smallAntSwattingColliderBoxX -= this.antVelocity;
-			if (this.smallAntX < this.leafX)
-			{
-				this.smallAntX = this.leafX;
-				this.smallAntSwattingColliderBoxX = this.leafX;
-			}
-		}
-		else if (defenseGame.inputManager.moveUpIsBeingHeld)
-		{
-			this.smallAntY -= this.antVelocity;
-			if (this.smallAntY < this.leafY)
-			{
-				this.smallAntY = this.leafY;
-			}
-		}
-		else if (defenseGame.inputManager.moveRightIsBeingHeld)
-		{
-			this.smallAntX += this.antVelocity;
-			this.smallAntSwattingColliderBoxX += this.antVelocity;
-			if (this.smallAntX + this.smallAntWidth > this.leafX + this.leafWidth * 0.9)
-			{
-				this.smallAntX = this.leafX + (this.leafWidth * 0.9) - this.smallAntWidth;
-				this.smallAntSwattingColliderBoxX = this.leafX + (this.leafWidth * 0.9) - this.smallAntWidth;
-			}
-		}
-		else if (defenseGame.inputManager.moveDownIsBeingHeld)
-		{
-			this.smallAntY += this.antVelocity;
-			if (this.smallAntY + this.smallAntHeight > this.leafY + this.leafHeight)
-			{
-				this.smallAntY = this.leafY + this.leafHeight - this.smallAntHeight;
-			}
-		}
-		else if (defenseGame.inputManager.swatIsBeingHeld)
-		{
-			//this.currentSmallAntImage = bigAntHindLegsFacingRightImage;
-			this.smallAntY = this.standingAntY;
+		// if (defenseGame.inputManager.moveLeftIsBeingHeld)
+		// {
+		// 	this.smallAntX -= this.antVelocity;
+		// 	this.smallAntSwattingColliderBoxX -= this.antVelocity;
+		// 	if (this.smallAntX < this.leafX)
+		// 	{
+		// 		this.smallAntX = this.leafX;
+		// 		this.smallAntSwattingColliderBoxX = this.leafX;
+		// 	}
+		// }
+		// else if (defenseGame.inputManager.moveUpIsBeingHeld)
+		// {
+		// 	this.smallAntY -= this.antVelocity;
+		// 	if (this.smallAntY < this.leafY)
+		// 	{
+		// 		this.smallAntY = this.leafY;
+		// 	}
+		// }
+		// else if (defenseGame.inputManager.moveRightIsBeingHeld)
+		// {
+		// 	this.smallAntX += this.antVelocity;
+		// 	this.smallAntSwattingColliderBoxX += this.antVelocity;
+		// 	if (this.smallAntX + this.smallAntWidth > this.leafX + this.leafWidth * 0.9)
+		// 	{
+		// 		this.smallAntX = this.leafX + (this.leafWidth * 0.9) - this.smallAntWidth;
+		// 		this.smallAntSwattingColliderBoxX = this.leafX + (this.leafWidth * 0.9) - this.smallAntWidth;
+		// 	}
+		// }
+		// else if (defenseGame.inputManager.moveDownIsBeingHeld)
+		// {
+		// 	this.smallAntY += this.antVelocity;
+		// 	if (this.smallAntY + this.smallAntHeight > this.leafY + this.leafHeight)
+		// 	{
+		// 		this.smallAntY = this.leafY + this.leafHeight - this.smallAntHeight;
+		// 	}
+		// }
+		// else if (defenseGame.inputManager.swatIsBeingHeld)
+		// {
+		// 	//this.currentSmallAntImage = bigAntHindLegsFacingRightImage;
+		// 	this.smallAntY = this.standingAntY;
 			
-			this.smallAntSwattingColliderBoxX = this.smallAntX;
-			this.smallAntSwattingColliderBoxY = this.standingAntY;
+		// 	this.smallAntSwattingColliderBoxX = this.smallAntX;
+		// 	this.smallAntSwattingColliderBoxY = this.standingAntY;
 
-			if (this.smallAntY < this.standingAntY)
-			{
-				this.smallAntY = this.standingAntY;
-			}
-		}
+		// 	if (this.smallAntY < this.standingAntY)
+		// 	{
+		// 		this.smallAntY = this.standingAntY;
+		// 	}
+		// }
 		// else 
 		// {
 		// 	this.smallAntY = this.leafY;
@@ -181,7 +181,7 @@ function NPCBigAnt(x)
 		// this.bigAntWalkingInterval.start();
 	}
 
-	this.headTarget = new Target('head target', defenseGame.canvas.width * 0.435,defenseGame.canvas.height * 0.575);
-	this.thoraxTarget = new Target('thorax target', defenseGame.canvas.width * 0.35,defenseGame.canvas.height * 0.6);
-	this.abdomenTarget = new Target('abdomen target', defenseGame.canvas.width * 0.285,defenseGame.canvas.height * 0.6);
+	// this.headTarget = new Target('head target', defenseGame.canvas.width * 0.435,defenseGame.canvas.height * 0.575);
+	// this.thoraxTarget = new Target('thorax target', defenseGame.canvas.width * 0.35,defenseGame.canvas.height * 0.6);
+	// this.abdomenTarget = new Target('abdomen target', defenseGame.canvas.width * 0.285,defenseGame.canvas.height * 0.6);
 }
