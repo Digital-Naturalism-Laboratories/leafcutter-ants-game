@@ -3,15 +3,15 @@ function Fly(name,status)
 	this.name = name;
 	this.image = flyFacingLeftImage;
 
-	this.width = defenseGame.canvas.width * 0.1;
-	this.height = defenseGame.canvas.height * 0.05;
+	this.width = renderer.canvas.width * 0.1;
+	this.height = renderer.canvas.height * 0.05;
 
 	this.status = status;// 'leaving', 'swatted'
 	this.eggHasBeenPlanted = false;
 
 	this.assignRandomXYCoordinatesInARange = function()
 	{
-		this.x = getRandomIntInclusive(-this.width*3,defenseGame.canvas.width + this.width*3);
+		this.x = getRandomIntInclusive(-this.width*3,renderer.canvas.width + this.width*3);
 		this.y = getRandomIntInclusive( Math.floor( -5*(this.height) ),Math.floor ( -3*(this.height) ) );
 
 		if (!this.eggHasBeenPlanted)
@@ -31,31 +31,31 @@ function Fly(name,status)
 
 	this.draw = function()
 	{
-		defenseGame.canvasContext.drawImage(this.image, this.x,this.y, this.width,this.height);
-		defenseGame.canvasContext.drawImage(this.eggImage, this.eggX,this.eggY, this.eggWidth,this.eggHeight);
+		renderer.drawImage(this.image, this.x,this.y, this.width,this.height);
+		renderer.drawImage(this.eggImage, this.eggX,this.eggY, this.eggWidth,this.eggHeight);
 
 		//collision box
 		if (defenseGame.debugOn)
 		{
-			defenseGame.canvasContext.lineWidth = 5;
-			defenseGame.canvasContext.strokeStyle = 'red';
-			defenseGame.canvasContext.strokeRect(this.x,this.y, this.width,this.height);		
+			renderer.lineWidth = 5;
+			renderer.strokeStyle = 'red';
+			renderer.strokeRect(this.x,this.y, this.width,this.height);		
 			
-			defenseGame.canvasContext.beginPath(); 
+			renderer.beginPath(); 
 		  // Staring point (10,45)
-		   defenseGame.canvasContext.moveTo(this.x,this.y);
+		   renderer.moveTo(this.x,this.y);
 		  // End point (180,47)
-		  defenseGame.canvasContext.lineTo(this.x,defenseGame.canvas.height);
+		  renderer.lineTo(this.x,renderer.canvas.height);
 		  // Make the line visible
-		  defenseGame.canvasContext.stroke();						
+		  renderer.stroke();						
 		}
 	}
 
 	
 	this.currentTarget = defenseGame.parentAntObject.headTarget;
 
-	this.velocityX = defenseGame.canvas.width * 0.0025;
-	this.velocityY = defenseGame.canvas.width * 0.0025;
+	this.velocityX = renderer.canvas.width * 0.0025;
+	this.velocityY = renderer.canvas.width * 0.0025;
 	this.move = function()
 	{
 		//outline: 1.check if there is room to move closer to the target for both x and y axis
@@ -89,7 +89,7 @@ function Fly(name,status)
 				
 			
 
-			if (Math.abs(this.x - this.currentTarget.x) < defenseGame.canvas.width*0.005)
+			if (Math.abs(this.x - this.currentTarget.x) < renderer.canvas.width*0.005)
 			{
 				this.x = this.currentTarget.x;//stop jittering when x coordinate is very close to targets x
 				if (!this.eggHasBeenPlanted)
@@ -199,6 +199,25 @@ function FlyManager()
 		{
 			this.arrayOfFlies[this.currentFlyIndex].status = 'planting';
 			// this.arrayOfFlies[this.currentFlyIndex].assignRandomXYCoordinatesInARange();
+		}
+	}
+
+	this.updateFlies = function()
+	{
+		for (let i = 0; i < this.arrayOfFlies.length; i++)
+		{
+			if (this.arrayOfFlies[i].status !== undefined)
+			{
+				this.arrayOfFlies[i].move();
+			}
+		}
+	}
+
+	this.drawFlies = function()
+	{
+		for (let i = 0; i < this.arrayOfFlies.length; i++)
+		{
+			this.arrayOfFlies[i].draw();
 		}
 	}
 }
