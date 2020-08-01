@@ -36,7 +36,8 @@ function init()
     canvasStartX = (window.innerWidth/2) - (gameWidth/2);
     canvas.style.left = canvasStartX.toString() + "px";
 
-    
+    bgRGB = [58, 173, 231];
+    bgHEX = "#3aade7";
     
     //Custom Initialization START
     uiInit();

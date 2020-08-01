@@ -145,7 +145,8 @@ class Ant
                     this.cutPointTimer -= deltaTime;
                 }
             }
-            while (pixelData[0] < 10 && pixelData[1] < 10 && pixelData[2] < 10);
+            while ((pixelData[0] == bgRGB[0] && pixelData[1] == bgRGB[1] && pixelData[2] == bgRGB[2])
+            || (this.cutPoint.x < 0 || this.cutPoint.y < 0 || this.cutPoint.x > gameWidth || this.cutPoint.y > gameHeight));
             this.cutTimer -= deltaTime;
         }
     }
@@ -153,9 +154,9 @@ class Ant
     draw(deltatime)
     {
         this.drawVoidAreas();
-        this.getLeafPoints(pixelSize*12);
+        this.getLeafPoints(pixelSize*16);
         for(let i = 0; i < this.cutPointLines.length-1; i++)
-            drawLine(renderer, this.cutPointLines[i], this.cutPointLines[i+1], "black");
+            drawLine(renderer, this.cutPointLines[i], this.cutPointLines[i+1], bgHEX);
         this.bodySprite.drawScRot();
         this.leadingJawSprite.drawScRot();
         this.cuttingJawSprite.drawScRot();
@@ -195,7 +196,7 @@ class Ant
     {
         for(let i = 0; i < this.voidAreas.length; i++)
         {
-            renderer.fillStyle = "black";
+            renderer.fillStyle = "#3aade7";
             renderer.beginPath();
             if(this.voidAreas[i].length > 1)
             {
@@ -267,15 +268,15 @@ class Ant
                     var upPixel = renderer.getImageData(x, y-borderPixelComparionDistance, 1, 1).data;
                     var downPixel = renderer.getImageData(x, y+borderPixelComparionDistance, 1, 1).data;
 
-                    //if the pixel is not black
-                    if(thisPixel[0] > 10 || thisPixel[1] > 10 || thisPixel[2] > 10)
+                    //if the pixel is not sky blue
+                    if(thisPixel[0] != bgRGB[0] || thisPixel[1] != bgRGB[1] || thisPixel[2] != bgRGB[2])
                     {
-                        //...and any of the surrounding pixels is black
+                        //...and any of the surrounding pixels is sky blue
                         if(
-                            (leftPixel[0] < 10 && leftPixel[1] < 10 && leftPixel[2] < 10)
-                            || (rightPixel[0] < 10 && rightPixel[1] < 10 && rightPixel[2] < 10)
-                            || (upPixel[0] < 10 && upPixel[1] < 10 && upPixel[2] < 10)
-                            || (downPixel[0] < 10 && downPixel[1] < 10 && downPixel[2] < 10)
+                            (leftPixel[0] == bgRGB[0] && leftPixel[1] == bgRGB[1] && leftPixel[2] == bgRGB[2])
+                            || (rightPixel[0] == bgRGB[0] && rightPixel[1] == bgRGB[1] && rightPixel[2] == bgRGB[2])
+                            || (upPixel[0] == bgRGB[0] && upPixel[1] == bgRGB[1] && upPixel[2] == bgRGB[2])
+                            || (downPixel[0] == bgRGB[0] && downPixel[1] == bgRGB[1] && downPixel[2] == bgRGB[2])
                         )
                         {
                             //then, it is a border pixel.
