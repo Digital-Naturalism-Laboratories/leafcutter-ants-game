@@ -48,6 +48,7 @@ defenseGame.initialize = function()
 	{
 		defenseGame.background.update();
 		this.flyManager.updateFlies();
+		this.parentAntObject.update();
 	}
 
 	this.draw = function()

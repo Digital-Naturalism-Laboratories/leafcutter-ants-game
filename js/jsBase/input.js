@@ -111,16 +111,29 @@ function onKeyDown(ev)
 {
     if(keysDown.indexOf(ev.key) == -1)
         keysDown.push(ev.key);
-}
 
-function onKeyPress(ev)
-{
-    //keysPressed is a custom event
-    /*if(keysPressed.indexOf(ev.key) == -1)
-        keysPressed.push(ev.key);*/
-        switch(ev.keyCode)
-      {
-        case 100://d
+    console.log('keyCode: ' + ev.keyCode);
+
+    switch(ev.keyCode)
+    {
+
+        case 37://left arrow
+        leftArrowIsBeingHeld = true;
+        break;
+
+        case 38://up arrow
+        upArrowIsBeingHeld = true;
+        break;
+
+        case 39://right arrow
+        rightArrowIsBeingHeld = true;
+        break;
+
+        case 40://down arrow
+        downArrowIsBeingHeld = true;
+        break;
+
+        case 68://d
         console.log(defenseGame.debugOn);
         if (defenseGame.debugOn === false)
         {
@@ -133,13 +146,52 @@ function onKeyPress(ev)
             console.log('debug off');
         }
         break;
+    }
+    
+}
+
+leftArrowIsBeingHeld = false;
+upArrowIsBeingHeld = false;
+rightArrowIsBeingHeld = false;
+downArrowIsBeingHeld = false;
+
+function onKeyPress(ev)
+{
+
+    //keysPressed is a custom event
+    /*if(keysPressed.indexOf(ev.key) == -1)
+        keysPressed.push(ev.key);*/
+        switch(ev.keyCode)
+      {
+        
       }
+      
 }
 
 function onKeyUp(ev)
 {
     var i = keysDown.indexOf(ev.key);
     if(i != -1) keysDown.splice(i, 1);
+
+    switch(ev.keyCode)
+    {
+        case 37://left arrow
+        leftArrowIsBeingHeld = false;
+        break;
+
+        case 38://up arrow
+        upArrowIsBeingHeld = false;
+        break;
+
+        case 39://right arrow
+        rightArrowIsBeingHeld = false;
+        break;
+
+        case 40://down arrow
+        downArrowIsBeingHeld = false;
+        break;
+    }
+    
 }
 
 function inputSetup()

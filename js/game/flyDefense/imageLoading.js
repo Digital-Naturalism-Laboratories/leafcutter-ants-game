@@ -39,10 +39,10 @@ let fungusImage = document.createElement('img');
 
 let numberOfDefenseGameImagesToLoad = undefined;
 let arrayOfDefenseGameImagesToLoad = [];
-console.log('anything from image loading');
+
 function loadDefenseGameImages()
 {
-	console.log('loading images function called');
+	
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: splashScreenImage, theFile: 'images/flyDefense/splashScreen.png'});
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: fungusLossImage, theFile: 'images/flyDefense/fungusLossText.png'});
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: eggPlantedLossImage, theFile: 'images/flyDefense/eggPlantedText.png'});
@@ -108,7 +108,7 @@ function countLoadedDefenseGameImageAndLaunchIfReady(fileName, imageToLoadIndex)
   numberOfDefenseGameImagesToLoad--;
   if (numberOfDefenseGameImagesToLoad === 0)
   {
-  	console.log('images loaded');
+  	
   	loadingImages = false;
   	splashScreenShouldBeShowing = true;
   	// setTimeout(function()

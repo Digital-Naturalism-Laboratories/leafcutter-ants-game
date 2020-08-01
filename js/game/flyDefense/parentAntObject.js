@@ -235,11 +235,7 @@ function ParentAntObject()
 		// 	leafcutterGame.strokeRect(this.fungusTangleX,this.fungusTangleY, this.fungusTangleWidth,this.fungusTangleHeight);
 		// }
 
-		console.log('this.leafX: ' + this.leafX);
-		console.log('this.leafWidth: ' + this.leafWidth);
-		console.log('this.leafY: ' + this.leafY);
-		console.log('this.leafHeight: ' + this.leafHeight);
-		console.log('this.leafPolygonFungusBorderLineSegments: ' + this.leafPolygonFungusBorderLineSegments);
+		
 		for (let i = 0; i < 200; i++)
 		{
 			let potentialFungusPoint = {x:Math.floor(getRandomIntInclusive(this.leafX,this.leafX + this.leafWidth)),
@@ -284,7 +280,7 @@ function ParentAntObject()
 	// this.arrayOfSmallAntWalkingLeftImages = [bigAntFrontRightForwardFlippedImage,bigAntNeutralFlippedImage,bigAntFrontLeftForwardFlippedImage];
 	this.smallAntX = this.leafX + this.leafWidth/2 - this.smallAntWidth/2;
 	this.smallAntY = this.leafY + this.leafHeight/2 - this.smallAntHeight/2;
-
+	this.smallAntMidPoint = {x:this.smallAntX + this.smallAntWidth/2,y:this.smallAntY + this.smallAntHeight/2};
 	// this.standingAntY = (this.smallAntY + this.smallAntHeight) - this.smallAntWidth;
 
 	// this.smallAntSwattingColliderBoxX = this.smallAntX;
@@ -323,6 +319,8 @@ function ParentAntObject()
 						renderer.lineWidth = 5;
 						renderer.strokeStyle = 'red';
 						renderer.strokeRect(this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
+
+						renderer.strokeRect(this.smallAntMidPoint.x - 5,this.smallAntMidPoint.y - 5, 5,5);
 					}
 		//}
 	}
@@ -330,68 +328,108 @@ function ParentAntObject()
 
 
 	this.antVelocity = renderer.canvas.width*0.0075;
+
+	this.smallAntPreviousX = this.smallAntX;
+	this.smallAntPreviousY = this.smallAntY;
+	
+	this.smallAntPreviousMouthColliderX = this.mouthColliderBoxX;
+	this.smallAntPreviousMouthColliderY = this.mouthColliderBoxY;
 	
 	this.moveSmallAnt = function()
 	{
+		this.smallAntPreviousX = this.smallAntX;
+		this.smallAntPreviousY = this.smallAntY;
+		
+		this.smallAntPreviousMouthColliderX = this.mouthColliderBoxX;
+		this.smallAntPreviousMouthColliderY = this.mouthColliderBoxY;
 		//keyboard input
-		if (defenseGame.inputManager.moveLeftIsBeingHeld)
+		if (leftArrowIsBeingHeld)
 		{
 			this.smallAntX -= this.antVelocity;
 			this.smallAntSwattingColliderBoxX -= this.antVelocity;
 			this.mouthColliderBoxX -= this.antVelocity;
-			if (this.smallAntX < this.leafX)
+			this.smallAntMidPoint.x = this.smallAntX + this.smallAntWidth/2;
+			this.smallAntMidPoint.y = this.smallAntY + this.smallAntHeight/2;	
+
+			if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
+				this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
 			{
-				this.smallAntX = this.leafX;
-				this.smallAntSwattingColliderBoxX = this.leafX;
-				this.mouthColliderBoxX = this.smallAntX + this.smallAntWidth/2;
-	
+				console.log('leaf border collision detected');
+				console.log('this.smallAntPreviousX: ' + this.smallAntPreviousX);
+				this.smallAntX = this.smallAntPreviousX;
+				this.smallAntY = this.smallAntPreviousY;
+				this.mouthColliderBoxX = this.smallAntPreviousMouthColliderX;
+				this.mouthColliderBoxY = this.smallAntPreviousMouthColliderY;
+				this.smallAntMidPoint.x = this.smallAntPreviousX + this.smallAntWidth/2;
+				this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;	
+				console.log('this.smallAntX: ' + this.smallAntX);	
 			}
 		}
-		else if (defenseGame.inputManager.moveUpIsBeingHeld)
+		else if (upArrowIsBeingHeld)
 		{
 			this.smallAntY -= this.antVelocity;
 			this.mouthColliderBoxY -= this.antVelocity;
-			if (this.smallAntY < this.leafY)
+			this.smallAntMidPoint.x = this.smallAntX + this.smallAntWidth/2;
+			this.smallAntMidPoint.y = this.smallAntY + this.smallAntHeight/2;		
+			if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
+				this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
 			{
-				this.smallAntY = this.leafY;
-				this.mouthColliderBoxY = this.smallAntY*1.025;
+				this.smallAntX = this.smallAntPreviousX;
+				this.smallAntY = this.smallAntPreviousY;
+				this.mouthColliderBoxX = this.smallAntPreviousMouthColliderX;
+				this.mouthColliderBoxY = this.smallAntPreviousMouthColliderY;	
+				this.smallAntMidPoint.x = this.smallAntPreviousX + this.smallAntWidth/2;
+				this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;		
 			}
 		}
-		else if (defenseGame.inputManager.moveRightIsBeingHeld)
+		else if (rightArrowIsBeingHeld)
 		{
 			this.smallAntX += this.antVelocity;
 			this.smallAntSwattingColliderBoxX += this.antVelocity;
 			this.mouthColliderBoxX += this.antVelocity;
-			if (this.smallAntX + this.smallAntWidth > this.leafX + this.leafWidth * 0.9)
+			this.smallAntMidPoint.x = this.smallAntX + this.smallAntWidth/2;
+			this.smallAntMidPoint.y = this.smallAntY + this.smallAntHeight/2;		
+			if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
+				this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
 			{
-				this.smallAntX = this.leafX + (this.leafWidth * 0.9) - this.smallAntWidth;
-				this.smallAntSwattingColliderBoxX = this.leafX + (this.leafWidth * 0.9) - this.smallAntWidth;
-				this.mouthColliderBoxX = this.smallAntX + this.smallAntWidth/2;
+				this.smallAntX = this.smallAntPreviousX;
+				this.smallAntY = this.smallAntPreviousY;
+				this.mouthColliderBoxX = this.smallAntPreviousMouthColliderX;
+				this.mouthColliderBoxY = this.smallAntPreviousMouthColliderY;	
+				this.smallAntMidPoint.x = this.smallAntPreviousX + this.smallAntWidth/2;
+				this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;		
 			}
 		}
-		else if (defenseGame.inputManager.moveDownIsBeingHeld)
+		else if (downArrowIsBeingHeld)
 		{
 			this.smallAntY += this.antVelocity;
 			this.mouthColliderBoxY += this.antVelocity;
-			if (this.smallAntY + this.smallAntHeight > this.leafY + this.leafHeight)
+			this.smallAntMidPoint.x = this.smallAntX + this.smallAntWidth/2;
+			this.smallAntMidPoint.y = this.smallAntY + this.smallAntHeight/2;		
+			if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
+				this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
 			{
-				this.smallAntY = this.leafY + this.leafHeight - this.smallAntHeight;
-				this.mouthColliderBoxY = this.smallAntY*1.025;
+				this.smallAntX = this.smallAntPreviousX;
+				this.smallAntY = this.smallAntPreviousY;
+				this.mouthColliderBoxX = this.smallAntPreviousMouthColliderX;
+				this.mouthColliderBoxY = this.smallAntPreviousMouthColliderY;	
+				this.smallAntMidPoint.x = this.smallAntPreviousX + this.smallAntWidth/2;
+				this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;		
 			}
 		}
-		else if (defenseGame.inputManager.swatIsBeingHeld)
-		{
-			//this.currentSmallAntImage = bigAntHindLegsFacingRightImage;
-			this.smallAntY = this.standingAntY;
+		// else if (swatIsBeingHeld)
+		// {
+		// 	//this.currentSmallAntImage = bigAntHindLegsFacingRightImage;
+		// 	this.smallAntY = this.standingAntY;
 			
-			this.smallAntSwattingColliderBoxX = this.smallAntX;
-			this.smallAntSwattingColliderBoxY = this.standingAntY;
+		// 	this.smallAntSwattingColliderBoxX = this.smallAntX;
+		// 	this.smallAntSwattingColliderBoxY = this.standingAntY;
 
-			if (this.smallAntY < this.standingAntY)
-			{
-				this.smallAntY = this.standingAntY;
-			}
-		}
+		// 	if (this.smallAntY < this.standingAntY)
+		// 	{
+		// 		this.smallAntY = this.standingAntY;
+		// 	}
+		// }
 		
 		//touch input
 		if (this.currentMovementTargetFromTouchInput.x !== undefined)//left or right movement
@@ -487,8 +525,7 @@ function ParentAntObject()
 
 	this.detectFungusSporeCollisions = function()
 	{
-		if (defenseGame.inputManager.moveLeftIsBeingHeld || defenseGame.inputManager.moveRightIsBeingHeld || 
-			defenseGame.inputManager.moveDownIsBeingHeld || defenseGame.inputManager.moveUpIsBeingHeld ||
+		if (leftArrowIsBeingHeld || rightArrowIsBeingHeld || downArrowIsBeingHeld || upArrowIsBeingHeld ||
 			this.currentMovementTargetFromTouchInput.x !== undefined || this.currentMovementTargetFromTouchInput.y !== undefined)
 		{
 			for (let i = 0; i < this.arrayOfFungusSpores.length; i++)
