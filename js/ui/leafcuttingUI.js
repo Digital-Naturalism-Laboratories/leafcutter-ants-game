@@ -6,7 +6,7 @@ var leafcuttingUI = [];
 var leaf;
 var ant;
 
-var leafcuttingFontSize = 20;
+var leafcuttingFontSize;
 
 const LEAFCUTTINGHINT_START = 0;
 const LEAFCUTTINGHINT_JAWS = 1;
@@ -29,6 +29,8 @@ var leafcuttingTimeLeft = 180000;
 
 function setupLeafcuttingUI()
 {
+    leafcuttingFontSize = 20 * pixelSize;
+
     leaf = new Leaf();
     ant = new Ant();
 
@@ -43,8 +45,8 @@ function setupLeafcuttingUI()
         leafcuttingFontSize.toString() + "px " + uiContext.fontFamily, "black", -1);
     gameplayLabels.push(timeLabel);
 
-    leafcuttingUI.push(new FlexGroup(tr(vec2(20, 20), vec2(window.innerWidth, 120)),
-        new SubState(tr(), gameplayLabels),false, vec2(0, 20), vec2(1, 4), true));
+    leafcuttingUI.push(new FlexGroup(tr(vec2(20*pixelSize, 20*pixelSize), vec2(window.innerWidth, 120*pixelSize)),
+        new SubState(tr(), gameplayLabels),false, vec2(0, 20*pixelSize), vec2(1, 4), true));
 }
 
 function leafcuttingUICustomDraw(deltaTime)

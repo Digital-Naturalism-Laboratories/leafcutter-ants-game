@@ -22,7 +22,7 @@ function init()
     }
     else if(gameWidth + (gameHeight/4) < gameHeight)
     {
-        sizeFactor = gameWidth;
+        sizeFactor = gameWidth - (gameWidth/4);
         gameHeight = gameWidth - (gameWidth/4);
     }
 

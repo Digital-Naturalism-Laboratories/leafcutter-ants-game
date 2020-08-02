@@ -3,10 +3,12 @@ const MAINMENUUI = 0;
 
 var mainMenuUI = [];
 
-var mainMenuFontSize = 32;
+var mainMenuFontSize;
 
 function setupMainMenuUI()
 {
+    mainMenuFontSize = 32 * pixelSize;
+
     menuButtons = [];
     // TextButton           constructor(transform, label, button, tooltip)
     // Transform            function tr(pos, sc, rot, orig) { return new Transform(pos, sc, rot, orig); }
@@ -42,10 +44,10 @@ function setupMainMenuUI()
 //function tr(pos, sc, rot, orig) { return new Transform(pos, sc, rot, orig); }
 //SubState constructor(transform, uiObjects)
     mainMenuUI.push(
-        new FlexGroup(tr(vec2(50, 25), vec2(gameWidth, gameHeight)),
+        new FlexGroup(tr(vec2(50 * pixelSize, 25 * pixelSize), vec2(gameWidth, gameHeight)),
         new SubState(tr(), menuButtons),
         false, 
-        vec2(50, 20), 
+        vec2(50 * pixelSize, 20 * pixelSize), 
         vec2(1, 4), 
         true));
 }
