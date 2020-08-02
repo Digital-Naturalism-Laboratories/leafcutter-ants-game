@@ -10,6 +10,8 @@ let groundBackground2Image = document.createElement("img");
 
 let pheremoneStripImage1 = document.createElement("img");
 let pheremoneStripImage2 = document.createElement("img");
+let pheremoneGapFillImage = document.createElement("img");
+
 
 let fungusNestImage = document.createElement("img");
 
@@ -56,6 +58,7 @@ function loadDefenseGameImages()
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: groundBackground2Image, theFile: 'images/flyDefense/Official Placeholder Art/GroundCrossSectionUpdate2.png'});
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: pheremoneStripImage1, theFile: 'images/flyDefense/Official Placeholder Art/pheremoneStrip1.png'});
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: pheremoneStripImage2, theFile: 'images/flyDefense/Official Placeholder Art/pheremoneStrip2.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: pheremoneGapFillImage, theFile: 'images/flyDefense/Official Placeholder Art/pheremoneGapFill.png'});
 
 
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: fungusNestImage, theFile: 'images/flyDefense/Official Placeholder Art/fungusNest.png'});

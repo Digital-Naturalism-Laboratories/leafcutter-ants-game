@@ -56,6 +56,7 @@ function onTouchStart(ev)
     {
         calculateTouchStartCoordinates(ev);
         defenseGame.parentAntObject.handleTouchstart();
+        defenseGame.background.handleTouchStart();
     }
     
 }

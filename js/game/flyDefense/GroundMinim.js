@@ -1,10 +1,10 @@
-function GroundMinim()
+function GroundMinim(x)
 {
 	this.width = renderer.canvas.width*0.15;
 	this.height = renderer.canvas.height*0.1;
 
-	this.x = getRandomIntInclusive(0,renderer.canvas.width - this.width);
-	this.y = renderer.canvas.height*0.875;
+	this.x = x;
+	this.y = renderer.canvas.height*0.88;
 
 	this.currentImage = bigAntNeutralImage;
 
