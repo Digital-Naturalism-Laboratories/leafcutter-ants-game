@@ -50,8 +50,8 @@ function loadDefenseGameImages()
 
 
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: skyBackgroundImage, theFile: 'images/flyDefense/Official Placeholder Art/skyBackgroundImage.png'});
-	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: groundBackgroundImage, theFile: 'images/flyDefense/Official Placeholder Art/groundCrossSection.png'});
-	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: groundBackground2Image, theFile: 'images/flyDefense/Official Placeholder Art/groundCrossSection2.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: groundBackgroundImage, theFile: 'images/flyDefense/Official Placeholder Art/GroundCrossSectionUpdate1.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: groundBackground2Image, theFile: 'images/flyDefense/Official Placeholder Art/GroundCrossSectionUpdate2.png'});
 
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: fungusNestImage, theFile: 'images/flyDefense/Official Placeholder Art/fungusNest.png'});
 

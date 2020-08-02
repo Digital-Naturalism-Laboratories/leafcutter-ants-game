@@ -1,13 +1,13 @@
 function Background()
 {
-	this.skyImage = undefined;
+	
 	this.groundImage1 = undefined;
 	this.groundImage2 = undefined;
 	this.fungusNestImage = undefined;
 
 	this.initialize = function()
 	{
-		this.skyImage = skyBackgroundImage;
+		
 		this.groundImage1 = groundBackgroundImage;
 		this.groundImage2 = groundBackground2Image;
 
@@ -59,9 +59,9 @@ function Background()
 	this.draw = function()
 	{
 		
-		renderer.drawImage(this.skyImage, 0,0, gameWidth,gameHeight);
-		renderer.drawImage(this.groundImage1, this.groundImage1xCoordinate,renderer.canvas.height*0.2, renderer.canvas.width*1.01,renderer.canvas.height);
-		renderer.drawImage(this.groundImage2, this.groundImage2xCoordinate,renderer.canvas.height*0.2, renderer.canvas.width*1.01,renderer.canvas.height);
+		
+		renderer.drawImage(this.groundImage1, this.groundImage1xCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
+		renderer.drawImage(this.groundImage2, this.groundImage2xCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
 	
 		// defenseGame.canvasContext.drawImage(this.leftArrowButtonImage, 0,0, defenseGame.canvas.width,defenseGame.canvas.height);
 		// defenseGame.canvasContext.drawImage(this.rightArrowButtonImage, 0,0, defenseGame.canvas.width,defenseGame.canvas.height);
