@@ -14,17 +14,17 @@ var colonyTiles = [];
 
 var colonyGrid = [  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 3, 2, 2, 2, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 3, 2, 2, 2, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0, 0, 0, 3, 2, 2, 2, 2, 3, 0, 0, 0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 3, 2, 2, 2, 2, 0, 0, 0,
-                    0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 ];
@@ -44,37 +44,37 @@ var population = 0;
 function setupColonyGameUI() {
 
     loadImages();
-    queen = new Queen(400, 220);
+    queen = new Queen(400 * pixelSize, 220 * pixelSize);
 }
 
 function colonyGameUICustomDraw(deltaTime) {
 
-    renderer.drawImage(groundBG, 0, 0, gameWidth, gameHeight - 120);
+    renderer.drawImage(groundBG, 0, 0, gameWidth, gameHeight - (120 * pixelSize));
 
     drawColonyTiles();
-    renderer.drawImage(fungusNest, gameWidth * 0.66, gameHeight * 0.35);
+    renderer.drawImage(fungusNest, gameWidth * 0.75, gameHeight * 0.4, gameWidth / 5, gameHeight / 5);
 
-    renderer.drawImage(worker_right, colonyTiles[COLONY_TUNNEL_VERT].width * 10, colonyTiles[COLONY_TUNNEL_VERT].height * 7 + 10, worker_right.width / 2, worker_right.height / 2);
+    renderer.drawImage(worker_right, (colonyTiles[COLONY_TUNNEL_VERT].width * 10) * pixelSize, (colonyTiles[COLONY_TUNNEL_VERT].height * 7 + 10) * pixelSize, (worker_right.width / 2) * pixelSize, (worker_right.height / 2) * pixelSize);
 
     renderer.fillStyle = 'black';
-    renderer.fillRect(0, gameHeight - 120, gameWidth, 120);
+    renderer.fillRect(0, gameHeight - (120 * pixelSize), gameWidth, 120 * pixelSize);
 
     renderer.fillStyle = "white";
-    renderer.font = "34px Arial";
+    renderer.font = (24 * pixelSize).toString() + "px Arial";
 
-    renderer.fillText("Fungus: " + fungusMass + "g", 50, gameHeight - 85);
-    renderer.fillText("Incoming Leaves: " + incomingLeaves + "g", 50, gameHeight - 50);
-    renderer.fillText("Workers: " + workerCount, 50, gameHeight - 15);
+    renderer.fillText("Fungus: " + fungusMass + "g", 50 * pixelSize, gameHeight - (85 * pixelSize));
+    renderer.fillText("Incoming Leaves: " + incomingLeaves + "g", 50 * pixelSize, gameHeight - (50 * pixelSize));
+    renderer.fillText("Workers: " + workerCount, 50 * pixelSize, gameHeight - (15 * pixelSize));
 
-    renderer.fillText("Population: " + population, gameWidth - 300, gameHeight - 85);
-    renderer.fillText("Eggs: " + eggCount, gameWidth - 300, gameHeight - 50);
-    renderer.fillText("Larvae: " + larvaeCount, gameWidth - 300, gameHeight - 15);
+    renderer.fillText("Population: " + population, gameWidth - (300 * pixelSize), gameHeight - (85 * pixelSize));
+    renderer.fillText("Eggs: " + eggCount, gameWidth - (300 * pixelSize), gameHeight - (50 * pixelSize));
+    renderer.fillText("Larvae: " + larvaeCount, gameWidth - (300 * pixelSize), gameHeight - (15 * pixelSize));
 
 }
 
 function colonyGameUICustomEvents(deltaTime) {
     if (isTouched) {
-        if (getDistBtwVec2(vec2(colonyTiles[COLONY_TUNNEL_VERT].width * 10, colonyTiles[COLONY_TUNNEL_VERT].height * 7 + 10), vec2(touchPos[0].x - canvas.getBoundingClientRect().left, touchPos[0].y - canvas.getBoundingClientRect().top)) < 40) {
+        if (getDistBtwVec2(vec2((colonyTiles[COLONY_TUNNEL_VERT].width * 10) * pixelSize, (colonyTiles[COLONY_TUNNEL_VERT].height * 7 + 10) * pixelSize), vec2(touchPos[0].x - canvas.getBoundingClientRect().left, touchPos[0].y - canvas.getBoundingClientRect().top)) < 40 * pixelSize) {
             ui.stateIndex = LEAFCUTTINGUI;
         }
     }
@@ -86,8 +86,8 @@ function colonyTileToIndex(tileCol, tileRow) {
 }
 
 function getColonyTileAtPixelCoord(pixelX, pixelY) {
-    var tileCol = pixelX / COLONY_W;
-    var tileRow = pixelY / COLONY_H;
+    var tileCol = (pixelX / COLONY_W) * pixelSize;
+    var tileRow = (pixelY / COLONY_H) * pixelSize;
 
     tileCol = Math.floor(tileCol);
     tileRow = Math.floor(tileRow);
@@ -115,15 +115,15 @@ function drawColonyTiles() {
             var colonyTypeHere = colonyGrid[colonyIndex];
 
             if (colonyGrid[colonyIndex] != COLONY_WALL) {
-                renderer.drawImage(colonyTiles[colonyTypeHere], colonyLeftEdgeX, colonyTopEdgeY);
+                renderer.drawImage(colonyTiles[colonyTypeHere], colonyLeftEdgeX, colonyTopEdgeY, COLONY_W * pixelSize, COLONY_H * pixelSize);
             }
 
             colonyIndex++;
-            colonyLeftEdgeX += COLONY_W;
+            colonyLeftEdgeX += COLONY_W * pixelSize;
 
         }
 
-        colonyTopEdgeY += COLONY_H;
+        colonyTopEdgeY += COLONY_H * pixelSize;
 
     }
 }
