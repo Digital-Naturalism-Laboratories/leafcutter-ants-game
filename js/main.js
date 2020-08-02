@@ -52,7 +52,7 @@ function draw(deltaTime)
 {
     renderer.clearRect(0, 0, canvas.width, canvas.height);
     renderer.fillStyle = "#000000";
-    drawRect(renderer, vec2(0, 0), vec2(gameWidth, gameHeight), true, "#000000");
+    drawRect(renderer, vec2(0, 0), vec2(gameWidth, gameHeight), true, bgHEX);
     switch(ui.stateIndex)
     {
         case MAINMENUUI: mainMenuUICustomDraw(deltaTime); break;

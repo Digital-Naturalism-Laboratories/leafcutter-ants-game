@@ -15,26 +15,26 @@ function setupMainMenuUI()
     // Button               constructor(transform, btnColor, selectColor, hoverColor, disabledColor)
 
     leafcuttingBtn = new TextButton(tr(vec2(), btnSize),
-        new Label(tr(), "  LEAFCUTTING GAME", mainMenuFontSize.toString() + "px " + uiContext.fontFamily, "black", 0),
-        new Button(tr(), "#ffffffff", "#99ff99ff", "#bbffbbff"), 
+        new Label(tr(), "  LEAFCUTTING GAME", mainMenuFontSize.toString() + "px " + uiContext.fontFamily, "white", 0),
+        new Button(tr(), "#222222ff", "#113311ff", "#224422ff"), 
         "");
     menuButtons.push(leafcuttingBtn);
 
     colonyBtn = new TextButton(tr(vec2(), btnSize),
-        new Label(tr(), "  COLONY GAME", mainMenuFontSize.toString() + "px " + uiContext.fontFamily, "black", 0),
-        new Button(tr(), "#ffffffff", "#99ff99ff", "#bbffbbff"), 
+        new Label(tr(), "  COLONY GAME", mainMenuFontSize.toString() + "px " + uiContext.fontFamily, "white", 0),
+        new Button(tr(), "#222222ff", "#113311ff", "#224422ff"), 
         "");
     menuButtons.push(colonyBtn);
 
     flightBtn = new TextButton(tr(vec2(), btnSize),
-        new Label(tr(), "  FLIGHT GAME", mainMenuFontSize.toString() + "px " + uiContext.fontFamily, "black", 0),
-        new Button(tr(), "#ffffffff", "#99ff99ff", "#bbffbbff"), 
+        new Label(tr(), "  FLIGHT GAME", mainMenuFontSize.toString() + "px " + uiContext.fontFamily, "white", 0),
+        new Button(tr(), "#222222ff", "#113311ff", "#224422ff"), 
         "");
     menuButtons.push(flightBtn);
 
     defenseBtn = new TextButton(tr(vec2(), btnSize),
-        new Label(tr(), "  FLY DEFENSE GAME", mainMenuFontSize.toString() + "px " + uiContext.fontFamily, "black", 0),
-        new Button(tr(), "#ffffffff", "#99ff99ff", "#bbffbbff"), 
+        new Label(tr(), "  FLY DEFENSE GAME", mainMenuFontSize.toString() + "px " + uiContext.fontFamily, "white", 0),
+        new Button(tr(), "#222222ff", "#113311ff", "#224422ff"), 
         "");
     menuButtons.push(defenseBtn);
 

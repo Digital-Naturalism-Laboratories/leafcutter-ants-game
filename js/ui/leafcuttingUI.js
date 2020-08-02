@@ -34,13 +34,13 @@ function setupLeafcuttingUI()
 
     gameplayLabels = [];
     gameHintLabel = new Label(tr(), leafcuttingHint,
-        leafcuttingFontSize.toString() + "px " + uiContext.fontFamily, undefined, -1);
+        leafcuttingFontSize.toString() + "px " + uiContext.fontFamily, "black", -1);
     gameplayLabels.push(gameHintLabel);
     scoreLabel = new Label(tr(), "SCORE: " + leafcuttingScore.toString(),
-        leafcuttingFontSize.toString() + "px " + uiContext.fontFamily, undefined, -1);
+        leafcuttingFontSize.toString() + "px " + uiContext.fontFamily, "black", -1);
     gameplayLabels.push(scoreLabel);
     timeLabel = new Label(tr(), "TIME LEFT: " + (leafcuttingTimeLeft/1000).toString(),
-        leafcuttingFontSize.toString() + "px " + uiContext.fontFamily, undefined, -1);
+        leafcuttingFontSize.toString() + "px " + uiContext.fontFamily, "black", -1);
     gameplayLabels.push(timeLabel);
 
     leafcuttingUI.push(new FlexGroup(tr(vec2(20, 20), vec2(window.innerWidth, 120)),
