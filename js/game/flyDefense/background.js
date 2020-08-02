@@ -5,7 +5,7 @@ function Background()
 	this.groundImage2 = undefined;
 	this.pheremoneStrip1Image = undefined;
 	this.pheremoneStrip2Image = undefined;
-	this.currentIncomingPheremoneStripImage = this.pheremoneStrip2Image;
+	this.currentIncomingPheremoneStripImage = undefined;
 	this.pheremoneGapFillImage = undefined;
 	this.fungusNestImage = undefined;
 
@@ -17,6 +17,7 @@ function Background()
 
 		this.pheremoneStrip1Image = pheremoneStripImage1;
 		this.pheremoneStrip2Image = pheremoneStripImage2;
+		this.currentIncomingPheremoneStripImage = this.pheremoneStrip2Image;
 		this.pheremoneGapFillImage = pheremoneGapFillImage;
 
 		this.fungusNestImage = fungusNestImage;
@@ -96,12 +97,13 @@ function Background()
 		for (let i = 0; i < arrayOfPheremoneGaps.length; i++)
 		{
 			if (this.touchStartCoordinates.x >= arrayOfPheremoneGaps[i].x && this.touchStartCoordinates.x < arrayOfPheremoneGaps[i].x + arrayOfPheremoneGaps[i].width &&
-			this.touchStartCoordinates.y >= arrayOfPheremoneGaps[i].y && this.touchStartCoordinates.y < arrayOfPheremoneGaps[i].y + arrayOfPheremoneGaps[i].height)
+			this.touchStartCoordinates.y >= arrayOfPheremoneGaps[i].y && this.touchStartCoordinates.y < arrayOfPheremoneGaps[i].y + arrayOfPheremoneGaps[i].height &&
+			arrayOfPheremoneGaps[i].isFilledIn === false)
 			{
 				this.stuckOnPheremoneGap = false;
 				arrayOfPheremoneGaps[i].isFilledIn = true;
 			}
-			
+
 		}
 		// if (this.touchStartCoordinates.x >= this.pheremoneGap.x && this.touchStartCoordinates.x <= this.pheremoneGap.x + this.pheremoneGap.width &&
 		// 	this.touchStartCoordinates.y >= this.pheremoneGap.y && this.touchStartCoordinates.y <= this.pheremoneGap.y + this.pheremoneGap.height)
@@ -145,7 +147,19 @@ function Background()
 												   renderer.canvas.width*0.6,renderer.canvas.height*0.6);
 
 		
+		if (defenseGame.debugOn)
+		{
+			console.log('inside debug line draw of ')
+			renderer.strokeStyle = 'red';
+			renderer.lineWidth = 5;
+			renderer.moveTo(this.pheremoneStrip1ImageXCoordinate + gameWidth,this.pheremoneStripY - 10);
+			renderer.lineTo(this.pheremoneStrip1ImageXCoordinate  + gameWidth,this.pheremoneStripY + 10);
+			renderer.stroke();
 
+			renderer.moveTo(this.pheremoneStrip2ImageXCoordinate  + gameWidth,this.pheremoneStripY - 10);
+			renderer.lineTo(this.pheremoneStrip2ImageXCoordinate + gameWidth,this.pheremoneStripY + 10);
+			renderer.stroke();
+		}
 	}
 }
 
@@ -153,7 +167,7 @@ function PheremoneGap(x)
 {
 	this.x = x;
 	this.y = defenseGame.background.pheremoneStripY;
-	this.width = renderer.canvas.width*0.075;
+	this.width = defenseGame.background.pheremoneGapWidth;
 	this.height = defenseGame.background.pheremoneStripHeight;
 
 	this.isFilledIn = false;

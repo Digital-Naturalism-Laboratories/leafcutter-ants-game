@@ -22,6 +22,8 @@ defenseGame.initialize = function()
 	defenseGame.pheremoneGapManager = new PheremoneGapManager();
 	defenseGame.pheremoneGap1 = new PheremoneGap(renderer.canvas.width*1.01);
 	defenseGame.pheremoneGapManager.arrayOfPheremoneGaps.push(defenseGame.pheremoneGap1);
+	defenseGame.pheremoneGap2 = new PheremoneGap(renderer.canvas.width*1.01 + defenseGame.background.pheremoneGapWidth + renderer.canvas.width*1.01);
+	defenseGame.pheremoneGapManager.arrayOfPheremoneGaps.push(defenseGame.pheremoneGap2);
 
 	//center ant with the controllable minim
 	this.parentAntObject = new ParentAntObject();
