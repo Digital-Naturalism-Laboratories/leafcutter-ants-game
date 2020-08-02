@@ -5,9 +5,11 @@ let fungusLossImage = document.createElement("img");
 let eggPlantedLossImage = document.createElement("img");
 let winTextImage = document.createElement("img");
 
-let skyBackgroundImage = document.createElement("img");
 let groundBackgroundImage = document.createElement("img");
 let groundBackground2Image = document.createElement("img");
+
+let pheremoneStripImage1 = document.createElement("img");
+let pheremoneStripImage2 = document.createElement("img");
 
 let fungusNestImage = document.createElement("img");
 
@@ -49,9 +51,12 @@ function loadDefenseGameImages()
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: winTextImage, theFile: 'images/flyDefense/winText.png'});
 
 
-	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: skyBackgroundImage, theFile: 'images/flyDefense/Official Placeholder Art/skyBackgroundImage.png'});
+	
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: groundBackgroundImage, theFile: 'images/flyDefense/Official Placeholder Art/GroundCrossSectionUpdate1.png'});
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: groundBackground2Image, theFile: 'images/flyDefense/Official Placeholder Art/GroundCrossSectionUpdate2.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: pheremoneStripImage1, theFile: 'images/flyDefense/Official Placeholder Art/pheremoneStrip1.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: pheremoneStripImage2, theFile: 'images/flyDefense/Official Placeholder Art/pheremoneStrip2.png'});
+
 
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: fungusNestImage, theFile: 'images/flyDefense/Official Placeholder Art/fungusNest.png'});
 
