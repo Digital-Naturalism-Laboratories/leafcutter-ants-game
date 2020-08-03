@@ -5,7 +5,6 @@ var gameIsPaused = false;
 
 window.onload = function()
 {
-
   defenseGame = {};
 
   defenseGame.initialize = function()
@@ -153,8 +152,8 @@ window.onload = function()
     // {
     //   defenseGame.inputManager.calculateMousePosition();
     //   defenseGame.canvasContext.fillStyle = 'red';
-    //   defenseGame.canvasContext.fillText(defenseGame.inputManager.mouseCoordinates.x + ':,' + defenseGame.inputManager.mouseCoordinates.y, 
-    //                           defenseGame.inputManager.mouseCoordinates.x,defenseGame.inputManager.mouseCoordinates.y);
+    //   defenseGame.canvasContext.fillText(touchPos[0].x - canvasStartX + ':,' + touchPos[0].y - canvasStartY, 
+    //                           touchPos[0].x - canvasStartX,touchPos[0].y - canvasStartY);
     // }
   }
 

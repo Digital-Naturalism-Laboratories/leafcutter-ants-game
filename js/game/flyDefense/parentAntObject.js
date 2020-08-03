@@ -601,7 +601,7 @@ function ParentAntObject()
 	
 	this.handleTouchstart = function()
 	{
-		this.currentMovementTargetFromInput = touchstartCoordinates;
+		this.currentMovementTargetFromInput = vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY);
 		if (this.currentMovementTargetFromInput.x > this.fungusTangleX && 
 			this.currentMovementTargetFromInput.x < this.fungusTangleX + this.fungusTangleWidth &&
 			this.currentMovementTargetFromInput.y > this.fungusTangleY &&
@@ -613,7 +613,7 @@ function ParentAntObject()
 	}
 	this.handleMouseDown = function()
 	{
-		this.currentMovementTargetFromInput = mouseDownCoordinates;
+		this.currentMovementTargetFromInput = vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY);
 		if (this.currentMovementTargetFromInput.x > this.fungusTangleX && 
 			this.currentMovementTargetFromInput.x < this.fungusTangleX + this.fungusTangleWidth &&
 			this.currentMovementTargetFromInput.y > this.fungusTangleY &&

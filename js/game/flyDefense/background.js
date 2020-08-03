@@ -113,12 +113,12 @@ function Background()
 		this.scrollGroundImages();
 	}
 
-	this.touchStartCoordinates = {x:undefined,y:undefined};
+	this.touchStartCoordinates = vec2();
 	this.fillInCurrentPheremoneGap = false;
 	
 	this.handleTouchStart = function()
 	{
-		this.touchStartCoordinates = touchstartCoordinates;
+		this.touchStartCoordinates = vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY);
 		let arrayOfPheremoneGaps = this.pheremoneGapManager.arrayOfPheremoneGaps;
 		for (let i = 0; i < arrayOfPheremoneGaps.length; i++)
 		{
@@ -149,10 +149,10 @@ function Background()
 		// }
 	}
 
-	this.mouseDownCoordinates = {x:undefined,y:undefined};
+	this.mouseDownCoordinates = vec2();
 	this.handleMouseDown = function()
 	{
-		this.mouseDownCoordinates = mouseDownCoordinates;
+		this.mouseDownCoordinates = vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY);
 		let arrayOfPheremoneGaps = this.pheremoneGapManager.arrayOfPheremoneGaps;
 		for (let i = 0; i < arrayOfPheremoneGaps.length; i++)
 		{
@@ -162,7 +162,6 @@ function Background()
 			{
 				defenseGame.groundMinimManager.toggleEnRouteStatusAfterUserClick();	
 			}
-
 		}
 	}
 

@@ -24,7 +24,9 @@ class Ant
         this.cuttingJawControlPos = vec2(550 * pixelSize, 420 * pixelSize);
         this.leadingJawControlPos = vec2(400 * pixelSize, 420 * pixelSize);
         this.isCuttingJawLed = false;
-        this.cutDuration = 300;
+        this.jawSpeedPenalty = 0;
+        this.jawSpeedPenaltyTotalTurns = 3;
+        this.cutDuration = 350;
         this.cutTimer = 0;
         this.rotationMode = false;
         this.alternateRotation = true;
@@ -123,7 +125,7 @@ class Ant
         {
             for(let i = 0; i < this.cutPointLines.length-1; i++)
             {
-                if(this.cutPointLines[i].distance(newPoint) < 6 * pixelSize)
+                if(this.cutPointLines[i].distance(newPoint) < 4 * pixelSize)
                 {
                     this.leaf.voidAreas.push([]);
                     for(let i = 0; i < this.cutPointLines.length; i++)
@@ -174,12 +176,13 @@ class Ant
             {
                 if(this.isCuttingJawLed)
                 {
-                    this.cutTimer = this.cutDuration;
+                    this.cutTimer = this.cutDuration * (this.jawSpeedPenalty > 0 ? 0.5 : 1.0);
                     this.isCuttingJawLed = false;
+                    this.jawSpeedPenalty--;
                 }
                 else
                 {
-                    this.cutPointLines = [];
+                    this.jawSpeedPenalty = this.jawSpeedPenaltyTotalTurns;
                     leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_FAIL];
                 }
             }
@@ -192,7 +195,7 @@ class Ant
                 }
                 else
                 {
-                    this.cutPointLines = [];
+                    this.jawSpeedPenalty = this.jawSpeedPenaltyTotalTurns;
                     leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_FAIL];
                 }
             }
@@ -204,18 +207,18 @@ class Ant
         do
         {
             if(!this.alternateRotation)
-                this.bodySprite.transform.rotation -= 0.025/2;
+                this.bodySprite.transform.rotation -= (0.025/2);
             else
-                this.bodySprite.transform.rotation += 0.025/2;
+                this.bodySprite.transform.rotation += (0.025/2);
             
-            moveInDir(this.bodySprite, 0.5 * pixelSize);
+            moveInDir(this.bodySprite, (0.5 * pixelSize));
             this.updatingJawTransform();
 
             var pixelData = renderer.getImageData(this.cutPoint.x, this.cutPoint.y, 1, 1).data;
 
             if(this.cutPointTimer <= 0)
             {
-                var newPoint = this.cutPoint.add(vec2(Math.random() * 6 * pixelSize, Math.random() * 6 * pixelSize));
+                var newPoint = this.cutPoint.add(vec2(Math.random() * 4 * pixelSize, Math.random() * 4 * pixelSize));
                 this.cutPointLines.push(newPoint);
                 if(this.addVoidAreaWhenPointsConnect(newPoint))
                 {
