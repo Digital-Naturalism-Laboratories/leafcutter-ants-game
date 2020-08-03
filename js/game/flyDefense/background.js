@@ -23,6 +23,9 @@ function Background()
 	this.fungusNestStartingXMidpoint = undefined;
 	this.fungusNestTotalTravelDistance = undefined;
 
+	this.currentPheremoneGapArrayIndex = undefined;
+	this.currentPheremoneGap = undefined;
+
 	this.stuckOnPheremoneGap = false;
 
 	this.initialize = function()
@@ -60,10 +63,8 @@ function Background()
 		this.pheremoneGap2 = new PheremoneGap(renderer.canvas.width*1.01 + this.pheremoneGapWidth + renderer.canvas.width*1.01);
 		this.pheremoneGapManager.arrayOfPheremoneGaps.push(this.pheremoneGap2);
 
-		console.log('this.pheremoneStrip1ImageXCoordinate + renderer.canvas.width*1.01: ' + (this.pheremoneStrip1ImageXCoordinate + renderer.canvas.width*1.01) );
-		console.log('this.pheremoneGapManager.arrayOfPheremoneGaps[0].x: ' + this.pheremoneGapManager.arrayOfPheremoneGaps[0].x);
-		console.log('this.pheremoneStrip2ImageXCoordinate + renderer.canvas.width*1.01: ' + (this.pheremoneStrip2ImageXCoordinate + renderer.canvas.width*1.01) );
-		console.log('this.pheremoneGapManager.arrayOfPheremoneGaps[1].x: ' + this.pheremoneGapManager.arrayOfPheremoneGaps[1].x);
+		this.currentPheremoneGapArrayIndex = 0;
+		this.currentPheremoneGap = this.pheremoneGapManager.arrayOfPheremoneGaps[this.currentPheremoneGapArrayIndex];
 	}
 
 	this.scrollGroundImages = function()
@@ -114,6 +115,7 @@ function Background()
 
 	this.touchStartCoordinates = {x:undefined,y:undefined};
 	this.fillInCurrentPheremoneGap = false;
+	
 	this.handleTouchStart = function()
 	{
 		this.touchStartCoordinates = touchstartCoordinates;
@@ -124,8 +126,7 @@ function Background()
 			this.touchStartCoordinates.y >= arrayOfPheremoneGaps[i].y && this.touchStartCoordinates.y < arrayOfPheremoneGaps[i].y + arrayOfPheremoneGaps[i].height &&
 			arrayOfPheremoneGaps[i].isFilledIn === false)
 			{
-				this.stuckOnPheremoneGap = false;
-				arrayOfPheremoneGaps[i].isFilledIn = true;
+				defenseGame.groundMinimManager.toggleEnRouteStatusAfterUserClick();	
 			}
 
 		}

@@ -50,11 +50,11 @@ defenseGame.initialize = function()
 
     //ground minims
     this.groundMinimManager = new GroundMinimManager();
-    this.groundMinim1 = new GroundMinim(0);
+    this.groundMinim1 = new GroundMinim(0, 3);
     this.groundMinimManager.arrayOfGroundMinims.push(this.groundMinim1);
-    this.groundMinim2 = new GroundMinim(renderer.canvas.width*0.25);
+    this.groundMinim2 = new GroundMinim(renderer.canvas.width*0.25, 2);
     this.groundMinimManager.arrayOfGroundMinims.push(this.groundMinim2);
-    this.groundMinim3 = new GroundMinim(renderer.canvas.width*0.5);
+    this.groundMinim3 = new GroundMinim(renderer.canvas.width*0.5, 1);
     this.groundMinimManager.arrayOfGroundMinims.push(this.groundMinim3);
 
 	// console.log('defense game init called');
@@ -72,6 +72,7 @@ defenseGame.initialize = function()
 		this.parentAntObject.update();
 
 		defenseGame.background.pheremoneGapManager.checkForGettingStuckOnPheremoneGaps();
+		this.groundMinimManager.checkIfAllGroundMinimsHaveReachedPheremoneGap();
 
 		if (this.timeLeft === 0 && this.parentAntObject.arrayOfFungusSpores.length > 0)
 	    {
@@ -93,6 +94,7 @@ defenseGame.initialize = function()
 		this.NPCBigAnt1.draw();
 		this.NPCBigAnt2.draw();
 
+		this.groundMinimManager.updateGroundMinims();
 		this.groundMinimManager.drawGroundMinims();
 
 		renderer.font = '60px Helvetica';
