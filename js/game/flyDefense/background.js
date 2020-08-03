@@ -149,6 +149,23 @@ function Background()
 		// }
 	}
 
+	this.mouseDownCoordinates = {x:undefined,y:undefined};
+	this.handleMouseDown = function()
+	{
+		this.mouseDownCoordinates = mouseDownCoordinates;
+		let arrayOfPheremoneGaps = this.pheremoneGapManager.arrayOfPheremoneGaps;
+		for (let i = 0; i < arrayOfPheremoneGaps.length; i++)
+		{
+			if (this.mouseDownCoordinates.x >= arrayOfPheremoneGaps[i].x && this.mouseDownCoordinates.x < arrayOfPheremoneGaps[i].x + arrayOfPheremoneGaps[i].width &&
+			this.mouseDownCoordinates.y >= arrayOfPheremoneGaps[i].y && this.mouseDownCoordinates.y < arrayOfPheremoneGaps[i].y + arrayOfPheremoneGaps[i].height &&
+			arrayOfPheremoneGaps[i].isFilledIn === false)
+			{
+				defenseGame.groundMinimManager.toggleEnRouteStatusAfterUserClick();	
+			}
+
+		}
+	}
+
 	this.draw = function()
 	{
 		

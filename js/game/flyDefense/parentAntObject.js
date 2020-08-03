@@ -337,6 +337,7 @@ function ParentAntObject()
 	
 	this.moveSmallAnt = function()
 	{
+
 		this.smallAntPreviousX = this.smallAntX;
 		this.smallAntPreviousY = this.smallAntY;
 		
@@ -414,42 +415,68 @@ function ParentAntObject()
 				this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;		
 			}
 		}
-		// else if (swatIsBeingHeld)
-		// {
-		// 	//this.currentSmallAntImage = bigAntHindLegsFacingRightImage;
-		// 	this.smallAntY = this.standingAntY;
-			
-		// 	this.smallAntSwattingColliderBoxX = this.smallAntX;
-		// 	this.smallAntSwattingColliderBoxY = this.standingAntY;
-
-		// 	if (this.smallAntY < this.standingAntY)
-		// 	{
-		// 		this.smallAntY = this.standingAntY;
-		// 	}
-		// }
 		
-		//touch input
-		if (this.currentMovementTargetFromTouchInput.x !== undefined)//left or right movement
+		
+		//touch and mouse input
+		if (this.currentMovementTargetFromInput.x > this.fungusTangleX && 
+			this.currentMovementTargetFromInput.x < this.fungusTangleX + this.fungusTangleWidth &&
+			this.currentMovementTargetFromInput.y > this.fungusTangleY &&
+			this.currentMovementTargetFromInput.y < this.fungusTangleY + this.fungusTangleHeight)//if inside the fungustangle
 		{
-			if (this.currentMovementTargetFromTouchInput.x > this.fungusTangleX && 
-				this.currentMovementTargetFromTouchInput.x < this.fungusTangleX + this.fungusTangleWidth &&
-				this.currentMovementTargetFromTouchInput.y > this.fungusTangleY &&
-				this.currentMovementTargetFromTouchInput.y < this.fungusTangleY + this.fungusTangleHeight)//check for intention of leaf touch vs pheremone gap
+			
+			// console.log('this.smallAntMidPoint.x: ' + this.smallAntMidPoint.x);
+			// 			console.log('this.currentMovementTargetFromInput.x: ' + this.currentMovementTargetFromInput.x);
+			if (this.smallAntMidPoint.x < this.currentMovementTargetFromInput.x)//ant should move to the right
 			{
-				if (this.smallAntX + this.smallAntWidth/2 < this.currentMovementTargetFromTouchInput.x)//ant should move to the right
-			{
-				this.smallAntX += this.antVelocity;
-				this.smallAntSwattingColliderBoxX += this.antVelocity;
-				this.mouthColliderBoxX += this.antVelocity;
-				this.smallAntMidPoint.x = this.smallAntX + this.smallAntWidth/2;
-				this.smallAntMidPoint.y = this.smallAntY + this.smallAntHeight/2;	
-				if (Math.abs(this.smallAntX  + this.smallAntWidth/2 - this.currentMovementTargetFromTouchInput.x) < renderer.canvas.width*0.005)
-				{//prevent jitter
-					this.currentMovementTargetFromTouchInput.x = undefined;
-				}
+					if (this.shouldBeMovingLeftOrRight)
+					{
+						//console.log('this.shouldBeMovingLeftOrRight: ' + this.shouldBeMovingLeftOrRight);
+						this.smallAntX += this.antVelocity;
+						this.smallAntSwattingColliderBoxX += this.antVelocity;
+						this.mouthColliderBoxX += this.antVelocity;
+						this.smallAntMidPoint.x = this.smallAntX + this.smallAntWidth/2;
+						this.smallAntMidPoint.y = this.smallAntY + this.smallAntHeight/2;	
+						if (Math.abs(this.smallAntMidPoint.x - this.currentMovementTargetFromInput.x) <= renderer.canvas.width*0.0075)
+						{//prevent jitter
+							this.shouldBeMovingLeftOrRight = false;
+							console.log('should be triggering false for moving left/right: ' + this.shouldBeMovingLeftOrRight);
+						}
 
-				if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
-					this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
+						if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
+							this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
+						{
+							this.smallAntX = this.smallAntPreviousX;
+							this.smallAntY = this.smallAntPreviousY;
+							this.mouthColliderBoxX = this.smallAntPreviousMouthColliderX;
+							this.mouthColliderBoxY = this.smallAntPreviousMouthColliderY;	
+							this.smallAntMidPoint.x = this.smallAntPreviousX + this.smallAntWidth/2;
+							this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;		
+							this.shouldBeMovingLeftOrRight = false;
+							this.shouldBeMovingUpOrDown = false;
+
+						}//end of midpoint of small ant outside of leaf boundaries
+					}
+					
+			}//end of moving to the right
+			
+			else if (this.smallAntMidPoint.x > this.currentMovementTargetFromInput.x) //ant should move to the left
+			{
+				if (this.shouldBeMovingLeftOrRight)
+				{
+					//console.log('this.shouldBeMovingLeftOrRight: ' + this.shouldBeMovingLeftOrRight);
+					this.smallAntX -= this.antVelocity;
+					this.smallAntSwattingColliderBoxX -= this.antVelocity;
+					this.mouthColliderBoxX -= this.antVelocity;
+					this.smallAntMidPoint.x = this.smallAntX + this.smallAntWidth/2;
+					this.smallAntMidPoint.y = this.smallAntY + this.smallAntHeight/2;	
+					
+					if (Math.abs(this.smallAntMidPoint.x - this.currentMovementTargetFromInput.x) <= renderer.canvas.width*0.0075)
+					{
+						this.shouldBeMovingLeftOrRight = false;
+					}
+
+					if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
+						this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
 					{
 						this.smallAntX = this.smallAntPreviousX;
 						this.smallAntY = this.smallAntPreviousY;
@@ -457,99 +484,91 @@ function ParentAntObject()
 						this.mouthColliderBoxY = this.smallAntPreviousMouthColliderY;	
 						this.smallAntMidPoint.x = this.smallAntPreviousX + this.smallAntWidth/2;
 						this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;		
-						this.currentMovementTargetFromTouchInput.x = undefined;
+						this.currentMovementTargetFromInput.x = undefined;
+						this.currentMovementTargetFromInput.y = undefined;
+						this.shouldBeMovingLeftOrRight = false;
+						this.shouldBeMovingUpOrDown = false;
+
+					}//end of checking if midpoint is outside the bounds of the leaf
+				}//end of moving to the left
+			}
+				
+		
+				if (this.smallAntMidPoint.y < this.currentMovementTargetFromInput.y)//ant should move down
+				{
+					if (this.shouldBeMovingUpOrDown)
+					{
+						//console.log('this.shouldBeMovingUpOrDown: ' + this.shouldBeMovingUpOrDown);
+						this.smallAntY += this.antVelocity;
+						this.mouthColliderBoxY += this.antVelocity;
+						this.smallAntMidPoint.x = this.smallAntX + this.smallAntWidth/2;
+						this.smallAntMidPoint.y = this.smallAntY + this.smallAntHeight/2;
+
+						if (Math.abs(this.smallAntMidPoint.y - this.currentMovementTargetFromInput.y) <= renderer.canvas.width*0.0075)
+						{
+							this.shouldBeMovingUpOrDown = false;
+						}
+
+						if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
+							this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
+						{
+							this.smallAntX = this.smallAntPreviousX;
+							this.smallAntY = this.smallAntPreviousY;
+							this.mouthColliderBoxX = this.smallAntPreviousMouthColliderX;
+							this.mouthColliderBoxY = this.smallAntPreviousMouthColliderY;
+							this.smallAntMidPoint.x = this.smallAntPreviousX + this.smallAntWidth/2;
+							this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;		
+							this.currentMovementTargetFromInput.x = undefined;
+							this.currentMovementTargetFromInput.y = undefined;
+							this.shouldBeMovingUpOrDown = false;
+							this.shouldBeMovingLeftOrRight = false;
+						}
 					}
-			}
-			else if (this.smallAntX + this.smallAntWidth/2 > this.currentMovementTargetFromTouchInput.x) //ant should move to the left
-			{
-				this.smallAntX -= this.antVelocity;
-				this.smallAntSwattingColliderBoxX -= this.antVelocity;
-				this.mouthColliderBoxX -= this.antVelocity;
-				this.smallAntMidPoint.x = this.smallAntX + this.smallAntWidth/2;
-				this.smallAntMidPoint.y = this.smallAntY + this.smallAntHeight/2;	
-
-				if (Math.abs(this.smallAntX  + this.smallAntWidth/2 - this.currentMovementTargetFromTouchInput.x) < renderer.canvas.width*0.005)
-				{
-					this.currentMovementTargetFromTouchInput.x = undefined;
+					
 				}
-
-				if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
-					this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
+				else if (this.smallAntMidPoint.y > this.currentMovementTargetFromInput.y)//ant should move up
 				{
-					this.smallAntX = this.smallAntPreviousX;
-					this.smallAntY = this.smallAntPreviousY;
-					this.mouthColliderBoxX = this.smallAntPreviousMouthColliderX;
-					this.mouthColliderBoxY = this.smallAntPreviousMouthColliderY;	
-					this.smallAntMidPoint.x = this.smallAntPreviousX + this.smallAntWidth/2;
-					this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;		
-					this.currentMovementTargetFromTouchInput.x = undefined;
-					this.currentMovementTargetFromTouchInput.y = undefined;
+					if (this.shouldBeMovingUpOrDown)
+					{
+						//console.log('this.shouldBeMovingUpOrDown: ' + this.shouldBeMovingUpOrDown);
+						this.smallAntY -= this.antVelocity;
+						this.mouthColliderBoxY -= this.antVelocity;
+						this.smallAntMidPoint.x = this.smallAntX + this.smallAntWidth/2;
+						this.smallAntMidPoint.y = this.smallAntY + this.smallAntHeight/2;
+
+						if (Math.abs(this.smallAntMidPoint.y - this.currentMovementTargetFromInput.y) <= renderer.canvas.width*0.0075)
+						{
+							this.shouldBeMovingUpOrDown = false;
+						}
+
+						if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
+							this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
+						{
+							
+							this.smallAntX = this.smallAntPreviousX;
+							this.smallAntY = this.smallAntPreviousY;
+							this.mouthColliderBoxX = this.smallAntPreviousMouthColliderX;
+							this.mouthColliderBoxY = this.smallAntPreviousMouthColliderY;
+							this.smallAntMidPoint.x = this.smallAntPreviousX + this.smallAntWidth/2;
+							this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;		
+							this.currentMovementTargetFromInput.x = undefined;
+							this.currentMovementTargetFromInput.y = undefined;
+							this.shouldBeMovingUpOrDown = false;
+							this.shouldBeMovingLeftOrRight = false;
+						}//end of checking small and midpoint is outside leaf boundaries
+					}//end of ant moving up		
 				}
-			}
+					
+
+				if (this.smallAntMidPoint === this.currentMovementTargetFromInput)
+				{
+					//console.log('target should clear');
+					this.currentMovementTargetFromInput.x = undefined;
+					this.currentMovementTargetFromInput.y = undefined;
+				}
 		}
-			}
 			
-
-		if (this.currentMovementTargetFromTouchInput.y !== undefined)// up or down movement
-		{
-			if (this.currentMovementTargetFromTouchInput.x > this.fungusTangleX && 
-				this.currentMovementTargetFromTouchInput.x < this.fungusTangleX + this.fungusTangleWidth &&
-				this.currentMovementTargetFromTouchInput.y > this.fungusTangleY &&
-				this.currentMovementTargetFromTouchInput.y < this.fungusTangleY + this.fungusTangleHeight)//check for intention of leaf touch vs pheremone gap
-			{
-				if (this.smallAntY < this.currentMovementTargetFromTouchInput.y)//ant should move down
-				{
-					this.smallAntY += this.antVelocity;
-					this.mouthColliderBoxY += this.antVelocity;
-					this.smallAntMidPoint.x = this.smallAntX + this.smallAntWidth/2;
-					this.smallAntMidPoint.y = this.smallAntY + this.smallAntHeight/2;
-
-					if (Math.abs(this.smallAntY - this.currentMovementTargetFromTouchInput.y) < renderer.canvas.width*0.005)
-					{
-						this.currentMovementTargetFromTouchInput.y = undefined;
-					}
-
-					if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
-						this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
-					{
-						this.smallAntX = this.smallAntPreviousX;
-						this.smallAntY = this.smallAntPreviousY;
-						this.mouthColliderBoxX = this.smallAntPreviousMouthColliderX;
-						this.mouthColliderBoxY = this.smallAntPreviousMouthColliderY;
-						this.smallAntMidPoint.x = this.smallAntPreviousX + this.smallAntWidth/2;
-						this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;		
-						this.currentMovementTargetFromTouchInput.x = undefined;
-						this.currentMovementTargetFromTouchInput.y = undefined;
-					}
-				}
-				else if (this.smallAntY > this.currentMovementTargetFromTouchInput.y)//ant should move up
-				{
-					this.smallAntY -= this.antVelocity;
-					this.mouthColliderBoxY -= this.antVelocity;
-					this.smallAntMidPoint.x = this.smallAntX + this.smallAntWidth/2;
-					this.smallAntMidPoint.y = this.smallAntY + this.smallAntHeight/2;
-
-					if (Math.abs(this.smallAntY - this.currentMovementTargetFromTouchInput.y) < renderer.canvas.width*0.005)
-					{
-						this.currentMovementTargetFromTouchInput.y = undefined;
-					}
-
-					if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
-						this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
-					{
-						this.smallAntX = this.smallAntPreviousX;
-						this.smallAntY = this.smallAntPreviousY;
-						this.mouthColliderBoxX = this.smallAntPreviousMouthColliderX;
-						this.mouthColliderBoxY = this.smallAntPreviousMouthColliderY;
-						this.smallAntMidPoint.x = this.smallAntPreviousX + this.smallAntWidth/2;
-						this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;		
-						this.currentMovementTargetFromTouchInput.x = undefined;
-						this.currentMovementTargetFromTouchInput.y = undefined;
-					}
-				}
-			}
 			
-		}		
 	}
 	
 		
@@ -563,7 +582,7 @@ function ParentAntObject()
 	this.detectFungusSporeCollisions = function()
 	{
 		if (leftArrowIsBeingHeld || rightArrowIsBeingHeld || downArrowIsBeingHeld || upArrowIsBeingHeld ||
-			this.currentMovementTargetFromTouchInput.x !== undefined || this.currentMovementTargetFromTouchInput.y !== undefined)
+			this.currentMovementTargetFromInput.x !== undefined || this.currentMovementTargetFromInput.y !== undefined)
 		{
 			for (let i = 0; i < this.arrayOfFungusSpores.length; i++)
 			{
@@ -578,10 +597,31 @@ function ParentAntObject()
 		}
 	}
 
-	this.currentMovementTargetFromTouchInput = {x:undefined,y:undefined};
+	this.currentMovementTargetFromInput = {x:undefined,y:undefined};
+	
 	this.handleTouchstart = function()
 	{
-		this.currentMovementTargetFromTouchInput = touchstartCoordinates;
+		this.currentMovementTargetFromInput = touchstartCoordinates;
+		if (this.currentMovementTargetFromInput.x > this.fungusTangleX && 
+			this.currentMovementTargetFromInput.x < this.fungusTangleX + this.fungusTangleWidth &&
+			this.currentMovementTargetFromInput.y > this.fungusTangleY &&
+			this.currentMovementTargetFromInput.y < this.fungusTangleY + this.fungusTangleHeight)
+		{
+			this.shouldBeMovingLeftOrRight = true;
+			this.shouldBeMovingUpOrDown = true;
+		}
+	}
+	this.handleMouseDown = function()
+	{
+		this.currentMovementTargetFromInput = mouseDownCoordinates;
+		if (this.currentMovementTargetFromInput.x > this.fungusTangleX && 
+			this.currentMovementTargetFromInput.x < this.fungusTangleX + this.fungusTangleWidth &&
+			this.currentMovementTargetFromInput.y > this.fungusTangleY &&
+			this.currentMovementTargetFromInput.y < this.fungusTangleY + this.fungusTangleHeight)
+		{
+			this.shouldBeMovingLeftOrRight = true;
+			this.shouldBeMovingUpOrDown = true;
+		}
 	}
 
 	this.update = function()

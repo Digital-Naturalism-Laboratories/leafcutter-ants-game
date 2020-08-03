@@ -88,10 +88,28 @@ function onTouchEnd(ev)
         isTouched = false;
 }
 
+mouseDownCoordinates = {x:undefined,y:undefined};
+function calculateMousePosition(ev)
+{
+    var rect = renderer.canvas.getBoundingClientRect();
+    var root = document.documentElement;
+    var x = ev.clientX - rect.left - root.scrollLeft;
+    var y = ev.clientY - rect.top - root.scrollTop;
+    mouseDownCoordinates.x = x;
+    mouseDownCoordinates.y = y;
+}
+
 function onMouseDown(ev)
 {
     isTouched = true;
     touchPos[0] = vec2(ev.clientX, ev.clientY);
+
+    if (ui.stateIndex = DEFENSEGAMEUI)
+    {
+        calculateMousePosition(ev);
+        defenseGame.parentAntObject.handleMouseDown();
+        defenseGame.background.handleMouseDown();
+    }
 }
 
 function onMouseMove(ev)
