@@ -64,7 +64,7 @@ class Ant
         if(!this.rotationMode && this.pointIndex > -1 && this.destinationPoint.distance(this.bodySprite.transform.position) > 5)
         {
             this.bodySprite.transform.rotation = this.destinationPoint.angle(this.bodySprite.transform.position);
-            moveInDir(this.bodySprite, 2);
+            moveInDir(this.bodySprite, 2 * pixelSize);
             this.updatingJawTransform();
         }
         else if(!this.rotationMode && this.pointIndex > -1)
@@ -144,7 +144,7 @@ class Ant
         {
             for(let i = 0; i < this.cutPointLines.length-1; i++)
             {
-                if(this.cutPointLines[i].distance(newPoint) < 10)
+                if(this.cutPointLines[i].distance(newPoint) < 6 * pixelSize)
                 {
                     this.voidAreas.push([]);
                     for(let i = 0; i < this.cutPointLines.length; i++)
@@ -284,14 +284,14 @@ class Ant
             else
                 this.bodySprite.transform.rotation += 0.025/2;
             
-            moveInDir(this.bodySprite, 1/2);
+            moveInDir(this.bodySprite, 0.5 * pixelSize);
             this.updatingJawTransform();
 
             var pixelData = renderer.getImageData(this.cutPoint.x, this.cutPoint.y, 1, 1).data;
 
             if(this.cutPointTimer <= 0)
             {
-                var newPoint = this.cutPoint.add(vec2(Math.random() * 5, Math.random() * 5));
+                var newPoint = this.cutPoint.add(vec2(Math.random() * 6 * pixelSize, Math.random() * 6 * pixelSize));
                 this.cutPointLines.push(newPoint);
                 if(this.addVoidAreaWhenPointsConnect(newPoint))
                 {
