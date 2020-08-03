@@ -8,8 +8,10 @@ function moveInDir(spr, value, offset)
 
 class Ant
 {
-    constructor()
+    constructor(leaf)
     {
+        this.leaf = leaf;
+
         this.bodySprite = new Sprite(tr(vec2(180 * pixelSize, 420 * pixelSize),vec2(pixelSize,pixelSize)),
             new ImageObject("images/body.png", vec2(64,64)));
         this.bodySprite.transform.rotation = -Math.PI/4;
@@ -30,17 +32,13 @@ class Ant
         this.cutPointLines = [];
         this.cutPointDelay = 200.0;
         this.cutPointTimer = this.cutPointDelay;
-        this.voidAreas = [];
 
         this.destinationPoint = this.bodySprite.transform.position;
         this.pointIndex = -1;
 
-        this.leafPoints = [];
-        this.pointsToCutLeaf = [];
-        this.leafBorderTouchMinimumDistance = 50;
-        this.updateLeafPoints = true;
-
         this.noTouchCounter = 0;
+
+        this.leafBorderTouchMinimumDistance = 50 * pixelSize;
 
         this.updatingJawTransform();
     }
@@ -83,14 +81,11 @@ class Ant
 
     draw(deltatime)
     {
-        this.drawVoidAreas();
-        this.getLeafPoints(pixelSize*16);
         for(let i = 0; i < this.cutPointLines.length-1; i++)
             drawLine(renderer, this.cutPointLines[i], this.cutPointLines[i+1], bgHEX);
         this.bodySprite.drawScRot();
         this.leadingJawSprite.drawScRot();
         this.cuttingJawSprite.drawScRot();
-        this.drawLeafCuttingPoints();
         this.drawJawControls();
     }
 
@@ -122,22 +117,6 @@ class Ant
         }
     }
 
-    drawVoidAreas()
-    {
-        for(let i = 0; i < this.voidAreas.length; i++)
-        {
-            renderer.fillStyle = "#3aade7";
-            renderer.beginPath();
-            if(this.voidAreas[i].length > 1)
-            {
-                renderer.moveTo(this.voidAreas[i][0].x, this.voidAreas[i][0].y);
-                for(let n = 0; n < this.voidAreas[i].length; n++)
-                    renderer.lineTo(this.voidAreas[i][n].x, this.voidAreas[i][n].y)
-            }
-            renderer.fill();
-        }
-    }
-
     addVoidAreaWhenPointsConnect(newPoint)
     {
         if(this.cutPointLines.length > 2)
@@ -146,9 +125,9 @@ class Ant
             {
                 if(this.cutPointLines[i].distance(newPoint) < 6 * pixelSize)
                 {
-                    this.voidAreas.push([]);
+                    this.leaf.voidAreas.push([]);
                     for(let i = 0; i < this.cutPointLines.length; i++)
-                        this.voidAreas[this.voidAreas.length-1].push(vec2(this.cutPointLines[i].x, this.cutPointLines[i].y));
+                        this.leaf.voidAreas[this.leaf.voidAreas.length-1].push(vec2(this.cutPointLines[i].x, this.cutPointLines[i].y));
                     this.cutPointLines = [];
                     return true;
                 }
@@ -158,84 +137,29 @@ class Ant
         return false;
     }
 
-    drawLeafCuttingPoints()
-    {
-        for(let i = 0; i < this.leafPoints.length; i++)
-        {
-            drawCircle(renderer, this.leafPoints[i], 1 * pixelSize, true, "white", 1);
-        }
-        for(let i = 0; i < this.pointsToCutLeaf.length; i++)
-        {
-            drawCircle(renderer, this.pointsToCutLeaf[i], 2 * pixelSize, true, "red", 1);
-        }
-    }
-
     onLeafCutSuccess()
     {
         this.rotationMode = false;
-        this.pointsToCutLeaf[this.pointIndex] = vec2(-1000, -1000);
+        this.leaf.borderPoints[this.pointIndex] = vec2(-10000, -10000);
         this.pointIndex = -1;
-        this.updateLeafPoints = true;
+        this.leaf.updatePoints = true;
         this.alternateRotation = !this.alternateRotation;
         leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_SUCCESS];
-    }
-
-    getLeafPoints(borderTestResolutionFactor)
-    {
-        var borderPixelComparionDistance = borderTestResolutionFactor;
-        if(this.updateLeafPoints)
-        {
-            var prevLeafPoints = this.leafPoints.length;
-            this.leafPoints = [];
-            this.pointsToCutLeaf = [];
-            for(let y = borderPixelComparionDistance; y < gameHeight-borderPixelComparionDistance; y+=borderTestResolutionFactor)
-            {
-                for(let x = borderPixelComparionDistance; x < gameWidth-borderPixelComparionDistance; x+=borderTestResolutionFactor)
-                {
-                    var thisPixel = renderer.getImageData(x, y, 1, 1).data;
-                    var leftPixel = renderer.getImageData(x-borderPixelComparionDistance, y, 1, 1).data;
-                    var rightPixel = renderer.getImageData(x+borderPixelComparionDistance, y, 1, 1).data;
-                    var upPixel = renderer.getImageData(x, y-borderPixelComparionDistance, 1, 1).data;
-                    var downPixel = renderer.getImageData(x, y+borderPixelComparionDistance, 1, 1).data;
-
-                    //if the pixel is not sky blue
-                    if(thisPixel[0] != bgRGB[0] || thisPixel[1] != bgRGB[1] || thisPixel[2] != bgRGB[2])
-                    {
-                        //...and any of the surrounding pixels is sky blue
-                        if(
-                            (leftPixel[0] == bgRGB[0] && leftPixel[1] == bgRGB[1] && leftPixel[2] == bgRGB[2])
-                            || (rightPixel[0] == bgRGB[0] && rightPixel[1] == bgRGB[1] && rightPixel[2] == bgRGB[2])
-                            || (upPixel[0] == bgRGB[0] && upPixel[1] == bgRGB[1] && upPixel[2] == bgRGB[2])
-                            || (downPixel[0] == bgRGB[0] && downPixel[1] == bgRGB[1] && downPixel[2] == bgRGB[2])
-                        )
-                        {
-                            //then, it is a border pixel.
-                            this.pointsToCutLeaf.push(vec2(x,y));
-                        }
-
-                        this.leafPoints.push(vec2(x,y));
-                    }
-                }
-            }
-            var leafPointsRemoved = prevLeafPoints - this.leafPoints.length;
-            if(leafPointsRemoved > 0) leafcuttingScore += leafPointsRemoved * 10;
-            this.updateLeafPoints = false;
-        }
     }
 
     leafBorderTouchInput()
     {
         var lastDist = 999999.9;
-        for(let i = 0; i < this.pointsToCutLeaf.length; i++)
+        for(let i = 0; i < this.leaf.borderPoints.length; i++)
         {
-            var dist = this.pointsToCutLeaf[i].distance(vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY));
+            var dist = this.leaf.borderPoints[i].distance(vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY));
             if(dist < lastDist)
             {
                 lastDist = dist;
 
                 if(dist < this.leafBorderTouchMinimumDistance)
                 {
-                    this.destinationPoint = this.pointsToCutLeaf[i];
+                    this.destinationPoint = this.leaf.borderPoints[i];
                     this.pointIndex = i;
                 }
             }
