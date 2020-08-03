@@ -32,7 +32,7 @@ function setupLeafcuttingUI()
     leafcuttingFontSize = 20 * pixelSize;
 
     leaf = new Leaf();
-    ant = new Ant();
+    ant = new Ant(leaf);
 
     gameplayLabels = [];
     gameHintLabel = new Label(tr(), leafcuttingHint,
