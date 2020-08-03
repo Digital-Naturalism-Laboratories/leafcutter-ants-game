@@ -174,7 +174,7 @@ function Background()
 		
 		if (defenseGame.debugOn)
 		{
-			console.log('inside debug line draw of ')
+			
 			renderer.strokeStyle = 'red';
 			renderer.lineWidth = 5;
 			renderer.moveTo(this.pheremoneStrip1ImageXCoordinate + gameWidth,this.pheremoneStripY - 10);
@@ -247,7 +247,7 @@ function PheremoneGapManager()
 
 	this.checkForGettingStuckOnPheremoneGaps = function()
 	{
-						console.log('checkForGettingStuckOnPheremoneGaps function called');
+						
 
 		for (let i = 0; i < this.arrayOfPheremoneGaps.length; i++)
 		{
@@ -255,7 +255,7 @@ function PheremoneGapManager()
 			if (!this.arrayOfPheremoneGaps[i].isFilledIn && 
 				this.arrayOfPheremoneGaps[i].x - (defenseGame.parentAntObject.bigAntX + defenseGame.parentAntObject.bigAntWidth) < 5 )
 			{
-				console.log('checkForGettingStuckOnPheremoneGaps entered condition');
+				
 				defenseGame.background.stuckOnPheremoneGap = true;
 				defenseGame.flyManager.toggleSwarm();
 			}

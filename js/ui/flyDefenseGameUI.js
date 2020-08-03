@@ -73,7 +73,7 @@ defenseGame.initialize = function()
 
 		if (defenseGame.background.stuckOnPheremoneGap === false)
 		{
-			console.log('checking stuckOnPheremoneGap');
+			
 			defenseGame.background.pheremoneGapManager.checkForGettingStuckOnPheremoneGaps();
 		}
 		
