@@ -108,16 +108,20 @@ function Fly(name,status)
 				}
 			}
 
-				//collision box detection
-				if (this.x < defenseGame.parentAntObject.smallAntX + defenseGame.parentAntObject.smallAntWidth && //check for swat collisions with flies
-				    this.x + this.width > defenseGame.parentAntObject.smallAntX  &&
-				    this.y < defenseGame.parentAntObject.smallAntY + defenseGame.parentAntObject.smallAntHeight &&
-				    this.y + this.height > defenseGame.parentAntObject.smallAntY)
-					{
-					    
-					    this.status = 'swatted';
-					    defenseGame.flyManager.toggleNextFlysStatusToPlant();
-					}		
+			//collision box detection
+			if (this.x < defenseGame.parentAntObject.smallAntX + defenseGame.parentAntObject.smallAntWidth && //check for swat collisions with flies
+			    this.x + this.width > defenseGame.parentAntObject.smallAntX  &&
+			    this.y < defenseGame.parentAntObject.smallAntY + defenseGame.parentAntObject.smallAntHeight &&
+			    this.y + this.height > defenseGame.parentAntObject.smallAntY)
+				{
+				    
+				    this.status = 'swatted';
+				    if (defenseGame.flyManager.currentStatus !== 'swarming')
+				    {
+				    	defenseGame.flyManager.toggleNextFlysStatusToPlant();
+				    }
+				    
+				}		
 
 			if (this.x > this.currentTarget.x * 0.96 && this.x < this.currentTarget.x * 1.04 && 
 				this.y > this.currentTarget.y * 0.96 && this.y < this.currentTarget.y * 1.04)//target reached
@@ -155,6 +159,10 @@ function Fly(name,status)
 				this.assignRandomXYCoordinatesInARange();
 				this.eggX = this.x;
 				this.eggY = this.y;
+				if (defenseGame.flyManager.currentStatus === 'swarming')
+				{
+					this.status = 'planting';
+				}
 			}
 		}
 		else if (this.status === 'leaving after planting')
@@ -180,6 +188,8 @@ function FlyManager()
 {
 	this.arrayOfFlies = [];
 	this.currentFlyIndex = 0;
+
+	this.currentStatus = 'normal';
 
 	this.toggleNextFlysStatusToPlant = function()
 	{
@@ -219,6 +229,15 @@ function FlyManager()
 		for (let i = 0; i < this.arrayOfFlies.length; i++)
 		{
 			this.arrayOfFlies[i].draw();
+		}
+	}
+
+	this.toggleSwarm = function()
+	{
+		this.currentStatus = 'swarming';
+		for (let i = 0; i < this.arrayOfFlies.length; i++)
+		{
+			this.arrayOfFlies[i].status = 'planting';
 		}
 	}
 }

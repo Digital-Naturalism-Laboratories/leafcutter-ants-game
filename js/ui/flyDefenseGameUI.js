@@ -71,7 +71,12 @@ defenseGame.initialize = function()
 		this.flyManager.updateFlies();
 		this.parentAntObject.update();
 
-		defenseGame.background.pheremoneGapManager.checkForGettingStuckOnPheremoneGaps();
+		if (defenseGame.background.stuckOnPheremoneGap === false)
+		{
+			console.log('checking stuckOnPheremoneGap');
+			defenseGame.background.pheremoneGapManager.checkForGettingStuckOnPheremoneGaps();
+		}
+		
 		this.groundMinimManager.checkIfAllGroundMinimsHaveReachedPheremoneGap();
 
 		if (this.timeLeft === 0 && this.parentAntObject.arrayOfFungusSpores.length > 0)

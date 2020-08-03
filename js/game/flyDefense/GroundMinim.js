@@ -102,6 +102,11 @@ function GroundMinimManager()
 			{
 				this.arrayOfGroundMinims[i].currentStatus = 'returning';
 			}
+			defenseGame.flyManager.currentStatus = 'normal';
+			defenseGame.flyManager.arrayOfFlies[0].status = 'planting';
+			defenseGame.flyManager.arrayOfFlies[1].status = 'swatted';
+			defenseGame.flyManager.arrayOfFlies[2].status = 'swatted';
+			defenseGame.flyManager.arrayOfFlies[3].status = 'swatted';
 		}
 	}
 }
