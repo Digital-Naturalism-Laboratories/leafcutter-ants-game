@@ -9,6 +9,22 @@ function Background()
 	this.pheremoneGapFillImage = undefined;
 	this.fungusNestImage = undefined;
 
+	this.groundImage1xCoordinate = undefined;
+	this.groundImage2xCoordinate = undefined;
+	
+	this.pheremoneStrip1ImageXCoordinate = undefined;
+	
+	this.pheremoneGapWidth = undefined;
+	this.pheremoneStripY = undefined;
+	this.pheremoneStripHeight = undefined;
+
+	this.pheremoneStrip2ImageXCoordinate = undefined;
+	this.fungusNestWidth = undefined;
+	this.fungusNestStartingXMidpoint = undefined;
+	this.fungusNestTotalTravelDistance = undefined;
+
+	this.stuckOnPheremoneGap = false;
+
 	this.initialize = function()
 	{
 		
@@ -21,26 +37,34 @@ function Background()
 		this.pheremoneGapFillImage = pheremoneGapFillImage;
 
 		this.fungusNestImage = fungusNestImage;
+
+		this.groundImage1xCoordinate = 0;
+		this.groundImage2xCoordinate = renderer.canvas.width;
+
+		this.pheremoneStrip1ImageXCoordinate = 0;
+
+		this.pheremoneGapWidth = renderer.canvas.width*0.075;
+		this.pheremoneStripY = renderer.canvas.height*0.875;
+		this.pheremoneStripHeight = renderer.canvas.height*0.075;
+
+		this.pheremoneStrip2ImageXCoordinate = renderer.canvas.width*1.01 + this.pheremoneGapWidth;
+
+		this.fungusNestXCoordinate = renderer.canvas.width;
+		this.fungusNestWidth = renderer.canvas.width*0.6;
+		this.fungusNestStartingXMidpoint = this.fungusNestXCoordinate + this.fungusNestWidth/2;
+		this.fungusNestTotalTravelDistance = this.fungusNestStartingXMidpoint - renderer.canvas.width/2;
+
+		this.pheremoneGapManager = new PheremoneGapManager();
+		this.pheremoneGap1 = new PheremoneGap(renderer.canvas.width*1.01);
+		this.pheremoneGapManager.arrayOfPheremoneGaps.push(this.pheremoneGap1);
+		this.pheremoneGap2 = new PheremoneGap(renderer.canvas.width*1.01 + this.pheremoneGapWidth + renderer.canvas.width*1.01);
+		this.pheremoneGapManager.arrayOfPheremoneGaps.push(this.pheremoneGap2);
+
+		console.log('this.pheremoneStrip1ImageXCoordinate + renderer.canvas.width*1.01: ' + (this.pheremoneStrip1ImageXCoordinate + renderer.canvas.width*1.01) );
+		console.log('this.pheremoneGapManager.arrayOfPheremoneGaps[0].x: ' + this.pheremoneGapManager.arrayOfPheremoneGaps[0].x);
+		console.log('this.pheremoneStrip2ImageXCoordinate + renderer.canvas.width*1.01: ' + (this.pheremoneStrip2ImageXCoordinate + renderer.canvas.width*1.01) );
+		console.log('this.pheremoneGapManager.arrayOfPheremoneGaps[1].x: ' + this.pheremoneGapManager.arrayOfPheremoneGaps[1].x);
 	}
-
-	this.groundImage1xCoordinate = 0;
-	this.groundImage2xCoordinate = renderer.canvas.width;
-
-	this.pheremoneStrip1ImageXCoordinate = 0;
-	
-	this.pheremoneGapWidth = renderer.canvas.width*0.075;
-	this.pheremoneStripY = renderer.canvas.height*0.875;
-	this.pheremoneStripHeight = renderer.canvas.height*0.075;
-
-	this.pheremoneStrip2ImageXCoordinate = renderer.canvas.width*1.01 + this.pheremoneGapWidth;
-	
-
-	this.fungusNestXCoordinate = renderer.canvas.width;
-	this.fungusNestWidth = renderer.canvas.width*0.6;
-	this.fungusNestStartingXMidpoint = this.fungusNestXCoordinate + this.fungusNestWidth/2;
-	this.fungusNestTotalTravelDistance = this.fungusNestStartingXMidpoint - renderer.canvas.width/2;
-
-	this.stuckOnPheremoneGap = false;
 
 	this.scrollGroundImages = function()
 	{
@@ -71,11 +95,11 @@ function Background()
 				}
 				if(this.pheremoneStrip1ImageXCoordinate + gameWidth < 0)
 				{
-					this.pheremoneStrip1ImageXCoordinate = gameWidth + this.pheremoneGapWidth;
+					this.pheremoneStrip1ImageXCoordinate = this.pheremoneStrip2ImageXCoordinate + renderer.canvas.width*1.01 + this.pheremoneGapWidth;
 				}
 				if(this.pheremoneStrip2ImageXCoordinate + gameWidth < 0)
 				{
-					this.pheremoneStrip2ImageXCoordinate = gameWidth + this.pheremoneGapWidth;
+					this.pheremoneStrip2ImageXCoordinate = this.pheremoneStrip1ImageXCoordinate + renderer.canvas.width*1.01 + this.pheremoneGapWidth;
 				}
 			}
 		}
@@ -93,7 +117,7 @@ function Background()
 	this.handleTouchStart = function()
 	{
 		this.touchStartCoordinates = touchstartCoordinates;
-		let arrayOfPheremoneGaps = defenseGame.pheremoneGapManager.arrayOfPheremoneGaps;
+		let arrayOfPheremoneGaps = this.pheremoneGapManager.arrayOfPheremoneGaps;
 		for (let i = 0; i < arrayOfPheremoneGaps.length; i++)
 		{
 			if (this.touchStartCoordinates.x >= arrayOfPheremoneGaps[i].x && this.touchStartCoordinates.x < arrayOfPheremoneGaps[i].x + arrayOfPheremoneGaps[i].width &&
@@ -136,7 +160,7 @@ function Background()
 		renderer.drawImage(this.pheremoneStrip2Image, this.pheremoneStrip2ImageXCoordinate,this.pheremoneStripY, 
 						   renderer.canvas.width*1.01,this.pheremoneStripHeight);
 
-		
+		this.pheremoneGapManager.drawPheremoneGaps();
 	
 		// defenseGame.canvasContext.drawImage(this.leftArrowButtonImage, 0,0, defenseGame.canvas.width,defenseGame.canvas.height);
 		// defenseGame.canvasContext.drawImage(this.rightArrowButtonImage, 0,0, defenseGame.canvas.width,defenseGame.canvas.height);
@@ -176,7 +200,7 @@ function PheremoneGap(x)
 
 	this.update = function()
 	{
-		if (!defenseGame.background.stuckOnPheremoneGap)
+		if (!defenseGame.background.stuckOnPheremoneGap && defenseGame.timeLeft > 0)
 		{
 			this.x -= 1;
 		}

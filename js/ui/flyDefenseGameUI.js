@@ -15,15 +15,13 @@ defenseGame.initialize = function()
     this.countdownInterval = new frameInterval(defenseGame.decreaseCounter,1000);
 
 
+    
+
     //background section
 	defenseGame.background = new Background();
 	defenseGame.background.initialize();
 
-	defenseGame.pheremoneGapManager = new PheremoneGapManager();
-	defenseGame.pheremoneGap1 = new PheremoneGap(renderer.canvas.width*1.01);
-	defenseGame.pheremoneGapManager.arrayOfPheremoneGaps.push(defenseGame.pheremoneGap1);
-	defenseGame.pheremoneGap2 = new PheremoneGap(renderer.canvas.width*1.01 + defenseGame.background.pheremoneGapWidth + renderer.canvas.width*1.01);
-	defenseGame.pheremoneGapManager.arrayOfPheremoneGaps.push(defenseGame.pheremoneGap2);
+
 
 	//center ant with the controllable minim
 	this.parentAntObject = new ParentAntObject();
@@ -68,12 +66,12 @@ defenseGame.initialize = function()
 	this.update = function()
 	{
 		defenseGame.background.update();
-		defenseGame.pheremoneGapManager.updatePheremoneGaps();
+		defenseGame.background.pheremoneGapManager.updatePheremoneGaps();
 
 		this.flyManager.updateFlies();
 		this.parentAntObject.update();
 
-		defenseGame.pheremoneGapManager.checkForGettingStuckOnPheremoneGaps();
+		defenseGame.background.pheremoneGapManager.checkForGettingStuckOnPheremoneGaps();
 
 		if (this.timeLeft === 0 && this.parentAntObject.arrayOfFungusSpores.length > 0)
 	    {
@@ -90,7 +88,7 @@ defenseGame.initialize = function()
 		//console.log('inside draw function of defense game');
 		defenseGame.background.draw();
 		defenseGame.parentAntObject.draw();
-		defenseGame.pheremoneGapManager.drawPheremoneGaps();
+		
 
 		this.NPCBigAnt1.draw();
 		this.NPCBigAnt2.draw();
