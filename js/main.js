@@ -77,9 +77,12 @@ function frame()
 {
     if (ImageObject.areAllLoaded())
     {
-        var deltaTime = getDeltaTime();
-        events(deltaTime);
-        update(deltaTime);
-        draw(deltaTime);
+        if (!gamePaused)
+        {
+            var deltaTime = getDeltaTime();
+            events(deltaTime);
+            update(deltaTime);
+            draw(deltaTime);
+        }
     }
 }

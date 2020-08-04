@@ -1,3 +1,4 @@
+gamePaused = false;
 function onResize(ev)
 {
     renderer.canvas.width = window.innerWidth;
@@ -180,6 +181,18 @@ function onKeyDown(ev)
         {
             defenseGame.debugOn = false;
             console.log('debug off');
+        }
+        break;
+
+        case 80://p
+        console.log('game paused')
+        if (gamePaused)
+        {
+            gamePaused = false;
+        }
+        else
+        {
+            gamePaused = true;
         }
         break;
     }

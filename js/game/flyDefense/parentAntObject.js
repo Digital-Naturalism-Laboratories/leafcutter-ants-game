@@ -236,7 +236,7 @@ function ParentAntObject()
 		// }
 
 		
-		for (let i = 0; i < 5; i++)
+		for (let i = 0; i < 75; i++)
 		{
 			let potentialFungusPoint = {x:Math.floor(getRandomIntInclusive(this.leafX,this.leafX + this.leafWidth)),
 											  y:Math.floor(getRandomIntInclusive(this.leafY,this.leafY + this.leafHeight))};
@@ -306,23 +306,83 @@ function ParentAntObject()
 	
 	this.drawSmallAnt = function()
 	{
-		// if (!defenseGame.inputManager.swatIsBeingHeld)
-		// {
-		// 			defenseGame.canvasContext.drawImage(this.currentSmallAntImage, this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
-		// }
-		// else
-		// {
-					// defenseGame.parentAntObject.swatInterval.start();
-					renderer.drawImage(this.currentSmallAntImage, this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
-					if (defenseGame.debugOn)
-					{
-						renderer.lineWidth = 5;
-						renderer.strokeStyle = 'red';
-						renderer.strokeRect(this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
+		if (this.currentSmallAntDirection === 'up')
+		{
+			renderer.drawImage(this.currentSmallAntImage, this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
+		}
+		else if (this.currentSmallAntDirection === 'upRight')
+		{
+			renderer.save();
+			renderer.translate(this.smallAntMidPoint.x,this.smallAntMidPoint.y);
+			renderer.rotate(45 * Math.PI / 180);
+			renderer.translate(-this.smallAntMidPoint.x,-this.smallAntMidPoint.y);
+			renderer.drawImage(this.currentSmallAntImage, this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
+			renderer.restore();
+		}
+		else if (this.currentSmallAntDirection === 'right')
+		{
+			renderer.save();
+			renderer.translate(this.smallAntMidPoint.x,this.smallAntMidPoint.y);
+			renderer.rotate(90 * Math.PI / 180);
+			renderer.translate(-this.smallAntMidPoint.x,-this.smallAntMidPoint.y);
+			renderer.drawImage(this.currentSmallAntImage, this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
+			renderer.restore();
+		}
+		else if (this.currentSmallAntDirection === 'downRight')
+		{
+			renderer.save();
+			renderer.translate(this.smallAntMidPoint.x,this.smallAntMidPoint.y);
+			renderer.rotate(135 * Math.PI / 180);
+			renderer.translate(-this.smallAntMidPoint.x,-this.smallAntMidPoint.y);
+			renderer.drawImage(this.currentSmallAntImage, this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
+			renderer.restore();
+		}
+		else if (this.currentSmallAntDirection === 'down')
+		{
+			renderer.save();
+			renderer.translate(this.smallAntMidPoint.x,this.smallAntMidPoint.y);
+			renderer.rotate(180 * Math.PI / 180);
+			renderer.translate(-this.smallAntMidPoint.x,-this.smallAntMidPoint.y);
+			renderer.drawImage(this.currentSmallAntImage, this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
+			renderer.restore();
+		}
+		else if (this.currentSmallAntDirection === 'downLeft')
+		{
+			renderer.save();
+			renderer.translate(this.smallAntMidPoint.x,this.smallAntMidPoint.y);
+			renderer.rotate(225 * Math.PI / 180);
+			renderer.translate(-this.smallAntMidPoint.x,-this.smallAntMidPoint.y);
+			renderer.drawImage(this.currentSmallAntImage, this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
+			renderer.restore();
+		}
+		else if (this.currentSmallAntDirection === 'left')
+		{
+			renderer.save();
+			renderer.translate(this.smallAntMidPoint.x,this.smallAntMidPoint.y);
+			renderer.rotate(270 * Math.PI / 180);
+			renderer.translate(-this.smallAntMidPoint.x,-this.smallAntMidPoint.y);
+			renderer.drawImage(this.currentSmallAntImage, this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
+			renderer.restore();
+		}
+		else if (this.currentSmallAntDirection === 'upLeft')
+		{
+			renderer.save();
+			renderer.translate(this.smallAntMidPoint.x,this.smallAntMidPoint.y);
+			renderer.rotate(315 * Math.PI / 180);
+			renderer.translate(-this.smallAntMidPoint.x,-this.smallAntMidPoint.y);
+			renderer.drawImage(this.currentSmallAntImage, this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
+			renderer.restore();
+		}
 
-						renderer.strokeRect(this.smallAntMidPoint.x - 5,this.smallAntMidPoint.y - 5, 5,5);
-					}
-		//}
+		if (defenseGame.debugOn)
+		{
+			renderer.lineWidth = 5;
+			renderer.strokeStyle = 'red';
+			renderer.strokeRect(this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
+
+			renderer.strokeRect(this.smallAntMidPoint.x - 5,this.smallAntMidPoint.y - 5, 5,5);
+		}
+		
 	}
 
 
@@ -335,6 +395,12 @@ function ParentAntObject()
 	this.smallAntPreviousMouthColliderX = this.mouthColliderBoxX;
 	this.smallAntPreviousMouthColliderY = this.mouthColliderBoxY;
 	
+	this.currentSmallAntDirection = 'up';
+	this.previousSmallAntDirection = 'up';
+	this.smallAntMovingUp = false;
+	this.smallAntMovingRight = false;
+	this.smallAntMovingDown = false;
+	this.smallAntMovingLeft = false;
 	this.moveSmallAnt = function()
 	{
 
@@ -343,78 +409,7 @@ function ParentAntObject()
 		
 		this.smallAntPreviousMouthColliderX = this.mouthColliderBoxX;
 		this.smallAntPreviousMouthColliderY = this.mouthColliderBoxY;
-		//keyboard input
-		if (leftArrowIsBeingHeld)
-		{
-			this.smallAntX -= this.antVelocity;
-			this.smallAntSwattingColliderBoxX -= this.antVelocity;
-			this.mouthColliderBoxX -= this.antVelocity;
-			this.smallAntMidPoint.x = this.smallAntX + this.smallAntWidth/2;
-			this.smallAntMidPoint.y = this.smallAntY + this.smallAntHeight/2;	
-
-			if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
-				this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
-			{
-				this.smallAntX = this.smallAntPreviousX;
-				this.smallAntY = this.smallAntPreviousY;
-				this.mouthColliderBoxX = this.smallAntPreviousMouthColliderX;
-				this.mouthColliderBoxY = this.smallAntPreviousMouthColliderY;
-				this.smallAntMidPoint.x = this.smallAntPreviousX + this.smallAntWidth/2;
-				this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;	
-			}
-		}
-		else if (upArrowIsBeingHeld)
-		{
-			this.smallAntY -= this.antVelocity;
-			this.mouthColliderBoxY -= this.antVelocity;
-			this.smallAntMidPoint.x = this.smallAntX + this.smallAntWidth/2;
-			this.smallAntMidPoint.y = this.smallAntY + this.smallAntHeight/2;		
-			if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
-				this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
-			{
-				this.smallAntX = this.smallAntPreviousX;
-				this.smallAntY = this.smallAntPreviousY;
-				this.mouthColliderBoxX = this.smallAntPreviousMouthColliderX;
-				this.mouthColliderBoxY = this.smallAntPreviousMouthColliderY;	
-				this.smallAntMidPoint.x = this.smallAntPreviousX + this.smallAntWidth/2;
-				this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;		
-			}
-		}
-		else if (rightArrowIsBeingHeld)
-		{
-			this.smallAntX += this.antVelocity;
-			this.smallAntSwattingColliderBoxX += this.antVelocity;
-			this.mouthColliderBoxX += this.antVelocity;
-			this.smallAntMidPoint.x = this.smallAntX + this.smallAntWidth/2;
-			this.smallAntMidPoint.y = this.smallAntY + this.smallAntHeight/2;		
-			if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
-				this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
-			{
-				this.smallAntX = this.smallAntPreviousX;
-				this.smallAntY = this.smallAntPreviousY;
-				this.mouthColliderBoxX = this.smallAntPreviousMouthColliderX;
-				this.mouthColliderBoxY = this.smallAntPreviousMouthColliderY;	
-				this.smallAntMidPoint.x = this.smallAntPreviousX + this.smallAntWidth/2;
-				this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;		
-			}
-		}
-		else if (downArrowIsBeingHeld)
-		{
-			this.smallAntY += this.antVelocity;
-			this.mouthColliderBoxY += this.antVelocity;
-			this.smallAntMidPoint.x = this.smallAntX + this.smallAntWidth/2;
-			this.smallAntMidPoint.y = this.smallAntY + this.smallAntHeight/2;		
-			if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
-				this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
-			{
-				this.smallAntX = this.smallAntPreviousX;
-				this.smallAntY = this.smallAntPreviousY;
-				this.mouthColliderBoxX = this.smallAntPreviousMouthColliderX;
-				this.mouthColliderBoxY = this.smallAntPreviousMouthColliderY;	
-				this.smallAntMidPoint.x = this.smallAntPreviousX + this.smallAntWidth/2;
-				this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;		
-			}
-		}
+		
 		
 		
 		//touch and mouse input
@@ -424,10 +419,11 @@ function ParentAntObject()
 			this.currentMovementTargetFromInput.y < this.fungusTangleY + this.fungusTangleHeight)//if inside the fungustangle
 		{
 			
-			// console.log('this.smallAntMidPoint.x: ' + this.smallAntMidPoint.x);
-			// 			console.log('this.currentMovementTargetFromInput.x: ' + this.currentMovementTargetFromInput.x);
+			this.previousSmallAntDirection = this.currentSmallAntDirection;
+
 			if (this.smallAntMidPoint.x < this.currentMovementTargetFromInput.x)//ant should move to the right
 			{
+				
 					if (this.shouldBeMovingLeftOrRight)
 					{
 						//console.log('this.shouldBeMovingLeftOrRight: ' + this.shouldBeMovingLeftOrRight);
@@ -439,7 +435,8 @@ function ParentAntObject()
 						if (Math.abs(this.smallAntMidPoint.x - this.currentMovementTargetFromInput.x) <= renderer.canvas.width*0.0075)
 						{//prevent jitter
 							this.shouldBeMovingLeftOrRight = false;
-							console.log('should be triggering false for moving left/right: ' + this.shouldBeMovingLeftOrRight);
+							this.smallAntMovingRight = false;
+							console.log('moving right should stop');
 						}
 
 						if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
@@ -453,13 +450,12 @@ function ParentAntObject()
 							this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;		
 							this.shouldBeMovingLeftOrRight = false;
 							this.shouldBeMovingUpOrDown = false;
-
 						}//end of midpoint of small ant outside of leaf boundaries
 					}
 					
 			}//end of moving to the right
 			
-			else if (this.smallAntMidPoint.x > this.currentMovementTargetFromInput.x) //ant should move to the left
+			if (this.smallAntMidPoint.x > this.currentMovementTargetFromInput.x) //ant should move to the left
 			{
 				if (this.shouldBeMovingLeftOrRight)
 				{
@@ -473,6 +469,8 @@ function ParentAntObject()
 					if (Math.abs(this.smallAntMidPoint.x - this.currentMovementTargetFromInput.x) <= renderer.canvas.width*0.0075)
 					{
 						this.shouldBeMovingLeftOrRight = false;
+						this.smallAntMovingLeft = false;
+						console.log('moving left should stop');
 					}
 
 					if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
@@ -488,7 +486,6 @@ function ParentAntObject()
 						this.currentMovementTargetFromInput.y = undefined;
 						this.shouldBeMovingLeftOrRight = false;
 						this.shouldBeMovingUpOrDown = false;
-
 					}//end of checking if midpoint is outside the bounds of the leaf
 				}//end of moving to the left
 			}
@@ -507,6 +504,8 @@ function ParentAntObject()
 						if (Math.abs(this.smallAntMidPoint.y - this.currentMovementTargetFromInput.y) <= renderer.canvas.width*0.0075)
 						{
 							this.shouldBeMovingUpOrDown = false;
+							this.smallAntMovingDown = false;
+							console.log('moving down should stop');
 						}
 
 						if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
@@ -526,7 +525,7 @@ function ParentAntObject()
 					}
 					
 				}
-				else if (this.smallAntMidPoint.y > this.currentMovementTargetFromInput.y)//ant should move up
+				if (this.smallAntMidPoint.y > this.currentMovementTargetFromInput.y)//ant should move up
 				{
 					if (this.shouldBeMovingUpOrDown)
 					{
@@ -539,12 +538,13 @@ function ParentAntObject()
 						if (Math.abs(this.smallAntMidPoint.y - this.currentMovementTargetFromInput.y) <= renderer.canvas.width*0.0075)
 						{
 							this.shouldBeMovingUpOrDown = false;
+							this.smallAntMovingUp = false;
+							console.log('moving up should stop');
 						}
 
 						if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
 							this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
 						{
-							
 							this.smallAntX = this.smallAntPreviousX;
 							this.smallAntY = this.smallAntPreviousY;
 							this.mouthColliderBoxX = this.smallAntPreviousMouthColliderX;
@@ -559,6 +559,51 @@ function ParentAntObject()
 					}//end of ant moving up		
 				}
 					
+				if (this.smallAntMovingUp && !this.smallAntMovingRight && !this.smallAntMovingLeft && !this.smallAntMovingDown)
+				{
+					this.currentSmallAntDirection = 'up';
+					this.redefineMouthColliderPropertiesForFacingUp();
+				}
+				else if (this.smallAntMovingUp && this.smallAntMovingLeft && !this.smallAntMovingRight && !this.smallAntMovingRight)
+				{
+					this.currentSmallAntDirection = 'upLeft';
+					this.redefineMouthColliderPropertiesForFacingUpLeft();
+				}
+				else if (this.smallAntMovingUp && this.smallAntMovingRight && !this.smallAntMovingDown && !this.smallAntMovingLeft)
+				{
+					this.currentSmallAntDirection = 'upRight';
+					this.redefineMouthColliderPropertiesForFacingUpRight();
+				}
+				else if (this.smallAntMovingRight && !this.smallAntMovingUp && !this.smallAntMovingDown && !this.smallAntMovingLeft)
+				{
+					this.currentSmallAntDirection = 'right';
+					this.redefineMouthColliderPropertiesForFacingRight();
+				}
+				else if (this.smallAntMovingDown && !this.smallAntMovingRight && !this.smallAntMovingLeft && !this.smallAntMovingUp)
+				{
+					this.currentSmallAntDirection = 'down';
+					this.redefineMouthColliderPropertiesForFacingDown();
+				}
+				else if (this.smallAntMovingDown && this.smallAntMovingLeft && !this.smallAntMovingUp && !this.smallAntMovingRight)
+				{
+					this.currentSmallAntDirection = 'downLeft';
+					this.redefineMouthColliderPropertiesForFacingDownLeft();
+				}
+				else if (this.smallAntMovingDown && this.smallAntMovingRight && !this.smallAntMovingUp && !this.smallAntMovingLeft)
+				{
+					this.currentSmallAntDirection = 'downRight';
+					this.redefineMouthColliderPropertiesForFacingDownRight();
+				}
+				else if (this.smallAntMovingLeft && !this.smallAntMovingDown && !this.smallAntMovingUp && !this.smallAntMovingRight)
+				{
+					this.currentSmallAntDirection = 'left';
+					this.redefineMouthColliderPropertiesForFacingLeft();
+				}
+				// else 
+				// {
+				// 	this.currentSmallAntDirection = this.previousSmallAntDirection;
+				// }
+				console.log('this.currentSmallAntDirection: ' + this.currentSmallAntDirection);
 
 				if (this.smallAntMidPoint === this.currentMovementTargetFromInput)
 				{
@@ -571,7 +616,70 @@ function ParentAntObject()
 			
 	}
 	
-		
+	this.redefineMouthColliderPropertiesForFacingUp = function()
+	{
+		this.mouthColliderBoxX = this.smallAntX + this.smallAntWidth*0.45;
+		this.mouthColliderBoxY =  this.smallAntY*1.025;
+		this.mouthColliderBoxWidth = this.smallAntWidth*0.4;
+		this.mouthColliderBoxHeight = this.smallAntHeight*0.4;
+	}
+	
+	this.redefineMouthColliderPropertiesForFacingDown = function()
+	{
+		this.mouthColliderBoxX = this.smallAntX + this.smallAntWidth*0.2;
+		this.mouthColliderBoxY = this.smallAntY + (this.smallAntHeight * 0.8);
+		this.mouthColliderBoxWidth = this.smallAntWidth*0.4;
+		this.mouthColliderBoxHeight = this.smallAntHeight*0.4;
+	}
+	
+	this.redefineMouthColliderPropertiesForFacingRight = function()
+	{
+		this.mouthColliderBoxX = this.smallAntX + this.smallAntWidth*0.85;
+		this.mouthColliderBoxY = this.smallAntY + this.smallAntHeight*0.45;
+		this.mouthColliderBoxWidth = this.smallAntWidth*0.4;
+		this.mouthColliderBoxHeight = this.smallAntHeight*0.4;
+	}
+	
+	this.redefineMouthColliderPropertiesForFacingLeft = function()
+	{
+		this.mouthColliderBoxX = this.smallAntX - this.smallAntWidth*0.15;
+		this.mouthColliderBoxY = this.smallAntY + this.smallAntHeight*0.25;
+		this.mouthColliderBoxWidth = this.smallAntWidth*0.4;
+		this.mouthColliderBoxHeight = this.smallAntHeight*0.4;
+	}
+	
+	this.redefineMouthColliderPropertiesForFacingUpRight = function()
+	{
+		this.mouthColliderBoxX = this.smallAntX + this.smallAntWidth*0.8;
+		this.mouthColliderBoxY = this.smallAntY + this.smallAntHeight*0.2;
+		this.mouthColliderBoxWidth = this.smallAntWidth*0.4;
+		this.mouthColliderBoxHeight = this.smallAntHeight*0.4;
+	}
+	
+	this.redefineMouthColliderPropertiesForFacingUpLeft = function()
+	{
+		this.mouthColliderBoxX = this.smallAntX;
+		this.mouthColliderBoxY = this.smallAntY + this.smallAntHeight*0.1;
+		this.mouthColliderBoxWidth = this.smallAntWidth*0.4;
+		this.mouthColliderBoxHeight = this.smallAntHeight*0.4;
+	}
+	
+	this.redefineMouthColliderPropertiesForFacingDownRight = function()
+	{
+		this.mouthColliderBoxX = this.smallAntX + this.smallAntWidth*0.6;
+		this.mouthColliderBoxY = this.smallAntY + (this.smallAntHeight * 0.65);
+		this.mouthColliderBoxWidth = this.smallAntWidth*0.4;
+		this.mouthColliderBoxHeight = this.smallAntHeight*0.4;
+	}
+	
+	this.redefineMouthColliderPropertiesForFacingDownLeft = function()
+	{
+		this.mouthColliderBoxX = this.smallAntX - this.smallAntWidth*0.15;
+		this.mouthColliderBoxY = this.smallAntY + (this.smallAntHeight * 0.5);
+		this.mouthColliderBoxWidth = this.smallAntWidth*0.4;
+		this.mouthColliderBoxHeight = this.smallAntHeight*0.4;
+	}
+	
 	
 
 	this.mouthColliderBoxX = this.smallAntX + this.smallAntWidth*0.45;
@@ -609,8 +717,80 @@ function ParentAntObject()
 		{
 			this.shouldBeMovingLeftOrRight = true;
 			this.shouldBeMovingUpOrDown = true;
+			if (this.smallAntMidPoint.x < this.currentMovementTargetFromInput.x)//ant should move to the right
+			{
+				this.smallAntMovingRight = true;
+				console.log('moving right triggered');
+				this.smallAntMovingLeft = false;
+			} 
+			else if (this.smallAntMidPoint.x > this.currentMovementTargetFromInput.x) //ant should move to the left
+			{
+				this.smallAntMovingLeft = true;
+				console.log('moving left triggered');
+				this.smallAntMovingRight = false;
+			}
+			
+			if (this.smallAntMidPoint.y < this.currentMovementTargetFromInput.y)//ant should move down
+			{
+				console.log('moving down triggered');
+				this.smallAntMovingDown = true;
+				this.smallAntMovingUp = false;
+			}
+			else if (this.smallAntMidPoint.y > this.currentMovementTargetFromInput.y)//ant should move up
+			{
+				this.smallAntMovingUp = true;
+				console.log('moving up triggered');
+				this.smallAntMovingDown = false;
+			}
 		}
+
+				if (this.smallAntMovingUp && !this.smallAntMovingRight && !this.smallAntMovingLeft && !this.smallAntMovingDown)
+				{
+					this.currentSmallAntDirection = 'up';
+					this.redefineMouthColliderPropertiesForFacingUp();
+				}
+				else if (this.smallAntMovingUp && this.smallAntMovingLeft && !this.smallAntMovingRight && !this.smallAntMovingRight)
+				{
+					this.currentSmallAntDirection = 'upLeft';
+					this.redefineMouthColliderPropertiesForFacingUpLeft();
+				}
+				else if (this.smallAntMovingUp && this.smallAntMovingRight && !this.smallAntMovingDown && !this.smallAntMovingLeft)
+				{
+					this.currentSmallAntDirection = 'upRight';
+					this.redefineMouthColliderPropertiesForFacingUpRight();
+				}
+				else if (this.smallAntMovingRight && !this.smallAntMovingUp && !this.smallAntMovingDown && !this.smallAntMovingLeft)
+				{
+					this.currentSmallAntDirection = 'right';
+					this.redefineMouthColliderPropertiesForFacingRight();
+				}
+				else if (this.smallAntMovingDown && !this.smallAntMovingRight && !this.smallAntMovingLeft && !this.smallAntMovingUp)
+				{
+					this.currentSmallAntDirection = 'down';
+					this.redefineMouthColliderPropertiesForFacingDown();
+				}
+				else if (this.smallAntMovingDown && this.smallAntMovingLeft && !this.smallAntMovingUp && !this.smallAntMovingRight)
+				{
+					this.currentSmallAntDirection = 'downLeft';
+					this.redefineMouthColliderPropertiesForFacingDownLeft();
+				}
+				else if (this.smallAntMovingDown && this.smallAntMovingRight && !this.smallAntMovingUp && !this.smallAntMovingLeft)
+				{
+					this.currentSmallAntDirection = 'downRight';
+					this.redefineMouthColliderPropertiesForFacingDownRight();
+				}
+				else if (this.smallAntMovingLeft && !this.smallAntMovingDown && !this.smallAntMovingUp && !this.smallAntMovingRight)
+				{
+					this.currentSmallAntDirection = 'left';
+					this.redefineMouthColliderPropertiesForFacingLeft();
+				}
+				else 
+				{
+					this.currentSmallAntDirection = this.previousSmallAntDirection;
+				}
+				console.log('this.currentSmallAntDirection: ' + this.currentSmallAntDirection);
 	}
+
 	this.handleMouseDown = function()
 	{
 		this.currentMovementTargetFromInput = mouseDownCoordinates;
@@ -622,6 +802,80 @@ function ParentAntObject()
 			this.shouldBeMovingLeftOrRight = true;
 			this.shouldBeMovingUpOrDown = true;
 		}
+
+
+		if (this.smallAntMidPoint.x < this.currentMovementTargetFromInput.x)//ant should move to the right
+		{
+			this.smallAntMovingRight = true;
+			console.log('moving right triggered');
+			this.smallAntMovingLeft = false;
+		} 
+		else if (this.smallAntMidPoint.x > this.currentMovementTargetFromInput.x) //ant should move to the left
+		{
+			this.smallAntMovingLeft = true;
+			console.log('moving left triggered');
+			this.smallAntMovingRight = false;
+		}
+		
+
+		if (this.smallAntMidPoint.y < this.currentMovementTargetFromInput.y)//ant should move down
+		{
+			console.log('moving down triggered');
+			this.smallAntMovingDown = true;
+			this.smallAntMovingUp = false;
+		}
+		else if (this.smallAntMidPoint.y > this.currentMovementTargetFromInput.y)//ant should move up
+		{
+			this.smallAntMovingUp = true;
+			console.log('moving up triggered');
+			this.smallAntMovingDown = false;
+		}
+
+				if (this.smallAntMovingUp && !this.smallAntMovingRight && !this.smallAntMovingLeft && !this.smallAntMovingDown)
+				{
+					this.currentSmallAntDirection = 'up';
+					this.redefineMouthColliderPropertiesForFacingUp();
+				}
+				else if (this.smallAntMovingUp && this.smallAntMovingLeft && !this.smallAntMovingRight && !this.smallAntMovingRight)
+				{
+					this.currentSmallAntDirection = 'upLeft';
+					this.redefineMouthColliderPropertiesForFacingUpLeft();
+				}
+				else if (this.smallAntMovingUp && this.smallAntMovingRight && !this.smallAntMovingDown && !this.smallAntMovingLeft)
+				{
+					this.currentSmallAntDirection = 'upRight';
+					this.redefineMouthColliderPropertiesForFacingUpRight();
+				}
+				else if (this.smallAntMovingRight && !this.smallAntMovingUp && !this.smallAntMovingDown && !this.smallAntMovingLeft)
+				{
+					this.currentSmallAntDirection = 'right';
+					this.redefineMouthColliderPropertiesForFacingRight();
+				}
+				else if (this.smallAntMovingDown && !this.smallAntMovingRight && !this.smallAntMovingLeft && !this.smallAntMovingUp)
+				{
+					this.currentSmallAntDirection = 'down';
+					this.redefineMouthColliderPropertiesForFacingDown();
+				}
+				else if (this.smallAntMovingDown && this.smallAntMovingLeft && !this.smallAntMovingUp && !this.smallAntMovingRight)
+				{
+					this.currentSmallAntDirection = 'downLeft';
+					this.redefineMouthColliderPropertiesForFacingDownLeft();
+				}
+				else if (this.smallAntMovingDown && this.smallAntMovingRight && !this.smallAntMovingUp && !this.smallAntMovingLeft)
+				{
+					this.currentSmallAntDirection = 'downRight';
+					this.redefineMouthColliderPropertiesForFacingDownRight();
+				}
+				else if (this.smallAntMovingLeft && !this.smallAntMovingDown && !this.smallAntMovingUp && !this.smallAntMovingRight)
+				{
+					this.currentSmallAntDirection = 'left';
+					this.redefineMouthColliderPropertiesForFacingLeft();
+				}
+				else 
+				{
+					this.currentSmallAntDirection = this.previousSmallAntDirection;
+				}
+				console.log('this.currentSmallAntDirection: ' + this.currentSmallAntDirection);
 	}
 
 	this.update = function()
