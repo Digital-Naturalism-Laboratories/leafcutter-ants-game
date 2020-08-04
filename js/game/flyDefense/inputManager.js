@@ -1,46 +1,6 @@
 function InputManager()
 {
-	this.mouseCoordinates = {x:undefined,y:undefined};
-	this.touchCoordinates = {x:undefined,y:undefined};
 	this.debugOn = false;
-
-    this.calculateMousePosition = function(builtInDocumentEventObject)
-    {
-	    var rect = defenseGame.canvas.getBoundingClientRect();
-	    var root = document.documentElement;
-	    var x = builtInDocumentEventObject.clientX - rect.left - root.scrollLeft;
-	    var y = builtInDocumentEventObject.clientY - rect.top - root.scrollTop;
-	    defenseGame.inputManager.mouseCoordinates.x = x;
-	    defenseGame.inputManager.mouseCoordinates.y = y;
-  	}
-
-  	this.calculateTouchPosition = function(builtInDocumentEventObject)
-  	{
-  		var rect = defenseGame.canvas.getBoundingClientRect();
-	    var root = document.documentElement;
-	    var touch = builtInDocumentEventObject.touches[0];
-	    var x = touch.clientX - rect.left - root.scrollLeft;
-	    var y = touch.clientY - rect.top - root.scrollTop;
-	    defenseGame.inputManager.touchCoordinates.x = x;
-	    defenseGame.inputManager.touchCoordinates.y = y;
-  	}
-
-  	this.touchstart = function(builtInDocumentEventObject)
-  	{
-  		builtInDocumentEventObject.preventDefault();
-  		defenseGame.inputManager.calculateTouchPosition(builtInDocumentEventObject);
-  		console.log('touchX: ' + defenseGame.inputManager.touchCoordinates.x);
-		console.log('touchY: ' + defenseGame.inputManager.touchCoordinates.y);
-
-  		defenseGame.parentAntObject.handleTouchstart();
-  	}
-
-  	this.mousemove = function(builtInDocumentEventObject)
-  	{
-  		// builtInDocumentEventObject.preventDefault();
-  		// defenseGame.inputManager.calculateMousePosition(builtInDocumentEventObject);
-  	}
-
   	this.moveLeftIsBeingHeld = false;
   	this.moveRightIsBeingHeld = false;
   	this.swatIsBeingHeld = false;
@@ -48,41 +8,37 @@ function InputManager()
 	{
 		builtInDocumentEventObject.preventDefault();
 
-		defenseGame.inputManager.calculateMousePosition(builtInDocumentEventObject);
-		console.log('mouseX: ' + defenseGame.inputManager.mouseCoordinates.x);
-		console.log('mouseY: ' + defenseGame.inputManager.mouseCoordinates.y);
-
 		if (this.moveLeftIsBeingHeld)
 		{
-			if (this.mouseCoordinates.x > defenseGame.canvas.width/3)
+			if (touchPos[0].x - canvasStartX > defenseGame.canvas.width/3)
 			{
 				return;
 			}
 		}
 		else if (this.swatIsBeingHeld)
 		{
-			if (this.mouseCoordinates.x < defenseGame.canvas.width/3 || this.mouseCoordinates.x > defenseGame.canvas.width*0.66)
+			if (touchPos[0].x - canvasStartX < defenseGame.canvas.width/3 || touchPos[0].x - canvasStartX > defenseGame.canvas.width*0.66)
 			{
 				return;
 			}
 		}
 		else if (this.moveRightIsBeingHeld)
 		{
-			if (this.mouseCoordinates.x < defenseGame.canvas.width*0.66)
+			if (touchPos[0].x - canvasStartX < defenseGame.canvas.width*0.66)
 			{
 				return;
 			}
 		}
 
-		if (defenseGame.inputManager.mouseCoordinates.x < defenseGame.canvas.width/3)
+		if (touchPos[0].x - canvasStartX < defenseGame.canvas.width/3)
 		{
 			defenseGame.inputManager.moveLeftIsBeingHeld = true;
 		}
-	    else if (defenseGame.inputManager.mouseCoordinates.x > defenseGame.canvas.width/3 && defenseGame.inputManager.mouseCoordinates.x < defenseGame.canvas.width*0.66)
+	    else if (touchPos[0].x - canvasStartX > defenseGame.canvas.width/3 && touchPos[0].x - canvasStartX < defenseGame.canvas.width*0.66)
 		{
 			defenseGame.inputManager.swatIsBeingHeld = true;
 		}
-		else if (defenseGame.inputManager.mouseCoordinates.x > defenseGame.canvas.width*0.66)
+		else if (touchPos[0].x - canvasStartX > defenseGame.canvas.width*0.66)
 		{
 			defenseGame.inputManager.moveRightIsBeingHeld = true;
 		}
