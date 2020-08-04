@@ -84,7 +84,7 @@ class Ant
     draw(deltatime)
     {
         for(let i = 0; i < this.cutPointLines.length-1; i++)
-            drawLine(renderer, this.cutPointLines[i], this.cutPointLines[i+1], bgHEX);
+            drawLine(renderer, this.cutPointLines[i], this.cutPointLines[i+1], "#000000");
         this.bodySprite.drawScRot();
         this.leadingJawSprite.drawScRot();
         this.cuttingJawSprite.drawScRot();
@@ -204,6 +204,7 @@ class Ant
 
     rotationMechanic(deltaTime)
     {
+        var bgValueBorder = 100;
         do
         {
             if(!this.alternateRotation)
@@ -231,7 +232,8 @@ class Ant
                 this.cutPointTimer -= deltaTime;
             }
         }
-        while ((pixelData[0] == bgRGB[0] && pixelData[1] == bgRGB[1] && pixelData[2] == bgRGB[2])
+        //while ((pixelData[0] == bgRGB[0] && pixelData[1] == bgRGB[1] && pixelData[2] == bgRGB[2])
+        while ((pixelData[0] < bgValueBorder && pixelData[1] < bgValueBorder && pixelData[2] < bgValueBorder)
         || (this.cutPoint.x < 0 || this.cutPoint.y < 0 || this.cutPoint.x > gameWidth || this.cutPoint.y > gameHeight));
     }
 }

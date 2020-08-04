@@ -1,24 +1,38 @@
 
+var _getPoints = false;
+
 class Leaf
 {
     constructor()
     {
-        this.sprite = new Sprite(tr(vec2(256*pixelSize, 256*pixelSize), vec2(pixelSize, pixelSize)), new ImageObject("images/leaf.png", vec2(512,512)));
+        this.leafSprite = new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(pixelSize*2, pixelSize*2)),
+            new ImageObject("images/uncutLeaf.png", vec2(gameWidth, gameHeight)));
+        this.stemSprite = new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(pixelSize*2, pixelSize*2)),
+            new ImageObject("images/leafToCutStem.png", vec2(gameWidth, gameHeight)));
+        this.bgSprite = new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(pixelSize*2, pixelSize*2)),
+            new ImageObject("images/leafCuttingBG.png", vec2(gameWidth, gameHeight)));
         this.points = [];
         this.borderPoints = [];
         this.updatePoints = true;
         this.voidAreas = [];
+
+        this.leafCanvas = document.createElement('canvas');
+        this.leafCanvas.width = gameWidth;
+        this.leafCanvas.height = gameHeight;
+        this.leafCanvasRenderer = this.leafCanvas.getContext("2d");
     }
 
     update()
     {
+        this.winCondition();
     }
 
     draw()
     {
-        this.sprite.drawSc();
-        this.drawVoidAreas();
-        this.getPoints(pixelSize*16);
+        this.bgSprite.drawSc();
+        this.stemSprite.drawSc();
+        this.updateLeafSprite();
+        this.leafSprite.drawSc();
         this.drawPoints(false);
     }
 
@@ -41,8 +55,10 @@ class Leaf
     getPoints(borderTestResolutionFactor)
     {
         var borderPixelComparionDistance = borderTestResolutionFactor;
-        if(this.updatePoints)
+        //if(this.updatePoints)
         {
+            var bgValueBorder = 100;
+
             var prevPoints = this.points.length;
             this.points = [];
             this.borderPoints = [];
@@ -50,24 +66,20 @@ class Leaf
             {
                 for(let x = borderPixelComparionDistance; x < gameWidth-borderPixelComparionDistance; x+=borderTestResolutionFactor)
                 {
-                    var thisPixel = renderer.getImageData(x, y, 1, 1).data;
-                    var leftPixel = renderer.getImageData(x-borderPixelComparionDistance, y, 1, 1).data;
-                    var rightPixel = renderer.getImageData(x+borderPixelComparionDistance, y, 1, 1).data;
-                    var upPixel = renderer.getImageData(x, y-borderPixelComparionDistance, 1, 1).data;
-                    var downPixel = renderer.getImageData(x, y+borderPixelComparionDistance, 1, 1).data;
-
-                    //if the pixel is not sky blue
-                    if(thisPixel[0] != bgRGB[0] || thisPixel[1] != bgRGB[1] || thisPixel[2] != bgRGB[2])
+                    var thisPixel = spritesRenderer.getImageData(x, y, 1, 1).data;
+                    var leftPixel = spritesRenderer.getImageData(x-borderPixelComparionDistance, y, 1, 1).data;
+                    var rightPixel = spritesRenderer.getImageData(x+borderPixelComparionDistance, y, 1, 1).data;
+                    var upPixel = spritesRenderer.getImageData(x, y-borderPixelComparionDistance, 1, 1).data;
+                    var downPixel = spritesRenderer.getImageData(x, y+borderPixelComparionDistance, 1, 1).data;
+                    if(!(thisPixel[0] < bgValueBorder && thisPixel[1] < bgValueBorder && thisPixel[2] < bgValueBorder))
                     {
-                        //...and any of the surrounding pixels is sky blue
                         if(
-                            (leftPixel[0] == bgRGB[0] && leftPixel[1] == bgRGB[1] && leftPixel[2] == bgRGB[2])
-                            || (rightPixel[0] == bgRGB[0] && rightPixel[1] == bgRGB[1] && rightPixel[2] == bgRGB[2])
-                            || (upPixel[0] == bgRGB[0] && upPixel[1] == bgRGB[1] && upPixel[2] == bgRGB[2])
-                            || (downPixel[0] == bgRGB[0] && downPixel[1] == bgRGB[1] && downPixel[2] == bgRGB[2])
+                            (leftPixel[0] < bgValueBorder && leftPixel[1] < bgValueBorder && leftPixel[2] < bgValueBorder)
+                            || (rightPixel[0] < bgValueBorder && rightPixel[1] < bgValueBorder && rightPixel[2] < bgValueBorder)
+                            || (upPixel[0] < bgValueBorder && upPixel[1] < bgValueBorder && upPixel[2] < bgValueBorder)
+                            || (downPixel[0] < bgValueBorder && downPixel[1] < bgValueBorder && downPixel[2] < bgValueBorder)
                         )
                         {
-                            //then, it is a border pixel.
                             this.borderPoints.push(vec2(x,y));
                         }
 
@@ -85,15 +97,59 @@ class Leaf
     {
         for(let i = 0; i < this.voidAreas.length; i++)
         {
-            renderer.fillStyle = "#3aade7";
-            renderer.beginPath();
+            spritesRenderer.fillStyle = "#000000";
+            spritesRenderer.beginPath();
             if(this.voidAreas[i].length > 1)
             {
-                renderer.moveTo(this.voidAreas[i][0].x, this.voidAreas[i][0].y);
+                spritesRenderer.moveTo(this.voidAreas[i][0].x, this.voidAreas[i][0].y);
                 for(let n = 0; n < this.voidAreas[i].length; n++)
-                    renderer.lineTo(this.voidAreas[i][n].x, this.voidAreas[i][n].y)
+                    spritesRenderer.lineTo(this.voidAreas[i][n].x, this.voidAreas[i][n].y)
             }
-            renderer.fill();
+            spritesRenderer.fill();
+        }
+    }
+
+    updateLeafSprite()
+    {
+        if(this.updatePoints)
+        {
+            spritesRenderer = this.leafCanvasRenderer;
+
+            this.leafCanvasRenderer.globalCompositeOperation = "source-over";
+            this.leafSprite.drawSc();
+
+            this.leafCanvasRenderer.globalCompositeOperation = "destination-out";
+            this.drawVoidAreas();
+
+            var newLeafImage = new Image();
+            newLeafImage.src = this.leafCanvas.toDataURL("image/png", 1);
+            newLeafImage.width = gameWidth/2.75;
+            newLeafImage.height = gameHeight/2.75;
+            this.leafSprite.imageObject.image = newLeafImage;
+
+            this.leafSprite.imageObject.image.onload = function() {
+                _getPoints = true;
+            }
+
+            spritesRenderer = renderer;
+
+            this.updatePoints = false;
+        }
+
+        if(_getPoints)
+        {
+            this.leafSprite.drawSc();
+            this.getPoints(pixelSize*16);
+            _getPoints = false;
+        }
+    }
+
+    winCondition()
+    {
+        if((this.borderPoints.length <= 10 || this.borderPoints.length == this.points.length)
+        && leafcuttingTimeLeft > 0)
+        {
+            leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_WIN];
         }
     }
 }
