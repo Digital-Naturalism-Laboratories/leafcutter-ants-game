@@ -21,7 +21,7 @@ const PLAYER_DIST_FROM_CENTER_BEFORE_CAMERA_PAN_X = 10;
 
 
 function setupFlightGameUI() {
-  flyingQueen = new FlyingQueen(50, 250, true);
+  flyingQueen = new FlyingQueen(0,0,true);
 
   for (i = 0; i < flyingMaleCount; i++) {
     flyingMales[i] = new FlyingMale();
