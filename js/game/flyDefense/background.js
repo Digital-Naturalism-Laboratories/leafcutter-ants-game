@@ -92,16 +92,18 @@ function Background()
 		{
 			if (defenseGame.timeLeft < 31 && defenseGame.timeLeft > 0)
 			{
-				this.groundImage1xCoordinate-=4;
-				this.groundImage2xCoordinate-=4;
-				this.pheremoneStrip1ImageXCoordinate-=4;
-				this.pheremoneStrip2ImageXCoordinate-=4;
-				this.grassLayerImage1XCoordinate-=3;
-				this.grassLayerImage2XCoordinate-=3;
-				this.leavesLayerImage1XCoordinate-=2;
-				this.leavesLayerImage2XCoordinate-=2;
-				this.forageLayerImage1XCoordinate--;
-				this.forageLayerImage2XCoordinate--;
+				
+				this.forageLayerImage1XCoordinate-=gameWidth*0.00025;
+				this.forageLayerImage2XCoordinate-=gameWidth*0.00025;
+				this.grassLayerImage1XCoordinate-=gameWidth*0.0005;
+				this.grassLayerImage2XCoordinate-=gameWidth*0.0005;
+				this.leavesLayerImage1XCoordinate-=gameWidth*0.00075;
+				this.leavesLayerImage2XCoordinate-=gameWidth*0.00075;
+				this.groundImage1xCoordinate-=gameWidth*0.001;
+				this.groundImage2xCoordinate-=gameWidth*0.001;
+				this.pheremoneStrip1ImageXCoordinate-=renderer.canvas.width*0.001;
+				this.pheremoneStrip2ImageXCoordinate-=renderer.canvas.width*0.001;
+				
 			}
 
 			if (!this.stuckOnPheremoneGap)
@@ -273,7 +275,7 @@ function PheremoneGap(x)
 	{
 		if (!defenseGame.background.stuckOnPheremoneGap && defenseGame.timeLeft > 0)
 		{
-			this.x -= 1;
+			this.x -= renderer.canvas.width*0.001;
 		}
 	}
 
