@@ -33,7 +33,7 @@ class Leaf
         this.stemSprite.drawSc();
         this.updateLeafSprite();
         this.leafSprite.drawSc();
-        this.drawPoints(false);
+        //this.drawPoints(false);
     }
 
     drawPoints(onlyBorders)
@@ -55,42 +55,38 @@ class Leaf
     getPoints(borderTestResolutionFactor)
     {
         var borderPixelComparionDistance = borderTestResolutionFactor;
-        //if(this.updatePoints)
+        var bgValueBorder = 100;
+
+        var prevPoints = this.points.length;
+        this.points = [];
+        this.borderPoints = [];
+        for(let y = borderPixelComparionDistance; y < gameHeight-borderPixelComparionDistance; y+=borderTestResolutionFactor)
         {
-            var bgValueBorder = 100;
-
-            var prevPoints = this.points.length;
-            this.points = [];
-            this.borderPoints = [];
-            for(let y = borderPixelComparionDistance; y < gameHeight-borderPixelComparionDistance; y+=borderTestResolutionFactor)
+            for(let x = borderPixelComparionDistance; x < gameWidth-borderPixelComparionDistance; x+=borderTestResolutionFactor)
             {
-                for(let x = borderPixelComparionDistance; x < gameWidth-borderPixelComparionDistance; x+=borderTestResolutionFactor)
+                var thisPixel = spritesRenderer.getImageData(x, y, 1, 1).data;
+                var leftPixel = spritesRenderer.getImageData(x-borderPixelComparionDistance, y, 1, 1).data;
+                var rightPixel = spritesRenderer.getImageData(x+borderPixelComparionDistance, y, 1, 1).data;
+                var upPixel = spritesRenderer.getImageData(x, y-borderPixelComparionDistance, 1, 1).data;
+                var downPixel = spritesRenderer.getImageData(x, y+borderPixelComparionDistance, 1, 1).data;
+                if(!(thisPixel[0] < bgValueBorder && thisPixel[1] < bgValueBorder && thisPixel[2] < bgValueBorder))
                 {
-                    var thisPixel = spritesRenderer.getImageData(x, y, 1, 1).data;
-                    var leftPixel = spritesRenderer.getImageData(x-borderPixelComparionDistance, y, 1, 1).data;
-                    var rightPixel = spritesRenderer.getImageData(x+borderPixelComparionDistance, y, 1, 1).data;
-                    var upPixel = spritesRenderer.getImageData(x, y-borderPixelComparionDistance, 1, 1).data;
-                    var downPixel = spritesRenderer.getImageData(x, y+borderPixelComparionDistance, 1, 1).data;
-                    if(!(thisPixel[0] < bgValueBorder && thisPixel[1] < bgValueBorder && thisPixel[2] < bgValueBorder))
+                    if(
+                        (leftPixel[0] < bgValueBorder && leftPixel[1] < bgValueBorder && leftPixel[2] < bgValueBorder)
+                        || (rightPixel[0] < bgValueBorder && rightPixel[1] < bgValueBorder && rightPixel[2] < bgValueBorder)
+                        || (upPixel[0] < bgValueBorder && upPixel[1] < bgValueBorder && upPixel[2] < bgValueBorder)
+                        || (downPixel[0] < bgValueBorder && downPixel[1] < bgValueBorder && downPixel[2] < bgValueBorder)
+                    )
                     {
-                        if(
-                            (leftPixel[0] < bgValueBorder && leftPixel[1] < bgValueBorder && leftPixel[2] < bgValueBorder)
-                            || (rightPixel[0] < bgValueBorder && rightPixel[1] < bgValueBorder && rightPixel[2] < bgValueBorder)
-                            || (upPixel[0] < bgValueBorder && upPixel[1] < bgValueBorder && upPixel[2] < bgValueBorder)
-                            || (downPixel[0] < bgValueBorder && downPixel[1] < bgValueBorder && downPixel[2] < bgValueBorder)
-                        )
-                        {
-                            this.borderPoints.push(vec2(x,y));
-                        }
-
-                        this.points.push(vec2(x,y));
+                        this.borderPoints.push(vec2(x,y));
                     }
+
+                    this.points.push(vec2(x,y));
                 }
             }
-            var leafPointsRemoved = prevPoints - this.points.length;
-            if(leafPointsRemoved > 0) leafcuttingScore += leafPointsRemoved * 10;
-            this.updatePoints = false;
         }
+        var leafPointsRemoved = prevPoints - this.points.length;
+        if(leafPointsRemoved > 0) leafcuttingScore += leafPointsRemoved * 10;
     }
 
     drawVoidAreas()
@@ -139,7 +135,7 @@ class Leaf
         if(_getPoints)
         {
             this.leafSprite.drawSc();
-            this.getPoints(pixelSize*16);
+            this.getPoints(pixelSize*24);
             _getPoints = false;
         }
     }

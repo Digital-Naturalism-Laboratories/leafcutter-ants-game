@@ -12,7 +12,7 @@ class Ant
     {
         this.leaf = leaf;
 
-        this.bodySprite = new Sprite(tr(vec2(180 * pixelSize, 420 * pixelSize),vec2(pixelSize,pixelSize)),
+        this.bodySprite = new Sprite(tr(vec2(-40 * pixelSize, 540 * pixelSize),vec2(pixelSize,pixelSize)),
             new ImageObject("images/body.png", vec2(64,64)));
         this.bodySprite.transform.rotation = -Math.PI/4;
         this.leadingJawSprite = new Sprite(tr(vec2(),vec2(pixelSize,pixelSize)),
@@ -35,8 +35,12 @@ class Ant
         this.cutPointDelay = 200.0;
         this.cutPointTimer = this.cutPointDelay;
 
-        this.destinationPoint = this.bodySprite.transform.position;
+        this.forcedDestination = true;
+        this.destinationPoint = vec2(60 * pixelSize, 360 * pixelSize);
         this.pointIndex = -1;
+
+        this.disabled = false;
+        this.disabling = false;
 
         this.noTouchCounter = 0;
 
@@ -45,46 +49,73 @@ class Ant
         this.updatingJawTransform();
     }
 
+    setSecondAnt(secondAnt)
+    {
+        this.secondAnt = secondAnt;
+    }
+
     event()
     {
-        if(isTouched && this.noTouchCounter > 10)
+        if(!this.disabled)
         {
-            this.noTouchCounter = 0;
-            this.leafBorderTouchInput();
-            this.jawButtonsInput();
-        }
-        else
-        {
-            this.noTouchCounter++;
+            if(isTouched && this.noTouchCounter > 10)
+            {
+                this.noTouchCounter = 0;
+                this.leafBorderTouchInput();
+                this.jawButtonsInput();
+            }
+            else
+            {
+                this.noTouchCounter++;
+            }
         }
     }
 
     update(deltaTime)
     {
-        if(!this.rotationMode && this.pointIndex > -1 && this.destinationPoint.distance(this.bodySprite.transform.position) > 5)
+        if(!this.disabled)
         {
-            this.bodySprite.transform.rotation = this.destinationPoint.angle(this.bodySprite.transform.position);
-            moveInDir(this.bodySprite, 2 * pixelSize);
-            this.updatingJawTransform();
-        }
-        else if(!this.rotationMode && this.pointIndex > -1)
-        {
-            this.rotationMode = true;
-            this.cutPointLines = [];
-            this.cutPointTimer = this.cutPointDelay;
-            leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_JAWS];
-        }
-        else if(this.rotationMode && this.cutTimer > 0)
-        {
-            this.rotationMechanic(deltaTime);
-            this.cutTimer -= deltaTime;
+            if(!this.rotationMode && (this.pointIndex > -1 || this.forcedDestination)
+            && this.destinationPoint.distance(this.bodySprite.transform.position) > 5)
+            {
+                this.bodySprite.transform.rotation = this.destinationPoint.angle(this.bodySprite.transform.position);
+                moveInDir(this.bodySprite, 2 * pixelSize);
+                this.updatingJawTransform();
+            }
+            else if(this.forcedDestination)
+            {
+                this.forcedDestination = false;
+                this.pointIndex = -1;
+                if(this.disabling)
+                {
+                    this.disabled = true;
+                    this.disabling = false;
+                }
+            }
+            else if(!this.rotationMode && this.pointIndex > -1)
+            {
+                this.rotationMode = true;
+                this.cutPointLines = [];
+                this.cutPointTimer = this.cutPointDelay;
+                leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_JAWS];
+            }
+            else if(this.rotationMode && this.cutTimer > 0)
+            {
+                this.rotationMechanic(deltaTime);
+                this.cutTimer -= deltaTime;
+            }
         }
     }
 
     draw(deltatime)
     {
         for(let i = 0; i < this.cutPointLines.length-1; i++)
-            drawLine(renderer, this.cutPointLines[i], this.cutPointLines[i+1], "#000000");
+        {
+            var pixelData1 = renderer.getImageData(this.cutPointLines[i].x, this.cutPointLines[i].y, 1, 1).data;
+            var pixelData2 = renderer.getImageData(this.cutPointLines[i+1].x, this.cutPointLines[i+1].y, 1, 1).data;
+            if(pixelData1[1] >= 70 && pixelData2[1] >= 70)
+                drawLine(renderer, this.cutPointLines[i], this.cutPointLines[i+1], "#000000");
+        }
         this.bodySprite.drawScRot();
         this.leadingJawSprite.drawScRot();
         this.cuttingJawSprite.drawScRot();
@@ -147,22 +178,33 @@ class Ant
         this.leaf.updatePoints = true;
         this.alternateRotation = !this.alternateRotation;
         leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_SUCCESS];
+
+        this.forcedDestination = true;
+        this.destinationPoint = vec2(-40 * pixelSize, 540 * pixelSize);
+        this.disabling = true;
+
+        this.secondAnt.disabled = false;
+        this.secondAnt.forcedDestination = true;
+        this.secondAnt.destinationPoint = vec2(60 * pixelSize, 360 * pixelSize);
     }
 
     leafBorderTouchInput()
     {
-        var lastDist = 999999.9;
-        for(let i = 0; i < this.leaf.borderPoints.length; i++)
+        if(!this.forcedDestination)
         {
-            var dist = this.leaf.borderPoints[i].distance(vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY));
-            if(dist < lastDist)
+            var lastDist = 999999.9;
+            for(let i = 0; i < this.leaf.borderPoints.length; i++)
             {
-                lastDist = dist;
-
-                if(dist < this.leafBorderTouchMinimumDistance)
+                var dist = this.leaf.borderPoints[i].distance(vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY));
+                if(dist < lastDist)
                 {
-                    this.destinationPoint = this.leaf.borderPoints[i];
-                    this.pointIndex = i;
+                    lastDist = dist;
+
+                    if(dist < this.leafBorderTouchMinimumDistance)
+                    {
+                        this.destinationPoint = this.leaf.borderPoints[i];
+                        this.pointIndex = i;
+                    }
                 }
             }
         }
