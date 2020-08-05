@@ -1,8 +1,14 @@
 function Background()
 {
 	
-	this.groundImage1 = undefined;
-	this.groundImage2 = undefined;
+	this.groundLayerImage1 = undefined;
+	this.groundLayerImage2 = undefined;
+	this.grassLayerImage1 = undefined;
+	this.grassLayerImage2 = undefined;
+	this.leavesLayerImage1 = undefined;
+	this.leavesLayerImage2 = undefined;
+	this.forageLayerImage1 = undefined;
+	this.forageLayerImage2 = undefined;
 	this.pheremoneStrip1Image = undefined;
 	this.pheremoneStrip2Image = undefined;
 	this.currentIncomingPheremoneStripImage = undefined;
@@ -31,8 +37,15 @@ function Background()
 	this.initialize = function()
 	{
 		
-		this.groundImage1 = groundBackgroundImage;
-		this.groundImage2 = groundBackground2Image;
+		this.groundLayerImage1 = groundLayerImage1;
+		this.groundLayerImage2 = groundLayerImage2;
+		this.grassLayerImage1 = grassLayerImage1;
+		this.grassLayerImage2 = grassLayerImage2;
+		this.leavesLayerImage1 = leavesLayerImage1;
+		this.leavesLayerImage2 = leavesLayerImage2;
+		this.forageLayerImage1 = forageLayerImage1;
+		this.forageLayerImage2 = forageLayerImage2;
+			
 
 		this.pheremoneStrip1Image = pheremoneStripImage1;
 		this.pheremoneStrip2Image = pheremoneStripImage2;
@@ -43,6 +56,12 @@ function Background()
 
 		this.groundImage1xCoordinate = 0;
 		this.groundImage2xCoordinate = renderer.canvas.width;
+		this.grassLayerImage1XCoordinate = 0;
+		this.grassLayerImage2XCoordinate = renderer.canvas.width;
+		this.leavesLayerImage1XCoordinate = 0;
+		this.leavesLayerImage2XCoordinate = renderer.canvas.width;
+		this.forageLayerImage1XCoordinate = 0;
+		this.forageLayerImage2XCoordinate = renderer.canvas.width;
 
 		this.pheremoneStrip1ImageXCoordinate = 0;
 
@@ -73,10 +92,16 @@ function Background()
 		{
 			if (defenseGame.timeLeft < 31 && defenseGame.timeLeft > 0)
 			{
-				this.groundImage1xCoordinate--;
-				this.groundImage2xCoordinate--;
-				this.pheremoneStrip1ImageXCoordinate--;
-				this.pheremoneStrip2ImageXCoordinate--;
+				this.groundImage1xCoordinate-=4;
+				this.groundImage2xCoordinate-=4;
+				this.pheremoneStrip1ImageXCoordinate-=4;
+				this.pheremoneStrip2ImageXCoordinate-=4;
+				this.grassLayerImage1XCoordinate-=3;
+				this.grassLayerImage2XCoordinate-=3;
+				this.leavesLayerImage1XCoordinate-=2;
+				this.leavesLayerImage2XCoordinate-=2;
+				this.forageLayerImage1XCoordinate--;
+				this.forageLayerImage2XCoordinate--;
 			}
 
 			if (!this.stuckOnPheremoneGap)
@@ -101,6 +126,30 @@ function Background()
 				if(this.pheremoneStrip2ImageXCoordinate + gameWidth < 0)
 				{
 					this.pheremoneStrip2ImageXCoordinate = this.pheremoneStrip1ImageXCoordinate + renderer.canvas.width*1.01 + this.pheremoneGapWidth;
+				}
+				if (this.grassLayerImage1XCoordinate + gameWidth < 0)
+				{
+					this.grassLayerImage1XCoordinate = gameWidth;
+				}
+				if (this.grassLayerImage2XCoordinate + gameWidth < 0)
+				{
+					this.grassLayerImage2XCoordinate = gameWidth;
+				}
+				if (this.leavesLayerImage1XCoordinate + gameWidth < 0)
+				{
+					this.leavesLayerImage1XCoordinate = gameWidth;
+				}
+				if (this.leavesLayerImage2XCoordinate + gameWidth < 0)
+				{
+					this.leavesLayerImage2XCoordinate = gameWidth;
+				}
+				if (this.forageLayerImage1XCoordinate + gameWidth < 0)
+				{
+					this.forageLayerImage1XCoordinate = gameWidth;
+				}
+				if (this.forageLayerImage2XCoordinate + gameWidth < 0)
+				{
+					this.forageLayerImage2XCoordinate = gameWidth;
 				}
 			}
 		}
@@ -167,10 +216,15 @@ function Background()
 
 	this.draw = function()
 	{
-		
-		
-		renderer.drawImage(this.groundImage1, this.groundImage1xCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
-		renderer.drawImage(this.groundImage2, this.groundImage2xCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
+
+		renderer.drawImage(this.forageLayerImage1, this.forageLayerImage1XCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
+		renderer.drawImage(this.forageLayerImage2, this.forageLayerImage2XCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
+		renderer.drawImage(this.grassLayerImage1, this.grassLayerImage1XCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
+		renderer.drawImage(this.grassLayerImage2, this.grassLayerImage2XCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
+		renderer.drawImage(this.leavesLayerImage1, this.leavesLayerImage1XCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
+		renderer.drawImage(this.leavesLayerImage2, this.leavesLayerImage2XCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
+		renderer.drawImage(this.groundLayerImage1, this.groundImage1xCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
+		renderer.drawImage(this.groundLayerImage2, this.groundImage2xCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
 
 		renderer.drawImage(this.pheremoneStrip1Image, this.pheremoneStrip1ImageXCoordinate,this.pheremoneStripY, 
 						   renderer.canvas.width*1.01,this.pheremoneStripHeight);

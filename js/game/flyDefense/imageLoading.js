@@ -5,8 +5,14 @@ let fungusLossImage = document.createElement("img");
 let eggPlantedLossImage = document.createElement("img");
 let winTextImage = document.createElement("img");
 
-let groundBackgroundImage = document.createElement("img");
-let groundBackground2Image = document.createElement("img");
+let groundLayerImage1 = document.createElement("img");
+let groundLayerImage2 = document.createElement("img");
+let grassLayerImage1 = document.createElement("img");
+let grassLayerImage2 = document.createElement("img");
+let leavesLayerImage1 = document.createElement("img");
+let leavesLayerImage2 = document.createElement("img");
+let forageLayerImage1 = document.createElement("img");
+let forageLayerImage2 = document.createElement("img");
 
 let pheremoneStripImage1 = document.createElement("img");
 let pheremoneStripImage2 = document.createElement("img");
@@ -54,12 +60,28 @@ function loadDefenseGameImages()
 
 
 	
-	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: groundBackgroundImage, theFile: 'images/flyDefense/Official Placeholder Art/GroundCrossSectionUpdate1.png'});
-	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: groundBackground2Image, theFile: 'images/flyDefense/Official Placeholder Art/GroundCrossSectionUpdate2.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: groundLayerImage1, theFile: 'images/flyDefense/Official Placeholder Art/gravelDirtLayer1.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: groundLayerImage2, theFile: 'images/flyDefense/Official Placeholder Art/gravelDirtLayer2.png'});
+	
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: grassLayerImage1, theFile: 'images/flyDefense/Official Placeholder Art/grassLayer1.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: grassLayerImage2, theFile: 'images/flyDefense/Official Placeholder Art/grassLayer2.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: leavesLayerImage1, theFile: 'images/flyDefense/Official Placeholder Art/leavesLayer1.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: leavesLayerImage2, theFile: 'images/flyDefense/Official Placeholder Art/leavesLayer2.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: forageLayerImage1, theFile: 'images/flyDefense/Official Placeholder Art/backgroundForageLayer1.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: forageLayerImage2, theFile: 'images/flyDefense/Official Placeholder Art/backgroundForageLayer2.png'});
+	
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: pheremoneStripImage1, theFile: 'images/flyDefense/Official Placeholder Art/pheremoneStrip1.png'});
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: pheremoneStripImage2, theFile: 'images/flyDefense/Official Placeholder Art/pheremoneStrip2.png'});
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: pheremoneGapFillImage, theFile: 'images/flyDefense/Official Placeholder Art/pheremoneGapFill.png'});
 
+// 	let groundLayerImage1 = document.createElement("img");
+// let groundLayerImage2 = document.createElement("img");
+// let grassLayerImage1 = document.createElement("img");
+// let grassLayerImage2 = document.createElement("img");
+// let leavesLayerImage1 = document.createElement("img");
+// let leavesLayerImage2 = document.createElement("img");
+// let forageLayerImage1 = document.createElement("img");
+// let forageLayerImage2 = document.createElement("img");
 
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: fungusNestImage, theFile: 'images/flyDefense/Official Placeholder Art/fungusNest.png'});
 
