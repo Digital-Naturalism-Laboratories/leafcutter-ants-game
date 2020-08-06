@@ -46,9 +46,10 @@ class Queen {
             this.y -= this.speedY;
         }
 
+        this.y = clamp(this.y, COLONY_H * 5, gameHeight);
+
         this.sprite.transform.position.x = this.x;
         this.sprite.transform.position.y = this.y;
-
     }
 
     draw() {

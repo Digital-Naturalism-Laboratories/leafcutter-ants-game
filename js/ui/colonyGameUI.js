@@ -34,12 +34,21 @@ const COLONY_TUNNEL_VERT = 1;
 const COLONY_TUNNEL_HOR = 2;
 const COLONY_TUNNEL_4WAY = 3;
 
+// variables from the mini-games that affect colony growth
+var geneticDiversity = 0; //from flying game
+var leafMaterial = 0; //from leaf cutting game
+var badFungusFromLeaves = 0; //from defense game
+var timeToReturnWithLeaves = 0; //from defense game
+var infectedAntsReturning = 0; //from defense game
+
 var fungusMass = 0; //grams
 var incomingLeaves = 0; //grams
 var workerCount = 0;
 var eggCount = 0;
 var larvaeCount = 0;
 var population = 0;
+
+var introTimer = 5000;
 
 function setupColonyGameUI() {
 
@@ -74,7 +83,9 @@ function colonyGameUICustomDraw(deltaTime) {
 }
 
 function colonyGameUICustomEvents(deltaTime) {
+  
   if (isTouched) {
+
     if (getDistBtwVec2(vec2((colonyTiles[COLONY_TUNNEL_VERT].width * 10) * pixelSize, (colonyTiles[COLONY_TUNNEL_VERT].height * 7 + 10) * pixelSize), vec2(touchPos[0].x - canvas.getBoundingClientRect().left, touchPos[0].y - canvas.getBoundingClientRect().top)) < 40 * pixelSize) {
       ui.stateIndex = LEAFCUTTINGUI;
     }
@@ -149,7 +160,7 @@ function beginLoadingImage(imgVar, fileName) {
   imgVar.src = "Visual Assets/" + fileName;
 }
 
-function loadImageForTrackCode(tunnelCode, fileName) {
+function loadImageForColonyTileCode(tunnelCode, fileName) {
   colonyTiles[tunnelCode] = document.createElement("img");
   beginLoadingImage(colonyTiles[tunnelCode], fileName);
 }
@@ -187,7 +198,7 @@ function loadImages() {
 
   for (var i = 0; i < imageList.length; i++) {
     if (imageList[i].tunnelType != undefined) {
-      loadImageForTrackCode(imageList[i].tunnelType, imageList[i].fileName);
+      loadImageForColonyTileCode(imageList[i].tunnelType, imageList[i].fileName);
     } else {
       beginLoadingImage(imageList[i].varName, imageList[i].fileName);
     }

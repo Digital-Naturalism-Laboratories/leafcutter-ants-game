@@ -21,7 +21,7 @@ const PLAYER_DIST_FROM_CENTER_BEFORE_CAMERA_PAN_X = 10;
 
 
 function setupFlightGameUI() {
-  flyingQueen = new FlyingQueen(0,0,true);
+  flyingQueen = new FlyingQueen(0, 0, true);
 
   for (i = 0; i < flyingMaleCount; i++) {
     flyingMales[i] = new FlyingMale();
@@ -69,11 +69,23 @@ function flightGameUICustomDraw(deltaTime) {
   renderer.strokeStyle = 'white';
   renderer.rect(gameWidth - 150, gameHeight - 75, 100, 34);
   renderer.stroke();
+
+  colorRect(20, 20, 100, 50, 'white');
+  renderer.fillStyle = "black";
+  renderer.font = "20px Arial";
+  renderer.fillText("Exit Game", 25, 50);
 }
 
 function flightGameUICustomEvents(deltaTime) {
   if (flyingQueen.movementState == flyingQueen.movementStates.FLYING) {
     energyBarLength -= 0.15;
+  }
+
+  if (isTouched) {
+
+    if (getDistBtwVec2(vec2(70, 45), vec2(lastTouchPos.x, lastTouchPos.y)) < 50) {
+      ui.stateIndex = COLONYGAMEUI;
+    }
   }
 
   //cameraFollow();
@@ -93,4 +105,9 @@ function cameraFollow() {
     }
   }
 
+}
+
+function colorRect(topLeftX, topLeftY, boxWidth, boxHeight, fillColor) {
+  renderer.fillStyle = fillColor;
+  renderer.fillRect(topLeftX, topLeftY, boxWidth, boxHeight);
 }
