@@ -33,10 +33,12 @@ function GroundMinim()
 		if (randomNumber <= 0.5)
 		{
 			this.currentStatus = 'meanderingLeft';
+			this.currentImage = soldierFacingLeftImage;
 		}
 		else
 		{
 			this.currentStatus = 'meanderingRight';
+			this.currentImage = soldierFacingRightImage;
 		}
 	}
 
@@ -46,7 +48,7 @@ function GroundMinim()
 		this.coinFlipAMeanderDirection();
 	}
 
-	this.currentImage = bigAntNeutralImage;
+	this.currentImage = undefined;
 
 	this.velocity = getRandomIntInclusive(1,3);
 
@@ -60,7 +62,7 @@ function GroundMinim()
 		
 		if (this.currentStatus === 'repairing')
 		{
-			console.log('inside repairing check of ground minim update');
+			
 			return;
 		}
 		else if (this.currentStatus === 'meanderingLeft')
@@ -73,8 +75,8 @@ function GroundMinim()
 			if (this.x - this.meanderBoundaryLeft <= renderer.canvas.width*0.005)
 			{
 				this.currentStatus = 'meanderingRight';
+				this.currentImage = soldierFacingRightImage;
 				
-				console.log('ground minim at index ' + i + ' switched to meanderingRight');
 			}	
 		}
 		else if (this.currentStatus === 'meanderingRight')
@@ -82,14 +84,14 @@ function GroundMinim()
 			
 			if (this.x + this.width < this.meanderBoundaryRight)
 			{
-				console.log('ground minim at index ' + i + ' is meandering right and its right side is less than the right boundary');
+				
 				this.x += this.velocity;
 			}
 			if (this.meanderBoundaryRight - (this.x + this.width) <= renderer.canvas.width*0.005)
 			{
 				this.currentStatus = 'meanderingLeft';
+				this.currentImage = soldierFacingLeftImage;
 				
-				console.log('ground minim at index ' + i + ' switched to meanderingLeft');
 			}
 		}
 		else if (this.currentStatus === 'en route to repair')
@@ -98,24 +100,39 @@ function GroundMinim()
 			if (this.x + this.width < defenseGame.background.currentPheremoneGap.x)
 			{
 				this.x += this.velocity;
+				this.currentImage = soldierFacingRightImage;
 			}
-			if (this.x + this.width >= defenseGame.background.currentPheremoneGap.x)
+			else if (this.x > defenseGame.background.currentPheremoneGap.x + defenseGame.background.currentPheremoneGap.width)
+			{
+				this.x -= this.velocity;
+				this.currentImage = soldierFacingLeftImage;
+			}
+			else
 			{
 				this.currentStatus = 'repairing';
 			}
 		}
-		else if (this.currentStatus === 'returning')
-		{
+		// else if (this.currentStatus === 'returning')
+		// {
 
-			if (this.x > this.startingX)
-			{
-				this.x -= this.velocity;
-			}
-			else if (this.x < this.startingX)
-			{
-				this.x += this.velocity;
-			}
-		}
+		// 	if (this.x > this.startingX)
+		// 	{
+		// 		this.x -= this.velocity;
+		// 		if (this.x - this.startingX < renderer.canvas.width*0.005)
+		// 		{
+		// 			this.coinFlipAMeanderDirection();
+		// 		}
+		// 	}
+		// 	else if (this.x + this.width < this.startingX)
+		// 	{
+		// 		this.x += this.velocity;
+		// 		if (this.startingX - this.x < renderer.canvas.width*0.005)
+		// 		{
+		// 			this.coinFlipAMeanderDirection();
+		// 		}
+		// 	}
+			
+		// }
 
 	}
 
@@ -167,6 +184,7 @@ function GroundMinimManager()
 		for (let i = 0; i < this.arrayOfGroundMinims.length; i++)
 		{
 			this.arrayOfGroundMinims[i].currentStatus = 'en route to repair';
+			this.arrayOfGroundMinims[i].velocity = renderer.canvas.width*0.005;
 		}
 	}
 
@@ -176,17 +194,13 @@ function GroundMinimManager()
 
 		for (let i = 0; i < this.arrayOfGroundMinims.length; i++)
 		{
-			if (this.arrayOfGroundMinims[i].currentStatus === 'walking')
-			{
-				return;
-			}
-			else if (this.arrayOfGroundMinims[i].currentStatus === 'repairing')
+			if (this.arrayOfGroundMinims[i].currentStatus === 'repairing')
 			{
 				minimRepairingTally++;
 			}
 		}
 
-		if (minimRepairingTally === 3)
+		if (minimRepairingTally === this.arrayOfGroundMinims.length)
 		{
 			defenseGame.background.stuckOnPheremoneGap = false;
 			defenseGame.background.currentPheremoneGap.isFilledIn = true;
@@ -194,7 +208,8 @@ function GroundMinimManager()
 			defenseGame.background.currentPheremoneGap = defenseGame.background.pheremoneGapManager.arrayOfPheremoneGaps[defenseGame.background.currentPheremoneGapArrayIndex];
 			for (let i = 0; i < this.arrayOfGroundMinims.length; i++)
 			{
-				this.arrayOfGroundMinims[i].currentStatus = 'returning';
+				this.arrayOfGroundMinims[i].coinFlipAMeanderDirection();
+				this.arrayOfGroundMinims[i].velocity = getRandomIntInclusive(1,4);
 			}
 			defenseGame.flyManager.currentStatus = 'normal';
 			defenseGame.flyManager.arrayOfFlies[0].status = 'planting';

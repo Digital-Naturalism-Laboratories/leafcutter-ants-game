@@ -29,6 +29,9 @@ let bigAntNeutralImage = document.createElement("img");
 let bigAntFrontRightForwardImage = document.createElement('img');
 let bigAntFrontLeftForwardImage = document.createElement('img');
 
+let soldierFacingRightImage = document.createElement("img");
+let soldierFacingLeftImage = document.createElement("img");
+
 let smallAntImage = document.createElement("img");
 
 let bigAntNeutralFlippedImage = document.createElement("img");
@@ -74,15 +77,6 @@ function loadDefenseGameImages()
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: pheremoneStripImage2, theFile: 'images/flyDefense/Official Placeholder Art/pheremoneStrip2.png'});
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: pheremoneGapFillImage, theFile: 'images/flyDefense/Official Placeholder Art/pheremoneGapFill.png'});
 
-// 	let groundLayerImage1 = document.createElement("img");
-// let groundLayerImage2 = document.createElement("img");
-// let grassLayerImage1 = document.createElement("img");
-// let grassLayerImage2 = document.createElement("img");
-// let leavesLayerImage1 = document.createElement("img");
-// let leavesLayerImage2 = document.createElement("img");
-// let forageLayerImage1 = document.createElement("img");
-// let forageLayerImage2 = document.createElement("img");
-
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: fungusNestImage, theFile: 'images/flyDefense/Official Placeholder Art/fungusNest.png'});
 
 
@@ -93,6 +87,9 @@ function loadDefenseGameImages()
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntNeutralImage, theFile: 'images/flyDefense/Official Placeholder Art/soldier.png'});
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntFrontRightForwardImage, theFile: 'images/flyDefense/creatures/bigAntFrontRightForward.png'});
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntFrontLeftForwardImage, theFile: 'images/flyDefense/creatures/bigAntFrontLeftForward.png'});
+
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: soldierFacingRightImage, theFile: 'images/flyDefense/Official Placeholder Art/soldierFacingRight.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: soldierFacingLeftImage, theFile: 'images/flyDefense/Official Placeholder Art/soldierFacingLeft.png'});
 
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: smallAntImage, theFile: 'images/flyDefense/Official Placeholder Art/minim.png'});
 
