@@ -53,7 +53,7 @@ class FlyingMale {
 
         if (getDistBtwVec2(flyingQueen.sprite.transform.position, this.sprite.transform.position) < flyingQueen.collisionRadius + this.collisionRadius){
             mateCount++;
-            diversityBarLength += 20;
+            diversityBarLength += 5;
             this.sprite.transform.position.y = 10000;
         }
 

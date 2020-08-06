@@ -78,7 +78,8 @@ function colonyGameUICustomDraw(deltaTime) {
 
   renderer.fillText("Population: " + population, gameWidth - (300 * pixelSize), gameHeight - (85 * pixelSize));
   renderer.fillText("Eggs: " + eggCount, gameWidth - (300 * pixelSize), gameHeight - (50 * pixelSize));
-  renderer.fillText("Larvae: " + larvaeCount, gameWidth - (300 * pixelSize), gameHeight - (15 * pixelSize));
+  //renderer.fillText("Larvae: " + larvaeCount, gameWidth - (300 * pixelSize), gameHeight - (15 * pixelSize));
+  renderer.fillText("Genetic Diversity: " + (geneticDiversity * 100) + "%", gameWidth - (300 * pixelSize), gameHeight - (15 * pixelSize));
 
 }
 

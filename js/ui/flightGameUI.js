@@ -14,7 +14,7 @@ var diversityBarLength = 0;
 var placeholder_BG = document.createElement('img');
 placeholder_BG.src = 'Visual Assets/placeholder_BG.png';
 var BG_image_width = placeholder_BG.width;
-var totalSeconds = 0;
+var totalMilliseconds = 0;
 
 var camPanX = 0.0;
 const PLAYER_DIST_FROM_CENTER_BEFORE_CAMERA_PAN_X = 10;
@@ -34,10 +34,10 @@ function setupFlightGameUI() {
 
 function flightGameUICustomDraw(deltaTime) {
 
-  totalSeconds += deltaTime;
+  totalMilliseconds += deltaTime;
   var vx = 1;
   var numImages = 2;
-  var xpos = totalSeconds * vx % gameWidth;
+  var xpos = totalMilliseconds * vx % gameWidth;
 
   renderer.save();
   renderer.translate(-xpos, 0);
@@ -78,7 +78,7 @@ function flightGameUICustomDraw(deltaTime) {
 
 function flightGameUICustomEvents(deltaTime) {
   if (flyingQueen.movementState == flyingQueen.movementStates.FLYING) {
-    energyBarLength -= 0.15;
+    energyBarLength -= 0.20;
   }
 
   if (isTouched) {
@@ -86,6 +86,14 @@ function flightGameUICustomEvents(deltaTime) {
     if (getDistBtwVec2(vec2(70, 45), vec2(lastTouchPos.x, lastTouchPos.y)) < 50) {
       ui.stateIndex = COLONYGAMEUI;
     }
+  }
+
+  if (energyBarLength <= 0 || diversityBarLength >= 100) {
+    geneticDiversity = diversityBarLength / 100;
+    energyBarLength = 100;
+    diversityBarLength = 0;
+    mateCount = 0;
+    ui.stateIndex = COLONYGAMEUI;
   }
 
   //cameraFollow();
