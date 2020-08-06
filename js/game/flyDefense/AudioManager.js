@@ -24,7 +24,7 @@ function AmbienceManager()
     this.scatteredBirdChirp.volume = 0.15;
     this.setBirdChirpScatterInterval = function()
     {
-    	this.scatteredBirdChirpInterval = getRandomIntInclusive(5, 9)*1000;
+    	this.scatteredBirdChirpInterval = getRandomIntInclusive(5, 14)*1000;
     }
 
     this.playScatteredBirdChirps = function()
@@ -63,7 +63,7 @@ function AmbienceManager()
     this.scatteredCicadaInterval = undefined;
     this.setScatteredCicadaInterval = function()
     {
-    	this.scatteredCicadaInterval = getRandomIntInclusive(5, 9)*1000;
+    	this.scatteredCicadaInterval = getRandomIntInclusive(5, 14)*1000;
     }
 
     this.playScatteredCicadaMultisound = function()
