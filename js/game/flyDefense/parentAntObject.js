@@ -91,11 +91,10 @@ function ParentAntObject()
 	this.tallyRaycastIntersectionsWithLeafPolygon = function(pointToRaycast, arrayOfLines)
 	{
 		let numberOfIntersections = 0;
-		// console.log('potentialFungusPoint.x,y: ' + potentialFungusPoint.x,potentialFungusPoint.y);
-		// console.log('this.leafPolygonLineSegments.length: ' + this.leafPolygonLineSegments.length);
+		
 		for (let i = 0; i < arrayOfLines.length; i++)
 		{
-			// console.log('inside for loop of intersection tally function');
+			
 
 			//raycast line from potential fungus point
 			let x1 = pointToRaycast.x;
@@ -241,22 +240,13 @@ function ParentAntObject()
 			let potentialFungusPoint = {x:Math.floor(getRandomIntInclusive(this.leafX,this.leafX + this.leafWidth)),
 											  y:Math.floor(getRandomIntInclusive(this.leafY,this.leafY + this.leafHeight))};
 
-			//console.log('this.tallyRaycastIntersectionsWithLeafPolygon(potentialFungusPoint): ' + this.tallyRaycastIntersectionsWithLeafPolygon(potentialFungusPoint));
 			while(this.tallyRaycastIntersectionsWithLeafPolygon(potentialFungusPoint, this.leafPolygonFungusBorderLineSegments) === 0 || 
 				this.tallyRaycastIntersectionsWithLeafPolygon(potentialFungusPoint, this.leafPolygonFungusBorderLineSegments) % 2 === 0)
 			{
 				potentialFungusPoint = {x:Math.floor(getRandomIntInclusive(this.leafX,this.leafX + this.leafWidth)),
 											  y:Math.floor(getRandomIntInclusive(this.leafY,this.leafY + this.leafHeight))};
 			}
-			// for (let i = 0; i < this.leafPolygonFungusBorderLineSegments.length; i++)
-			// {
-
-			// 	console.log(this.leafPolygonFungusBorderLineSegments[i].x);
-			// 	console.log(this.leafPolygonFungusBorderLineSegments[i].y);
-			// }
 			
-			// let tally = this.tallyRaycastIntersectionsWithLeafPolygon(potentialFungusPoint, this.leafPolygonFungusBorderLineSegments);
-			// console.log('tally: ' + tally);
 			let fungusSpore = new FungusSpore(potentialFungusPoint.x,potentialFungusPoint.y);
 			this.arrayOfFungusSpores.push(fungusSpore);
 		}
@@ -426,7 +416,6 @@ function ParentAntObject()
 				
 					if (this.shouldBeMovingLeftOrRight)
 					{
-						//console.log('this.shouldBeMovingLeftOrRight: ' + this.shouldBeMovingLeftOrRight);
 						this.smallAntX += this.antVelocity;
 						this.smallAntSwattingColliderBoxX += this.antVelocity;
 						this.mouthColliderBoxX += this.antVelocity;
@@ -436,7 +425,6 @@ function ParentAntObject()
 						{//prevent jitter
 							this.shouldBeMovingLeftOrRight = false;
 							this.smallAntMovingRight = false;
-							console.log('moving right should stop');
 						}
 
 						if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
@@ -459,7 +447,6 @@ function ParentAntObject()
 			{
 				if (this.shouldBeMovingLeftOrRight)
 				{
-					//console.log('this.shouldBeMovingLeftOrRight: ' + this.shouldBeMovingLeftOrRight);
 					this.smallAntX -= this.antVelocity;
 					this.smallAntSwattingColliderBoxX -= this.antVelocity;
 					this.mouthColliderBoxX -= this.antVelocity;
@@ -470,7 +457,6 @@ function ParentAntObject()
 					{
 						this.shouldBeMovingLeftOrRight = false;
 						this.smallAntMovingLeft = false;
-						console.log('moving left should stop');
 					}
 
 					if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
@@ -495,7 +481,6 @@ function ParentAntObject()
 				{
 					if (this.shouldBeMovingUpOrDown)
 					{
-						//console.log('this.shouldBeMovingUpOrDown: ' + this.shouldBeMovingUpOrDown);
 						this.smallAntY += this.antVelocity;
 						this.mouthColliderBoxY += this.antVelocity;
 						this.smallAntMidPoint.x = this.smallAntX + this.smallAntWidth/2;
@@ -505,7 +490,6 @@ function ParentAntObject()
 						{
 							this.shouldBeMovingUpOrDown = false;
 							this.smallAntMovingDown = false;
-							console.log('moving down should stop');
 						}
 
 						if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
@@ -529,7 +513,6 @@ function ParentAntObject()
 				{
 					if (this.shouldBeMovingUpOrDown)
 					{
-						//console.log('this.shouldBeMovingUpOrDown: ' + this.shouldBeMovingUpOrDown);
 						this.smallAntY -= this.antVelocity;
 						this.mouthColliderBoxY -= this.antVelocity;
 						this.smallAntMidPoint.x = this.smallAntX + this.smallAntWidth/2;
@@ -539,7 +522,6 @@ function ParentAntObject()
 						{
 							this.shouldBeMovingUpOrDown = false;
 							this.smallAntMovingUp = false;
-							console.log('moving up should stop');
 						}
 
 						if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
@@ -603,11 +585,9 @@ function ParentAntObject()
 				// {
 				// 	this.currentSmallAntDirection = this.previousSmallAntDirection;
 				// }
-				console.log('this.currentSmallAntDirection: ' + this.currentSmallAntDirection);
 
 				if (this.smallAntMidPoint === this.currentMovementTargetFromInput)
 				{
-					//console.log('target should clear');
 					this.currentMovementTargetFromInput.x = undefined;
 					this.currentMovementTargetFromInput.y = undefined;
 				}
@@ -720,26 +700,22 @@ function ParentAntObject()
 			if (this.smallAntMidPoint.x < this.currentMovementTargetFromInput.x)//ant should move to the right
 			{
 				this.smallAntMovingRight = true;
-				console.log('moving right triggered');
 				this.smallAntMovingLeft = false;
 			} 
 			else if (this.smallAntMidPoint.x > this.currentMovementTargetFromInput.x) //ant should move to the left
 			{
 				this.smallAntMovingLeft = true;
-				console.log('moving left triggered');
 				this.smallAntMovingRight = false;
 			}
 			
 			if (this.smallAntMidPoint.y < this.currentMovementTargetFromInput.y)//ant should move down
 			{
-				console.log('moving down triggered');
 				this.smallAntMovingDown = true;
 				this.smallAntMovingUp = false;
 			}
 			else if (this.smallAntMidPoint.y > this.currentMovementTargetFromInput.y)//ant should move up
 			{
 				this.smallAntMovingUp = true;
-				console.log('moving up triggered');
 				this.smallAntMovingDown = false;
 			}
 		}
@@ -788,7 +764,6 @@ function ParentAntObject()
 				{
 					this.currentSmallAntDirection = this.previousSmallAntDirection;
 				}
-				console.log('this.currentSmallAntDirection: ' + this.currentSmallAntDirection);
 	}
 
 	this.handleMouseDown = function()
@@ -807,27 +782,23 @@ function ParentAntObject()
 		if (this.smallAntMidPoint.x < this.currentMovementTargetFromInput.x)//ant should move to the right
 		{
 			this.smallAntMovingRight = true;
-			console.log('moving right triggered');
 			this.smallAntMovingLeft = false;
 		} 
 		else if (this.smallAntMidPoint.x > this.currentMovementTargetFromInput.x) //ant should move to the left
 		{
 			this.smallAntMovingLeft = true;
-			console.log('moving left triggered');
 			this.smallAntMovingRight = false;
 		}
 		
 
 		if (this.smallAntMidPoint.y < this.currentMovementTargetFromInput.y)//ant should move down
 		{
-			console.log('moving down triggered');
 			this.smallAntMovingDown = true;
 			this.smallAntMovingUp = false;
 		}
 		else if (this.smallAntMidPoint.y > this.currentMovementTargetFromInput.y)//ant should move up
 		{
 			this.smallAntMovingUp = true;
-			console.log('moving up triggered');
 			this.smallAntMovingDown = false;
 		}
 
@@ -875,7 +846,6 @@ function ParentAntObject()
 				{
 					this.currentSmallAntDirection = this.previousSmallAntDirection;
 				}
-				console.log('this.currentSmallAntDirection: ' + this.currentSmallAntDirection);
 	}
 
 	this.update = function()
@@ -886,7 +856,6 @@ function ParentAntObject()
 
 	this.initialize = function()
 	{
-		// this.bigAntWalkingInterval.start();
 		this.initializeLineSegments();
 		this.initializeArrayOfFungusSpores();
 	}

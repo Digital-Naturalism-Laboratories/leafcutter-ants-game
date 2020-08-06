@@ -81,5 +81,6 @@ function mainMenuUICustomEvents(deltaTime)
     {
         ui.stateIndex = DEFENSEGAMEUI;
         defenseBtn.button.resetOutput();
+        defenseGame.audioManager.ambienceManager.startAmbience();
     }
 }

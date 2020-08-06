@@ -15,6 +15,7 @@ defenseGame.initialize = function()
     this.countdownInterval = new frameInterval(defenseGame.decreaseCounter,1000);
 
 
+    this.audioManager = new AudioManager();
     
 
     //background section
