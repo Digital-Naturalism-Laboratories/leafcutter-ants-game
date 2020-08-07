@@ -129,7 +129,7 @@ class Ant
 
     draw(deltatime)
     {
-        this.drawDestinationPath();
+        //this.drawDestinationPath();
         for(let i = 0; i < this.cutPointLines.length-1; i++)
         {
             var pixelData1 = renderer.getImageData(this.cutPointLines[i].x, this.cutPointLines[i].y, 1, 1).data;
@@ -153,12 +153,16 @@ class Ant
         {
             if(this.destinationPoints[this.destinationPointsIndex].distance(this.bodySprite.transform.position) > 5 * pixelSize)
                 this.bodySprite.transform.rotation = changeValueInSteps(this.bodySprite.transform.rotation, this.destinationPoints[this.destinationPointsIndex].angle(this.bodySprite.transform.position), 0.05 * deltaTime);
-            else
+            else if(this.destinationPointsIndex + 1 < this.destinationPoints.length - 1)
                 this.destinationPointsIndex++;
+            else
+            {
+                this.destinationPointsIndex = -1;
+                this.destinationPoints = [];
+            }
         }
 
         moveInDir(this.bodySprite, 2 * pixelSize);
-
 
         if(leafcuttingSFX[SFX_ANTWALK].currentTime <= 0 || leafcuttingSFX[SFX_ANTWALK].currentTime > 1.2)
         {
@@ -205,7 +209,7 @@ class Ant
     {
         if(this.cutPointLines.length > 2)
         {
-            if(this.rotationCounter >= Math.PI * 2.2)
+            if(this.rotationCounter >= Math.PI * 2.0)
             {
                 this.leaf.voidAreas.push([]);
                 for(let i = 0; i < this.cutPointLines.length; i++)
@@ -243,6 +247,8 @@ class Ant
         this.pointIndex = -1;
         this.alternateRotation = !this.alternateRotation;
         leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_SUCCESS];
+
+        this.isCuttingJawLed = false;
 
         this.timedJawRadius = this.timedJawMinRadius;
         this.jawSpeedPenalty = 0;
@@ -313,7 +319,6 @@ class Ant
                 {
                     this.destinationPoints.push(vec2(this.leaf.borderPoints[index].x,
                     this.leaf.borderPoints[index].y));
-                    console.log("index is " + index.toString())
                 }
             }
 
@@ -486,7 +491,6 @@ class Ant
                 this.cutPointTimer -= deltaTime;
             }
         }
-        //while ((pixelData[0] == bgRGB[0] && pixelData[1] == bgRGB[1] && pixelData[2] == bgRGB[2])
         while ((pixelData[0] < bgValueBorder && pixelData[1] < bgValueBorder && pixelData[2] < bgValueBorder)
         || (this.cutPoint.x < 0 || this.cutPoint.y < 0 || this.cutPoint.x > gameWidth || this.cutPoint.y > gameHeight));
 
