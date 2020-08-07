@@ -145,9 +145,15 @@ function SFXManager()
 	this.groundMinimFootstepsAccelerated.loop = true;
 	this.groundMinimFootstepsAccelerated.volume = 0.2;
 
+	this.leafMinimFootsteps = document.createElement('audio');
+	this.leafMinimFootsteps.setAttribute('src', 'audio/flyDefense/groundMinimFootsteps.mp3');
+	this.leafMinimFootsteps.loop = true;
+	this.leafMinimFootsteps.volume = 0.2;
+
 	this.arrayOfLoopSoundsToBeLoopedBeforeAwkwardSilence = 
 	[
-		this.flyBuzzingNormal, this.fliesSwarming, this.groundMinimFootsteps, this.groundMinimFootstepsAccelerated
+		this.flyBuzzingNormal, this.fliesSwarming, this.groundMinimFootsteps, this.groundMinimFootstepsAccelerated, 
+		this.leafMinimFootsteps
 	]
 
 	this.calculateAndSetAvoidAwkwardSilenceTimestamps = function()
