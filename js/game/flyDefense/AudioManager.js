@@ -122,7 +122,6 @@ function SFXManager()
 		{
 			this.eatingFungusSoundArrayIndex = 0;
 		}
-		console.log('this.eatingFungusSoundArrayIndex: ' + this.eatingFungusSoundArrayIndex);
 	}
 
 	//loops that need adjusted loop points
@@ -136,9 +135,19 @@ function SFXManager()
 	this.fliesSwarming.loop = true;
 	this.fliesSwarming.volume = 0.1;
 
+	this.groundMinimFootsteps = document.createElement('audio');
+	this.groundMinimFootsteps.setAttribute('src', 'audio/flyDefense/groundMinimFootsteps.mp3');
+	this.groundMinimFootsteps.loop = true;
+	this.groundMinimFootsteps.volume = 0.2;
+
+	this.groundMinimFootstepsAccelerated = document.createElement('audio');
+	this.groundMinimFootstepsAccelerated.setAttribute('src', 'audio/flyDefense/groundMinimFootstepsAccelerated.mp3');
+	this.groundMinimFootstepsAccelerated.loop = true;
+	this.groundMinimFootstepsAccelerated.volume = 0.2;
+
 	this.arrayOfLoopSoundsToBeLoopedBeforeAwkwardSilence = 
 	[
-		this.flyBuzzingNormal, this.fliesSwarming
+		this.flyBuzzingNormal, this.fliesSwarming, this.groundMinimFootsteps, this.groundMinimFootstepsAccelerated
 	]
 
 	this.calculateAndSetAvoidAwkwardSilenceTimestamps = function()

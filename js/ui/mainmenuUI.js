@@ -85,5 +85,6 @@ function mainMenuUICustomEvents(deltaTime)
         defenseGame.audioManager.ambienceManager.startAmbience();
         defenseGame.audioManager.sfxManager.calculateAndSetAvoidAwkwardSilenceTimestamps();
         defenseGame.audioManager.sfxManager.flyBuzzingNormal.play();
+        defenseGame.audioManager.sfxManager.groundMinimFootsteps.play();
     }
 }
