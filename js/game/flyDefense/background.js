@@ -181,23 +181,6 @@ function Background()
 			}
 
 		}
-		// if (this.touchStartCoordinates.x >= this.pheremoneGap.x && this.touchStartCoordinates.x <= this.pheremoneGap.x + this.pheremoneGap.width &&
-		// 	this.touchStartCoordinates.y >= this.pheremoneGap.y && this.touchStartCoordinates.y <= this.pheremoneGap.y + this.pheremoneGap.height)
-		// {
-			
-		// 	this.fillInCurrentPheremoneGap = true;
-
-			
-
-		// 	if (this.currentIncomingPheremoneStripImage === this.pheremoneStrip2Image)
-		// 			{
-		// 				this.pheremoneGap.x = this.pheremoneStrip2ImageXCoordinate + gameWidth;
-		// 			}
-		// 			else if (this.currentIncomingPheremoneStripImage === this.pheremoneStrip1Image)
-		// 			{
-		// 				this.pheremoneGap.x = this.pheremoneStrip1ImageXCoordinate + gameWidth;
-		// 			}
-		// }
 	}
 
 	this.mouseDownCoordinates = vec2();
@@ -234,10 +217,6 @@ function Background()
 						   renderer.canvas.width*1.01,this.pheremoneStripHeight);
 
 		this.pheremoneGapManager.drawPheremoneGaps();
-	
-		// defenseGame.canvasContext.drawImage(this.leftArrowButtonImage, 0,0, defenseGame.canvas.width,defenseGame.canvas.height);
-		// defenseGame.canvasContext.drawImage(this.rightArrowButtonImage, 0,0, defenseGame.canvas.width,defenseGame.canvas.height);
-		// defenseGame.canvasContext.drawImage(this.swatButtonImage, 0,0, defenseGame.canvas.width,defenseGame.canvas.height);
 
 		
 		renderer.drawImage(this.fungusNestImage, this.fungusNestXCoordinate,renderer.canvas.height*0.33, 
@@ -300,6 +279,7 @@ function PheremoneGap(x)
 function PheremoneGapManager()
 {
 	this.arrayOfPheremoneGaps = [];
+	
 
 	this.updatePheremoneGaps = function()
 	{
@@ -330,6 +310,10 @@ function PheremoneGapManager()
 				
 				defenseGame.background.stuckOnPheremoneGap = true;
 				defenseGame.flyManager.toggleSwarm();
+				if (defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.paused)
+				{
+					defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.play();
+				}
 			}
 		}
 	}

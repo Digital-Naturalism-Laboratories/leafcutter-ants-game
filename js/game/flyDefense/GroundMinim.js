@@ -206,6 +206,9 @@ function GroundMinimManager()
 			defenseGame.background.currentPheremoneGap.isFilledIn = true;
 			defenseGame.background.currentPheremoneGapArrayIndex++;
 			defenseGame.background.currentPheremoneGap = defenseGame.background.pheremoneGapManager.arrayOfPheremoneGaps[defenseGame.background.currentPheremoneGapArrayIndex];
+			defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.pause();
+			defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.currentTime = 0;
+			defenseGame.audioManager.sfxManager.beefUpTrailFeedback.play();
 			for (let i = 0; i < this.arrayOfGroundMinims.length; i++)
 			{
 				this.arrayOfGroundMinims[i].coinFlipAMeanderDirection();

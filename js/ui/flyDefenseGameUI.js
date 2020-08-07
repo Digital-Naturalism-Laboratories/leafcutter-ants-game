@@ -5,6 +5,12 @@ defenseGame.initialize = function()
 {
 	this.arrayOfUIObjects = [];
 
+	
+	this.backgroundMusic = document.createElement('audio');
+    this.backgroundMusic.setAttribute('src', 'audio/Main Nest Scene B.mp3');
+    //this.backgroundMusic.setAttribute('autoplay', 'autoplay');
+    this.backgroundMusic.loop = true;
+    
 	loadDefenseGameImages();
 
 	this.debugOn = false;
@@ -16,6 +22,7 @@ defenseGame.initialize = function()
 
 
     this.audioManager = new AudioManager();
+    
     
 
     //background section
@@ -84,6 +91,8 @@ defenseGame.initialize = function()
 	    {
 	      //alert("You made it back without being infected and with a clean leaf. You win!");
 	    }
+
+	    this.audioManager.sfxManager.avoidAwkwardSilenceForLoopedAudioFiles();
 	}
 
 	this.draw = function()

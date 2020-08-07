@@ -1,7 +1,7 @@
 function AudioManager()
 {
 	this.ambienceManager = new AmbienceManager();
-
+	this.sfxManager = new SFXManager();
 }
 
 function AmbienceManager()
@@ -36,7 +36,7 @@ function AmbienceManager()
     		function()
 
     		{defenseGame.audioManager.ambienceManager.scatteredBirdChirp.play(); 
-    			console.log('should be hearing bird chirp');
+    			
     		 defenseGame.audioManager.ambienceManager.setBirdChirpScatterInterval();
     		 defenseGame.audioManager.ambienceManager.playScatteredBirdChirps()}, 
 
@@ -77,7 +77,7 @@ function AmbienceManager()
     		{
     			let randomCicadaSoundArrayIndex = getRandomIntInclusive(0,defenseGame.audioManager.ambienceManager.arrayOfCicadaSounds.length - 1);
     			defenseGame.audioManager.ambienceManager.arrayOfCicadaSounds[randomCicadaSoundArrayIndex].play(); 
-    			console.log('should be hearing cicada');
+    			
     		 defenseGame.audioManager.ambienceManager.setScatteredCicadaInterval();
     		 defenseGame.audioManager.ambienceManager.playScatteredCicadaMultisound()}, 
 
@@ -85,4 +85,48 @@ function AmbienceManager()
     	);
     }
 
+}
+
+function SFXManager()
+{
+	this.stuckSwarmAlertSound = document.createElement('audio');
+	this.stuckSwarmAlertSound.setAttribute('src', 'audio/flyDefense/pheremoneGapSwarmAlert.mp3');
+	this.stuckSwarmAlertSound.loop = true;
+	this.stuckSwarmAlertSound.volume = 0.5;
+
+	this.beefUpTrailFeedback = document.createElement('audio');
+	this.beefUpTrailFeedback.setAttribute('src', 'audio/flyDefense/beefUpTrailFeedback.mp3');
+
+	this.flyBuzzingNormal = document.createElement('audio');
+	this.flyBuzzingNormal.setAttribute('src', 'audio/flyDefense/flyBuzzingNormal.mp3');
+	this.flyBuzzingNormal.loop = true;
+	this.flyBuzzingNormal.volume = 0.05;
+
+	this.arrayOfLoopSoundsToBeLoopedBeforeAwkwardSilence = 
+	[
+		this.flyBuzzingNormal
+	]
+
+	this.calculateAndSetAvoidAwkwardSilenceTimestamps = function()
+	{
+		for (let i = 0; i < this.arrayOfLoopSoundsToBeLoopedBeforeAwkwardSilence.length; i++)
+		{
+			let awkwardSilenceTimestamp = this.arrayOfLoopSoundsToBeLoopedBeforeAwkwardSilence[i].duration - 0.2;
+
+			this.arrayOfLoopSoundsToBeLoopedBeforeAwkwardSilence[i].awkwardSilenceTimestamp = awkwardSilenceTimestamp;
+		}
+	}
+
+	this.avoidAwkwardSilenceForLoopedAudioFiles = function()
+	{
+		for (let i = 0; i < this.arrayOfLoopSoundsToBeLoopedBeforeAwkwardSilence.length; i++)
+		{
+			
+			if (this.arrayOfLoopSoundsToBeLoopedBeforeAwkwardSilence[i].currentTime >= this.arrayOfLoopSoundsToBeLoopedBeforeAwkwardSilence[i].awkwardSilenceTimestamp)
+			{
+				this.arrayOfLoopSoundsToBeLoopedBeforeAwkwardSilence[i].currentTime = 0.2;
+				
+			}
+		}
+	}
 }

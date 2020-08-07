@@ -8,6 +8,7 @@ window.onload = function()
     bgm1.setAttribute('src', 'audio/Main Nest Scene B.mp3');
     bgm1.setAttribute('autoplay', 'autoplay');
     bgm1.loop = true;
+    console.log(bgm1);
 };
 
 function events(deltaTime)
