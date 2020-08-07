@@ -26,16 +26,49 @@ var leafcuttingHints = [
 var leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_START];
 
 var leafcuttingScore = 0;
-var leafcuttingTimeLeft = 180000;
+var leafcuttingTimeLeft = 0;
 
 var prevBGM = -1;
 var currentBGM = -1;
-var leafcuttingBGM = [document.createElement('audio'), document.createElement('audio')];
+
+var leafcuttingBGM = [
+    document.createElement('audio'),
+    document.createElement('audio')
+];
+var leafcuttingBGMPaths = [
+    "audio/Transporting Leaves Scene.mp3",
+    "audio/Slicing Leaves Scene.mp3"
+]
 var BGM_TRANSPORTING = 0;
 var BGM_SLICING = 1;
 
+var leafcuttingSFX = [
+    document.createElement('audio'),
+    document.createElement('audio'),
+    document.createElement('audio'),
+    document.createElement('audio'),
+    document.createElement('audio'),
+    document.createElement('audio')
+]
+var leafcuttingSFXPaths = [
+    "audio/SFX/UI Menu Buttons.wav",
+    "audio/SFX/Positive Feedback - Beef Up Trail.wav",
+    "audio/SFX/Clock Ticking.wav",
+    "audio/SFX/Leaf Minim Footsteps.wav",
+    "audio/SFX/Positive Feedback - Player Wins.wav",
+    "audio/SFX/Game Over.wav"
+]
+var SFX_JAWBUTTON = 0;
+var SFX_JAWTIMED = 1;
+var SFX_LOWTIME = 2;
+var SFX_ANTWALK = 3;
+var SFX_PLAYERWIN = 4;
+var SFX_TIMEOUT = 5;
+
 function setupLeafcuttingUI()
 {
+    leafcuttingTimeLeft = 180000;
+
     leafcuttingFontSize = 14 * pixelSize;
 
     leaf = new Leaf();
@@ -59,10 +92,16 @@ function setupLeafcuttingUI()
     leafcuttingUI.push(new FlexGroup(tr(vec2(20*pixelSize, 20*pixelSize), vec2(window.innerWidth, 80*pixelSize)),
         new SubState(tr(), gameplayLabels),false, vec2(0, 20*pixelSize), vec2(1, 4), true));
 
-    leafcuttingBGM[BGM_TRANSPORTING].setAttribute('src', 'audio/Transporting Leaves Scene.mp3');
-    leafcuttingBGM[BGM_TRANSPORTING].loop = true;
-    leafcuttingBGM[BGM_SLICING].setAttribute('src', 'audio/Slicing Leaves Scene.mp3');
-    leafcuttingBGM[BGM_SLICING].loop = true;
+    for(let i = 0; i < leafcuttingBGM.length; i++)
+    {
+        leafcuttingBGM[i].setAttribute('src', leafcuttingBGMPaths[i]);
+        leafcuttingBGM[i].loop = true;
+        leafcuttingBGM[i].volume = 0.6;
+    }
+    for(let i = 0; i < leafcuttingSFX.length; i++)
+    {
+        leafcuttingSFX[i].setAttribute('src', leafcuttingSFXPaths[i]);
+    }
 }
 
 function leafcuttingUICustomDraw(deltaTime)
@@ -84,11 +123,22 @@ function leafcuttingUICustomUpdate(deltaTime)
     timeLabel.text = "TIME LEFT: " + (Math.floor(leafcuttingTimeLeft/1000)).toString();
     leafcuttingTimeLeft -= deltaTime;
 
+    leafcuttingAudioHandling();
+}
+
+function leafcuttingUICustomEvents(deltaTime)
+{
+    ant.event();
+    ant2.event();
+}
+
+function leafcuttingAudioHandling()
+{
     if((!ant.disabled && ant.rotationMode) || (!ant2.disabled && ant2.rotationMode))
         currentBGM = 1;
     else
         currentBGM = 0;
-    
+
     if(!leafcuttingBGM[currentBGM].isPlaying)
     {
         leafcuttingBGM[currentBGM].play();
@@ -99,10 +149,15 @@ function leafcuttingUICustomUpdate(deltaTime)
             leafcuttingBGM[prevBGM].currentTime = 0;
         }
     }
-}
 
-function leafcuttingUICustomEvents(deltaTime)
-{
-    ant.event();
-    ant2.event();
+    if(leafcuttingTimeLeft < 10000 && leafcuttingTimeLeft > 0)
+    {
+        if(!leafcuttingSFX[SFX_LOWTIME].isPlaying())
+            leafcuttingSFX[SFX_LOWTIME].play();
+    }
+    else
+    {
+        leafcuttingSFX[SFX_LOWTIME].pause();
+        leafcuttingSFX[SFX_LOWTIME].currentTime = 0;
+    }
 }

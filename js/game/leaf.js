@@ -16,13 +16,15 @@ class Leaf
             new ImageObject("images/leafCuttingBG.png", vec2(gameWidth, gameHeight)));
         this.points = [];
         this.borderPoints = [];
-        this.updatePoints = true;
         this.voidAreas = [];
 
         this.leafCanvas = document.createElement('canvas');
         this.leafCanvas.width = gameWidth;
         this.leafCanvas.height = gameHeight;
         this.leafCanvasRenderer = this.leafCanvas.getContext("2d");
+        
+        this.start = true;
+        this.updatePoints = true;
     }
 
     update()
@@ -34,9 +36,36 @@ class Leaf
     {
         this.bgSprite.drawSc();
         this.stemSprite.drawSc();
-        this.updateLeafSprite();
         this.leafSprite.drawSc();
+        this.updatePointsMechanism();
         //this.drawPoints(false);
+    }
+
+    updatePointsMechanism()
+    {
+        if(this.start || typeof this.cutterAnt != "undefined")
+        {
+            if(this.updatePoints)
+            {
+                this.updateLeafSprite();
+
+                this.updatePoints = false;
+            }
+
+            if(_getPoints)
+            {
+                this.getPoints(distanceBetween2AdjacentPoints);
+                if(typeof this.cutterAnt != "undefined")
+                {
+                    this.cutterAnt.antDestionationAfterLeafCutSuccess();
+                    this.cutterAnt = undefined;
+                }
+
+                this.start = false;
+
+                _getPoints = false;
+            }
+        }
     }
 
     drawPoints(onlyBorders)
@@ -110,37 +139,24 @@ class Leaf
 
     updateLeafSprite()
     {
-        if(this.updatePoints)
-        {
-            spritesRenderer = this.leafCanvasRenderer;
+        spritesRenderer = this.leafCanvasRenderer;
 
-            this.leafCanvasRenderer.globalCompositeOperation = "source-over";
-            this.leafSprite.drawSc();
+        this.leafCanvasRenderer.globalCompositeOperation = "source-over";
+        this.leafSprite.drawSc();
 
-            this.leafCanvasRenderer.globalCompositeOperation = "destination-out";
-            this.drawVoidAreas();
+        this.leafCanvasRenderer.globalCompositeOperation = "destination-out";
+        this.drawVoidAreas();
 
-            var newLeafImage = new Image();
-            newLeafImage.src = this.leafCanvas.toDataURL("image/png", 1);
-            newLeafImage.width = gameWidth / (pixelSize*2);
-            newLeafImage.height = gameHeight / (pixelSize*2);
-            this.leafSprite.imageObject.image = newLeafImage;
-
-            this.leafSprite.imageObject.image.onload = function() {
-                _getPoints = true;
-            }
-
-            spritesRenderer = renderer;
-
-            this.updatePoints = false;
+        var newLeafImage = new Image();
+        newLeafImage.src = this.leafCanvas.toDataURL("image/png", 1);
+        newLeafImage.width = gameWidth / (pixelSize*2);
+        newLeafImage.height = gameHeight / (pixelSize*2);
+        this.leafSprite.imageObject.image = newLeafImage;
+        this.leafSprite.imageObject.image.onload = function() {
+            _getPoints = true;
         }
 
-        if(_getPoints)
-        {
-            this.leafSprite.drawSc();
-            this.getPoints(distanceBetween2AdjacentPoints);
-            _getPoints = false;
-        }
+        spritesRenderer = renderer;
     }
 
     winCondition()

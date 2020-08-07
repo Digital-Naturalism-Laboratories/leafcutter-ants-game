@@ -160,6 +160,7 @@ function setupColonyGameUI() {
 
   bgmColony.setAttribute('src', 'audio/Intro Music.mp3');
   bgmColony.loop = true;
+  bgmColony.volume = 0.6;
 }
 
 function colonyGameUICustomDraw(deltaTime) {
@@ -210,7 +211,7 @@ function colonyGameUICustomEvents(deltaTime)
     if (getDistBtwVec2(vec2((colonyTiles[COLONY_TUNNEL_VERT].width * 3) * pixelSize, (colonyTiles[COLONY_TUNNEL_VERT].height * 2 - 10) * pixelSize), vec2(touchPos[0].x - canvas.getBoundingClientRect().left, touchPos[0].y - canvas.getBoundingClientRect().top)) < 40 * pixelSize) {
       bgmColony.pause();
       bgmColony.currentTime = 0;
-      
+
       ui.stateIndex = LEAFCUTTINGUI;
     }
     if (getDistBtwVec2(vec2((colonyTiles[COLONY_TUNNEL_VERT].width * 13) * pixelSize, (colonyTiles[COLONY_TUNNEL_VERT].height + 20) * pixelSize), vec2(touchPos[0].x - canvas.getBoundingClientRect().left, touchPos[0].y - canvas.getBoundingClientRect().top)) < 40 * pixelSize) {

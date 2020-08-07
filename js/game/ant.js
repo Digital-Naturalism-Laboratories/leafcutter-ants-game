@@ -100,6 +100,8 @@ class Ant
                 {
                     this.disabled = true;
                     this.disabling = false;
+                    this.destinationPoints = [];
+                    this.destinationPointsIndex = -1;
                 }
             }
             else if(!this.rotationMode && this.pointIndex > -1)
@@ -115,7 +117,7 @@ class Ant
                 this.cutTimer -= deltaTime;
             }
 
-            if(this.rotationMode && this.jawSpeedPenalty <= 0)
+            if(this.rotationMode)
             {
                 this.timedJawRadius -= this.timedJawSpeedFactor * deltaTime;
 
@@ -156,6 +158,14 @@ class Ant
         }
 
         moveInDir(this.bodySprite, 2 * pixelSize);
+
+
+        if(leafcuttingSFX[SFX_ANTWALK].currentTime <= 0 || leafcuttingSFX[SFX_ANTWALK].currentTime > 1.2)
+        {
+            leafcuttingSFX[SFX_ANTWALK].currentTime = 0;
+            leafcuttingSFX[SFX_ANTWALK].play();
+        }
+
         this.updatingJawTransform();
     }
 
@@ -176,10 +186,9 @@ class Ant
         {
             drawCircle(renderer, this.leadingJawControlPos, this.timedJawMinRadius, !this.isCuttingJawLed, !this.isCuttingJawLed ? "white" : "red", pixelSize);
             drawCircle(renderer, this.cuttingJawControlPos, this.timedJawMinRadius, this.isCuttingJawLed, this.isCuttingJawLed ? "white" : "red", pixelSize);
-            if(this.jawSpeedPenalty <= 0)
-                drawCircle(renderer, this.isCuttingJawLed ? this.cuttingJawControlPos : this.leadingJawControlPos,
-                this.timedJawRadius, false, rgb(Math.floor((this.timedJawRadius - this.timedJawMinRadius)*4),
-                Math.floor((this.timedJawMaxRadius - this.timedJawRadius)*4), 0), (this.timedJawRadius - this.timedJawMinRadius) * pixelSize);
+            drawCircle(renderer, this.isCuttingJawLed ? this.cuttingJawControlPos : this.leadingJawControlPos,
+                this.timedJawRadius, false, this.jawSpeedPenalty <= 0 ? rgb(Math.floor((this.timedJawRadius - this.timedJawMinRadius)*4),
+                Math.floor((this.timedJawMaxRadius - this.timedJawRadius)*4), 0) : "grey", (this.timedJawRadius - this.timedJawMinRadius) * pixelSize);
             renderer.lineWidth = 1;
             var tempPos = vec2(this.cuttingJawSprite.transform.position.x, this.cuttingJawSprite.transform.position.y);
             this.cuttingJawSprite.transform.position = this.cuttingJawControlPos;
@@ -192,50 +201,54 @@ class Ant
         }
     }
 
-    addVoidAreaWhenPointsConnect(newPoint)
+    addVoidAreaWhenRotationCompletes()
     {
         if(this.cutPointLines.length > 2)
         {
-            //for(let i = 0; i < this.cutPointLines.length-1; i++)
+            if(this.rotationCounter >= Math.PI * 2.2)
             {
-                //if(this.cutPointLines[i].distance(newPoint) < this.minRotationDistance)
-                if(this.rotationCounter >= Math.PI * 2.2)
-                {
-                    this.leaf.voidAreas.push([]);
-                    for(let i = 0; i < this.cutPointLines.length; i++)
-                        this.leaf.voidAreas[this.leaf.voidAreas.length-1].push(vec2(this.cutPointLines[i].x, this.cutPointLines[i].y));
-                    this.cutPointLines = [];
-                    this.rotationCounter = 0.0;
-                    return true;
-                }
+                this.leaf.voidAreas.push([]);
+                for(let i = 0; i < this.cutPointLines.length; i++)
+                    this.leaf.voidAreas[this.leaf.voidAreas.length-1].push(vec2(this.cutPointLines[i].x, this.cutPointLines[i].y));
+                this.cutPointLines = [];
+                this.rotationCounter = 0.0;
+                return true;
             }
         }
 
         return false;
     }
 
-    onLeafCutSuccess()
+    antDestionationAfterLeafCutSuccess()
     {
-        this.rotationMode = false;
-        this.leaf.borderPoints[this.pointIndex] = vec2(-10000, -10000);
-        this.pointIndex = -1;
-        this.leaf.updatePoints = true;
-        this.alternateRotation = !this.alternateRotation;
-        leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_SUCCESS];
-
-        this.forcedDestination = true;
-        this.destinationPoints = [];
-        this.destinationPointsIndex = -1;
-        this.destinationPoint = vec2(-40 * pixelSize, 540 * pixelSize);
         this.disabling = true;
-
         this.secondAnt.disabled = false;
         this.secondAnt.forcedDestination = true;
         this.secondAnt.destinationPoint = vec2(60 * pixelSize, 360 * pixelSize);
 
+        this.forcedDestination = true;
+        this.destinationPoints = [];
+        this.destinationPoint = vec2(-40 * pixelSize, 540 * pixelSize);
+        this.destinationPointsIndex = 0;
+        this.calculateDestinationPoints();
+    }
+
+    onLeafCutSuccess()
+    {
+        this.leaf.cutterAnt = this;
+        this.leaf.updatePoints = true;
+
+        this.rotationMode = false;
+        this.leaf.borderPoints[this.pointIndex] = vec2(-10000, -10000);
+        this.pointIndex = -1;
+        this.alternateRotation = !this.alternateRotation;
+        leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_SUCCESS];
+
         this.timedJawRadius = this.timedJawMinRadius;
         this.jawSpeedPenalty = 0;
         this.cutTimer = 0;
+
+        this.leaf.getPoints(distanceBetween2AdjacentPoints);
     }
 
     leafBorderTouchInput()
@@ -282,6 +295,28 @@ class Ant
         {
             this.destinationPoints.push(vec2(this.bodySprite.transform.position.x, this.bodySprite.transform.position.y));
 
+            if(this.disabling) //go to nearest border point
+            {
+                var index = -1;
+                var distance = 99999;
+                for(let i = 0; i < this.leaf.borderPoints.length; i++)
+                {
+                    var tempDistance = this.leaf.borderPoints[i].distance(this.bodySprite.transform.position);
+                    if(tempDistance < distance)
+                    {
+                        distance = tempDistance;
+                        index = i;
+                    }
+                }
+
+                if(index > -1)
+                {
+                    this.destinationPoints.push(vec2(this.leaf.borderPoints[index].x,
+                    this.leaf.borderPoints[index].y));
+                    console.log("index is " + index.toString())
+                }
+            }
+
             while(this.destinationPoints.length < 40)
             {
                 if(this.destinationPoints[this.destinationPoints.length - 1].distance(this.destinationPoint) <= distanceBetween2AdjacentPoints * 1.67)
@@ -323,7 +358,6 @@ class Ant
                 }
                 else
                 {
-                    console.log("Impossible leaf destination for the ant to move onto using path mechanic. Ant will move directly to the destination point.");
                     this.destinationPoints.push(vec2(this.destinationPoint.x, this.destinationPoint.y));
                     break;
                 }
@@ -333,7 +367,7 @@ class Ant
 
     drawDestinationPath()
     {
-        if(this.destinationPoints.length > 1 && !this.rotationMode)
+        if(this.destinationPoints.length > 1 && !this.rotationMode && !this.disabled)
         {
             for(let i = 1; i < this.destinationPoints.length; i++)
             {
@@ -353,7 +387,19 @@ class Ant
                     this.timedJawCutSpeedBonus = 1 + ((this.timedJawMaxRadius - this.timedJawRadius) * this.timedJawCutSpeedBonusFactor);
                     
                     //TIMED JAW CUT SPEED PENALTY RULE
-                    if(this.timedJawCutSpeedBonus <= 1.75) this.timedJawCutSpeedBonus /= 2;
+                    if(this.timedJawCutSpeedBonus <= 1.5)
+                    {
+                        this.timedJawCutSpeedBonus /= 2;
+                        leafcuttingSFX[SFX_JAWBUTTON].currentTime = 0;
+                        leafcuttingSFX[SFX_JAWBUTTON].play();
+                    }
+                    else
+                    {
+                        leafcuttingSFX[SFX_JAWTIMED].currentTime = 0;
+                        leafcuttingSFX[SFX_JAWTIMED].play();
+                    }
+
+                    if(this.jawSpeedPenalty > 0 && this.timedJawCutSpeedBonus > 1) this.timedJawCutSpeedBonus = 1;
 
                     this.timedJawRadius = this.timedJawMinRadius;
 
@@ -365,7 +411,8 @@ class Ant
                 }
                 else
                 {
-                    this.jawSpeedPenalty = this.jawSpeedPenaltyTotalTurns;
+                    if(this.jawSpeedPenalty < this.jawSpeedPenaltyTotalTurns)
+                        this.jawSpeedPenalty = this.jawSpeedPenaltyTotalTurns;
                     leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_FAIL];
                 }
             }
@@ -376,11 +423,21 @@ class Ant
                     this.timedJawCutTimeBonus = (this.timedJawMaxRadius - this.timedJawRadius) * this.timedJawCutTimeBonusFactor;
                     
                     //TIMED JAW CUT TIME PENALTY RULE
-                    if(this.timedJawCutTimeBonus <= 150) this.timedJawCutTimeBonus -= 200;
+                    if(this.timedJawCutTimeBonus <= 150)
+                    {
+                        this.timedJawCutTimeBonus -= 200;
+                        leafcuttingSFX[SFX_JAWBUTTON].currentTime = 0;
+                        leafcuttingSFX[SFX_JAWBUTTON].play();
+                    }
+                    else
+                    {
+                        leafcuttingSFX[SFX_JAWTIMED].currentTime = 0;
+                        leafcuttingSFX[SFX_JAWTIMED].play();
+                    }
+
+                    if(this.jawSpeedPenalty > 0 && this.timedJawCutTimeBonus > 0) this.timedJawCutTimeBonus = 0;
 
                     this.timedJawRadius = this.timedJawMinRadius;
-
-                    console.log(this.timedJawCutTimeBonus.toString());
 
                     this.timedJawCutSpeedBonus = 1;
 
@@ -389,7 +446,8 @@ class Ant
                 }
                 else
                 {
-                    this.jawSpeedPenalty = this.jawSpeedPenaltyTotalTurns;
+                    if(this.jawSpeedPenalty < this.jawSpeedPenaltyTotalTurns)
+                        this.jawSpeedPenalty = this.jawSpeedPenaltyTotalTurns;
                     leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_FAIL];
                 }
             }
@@ -421,10 +479,6 @@ class Ant
             {
                 var newPoint = this.cutPoint.add(vec2(Math.random() * 3 * pixelSize, Math.random() * 3 * pixelSize));
                 this.cutPointLines.push(newPoint);
-                if(this.addVoidAreaWhenPointsConnect(newPoint))
-                {
-                    this.onLeafCutSuccess();
-                }
                 this.cutPointTimer = this.cutPointDelay;
             }
             else
@@ -435,5 +489,8 @@ class Ant
         //while ((pixelData[0] == bgRGB[0] && pixelData[1] == bgRGB[1] && pixelData[2] == bgRGB[2])
         while ((pixelData[0] < bgValueBorder && pixelData[1] < bgValueBorder && pixelData[2] < bgValueBorder)
         || (this.cutPoint.x < 0 || this.cutPoint.y < 0 || this.cutPoint.x > gameWidth || this.cutPoint.y > gameHeight));
+
+        if(this.addVoidAreaWhenRotationCompletes())
+            this.onLeafCutSuccess();
     }
 }
