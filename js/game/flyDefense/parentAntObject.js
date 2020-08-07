@@ -680,6 +680,7 @@ function ParentAntObject()
 				    this.arrayOfFungusSpores[i].y + this.arrayOfFungusSpores[i].height > this.mouthColliderBoxY)
 				{
 					this.arrayOfFungusSpores.splice(i,1);
+					defenseGame.audioManager.sfxManager.playEatingFungusSound();
 				}
 			}
 		}

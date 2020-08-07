@@ -99,6 +99,32 @@ function SFXManager()
 	this.beefUpTrailFeedback = document.createElement('audio');
 	this.beefUpTrailFeedback.setAttribute('src', 'audio/flyDefense/beefUpTrailFeedback.mp3');
 
+	//avoid cutoff one shots
+	this.eatingFungusSound1 = document.createElement('audio');
+	this.eatingFungusSound1.setAttribute('src', 'audio/flyDefense/eatingFungus.mp3');
+	this.eatingFungusSound2 = document.createElement('audio');
+	this.eatingFungusSound2.setAttribute('src', 'audio/flyDefense/eatingFungus.mp3');
+	this.eatingFungusSound3 = document.createElement('audio');
+	this.eatingFungusSound3.setAttribute('src', 'audio/flyDefense/eatingFungus.mp3');
+	this.eatingFungusSoundArrayIndex = 0;
+	this.arrayOfEatingFungusSounds = [];
+
+	this.populateArrayOfEatingFungusSounds = function()
+	{
+		this.arrayOfEatingFungusSounds.push(this.eatingFungusSound1,this.eatingFungusSound2,this.eatingFungusSound3);
+	}
+
+	this.playEatingFungusSound = function()
+	{
+		this.arrayOfEatingFungusSounds[this.eatingFungusSoundArrayIndex].play();
+		this.eatingFungusSoundArrayIndex++;
+		if (this.eatingFungusSoundArrayIndex > this.arrayOfEatingFungusSounds.length - 1)
+		{
+			this.eatingFungusSoundArrayIndex = 0;
+		}
+		console.log('this.eatingFungusSoundArrayIndex: ' + this.eatingFungusSoundArrayIndex);
+	}
+
 	//loops that need adjusted loop points
 	this.flyBuzzingNormal = document.createElement('audio');
 	this.flyBuzzingNormal.setAttribute('src', 'audio/flyDefense/flyBuzzingNormal.mp3');
