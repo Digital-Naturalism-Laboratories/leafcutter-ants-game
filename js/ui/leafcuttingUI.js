@@ -21,7 +21,7 @@ var leafcuttingHints = [
     "Leaf part cut successfully. Now, click on any leaf borders to move on cutting the next part.",
     "You pressed the wrong jaw button! Try cutting again by clicking jaw buttons alternatively!",
     "Time out! You failed to cut the entire leaf within the given time.",
-    "You are the TRUE LEAFCUTTER ANT! You finished cutting the entire leaf within time! You win!"
+    "Excellent! You finished cutting the entire leaf within time!"
 ];
 var leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_START];
 

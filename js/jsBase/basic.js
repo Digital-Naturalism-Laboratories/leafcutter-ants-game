@@ -160,6 +160,29 @@ function radToDeg(val)
   return val * (180.0 / Math.PI);
 }
 
+function changeValueInSteps(valueToChange, targetValue, positiveAmount)
+{
+  if(valueToChange < targetValue - positiveAmount)
+  {
+    valueToChange += positiveAmount;
+  }
+  else if(valueToChange < targetValue)
+  {
+    valueToChange = targetValue
+  }
+
+  else if(valueToChange > targetValue + positiveAmount)
+  {
+    valueToChange -= positiveAmount;
+  }
+  else if(valueToChange > targetValue)
+  {
+    valueToChange = targetValue
+  }
+
+  return valueToChange;
+}
+
 function lerp(val1, val2, amount)
 {
 	amount = amount < 0 ? 0 : amount;

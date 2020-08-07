@@ -31,6 +31,15 @@ class Ant
         this.rotationMode = false;
         this.alternateRotation = true;
 
+        this.timedJawMinRadius = 45 * pixelSize;
+        this.timedJawMaxRadius = 80 * pixelSize;
+        this.timedJawRadius = this.timedJawMaxRadius;
+        this.timedJawSpeedFactor = 0.075;
+        this.timedJawCutSpeedBonus = 0;
+        this.timedJawCutSpeedBonusFactor = 0.025;
+        this.timedJawCutTimeBonus = 0;
+        this.timedJawCutTimeBonusFactor = 5;
+
         this.cutPointLines = [];
         this.cutPointDelay = 200.0;
         this.cutPointTimer = this.cutPointDelay;
@@ -104,11 +113,20 @@ class Ant
                 this.rotationMechanic(deltaTime);
                 this.cutTimer -= deltaTime;
             }
+
+            if(this.rotationMode && this.jawSpeedPenalty <= 0)
+            {
+                this.timedJawRadius -= this.timedJawSpeedFactor * deltaTime;
+
+                if(this.timedJawRadius <= this.timedJawMinRadius)
+                    this.timedJawRadius = this.timedJawMaxRadius;
+            }
         }
     }
 
     draw(deltatime)
     {
+        this.drawDestinationPath();
         for(let i = 0; i < this.cutPointLines.length-1; i++)
         {
             var pixelData1 = renderer.getImageData(this.cutPointLines[i].x, this.cutPointLines[i].y, 1, 1).data;
@@ -120,19 +138,18 @@ class Ant
         this.leadingJawSprite.drawScRot();
         this.cuttingJawSprite.drawScRot();
         this.drawJawControls();
-        this.drawDestinationPath();
     }
 
     moveToDestination(deltaTime)
     {
         if(this.destinationPoints.length <= 1)
         {
-            this.bodySprite.transform.rotation = this.destinationPoint.angle(this.bodySprite.transform.position);
+            this.bodySprite.transform.rotation = changeValueInSteps(this.bodySprite.transform.rotation, this.destinationPoint.angle(this.bodySprite.transform.position), 0.05 * deltaTime);
         }
         else
         {
             if(this.destinationPoints[this.destinationPointsIndex].distance(this.bodySprite.transform.position) > 5 * pixelSize)
-                this.bodySprite.transform.rotation = this.destinationPoints[this.destinationPointsIndex].angle(this.bodySprite.transform.position);
+                this.bodySprite.transform.rotation = changeValueInSteps(this.bodySprite.transform.rotation, this.destinationPoints[this.destinationPointsIndex].angle(this.bodySprite.transform.position), 0.05 * deltaTime);
             else
                 this.destinationPointsIndex++;
         }
@@ -156,8 +173,13 @@ class Ant
     {
         if(this.rotationMode)
         {
-            drawCircle(renderer, this.leadingJawControlPos, 60 * pixelSize, !this.isCuttingJawLed, !this.isCuttingJawLed ? "white" : "red", 2);
-            drawCircle(renderer, this.cuttingJawControlPos, 60 * pixelSize, this.isCuttingJawLed, this.isCuttingJawLed ? "white" : "red", 2);
+            drawCircle(renderer, this.leadingJawControlPos, this.timedJawMinRadius, !this.isCuttingJawLed, !this.isCuttingJawLed ? "white" : "red", pixelSize);
+            drawCircle(renderer, this.cuttingJawControlPos, this.timedJawMinRadius, this.isCuttingJawLed, this.isCuttingJawLed ? "white" : "red", pixelSize);
+            if(this.jawSpeedPenalty <= 0)
+                drawCircle(renderer, this.isCuttingJawLed ? this.cuttingJawControlPos : this.leadingJawControlPos,
+                this.timedJawRadius, false, rgb(Math.floor((this.timedJawRadius - this.timedJawMinRadius)*4),
+                Math.floor((this.timedJawMaxRadius - this.timedJawRadius)*4), 0), (this.timedJawRadius - this.timedJawMinRadius) * pixelSize);
+            renderer.lineWidth = 1;
             var tempPos = vec2(this.cuttingJawSprite.transform.position.x, this.cuttingJawSprite.transform.position.y);
             this.cuttingJawSprite.transform.position = this.cuttingJawControlPos;
             this.cuttingJawSprite.drawSc();
@@ -207,6 +229,10 @@ class Ant
         this.secondAnt.disabled = false;
         this.secondAnt.forcedDestination = true;
         this.secondAnt.destinationPoint = vec2(60 * pixelSize, 360 * pixelSize);
+
+        this.timedJawRadius = this.timedJawMinRadius;
+        this.jawSpeedPenalty = 0;
+        this.cutTimer = 0;
     }
 
     leafBorderTouchInput()
@@ -242,10 +268,7 @@ class Ant
             && array[i].x < vec.x + (0.5 * pixelSize)
             && array[i].y > vec.y - (0.5 * pixelSize)
             && array[i].y < vec.y + (0.5 * pixelSize))
-            {
-                console.log("vector in array already. not adding");
                 return true;
-            }
         }
         return false;
     }
@@ -297,7 +320,7 @@ class Ant
                 }
                 else
                 {
-                    console.log("Impossible leaf destination for the ant to move onto. Ant will move directly to the destination point.");
+                    console.log("Impossible leaf destination for the ant to move onto using path mechanic. Ant will move directly to the destination point.");
                     this.destinationPoints.push(vec2(this.destinationPoint.x, this.destinationPoint.y));
                     break;
                 }
@@ -307,11 +330,11 @@ class Ant
 
     drawDestinationPath()
     {
-        if(this.destinationPoints.length > 1)
+        if(this.destinationPoints.length > 1 && !this.rotationMode)
         {
             for(let i = 1; i < this.destinationPoints.length; i++)
             {
-                drawLine(renderer, this.destinationPoints[i - 1], this.destinationPoints[i], "blue");
+                drawLine(renderer, this.destinationPoints[i - 1], this.destinationPoints[i], "#ffffff99");
             }
         }
     }
@@ -320,11 +343,20 @@ class Ant
     {
         if(this.rotationMode)
         {
-            if(isPointInCircle(vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY), this.cuttingJawControlPos, 45 * pixelSize))
+            if(isPointInCircle(vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY), this.cuttingJawControlPos, this.timedJawMinRadius))
             {
                 if(this.isCuttingJawLed)
                 {
-                    this.cutTimer = this.cutDuration * (this.jawSpeedPenalty > 0 ? 0.5 : 1.0);
+                    this.timedJawCutSpeedBonus = 1 + ((this.timedJawMaxRadius - this.timedJawRadius) * this.timedJawCutSpeedBonusFactor);
+                    
+                    //TIMED JAW CUT SPEED PENALTY RULE
+                    if(this.timedJawCutSpeedBonus <= 1.75) this.timedJawCutSpeedBonus /= 2;
+
+                    this.timedJawRadius = this.timedJawMinRadius;
+
+                    this.cutTimer = (this.cutDuration * (this.jawSpeedPenalty > 0 ? 0.5 : 1.0)) + this.timedJawCutTimeBonus;
+                    this.timedJawCutTimeBonus = 0;
+
                     this.isCuttingJawLed = false;
                     this.jawSpeedPenalty--;
                 }
@@ -334,10 +366,21 @@ class Ant
                     leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_FAIL];
                 }
             }
-            else if(isPointInCircle(vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY), this.leadingJawControlPos, 45 * pixelSize))
+            else if(isPointInCircle(vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY), this.leadingJawControlPos, this.timedJawMinRadius))
             {
                 if(!this.isCuttingJawLed)
                 {
+                    this.timedJawCutTimeBonus = (this.timedJawMaxRadius - this.timedJawRadius) * this.timedJawCutTimeBonusFactor;
+                    
+                    //TIMED JAW CUT TIME PENALTY RULE
+                    if(this.timedJawCutTimeBonus <= 150) this.timedJawCutTimeBonus -= 200;
+
+                    this.timedJawRadius = this.timedJawMinRadius;
+
+                    console.log(this.timedJawCutTimeBonus.toString());
+
+                    this.timedJawCutSpeedBonus = 1;
+
                     this.isCuttingJawLed = true;
                     leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_JAWS];
                 }
@@ -356,11 +399,11 @@ class Ant
         do
         {
             if(!this.alternateRotation)
-                this.bodySprite.transform.rotation -= (0.025/2);
+                this.bodySprite.transform.rotation -= (0.0125 * this.timedJawCutSpeedBonus);
             else
-                this.bodySprite.transform.rotation += (0.025/2);
+                this.bodySprite.transform.rotation += (0.0125 * this.timedJawCutSpeedBonus);
             
-            moveInDir(this.bodySprite, (0.5 * pixelSize));
+            moveInDir(this.bodySprite, (0.5 * pixelSize) * this.timedJawCutSpeedBonus);
             this.updatingJawTransform();
 
             var pixelData = renderer.getImageData(this.cutPoint.x, this.cutPoint.y, 1, 1).data;
