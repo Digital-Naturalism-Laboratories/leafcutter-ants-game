@@ -58,6 +58,11 @@ function setupLeafcuttingUI()
 
     leafcuttingUI.push(new FlexGroup(tr(vec2(20*pixelSize, 20*pixelSize), vec2(window.innerWidth, 80*pixelSize)),
         new SubState(tr(), gameplayLabels),false, vec2(0, 20*pixelSize), vec2(1, 4), true));
+
+    leafcuttingBGM[BGM_TRANSPORTING].setAttribute('src', 'audio/Transporting Leaves Scene.mp3');
+    leafcuttingBGM[BGM_TRANSPORTING].loop = true;
+    leafcuttingBGM[BGM_SLICING].setAttribute('src', 'audio/Slicing Leaves Scene.mp3');
+    leafcuttingBGM[BGM_SLICING].loop = true;
 }
 
 function leafcuttingUICustomDraw(deltaTime)
