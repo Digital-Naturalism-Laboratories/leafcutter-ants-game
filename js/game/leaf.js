@@ -1,10 +1,13 @@
 
+var distanceBetween2AdjacentPoints = 0;
 var _getPoints = false;
 
 class Leaf
 {
     constructor()
     {
+        distanceBetween2AdjacentPoints = pixelSize*24;
+
         this.leafSprite = new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(pixelSize*2, pixelSize*2)),
             new ImageObject("images/uncutLeaf.png", vec2(gameWidth, gameHeight)));
         this.stemSprite = new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(pixelSize*2, pixelSize*2)),
@@ -33,7 +36,7 @@ class Leaf
         this.stemSprite.drawSc();
         this.updateLeafSprite();
         this.leafSprite.drawSc();
-        //this.drawPoints(false);
+        this.drawPoints(false);
     }
 
     drawPoints(onlyBorders)
@@ -119,8 +122,8 @@ class Leaf
 
             var newLeafImage = new Image();
             newLeafImage.src = this.leafCanvas.toDataURL("image/png", 1);
-            newLeafImage.width = gameWidth/2.75;
-            newLeafImage.height = gameHeight/2.75;
+            newLeafImage.width = gameWidth / (pixelSize*2);
+            newLeafImage.height = gameHeight / (pixelSize*2);
             this.leafSprite.imageObject.image = newLeafImage;
 
             this.leafSprite.imageObject.image.onload = function() {
@@ -135,7 +138,7 @@ class Leaf
         if(_getPoints)
         {
             this.leafSprite.drawSc();
-            this.getPoints(pixelSize*24);
+            this.getPoints(distanceBetween2AdjacentPoints);
             _getPoints = false;
         }
     }
