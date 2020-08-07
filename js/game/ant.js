@@ -36,6 +36,8 @@ class Ant
         this.cutPointTimer = this.cutPointDelay;
 
         this.forcedDestination = true;
+        this.destinationPoints = [];
+        this.destinationPointsIndex = -1;
         this.destinationPoint = vec2(60 * pixelSize, 360 * pixelSize);
         this.pointIndex = -1;
 
@@ -76,11 +78,9 @@ class Ant
         if(!this.disabled)
         {
             if(!this.rotationMode && (this.pointIndex > -1 || this.forcedDestination)
-            && this.destinationPoint.distance(this.bodySprite.transform.position) > 5)
+            && this.destinationPoint.distance(this.bodySprite.transform.position) > 5 * pixelSize)
             {
-                this.bodySprite.transform.rotation = this.destinationPoint.angle(this.bodySprite.transform.position);
-                moveInDir(this.bodySprite, 2 * pixelSize);
-                this.updatingJawTransform();
+                this.moveToDestination(deltaTime);
             }
             else if(this.forcedDestination)
             {
@@ -120,6 +120,25 @@ class Ant
         this.leadingJawSprite.drawScRot();
         this.cuttingJawSprite.drawScRot();
         this.drawJawControls();
+        this.drawDestinationPath();
+    }
+
+    moveToDestination(deltaTime)
+    {
+        if(this.destinationPoints.length <= 1)
+        {
+            this.bodySprite.transform.rotation = this.destinationPoint.angle(this.bodySprite.transform.position);
+        }
+        else
+        {
+            if(this.destinationPoints[this.destinationPointsIndex].distance(this.bodySprite.transform.position) > 5 * pixelSize)
+                this.bodySprite.transform.rotation = this.destinationPoints[this.destinationPointsIndex].angle(this.bodySprite.transform.position);
+            else
+                this.destinationPointsIndex++;
+        }
+
+        moveInDir(this.bodySprite, 2 * pixelSize);
+        this.updatingJawTransform();
     }
 
     updatingJawTransform()
@@ -156,7 +175,7 @@ class Ant
         {
             for(let i = 0; i < this.cutPointLines.length-1; i++)
             {
-                if(this.cutPointLines[i].distance(newPoint) < 4 * pixelSize)
+                if(this.cutPointLines[i].distance(newPoint) < 5 * pixelSize)
                 {
                     this.leaf.voidAreas.push([]);
                     for(let i = 0; i < this.cutPointLines.length; i++)
@@ -180,6 +199,8 @@ class Ant
         leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_SUCCESS];
 
         this.forcedDestination = true;
+        this.destinationPoints = [];
+        this.destinationPointsIndex = -1;
         this.destinationPoint = vec2(-40 * pixelSize, 540 * pixelSize);
         this.disabling = true;
 
@@ -200,12 +221,97 @@ class Ant
                 {
                     lastDist = dist;
 
-                    if(dist < this.leafBorderTouchMinimumDistance)
+                    if(dist < this.leafBorderTouchMinimumDistance && !this.rotationMode)
                     {
                         this.destinationPoint = this.leaf.borderPoints[i];
+                        this.destinationPointsIndex = 0;
+                        this.destinationPoints = [];
+                        this.calculateDestinationPoints();
                         this.pointIndex = i;
                     }
                 }
+            }
+        }
+    }
+
+    isVectorInArray(vec, array)
+    {
+        for(let i = 0; i < array.length; i++)
+        {
+            if(array[i].x > vec.x - (0.5 * pixelSize)
+            && array[i].x < vec.x + (0.5 * pixelSize)
+            && array[i].y > vec.y - (0.5 * pixelSize)
+            && array[i].y < vec.y + (0.5 * pixelSize))
+            {
+                console.log("vector in array already. not adding");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    calculateDestinationPoints()
+    {
+        if(this.destinationPoints.length <= 0)
+        {
+            this.destinationPoints.push(vec2(this.bodySprite.transform.position.x, this.bodySprite.transform.position.y));
+
+            while(this.destinationPoints.length < 40)
+            {
+                if(this.destinationPoints[this.destinationPoints.length - 1].distance(this.destinationPoint) <= distanceBetween2AdjacentPoints * 1.67)
+                {
+                    this.destinationPoints.push(vec2(this.destinationPoint.x, this.destinationPoint.y));
+                    break;
+                }
+
+                var adjacentPoints = [];
+                var pointToIgnore = -1;
+                for(let i = 0; i < this.leaf.points.length; i++)
+                {
+                    if(pointToIgnore < 0 && isPointInCircle(this.destinationPoints[this.destinationPoints.length - 1], this.leaf.points[i], distanceBetween2AdjacentPoints / 2))
+                    {
+                        pointToIgnore = i;
+                    }
+                    else if(isPointInCircle(this.destinationPoints[this.destinationPoints.length - 1], this.leaf.points[i], distanceBetween2AdjacentPoints * 1.67))
+                    {
+                        adjacentPoints.push(vec2(this.leaf.points[i].x, this.leaf.points[i].y));
+                    }
+                }
+
+                var distanceFromDestinationPoint = 999999;
+                var adjacentPointIndexCloserToDestination = vec2(99999, 99999);
+                for(let i = 0; i < adjacentPoints.length; i++)
+                {
+                    var distance = this.destinationPoint.distance(adjacentPoints[i]);
+                    if(distance < distanceFromDestinationPoint
+                    && !this.isVectorInArray(adjacentPoints[i], this.destinationPoints))
+                    {
+                        distanceFromDestinationPoint = distance;
+                        adjacentPointIndexCloserToDestination = adjacentPoints[i];
+                    }
+                }
+
+                if(adjacentPointIndexCloserToDestination.x < 99990)
+                {
+                    this.destinationPoints.push(vec2(adjacentPointIndexCloserToDestination.x, adjacentPointIndexCloserToDestination.y));
+                }
+                else
+                {
+                    console.log("Impossible leaf destination for the ant to move onto. Ant will move directly to the destination point.");
+                    this.destinationPoints.push(vec2(this.destinationPoint.x, this.destinationPoint.y));
+                    break;
+                }
+            }
+        }
+    }
+
+    drawDestinationPath()
+    {
+        if(this.destinationPoints.length > 1)
+        {
+            for(let i = 1; i < this.destinationPoints.length; i++)
+            {
+                drawLine(renderer, this.destinationPoints[i - 1], this.destinationPoints[i], "blue");
             }
         }
     }
@@ -261,7 +367,7 @@ class Ant
 
             if(this.cutPointTimer <= 0)
             {
-                var newPoint = this.cutPoint.add(vec2(Math.random() * 4 * pixelSize, Math.random() * 4 * pixelSize));
+                var newPoint = this.cutPoint.add(vec2(Math.random() * 3 * pixelSize, Math.random() * 3 * pixelSize));
                 this.cutPointLines.push(newPoint);
                 if(this.addVoidAreaWhenPointsConnect(newPoint))
                 {
