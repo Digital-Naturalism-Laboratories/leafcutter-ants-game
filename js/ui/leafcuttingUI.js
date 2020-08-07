@@ -28,6 +28,12 @@ var leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_START];
 var leafcuttingScore = 0;
 var leafcuttingTimeLeft = 180000;
 
+var prevBGM = -1;
+var currentBGM = -1;
+var leafcuttingBGM = [document.createElement('audio'), document.createElement('audio')];
+var BGM_TRANSPORTING = 0;
+var BGM_SLICING = 1;
+
 function setupLeafcuttingUI()
 {
     leafcuttingFontSize = 14 * pixelSize;
@@ -63,6 +69,8 @@ function leafcuttingUICustomDraw(deltaTime)
 
 function leafcuttingUICustomUpdate(deltaTime)
 {
+    prevBGM = currentBGM;
+
     ant.update(deltaTime);
     ant2.update(deltaTime);
     
@@ -70,6 +78,22 @@ function leafcuttingUICustomUpdate(deltaTime)
     scoreLabel.text = "SCORE: " + leafcuttingScore.toString();
     timeLabel.text = "TIME LEFT: " + (Math.floor(leafcuttingTimeLeft/1000)).toString();
     leafcuttingTimeLeft -= deltaTime;
+
+    if((!ant.disabled && ant.rotationMode) || (!ant2.disabled && ant2.rotationMode))
+        currentBGM = 1;
+    else
+        currentBGM = 0;
+    
+    if(!leafcuttingBGM[currentBGM].isPlaying)
+    {
+        leafcuttingBGM[currentBGM].play();
+
+        if(prevBGM != currentBGM && prevBGM >= 0)
+        {
+            leafcuttingBGM[prevBGM].pause();
+            leafcuttingBGM[prevBGM].currentTime = 0;
+        }
+    }
 }
 
 function leafcuttingUICustomEvents(deltaTime)

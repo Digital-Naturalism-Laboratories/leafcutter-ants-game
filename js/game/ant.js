@@ -30,6 +30,7 @@ class Ant
         this.cutTimer = 0;
         this.rotationMode = false;
         this.alternateRotation = true;
+        this.rotationCounter = 0.0;
 
         this.timedJawMinRadius = 45 * pixelSize;
         this.timedJawMaxRadius = 80 * pixelSize;
@@ -195,14 +196,16 @@ class Ant
     {
         if(this.cutPointLines.length > 2)
         {
-            for(let i = 0; i < this.cutPointLines.length-1; i++)
+            //for(let i = 0; i < this.cutPointLines.length-1; i++)
             {
-                if(this.cutPointLines[i].distance(newPoint) < 5 * pixelSize)
+                //if(this.cutPointLines[i].distance(newPoint) < this.minRotationDistance)
+                if(this.rotationCounter >= Math.PI * 2.2)
                 {
                     this.leaf.voidAreas.push([]);
                     for(let i = 0; i < this.cutPointLines.length; i++)
                         this.leaf.voidAreas[this.leaf.voidAreas.length-1].push(vec2(this.cutPointLines[i].x, this.cutPointLines[i].y));
                     this.cutPointLines = [];
+                    this.rotationCounter = 0.0;
                     return true;
                 }
             }
@@ -399,9 +402,15 @@ class Ant
         do
         {
             if(!this.alternateRotation)
+            {
                 this.bodySprite.transform.rotation -= (0.0125 * this.timedJawCutSpeedBonus);
+                this.rotationCounter += (0.0125 * this.timedJawCutSpeedBonus);
+            }
             else
+            {
                 this.bodySprite.transform.rotation += (0.0125 * this.timedJawCutSpeedBonus);
+                this.rotationCounter += (0.0125 * this.timedJawCutSpeedBonus);
+            }
             
             moveInDir(this.bodySprite, (0.5 * pixelSize) * this.timedJawCutSpeedBonus);
             this.updatingJawTransform();

@@ -50,6 +50,8 @@ var visited = [];
 
 var totalMilliseconds = 0;
 
+var bgmColony = document.createElement('audio');
+
 function distToTargetTile(){
   move_count = 0;
   reached_end = false;
@@ -155,6 +157,9 @@ function setupColonyGameUI() {
 
   loadImages();
   queen = new Queen((COLONY_W * 12) - 10, (COLONY_H * 6) + 20);
+
+  bgmColony.setAttribute('src', 'audio/Intro Music.mp3');
+  bgmColony.loop = true;
 }
 
 function colonyGameUICustomDraw(deltaTime) {
@@ -196,18 +201,25 @@ function colonyGameUICustomDraw(deltaTime) {
 
 }
 
-function colonyGameUICustomEvents(deltaTime) {
-  
-  if (isTouched) {
+function colonyGameUICustomEvents(deltaTime)
+{
+  if(userInteracted && !bgmColony.isPlaying)
+    bgmColony.play();
 
+  if (isTouched) {
     if (getDistBtwVec2(vec2((colonyTiles[COLONY_TUNNEL_VERT].width * 3) * pixelSize, (colonyTiles[COLONY_TUNNEL_VERT].height * 2 - 10) * pixelSize), vec2(touchPos[0].x - canvas.getBoundingClientRect().left, touchPos[0].y - canvas.getBoundingClientRect().top)) < 40 * pixelSize) {
+      bgmColony.pause();
+      bgmColony.currentTime = 0;
+      
       ui.stateIndex = LEAFCUTTINGUI;
     }
     if (getDistBtwVec2(vec2((colonyTiles[COLONY_TUNNEL_VERT].width * 13) * pixelSize, (colonyTiles[COLONY_TUNNEL_VERT].height + 20) * pixelSize), vec2(touchPos[0].x - canvas.getBoundingClientRect().left, touchPos[0].y - canvas.getBoundingClientRect().top)) < 40 * pixelSize) {
+      bgmColony.pause();
+      bgmColony.currentTime = 0;
+
       ui.stateIndex = DEFENSEGAMEUI;
     }
   }
-
 }
 
 function colonyTileToIndex(tileCol, tileRow) {
