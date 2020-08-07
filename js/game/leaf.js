@@ -36,7 +36,7 @@ class Leaf
         this.stemSprite.drawSc();
         this.updateLeafSprite();
         this.leafSprite.drawSc();
-        this.drawPoints(false);
+        //this.drawPoints(false);
     }
 
     drawPoints(onlyBorders)

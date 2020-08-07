@@ -14,7 +14,7 @@ function uiInit()
     uistates.push(new UIState(colonyGameUI));
     uistates.push(new UIState(leafcuttingUI));
     uistates.push(new UIState(defenseGame.arrayOfUIObjects))
-    ui = new UI(uistates, MAINMENUUI);
+    ui = new UI(uistates, COLONYGAMEUI);
 }
 
 function uiSettings()
