@@ -209,6 +209,8 @@ function GroundMinimManager()
 			defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.pause();
 			defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.currentTime = 0;
 			defenseGame.audioManager.sfxManager.beefUpTrailFeedback.play();
+			defenseGame.audioManager.sfxManager.fliesSwarming.pause();
+			defenseGame.audioManager.sfxManager.flyBuzzingNormal.play();
 			for (let i = 0; i < this.arrayOfGroundMinims.length; i++)
 			{
 				this.arrayOfGroundMinims[i].coinFlipAMeanderDirection();

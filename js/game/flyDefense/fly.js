@@ -235,6 +235,8 @@ function FlyManager()
 	this.toggleSwarm = function()
 	{
 		this.currentStatus = 'swarming';
+		defenseGame.audioManager.sfxManager.flyBuzzingNormal.pause();
+		defenseGame.audioManager.sfxManager.fliesSwarming.play();
 		for (let i = 0; i < this.arrayOfFlies.length; i++)
 		{
 			this.arrayOfFlies[i].status = 'planting';

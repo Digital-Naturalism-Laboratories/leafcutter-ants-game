@@ -89,22 +89,30 @@ function AmbienceManager()
 
 function SFXManager()
 {
+	//normal loops
 	this.stuckSwarmAlertSound = document.createElement('audio');
 	this.stuckSwarmAlertSound.setAttribute('src', 'audio/flyDefense/pheremoneGapSwarmAlert.mp3');
 	this.stuckSwarmAlertSound.loop = true;
 	this.stuckSwarmAlertSound.volume = 0.5;
 
+	//one shots
 	this.beefUpTrailFeedback = document.createElement('audio');
 	this.beefUpTrailFeedback.setAttribute('src', 'audio/flyDefense/beefUpTrailFeedback.mp3');
 
+	//loops that need adjusted loop points
 	this.flyBuzzingNormal = document.createElement('audio');
 	this.flyBuzzingNormal.setAttribute('src', 'audio/flyDefense/flyBuzzingNormal.mp3');
 	this.flyBuzzingNormal.loop = true;
 	this.flyBuzzingNormal.volume = 0.05;
 
+	this.fliesSwarming = document.createElement('audio');
+	this.fliesSwarming.setAttribute('src', 'audio/flyDefense/fliesSwarming.mp3');
+	this.fliesSwarming.loop = true;
+	this.fliesSwarming.volume = 0.1;
+
 	this.arrayOfLoopSoundsToBeLoopedBeforeAwkwardSilence = 
 	[
-		this.flyBuzzingNormal
+		this.flyBuzzingNormal, this.fliesSwarming
 	]
 
 	this.calculateAndSetAvoidAwkwardSilenceTimestamps = function()
