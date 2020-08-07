@@ -6,7 +6,7 @@ class Queen {
         this.y = y;
         this.speedX = 2;
         this.speedY = 2;
-        this.sprite = new Sprite(tr(vec2(this.x * pixelSize, this.y * pixelSize), vec2(pixelSize / 3, pixelSize / 3)), new ImageObject("Visual Assets/8bit-Queen-no-wings-left.png", vec2(0, 0)));
+        this.sprite = new Sprite(tr(vec2(this.x * pixelSize, this.y * pixelSize), vec2(pixelSize / 2, pixelSize / 2)), new ImageObject("Visual Assets/8bit-Queen-no-wings-left.png", vec2(0, 0)));
         this.collisionRadius = 15;
 
         colonyGameUI.push(this);
@@ -30,6 +30,7 @@ class Queen {
     }
 
     update() {
+        /*
         if (this.x < lastTouchPos.x) {
             this.x += this.speedX;
         }
@@ -46,10 +47,11 @@ class Queen {
             this.y -= this.speedY;
         }
 
-        this.y = clamp(this.y, COLONY_H * 5, gameHeight);
+        this.y = clamp(this.y, COLONY_H * 3 * pixelSize, gameHeight);
 
         this.sprite.transform.position.x = this.x;
         this.sprite.transform.position.y = this.y;
+        */
     }
 
     draw() {
