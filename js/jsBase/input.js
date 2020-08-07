@@ -1,4 +1,6 @@
-gamePaused = false;
+var gamePaused = false;
+var userInteracted = false;
+
 function onResize(ev)
 {
     renderer.canvas.width = window.innerWidth;
@@ -74,6 +76,8 @@ function onTouchEnd(ev)
     
     if(ev.touches.length <= 0)
         isTouched = false;
+
+    userInteracted = true;
 }
 
 function onMouseDown(ev)
@@ -109,6 +113,8 @@ function onMouseMove(ev)
 function onMouseUp(ev)
 {
     isTouched = false;
+
+    userInteracted = true;
 }
 
 function onMouseWheelScroll(ev)

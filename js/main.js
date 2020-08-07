@@ -1,14 +1,13 @@
+var bgmIntro = document.createElement('audio');
+
 window.onload = function()
 {
     init();
     
     setInterval(frame, 1000 / 60);
 
-    var bgm1 = document.createElement('audio');
-    bgm1.setAttribute('src', 'audio/Main Nest Scene B.mp3');
-    bgm1.setAttribute('autoplay', 'autoplay');
-    bgm1.loop = true;
-    console.log(bgm1);
+    bgmIntro.setAttribute('src', 'audio/Intro Music.mp3');
+    bgmIntro.loop = true;
 };
 
 function events(deltaTime)
@@ -36,8 +35,6 @@ function update(deltaTime)
 
 function draw(deltaTime)
 {
-    renderer.clearRect(0, 0, canvas.width, canvas.height);
-    renderer.fillStyle = "#000000";
     drawRect(renderer, vec2(0, 0), vec2(gameWidth, gameHeight), true, bgHEX);
     switch(ui.stateIndex)
     {
@@ -49,8 +46,6 @@ function draw(deltaTime)
     }
     
     ui.draw();
-    
-    //displayMouseCoords(renderer);
 }
 
 function frame()
