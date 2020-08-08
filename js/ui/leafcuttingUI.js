@@ -27,7 +27,11 @@ var leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_START];
 
 var leafcuttingScore = 0;
 var leafcuttingTimeLeft = 0;
+var leafcuttingStartTime = 200000;
 var leafcuttingLowTimeAlert = 15000;
+
+var leafcuttingWinBonus = 2;
+var leafcuttingLosePenalty = 2;
 
 var prevBGM = -1;
 var currentBGM = 0;
@@ -68,9 +72,10 @@ var SFX_ANTWALK = 3;
 var SFX_PLAYERWIN = 4;
 var SFX_TIMEOUT = 5;
 
-function setupLeafcuttingUI()
+function leafcuttingResetGame()
 {
-    leafcuttingTimeLeft = 180000;
+    leafcuttingScore = 0;
+    leafcuttingTimeLeft = leafcuttingStartTime;
 
     leafcuttingFontSize = 14 * pixelSize;
 
@@ -80,6 +85,11 @@ function setupLeafcuttingUI()
     ant.setSecondAnt(ant2);
     ant2.setSecondAnt(ant);
     ant2.disabled = true;
+}
+
+function setupLeafcuttingUI()
+{
+    leafcuttingResetGame();
 
     gameplayLabels = [];
     gameHintLabel = new Label(tr(), leafcuttingHint,
@@ -104,6 +114,7 @@ function setupLeafcuttingUI()
     for(let i = 0; i < leafcuttingSFX.length; i++)
     {
         leafcuttingSFX[i].setAttribute('src', leafcuttingSFXPaths[i]);
+        leafcuttingSFX[i].volume = 1;
     }
 }
 
@@ -116,6 +127,7 @@ function leafcuttingUICustomDraw(deltaTime)
 
 function leafcuttingUICustomUpdate(deltaTime)
 {
+    leaf.update();
     ant.update(deltaTime);
     ant2.update(deltaTime);
     
@@ -124,11 +136,10 @@ function leafcuttingUICustomUpdate(deltaTime)
     if(leafcuttingTimeLeft > 0)
         timeLabel.text = "TIME LEFT: " + (Math.floor(leafcuttingTimeLeft/1000)).toString();
     else
-    {
         timeLabel.text = "TIME OUT!";
-        ant.disabled = ant2.disabled = true;
-    }
-    leafcuttingTimeLeft -= deltaTime;
+
+    if(!ant.disabled || !ant2.disabled)
+        leafcuttingTimeLeft -= deltaTime;
 
     leafcuttingAudioHandling(deltaTime);
 }
@@ -137,6 +148,16 @@ function leafcuttingUICustomEvents(deltaTime)
 {
     ant.event();
     ant2.event();
+}
+
+function areLeafcuttingAntsDisabled()
+{
+    return ant.disabled && ant2.disabled;
+}
+
+function leafcuttingDisableBothAnts()
+{
+    ant.disabled = ant2.disabled = true;
 }
 
 function leafcuttingAudioHandling(deltaTime)
@@ -198,10 +219,24 @@ function leafcuttingAudioHandling(deltaTime)
         leafcuttingSFX[SFX_LOWTIME].pause();
         leafcuttingSFX[SFX_LOWTIME].currentTime = 0;
 
-        if(leafcuttingTimeLeft < 0 && leafcuttingTimeLeft > -1000 && !leafcuttingSFX[SFX_TIMEOUT].isPlaying)
+        if(leafcuttingTimeLeft < 0 && leafcuttingTimeLeft > -1000)
         {
-            leafcuttingSFX[SFX_TIMEOUT].volume = leafcuttingBGMMaxVolume;
-            leafcuttingSFX[SFX_TIMEOUT].play();
+            if(!areLeafcuttingAntsDisabled())
+            {
+                leafcuttingSFX[SFX_TIMEOUT].volume = leafcuttingBGMMaxVolume;
+                leafcuttingSFX[SFX_TIMEOUT].play();
+                leafcuttingDisableBothAnts();
+            }
+            else if(!leafcuttingSFX[SFX_TIMEOUT].isPlaying && leafcuttingSFX[SFX_TIMEOUT].volume <= 0.4)
+            {
+                leafMaterial += leafcuttingScore / leafcuttingLosePenalty;
+                leafcuttingResetGame();
+                ui.stateIndex = COLONYGAMEUI;
+            }
+            else if(leafcuttingSFX[SFX_TIMEOUT].volume > 0.4)
+            {
+                leafcuttingSFX[SFX_TIMEOUT].volume -= 0.000025 * deltaTime;
+            }
         }
     }
 }

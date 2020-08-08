@@ -159,12 +159,28 @@ class Leaf
         spritesRenderer = renderer;
     }
 
-    winCondition()
+    winCondition(deltaTime)
     {
         if((this.borderPoints.length <= 10 || this.borderPoints.length == this.points.length)
-        && leafcuttingTimeLeft > 0)
+        && leafcuttingTimeLeft > 0 && !this.updatePoints && !_getPoints)
         {
-            leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_WIN];
+            if(!areLeafcuttingAntsDisabled())
+            {
+                leafcuttingSFX[SFX_PLAYERWIN].volume = leafcuttingBGMMaxVolume;
+                leafcuttingSFX[SFX_PLAYERWIN].play();
+                leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_WIN];
+                leafcuttingDisableBothAnts();
+            }
+            else if(!leafcuttingSFX[SFX_PLAYERWIN].isPlaying && leafcuttingSFX[SFX_PLAYERWIN].volume <= 0.4)
+            {
+                leafMaterial += leafcuttingScore * leafcuttingWinBonus;
+                leafcuttingResetGame();
+                ui.stateIndex = COLONYGAMEUI;
+            }
+            else if(leafcuttingSFX[SFX_PLAYERWIN].volume > 0.4)
+            {
+                leafcuttingSFX[SFX_PLAYERWIN].volume -= 0.000025 * deltaTime;
+            }
         }
     }
 }

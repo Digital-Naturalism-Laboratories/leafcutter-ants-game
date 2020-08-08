@@ -26,7 +26,7 @@ class Ant
         this.isCuttingJawLed = false;
         this.jawSpeedPenalty = 0;
         this.jawSpeedPenaltyTotalTurns = 3;
-        this.cutDuration = 350;
+        this.cutDuration = 200;
         this.cutTimer = 0;
         this.rotationMode = false;
         this.alternateRotation = true;
@@ -35,11 +35,15 @@ class Ant
         this.timedJawMinRadius = 45 * pixelSize;
         this.timedJawMaxRadius = 80 * pixelSize;
         this.timedJawRadius = this.timedJawMaxRadius;
-        this.timedJawSpeedFactor = 0.075;
+        this.timedJawSpeedFactorDefault = 0.075
+        this.timedJawSpeedFactorMax = 0.1;
+        this.timedJawSpeedFactorMin = 0.05;
+        this.timedJawSpeedFactor = this.timedJawSpeedFactorDefault;
+        this.timedJawSpeedFactorStep = 0.005;
         this.timedJawCutSpeedBonus = 0;
-        this.timedJawCutSpeedBonusFactor = 0.025;
+        this.timedJawCutSpeedBonusFactor = 0.03;
         this.timedJawCutTimeBonus = 0;
-        this.timedJawCutTimeBonusFactor = 5;
+        this.timedJawCutTimeBonusFactor = 2.5;
 
         this.cutPointLines = [];
         this.cutPointDelay = 200.0;
@@ -145,14 +149,17 @@ class Ant
 
     moveToDestination(deltaTime)
     {
+        var targetAngle = 0;
         if(this.destinationPoints.length <= 1)
         {
-            this.bodySprite.transform.rotation = changeValueInSteps(this.bodySprite.transform.rotation, this.destinationPoint.angle(this.bodySprite.transform.position), 0.05 * deltaTime);
+            targetAngle = this.destinationPoint.angle(this.bodySprite.transform.position);
+            this.bodySprite.transform.rotation = targetAngle;//changeValueInSteps(this.bodySprite.transform.rotation, targetAngle, 0.0025 * deltaTime);
         }
         else
         {
+            targetAngle = this.destinationPoints[this.destinationPointsIndex].angle(this.bodySprite.transform.position);
             if(this.destinationPoints[this.destinationPointsIndex].distance(this.bodySprite.transform.position) > 5 * pixelSize)
-                this.bodySprite.transform.rotation = changeValueInSteps(this.bodySprite.transform.rotation, this.destinationPoints[this.destinationPointsIndex].angle(this.bodySprite.transform.position), 0.05 * deltaTime);
+                this.bodySprite.transform.rotation = targetAngle;//changeValueInSteps(this.bodySprite.transform.rotation, targetAngle, 0.0025 * deltaTime);
             else if(this.destinationPointsIndex + 1 < this.destinationPoints.length - 1)
                 this.destinationPointsIndex++;
             else
@@ -162,7 +169,8 @@ class Ant
             }
         }
 
-        moveInDir(this.bodySprite, 2 * pixelSize);
+        if(this.bodySprite.transform.rotation == targetAngle)
+            moveInDir(this.bodySprite, 2 * pixelSize);
 
         if(leafcuttingSFX[SFX_ANTWALK].currentTime <= 0 || leafcuttingSFX[SFX_ANTWALK].currentTime > 1.2)
         {
@@ -253,6 +261,7 @@ class Ant
         this.timedJawRadius = this.timedJawMinRadius;
         this.jawSpeedPenalty = 0;
         this.cutTimer = 0;
+        this.timedJawSpeedFactor = this.timedJawSpeedFactorDefault;
 
         this.leaf.getPoints(distanceBetween2AdjacentPoints);
     }
@@ -392,14 +401,21 @@ class Ant
                     this.timedJawCutSpeedBonus = 1 + ((this.timedJawMaxRadius - this.timedJawRadius) * this.timedJawCutSpeedBonusFactor);
                     
                     //TIMED JAW CUT SPEED PENALTY RULE
-                    if(this.timedJawCutSpeedBonus <= 1.5)
+                    if(this.timedJawCutSpeedBonus <= 2.1)
                     {
                         this.timedJawCutSpeedBonus /= 2;
+
+                        if(this.timedJawSpeedFactor > this.timedJawSpeedFactorMin)
+                            this.timedJawSpeedFactor -= this.timedJawSpeedFactorStep;
+
                         leafcuttingSFX[SFX_JAWBUTTON].currentTime = 0;
                         leafcuttingSFX[SFX_JAWBUTTON].play();
                     }
                     else
                     {
+                        if(this.timedJawSpeedFactor < this.timedJawSpeedFactorMax)
+                            this.timedJawSpeedFactor += this.timedJawSpeedFactorStep;
+
                         leafcuttingSFX[SFX_JAWTIMED].currentTime = 0;
                         leafcuttingSFX[SFX_JAWTIMED].play();
                     }
@@ -428,14 +444,21 @@ class Ant
                     this.timedJawCutTimeBonus = (this.timedJawMaxRadius - this.timedJawRadius) * this.timedJawCutTimeBonusFactor;
                     
                     //TIMED JAW CUT TIME PENALTY RULE
-                    if(this.timedJawCutTimeBonus <= 150)
+                    if(this.timedJawCutTimeBonus <= 90)
                     {
                         this.timedJawCutTimeBonus -= 200;
+
+                        if(this.timedJawSpeedFactor > this.timedJawSpeedFactorMin)
+                            this.timedJawSpeedFactor -= this.timedJawSpeedFactorStep;
+
                         leafcuttingSFX[SFX_JAWBUTTON].currentTime = 0;
                         leafcuttingSFX[SFX_JAWBUTTON].play();
                     }
                     else
                     {
+                        if(this.timedJawSpeedFactor < this.timedJawSpeedFactorMax)
+                            this.timedJawSpeedFactor += this.timedJawSpeedFactorStep;
+
                         leafcuttingSFX[SFX_JAWTIMED].currentTime = 0;
                         leafcuttingSFX[SFX_JAWTIMED].play();
                     }
