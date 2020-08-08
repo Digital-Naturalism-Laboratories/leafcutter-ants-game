@@ -150,10 +150,15 @@ function SFXManager()
 	this.leafMinimFootsteps.loop = true;
 	this.leafMinimFootsteps.volume = 0.2;
 
+	this.timeIsAlmostOutClockTickingLoop = document.createElement('audio');
+	this.timeIsAlmostOutClockTickingLoop.setAttribute('src', 'audio/flyDefense/clockTickingLoop.mp3');
+	this.timeIsAlmostOutClockTickingLoop.loop = true;
+	this.timeIsAlmostOutClockTickingLoop.volume = 0.2;
+
 	this.arrayOfLoopSoundsToBeLoopedBeforeAwkwardSilence = 
 	[
 		this.flyBuzzingNormal, this.fliesSwarming, this.groundMinimFootsteps, this.groundMinimFootstepsAccelerated, 
-		this.leafMinimFootsteps
+		this.leafMinimFootsteps, this.timeIsAlmostOutClockTickingLoop
 	]
 
 	this.calculateAndSetAvoidAwkwardSilenceTimestamps = function()

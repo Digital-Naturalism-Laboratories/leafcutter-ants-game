@@ -53,7 +53,25 @@ window.onload = function()
     defenseGame.gameInterval.start();
 
     defenseGame.timeLeft = 37;
-    defenseGame.decreaseCounter = function() {if (defenseGame.timeLeft > 0) {defenseGame.timeLeft--;}};
+    defenseGame.decreaseCounter = function() 
+    {
+      if (defenseGame.timeLeft > 0) 
+      {
+        defenseGame.timeLeft--;
+      }
+      console.log('defenseGame.timeLeft: ' + defenseGame.timeLeft);
+      console.log('defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.paused: ' + defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.paused);
+      if(defenseGame.timeLeft === 5 && defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.paused)
+      {
+        audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.play();
+        console.log('should hear clock ticking');
+      }
+      else if (defenseGame.timeLeft === 0 && !defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.paused)
+      {
+        audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.pause();
+        console.log('should stop clock ticking');
+      }
+    };
     defenseGame.countdownInterval = new frameInterval(defenseGame.decreaseCounter,1000);
     
     defenseGame.eggHasBeenPlanted = false;
