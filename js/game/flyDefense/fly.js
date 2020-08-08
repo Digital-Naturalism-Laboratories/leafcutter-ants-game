@@ -6,7 +6,7 @@ function Fly(name,status)
 	this.width = renderer.canvas.width * 0.1;
 	this.height = renderer.canvas.height * 0.05;
 
-	this.status = status;// 'leaving', 'swatted'
+	this.status = status;
 	this.eggHasBeenPlanted = false;
 
 	this.assignRandomXYCoordinatesInARange = function()
@@ -114,7 +114,7 @@ function Fly(name,status)
 			    this.y < defenseGame.parentAntObject.smallAntY + defenseGame.parentAntObject.smallAntHeight &&
 			    this.y + this.height > defenseGame.parentAntObject.smallAntY)
 				{
-				    
+				    defenseGame.audioManager.sfxManager.playFlyChasedSound();
 				    this.status = 'swatted';
 				    if (defenseGame.flyManager.currentStatus !== 'swarming')
 				    {

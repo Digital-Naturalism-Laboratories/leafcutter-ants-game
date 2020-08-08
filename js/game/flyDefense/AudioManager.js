@@ -124,6 +124,33 @@ function SFXManager()
 		}
 	}
 
+	this.flyChasedSound1 = document.createElement('audio');
+	this.flyChasedSound1.setAttribute('src', 'audio/flyDefense/flyChasedFeedback.mp3');
+	this.flyChasedSound1.volume = 0.3;
+	this.flyChasedSound2 = document.createElement('audio');
+	this.flyChasedSound2.setAttribute('src', 'audio/flyDefense/flyChasedFeedback.mp3');
+	this.flyChasedSound2.volume = 0.3;
+	this.flyChasedSound3 = document.createElement('audio');
+	this.flyChasedSound3.setAttribute('src', 'audio/flyDefense/flyChasedFeedback.mp3');
+	this.flyChasedSound3.volume = 0.3;
+	this.flyChasedSoundArrayIndex = 0;
+	this.arrayOfFlyChasedSounds = [];
+
+	this.populateArrayOfFlyChasedSounds = function()
+	{
+		this.arrayOfFlyChasedSounds.push(this.flyChasedSound1,this.flyChasedSound2,this.flyChasedSound3);
+	}
+
+	this.playFlyChasedSound = function()
+	{
+		this.arrayOfFlyChasedSounds[this.flyChasedSoundArrayIndex].play();
+		this.flyChasedSoundArrayIndex++;
+		if (this.flyChasedSoundArrayIndex > this.arrayOfFlyChasedSounds.length - 1)
+		{
+			this.flyChasedSoundArrayIndex = 0;
+		}
+	}
+
 	//loops that need adjusted loop points
 	this.flyBuzzingNormal = document.createElement('audio');
 	this.flyBuzzingNormal.setAttribute('src', 'audio/flyDefense/flyBuzzingNormal.mp3');
@@ -149,12 +176,12 @@ function SFXManager()
 	this.leafMinimFootsteps.setAttribute('src', 'audio/flyDefense/leafMinimFootsteps.mp3');
 	this.leafMinimFootsteps.loop = true;
 	this.leafMinimFootsteps.playbackRate = 1;
-	this.leafMinimFootsteps.volume = 0.6;
+	this.leafMinimFootsteps.volume = 0.4;
 
 	this.timeIsAlmostOutClockTickingLoop = document.createElement('audio');
 	this.timeIsAlmostOutClockTickingLoop.setAttribute('src', 'audio/flyDefense/clockTickingLoop.mp3');
 	this.timeIsAlmostOutClockTickingLoop.loop = true;
-	this.timeIsAlmostOutClockTickingLoop.volume = 0.2;
+	this.timeIsAlmostOutClockTickingLoop.volume = 0.4;
 
 	this.arrayOfLoopSoundsToBeLoopedBeforeAwkwardSilence = 
 	[

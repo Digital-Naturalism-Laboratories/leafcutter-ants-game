@@ -82,6 +82,7 @@ function mainMenuUICustomEvents(deltaTime)
         ui.stateIndex = DEFENSEGAMEUI;
         defenseBtn.button.resetOutput();
         defenseGame.audioManager.sfxManager.populateArrayOfEatingFungusSounds();
+        defenseGame.audioManager.sfxManager.populateArrayOfFlyChasedSounds();
         defenseGame.audioManager.ambienceManager.startAmbience();
         defenseGame.audioManager.sfxManager.calculateAndSetAvoidAwkwardSilenceTimestamps();
         defenseGame.audioManager.sfxManager.flyBuzzingNormal.play();
