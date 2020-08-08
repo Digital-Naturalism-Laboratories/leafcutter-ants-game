@@ -23,17 +23,13 @@ defenseGame.initialize = function()
 	      {
 	        defenseGame.timeLeft--;
 	      }
-	      console.log('defenseGame.timeLeft: ' + defenseGame.timeLeft);
-	      console.log('defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.paused: ' + defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.paused);
 	      if(defenseGame.timeLeft === 5 && defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.paused)
 	      {
 	        defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.play();
-	        console.log('should hear clock ticking');
 	      }
 	      else if (defenseGame.timeLeft === 0 && !defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.paused)
 	      {
 	        defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.pause();
-	        console.log('should stop clock ticking');
 	      }
 
 	};

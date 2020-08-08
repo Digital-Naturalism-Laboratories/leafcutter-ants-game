@@ -146,9 +146,10 @@ function SFXManager()
 	this.groundMinimFootstepsAccelerated.volume = 0.2;
 
 	this.leafMinimFootsteps = document.createElement('audio');
-	this.leafMinimFootsteps.setAttribute('src', 'audio/flyDefense/groundMinimFootsteps.mp3');
+	this.leafMinimFootsteps.setAttribute('src', 'audio/flyDefense/leafMinimFootsteps.mp3');
 	this.leafMinimFootsteps.loop = true;
-	this.leafMinimFootsteps.volume = 0.2;
+	this.leafMinimFootsteps.playbackRate = 1;
+	this.leafMinimFootsteps.volume = 0.6;
 
 	this.timeIsAlmostOutClockTickingLoop = document.createElement('audio');
 	this.timeIsAlmostOutClockTickingLoop.setAttribute('src', 'audio/flyDefense/clockTickingLoop.mp3');

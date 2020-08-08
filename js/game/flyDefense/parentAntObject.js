@@ -408,8 +408,8 @@ function ParentAntObject()
 			this.currentMovementTargetFromInput.x < this.fungusTangleX + this.fungusTangleWidth &&
 			this.currentMovementTargetFromInput.y > this.fungusTangleY &&
 			this.currentMovementTargetFromInput.y < this.fungusTangleY + this.fungusTangleHeight)//if inside the fungustangle
-		{
-			defenseGame.audioManager.sfxManager.leafMinimFootsteps.play();
+		{			
+			
 			this.previousSmallAntDirection = this.currentSmallAntDirection;
 
 			if (this.smallAntMidPoint.x < this.currentMovementTargetFromInput.x)//ant should move to the right
@@ -595,8 +595,12 @@ function ParentAntObject()
 
 				if (!this.shouldBeMovingUpOrDown && !this.shouldBeMovingLeftOrRight)
 				{
-					defenseGame.audioManager.sfxManager.leafMinimFootsteps.pause();
-					defenseGame.audioManager.sfxManager.leafMinimFootsteps.currentTime = 0;
+					if (!defenseGame.audioManager.sfxManager.leafMinimFootsteps.paused)
+					{
+						defenseGame.audioManager.sfxManager.leafMinimFootsteps.pause();
+						//defenseGame.audioManager.sfxManager.leafMinimFootsteps.currentTime = 0;
+					}
+					
 				}
 		}
 			
@@ -702,7 +706,13 @@ function ParentAntObject()
 			this.currentMovementTargetFromInput.x < this.fungusTangleX + this.fungusTangleWidth &&
 			this.currentMovementTargetFromInput.y > this.fungusTangleY &&
 			this.currentMovementTargetFromInput.y < this.fungusTangleY + this.fungusTangleHeight)
+			
 		{
+			if (defenseGame.audioManager.sfxManager.leafMinimFootsteps.paused)
+			{
+				defenseGame.audioManager.sfxManager.leafMinimFootsteps.play();
+			}
+
 			this.shouldBeMovingLeftOrRight = true;
 			this.shouldBeMovingUpOrDown = true;
 			if (this.smallAntMidPoint.x < this.currentMovementTargetFromInput.x)//ant should move to the right
@@ -782,6 +792,10 @@ function ParentAntObject()
 			this.currentMovementTargetFromInput.y > this.fungusTangleY &&
 			this.currentMovementTargetFromInput.y < this.fungusTangleY + this.fungusTangleHeight)
 		{
+			if (defenseGame.audioManager.sfxManager.leafMinimFootsteps.paused)
+			{
+				defenseGame.audioManager.sfxManager.leafMinimFootsteps.play();
+			}
 			this.shouldBeMovingLeftOrRight = true;
 			this.shouldBeMovingUpOrDown = true;
 		}
