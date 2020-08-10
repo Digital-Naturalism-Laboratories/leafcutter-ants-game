@@ -9,7 +9,7 @@ class Leaf
         distanceBetween2AdjacentPoints = pixelSize*24;
 
         this.leafSprite = new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(pixelSize*2, pixelSize*2)),
-            new ImageObject("images/uncutLeaf.png", vec2(gameWidth, gameHeight)));
+            new ImageObject("images/UncutLeaf.png", vec2(gameWidth, gameHeight)));
         this.stemSprite = new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(pixelSize*2, pixelSize*2)),
             new ImageObject("images/leafToCutStem.png", vec2(gameWidth, gameHeight)));
         this.bgSprite = new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(pixelSize*2, pixelSize*2)),
