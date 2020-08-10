@@ -690,8 +690,13 @@ function ParentAntObject()
 				    this.arrayOfFungusSpores[i].y < this.mouthColliderBoxY + this.mouthColliderBoxHeight &&
 				    this.arrayOfFungusSpores[i].y + this.arrayOfFungusSpores[i].height > this.mouthColliderBoxY)
 				{
+					let fungusSporeFeedbackAnimation = new FungusSporeFeedbackAnimation(this.arrayOfFungusSpores[i].x,this.arrayOfFungusSpores[i].y);
+					defenseGame.background.fungusSporeFeedbackAnimationManager.arrayOfFungusSporeVisualFeedbackAnimations.push(fungusSporeFeedbackAnimation);
+
 					this.arrayOfFungusSpores.splice(i,1);
 					defenseGame.audioManager.sfxManager.playEatingFungusSound();
+					defenseGame.background.fungusTallyDiv.tallyOfEatenFungusSpores++;
+
 				}
 			}
 		}

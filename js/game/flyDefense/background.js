@@ -84,6 +84,8 @@ function Background()
 
 		this.currentPheremoneGapArrayIndex = 0;
 		this.currentPheremoneGap = this.pheremoneGapManager.arrayOfPheremoneGaps[this.currentPheremoneGapArrayIndex];
+
+		this.fungusSporeFeedbackAnimationManager = new FungusSporeFeedbackAnimationManager();
 	}
 
 	this.scrollGroundImages = function()
@@ -162,6 +164,22 @@ function Background()
 	this.update = function()
 	{
 		this.scrollGroundImages();
+		this.fungusSporeFeedbackAnimationManager.update();
+	}
+
+	this.fungusTallyDiv = 
+	{
+		x: renderer.canvas.width * 0.05,
+		y: renderer.canvas.height * 0.05,
+
+		tallyOfEatenFungusSpores: 0,
+
+		draw: function()
+		{
+			renderer.fillStyle = 'purple';
+			renderer.font = '30px Helvetica';
+			renderer.fillText('Eaten Fungus Spores: ' + this.tallyOfEatenFungusSpores, this.x,this.y);
+		}
 	}
 
 	this.touchStartCoordinates = vec2();
@@ -236,6 +254,9 @@ function Background()
 			renderer.lineTo(this.pheremoneStrip2ImageXCoordinate + gameWidth,this.pheremoneStripY + 10);
 			renderer.stroke();
 		}
+
+		this.fungusTallyDiv.draw();
+		
 	}
 }
 
@@ -243,7 +264,7 @@ function PheremoneGap(x)
 {
 	this.x = x;
 	this.y = defenseGame.background.pheremoneStripY;
-	this.width = defenseGame.background.pheremoneGapWidth;
+	this.width = defenseGame.background.pheremoneGapWidth*1.2;
 	this.height = defenseGame.background.pheremoneStripHeight;
 
 	this.isFilledIn = false;
@@ -262,7 +283,7 @@ function PheremoneGap(x)
 	{
 		if (this.isFilledIn)
 		{
-			renderer.drawImage(this.fillImage, this.x,this.y, this.width,this.height);
+			renderer.drawImage(this.fillImage, this.x*0.95,this.y, this.width*1.5,this.height);
 			if (defenseGame.debugOn)
 			{
 				if (defenseGame.debugOn)
@@ -315,6 +336,51 @@ function PheremoneGapManager()
 					defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.play();
 				}
 			}
+		}
+	}
+}
+
+function FungusSporeFeedbackAnimation(x,y)
+{
+	this.x = x;
+	this.y = y;
+
+	this.text = '+1';
+	this.currentAlpha = 1;
+
+	this.draw = function()
+	{
+		renderer.fillStyle = 'purple';
+		renderer.font = '30px Helvetica';
+		renderer.save();
+		renderer.alpha = this.currentAlpha;
+		renderer.fillText(this.text, this.x,this.y);
+		renderer.restore();
+	}
+}
+
+function FungusSporeFeedbackAnimationManager()
+{
+	this.arrayOfFungusSporeVisualFeedbackAnimations = [];
+
+	this.update = function()
+	{
+		for (let i = 0; i < this.arrayOfFungusSporeVisualFeedbackAnimations.length; i++)
+		{
+			this.arrayOfFungusSporeVisualFeedbackAnimations[i].currentAlpha -= 0.025;
+			if (this.arrayOfFungusSporeVisualFeedbackAnimations[i].currentAlpha <= 0)
+			{
+				this.arrayOfFungusSporeVisualFeedbackAnimations.splice(i, 1);
+			}
+			this.arrayOfFungusSporeVisualFeedbackAnimations[i].y -= renderer.canvas.height * 0.0025;
+		}
+	}
+
+	this.draw = function()
+	{
+		for (let i = 0; i < this.arrayOfFungusSporeVisualFeedbackAnimations.length; i++)
+		{
+			this.arrayOfFungusSporeVisualFeedbackAnimations[i].draw();
 		}
 	}
 }

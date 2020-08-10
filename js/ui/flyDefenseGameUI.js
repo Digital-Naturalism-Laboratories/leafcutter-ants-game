@@ -115,7 +115,7 @@ defenseGame.initialize = function()
 		//console.log('inside draw function of defense game');
 		defenseGame.background.draw();
 		defenseGame.parentAntObject.draw();
-		
+		defenseGame.background.fungusSporeFeedbackAnimationManager.draw();
 
 		this.NPCBigAnt1.draw();
 		this.NPCBigAnt2.draw();
