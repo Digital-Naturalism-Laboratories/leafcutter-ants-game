@@ -353,7 +353,7 @@ function FungusSporeFeedbackAnimation(x,y)
 		renderer.fillStyle = 'purple';
 		renderer.font = '30px Helvetica';
 		renderer.save();
-		renderer.alpha = this.currentAlpha;
+		renderer.globalAlpha = this.currentAlpha;
 		renderer.fillText(this.text, this.x,this.y);
 		renderer.restore();
 	}
