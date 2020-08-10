@@ -2,6 +2,26 @@ function AudioManager()
 {
 	this.ambienceManager = new AmbienceManager();
 	this.sfxManager = new SFXManager();
+
+	this.handleInputFeedbackSounds = function()
+	{
+		if (defenseGame.background.touchInsidePheremoneGap || defenseGame.background.clickInsidePheremoneGap)
+		{
+			this.sfxManager.playPheremoneGapTouchedSound();
+			defenseGame.background.touchInsidePheremoneGap = false;
+			defenseGame.background.clickInsidePheremoneGap = false;
+		}
+		else if (defenseGame.parentAntObject.touchInsideFungusTangle || defenseGame.parentAntObject.clickInsideFungusTangle)
+		{
+			this.sfxManager.playLeafTouchedSound();
+			defenseGame.parentAntObject.touchInsideFungusTangle = false;
+			defenseGame.parentAntObject.clickInsideFungusTangle = false;
+		}
+		else
+		{
+			this.sfxManager.playThatDoesNothingSound();
+		}
+	}
 }
 
 function AmbienceManager()
@@ -150,6 +170,72 @@ function SFXManager()
 			this.flyChasedSoundArrayIndex = 0;
 		}
 	}
+
+	//touch feedback sounds
+	this.pheremoneGapTouchedSound1 = document.createElement('audio');
+	this.pheremoneGapTouchedSound1.setAttribute('src', 'audio/flyDefense/touchedPheremoneGapSound.mp3');
+    this.pheremoneGapTouchedSound1.volume = 0.5;
+    this.pheremoneGapTouchedSound2 = document.createElement('audio');
+	this.pheremoneGapTouchedSound2.setAttribute('src', 'audio/flyDefense/touchedPheremoneGapSound.mp3');
+    this.pheremoneGapTouchedSound2.volume = 0.5;
+	this.pheremoneGapTouchedSound3 = document.createElement('audio');
+	this.pheremoneGapTouchedSound3.setAttribute('src', 'audio/flyDefense/touchedPheremoneGapSound.mp3');
+    this.pheremoneGapTouchedSound3.volume = 0.5;
+    this.arrayOfPheremoneGapTouchedSoundsIndex = 0;
+    this.arrayOfPheremoneGapTouchedSounds = [this.pheremoneGapTouchedSound1,this.pheremoneGapTouchedSound2,this.pheremoneGapTouchedSound3];
+
+
+    this.playPheremoneGapTouchedSound = function()
+	{
+		this.arrayOfPheremoneGapTouchedSounds[this.arrayOfPheremoneGapTouchedSoundsIndex].play();
+		this.arrayOfPheremoneGapTouchedSoundsIndex++;
+		if (this.arrayOfPheremoneGapTouchedSoundsIndex > this.arrayOfPheremoneGapTouchedSounds.length - 1)
+		{
+			this.arrayOfPheremoneGapTouchedSoundsIndex = 0;
+		}
+	}
+
+    this.leafTouchedSound1 = document.createElement('audio');
+	this.leafTouchedSound1.setAttribute('src', 'audio/flyDefense/touchedLeafSound.mp3');
+    this.leafTouchedSound1.volume = 0.5;
+    this.leafTouchedSound2 = document.createElement('audio');
+	this.leafTouchedSound2.setAttribute('src', 'audio/flyDefense/touchedLeafSound.mp3');
+    this.leafTouchedSound2.volume = 0.5;
+    this.leafTouchedSound3 = document.createElement('audio');
+	this.leafTouchedSound3.setAttribute('src', 'audio/flyDefense/touchedLeafSound.mp3');
+    this.leafTouchedSound3.volume = 0.5;
+    this.arrayOfLeafTouchedSoundsIndex = 0;
+    this.arrayOfLeafTouchedSounds = [this.leafTouchedSound1,this.leafTouchedSound2,this.leafTouchedSound3];
+    this.playLeafTouchedSound = function()
+    {
+    	this.arrayOfLeafTouchedSounds[this.arrayOfLeafTouchedSoundsIndex].play();
+		this.arrayOfLeafTouchedSoundsIndex++;
+		if (this.arrayOfLeafTouchedSoundsIndex > this.arrayOfLeafTouchedSounds.length - 1)
+		{
+			this.arrayOfLeafTouchedSoundsIndex = 0;
+		}
+    }
+
+    this.thatDoesNothingSound1 = document.createElement('audio');
+	this.thatDoesNothingSound1.setAttribute('src', 'audio/flyDefense/thatDoesNothing.mp3');
+    this.thatDoesNothingSound1.volume = 0.5;
+    this.thatDoesNothingSound2 = document.createElement('audio');
+	this.thatDoesNothingSound2.setAttribute('src', 'audio/flyDefense/thatDoesNothing.mp3');
+    this.thatDoesNothingSound2.volume = 0.5;
+    this.thatDoesNothingSound3 = document.createElement('audio');
+	this.thatDoesNothingSound3.setAttribute('src', 'audio/flyDefense/thatDoesNothing.mp3');
+    this.thatDoesNothingSound3.volume = 0.5;
+	this.arrayOfThatDoesNothingSoundsIndex = 0;
+    this.arrayOfThatDoesNothingSounds = [this.thatDoesNothingSound1,this.thatDoesNothingSound2,this.thatDoesNothingSound3];
+    this.playThatDoesNothingSound = function()
+    {
+    	this.arrayOfThatDoesNothingSounds[this.arrayOfThatDoesNothingSoundsIndex].play();
+		this.arrayOfThatDoesNothingSoundsIndex++;
+		if (this.arrayOfThatDoesNothingSoundsIndex > this.arrayOfThatDoesNothingSounds.length - 1)
+		{
+			this.arrayOfThatDoesNothingSoundsIndex = 0;
+		}
+    }
 
 	//loops that need adjusted loop points
 	this.flyBuzzingNormal = document.createElement('audio');

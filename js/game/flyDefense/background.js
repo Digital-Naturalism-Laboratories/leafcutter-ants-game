@@ -184,7 +184,7 @@ function Background()
 
 	this.touchStartCoordinates = vec2();
 	this.fillInCurrentPheremoneGap = false;
-	
+	this.touchInsidePheremoneGap = false;
 	this.handleTouchStart = function()
 	{
 		this.touchStartCoordinates = vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY);
@@ -195,12 +195,14 @@ function Background()
 			this.touchStartCoordinates.y >= arrayOfPheremoneGaps[i].y && this.touchStartCoordinates.y < arrayOfPheremoneGaps[i].y + arrayOfPheremoneGaps[i].height &&
 			arrayOfPheremoneGaps[i].isFilledIn === false)
 			{
+				this.touchInsidePheremoneGap = true;
 				defenseGame.groundMinimManager.toggleEnRouteStatusAfterUserClick();	
 			}
 
 		}
 	}
 
+	this.clickInsidePheremoneGap = false;
 	this.mouseDownCoordinates = vec2();
 	this.handleMouseDown = function()
 	{
@@ -212,6 +214,7 @@ function Background()
 			this.mouseDownCoordinates.y >= arrayOfPheremoneGaps[i].y && this.mouseDownCoordinates.y < arrayOfPheremoneGaps[i].y + arrayOfPheremoneGaps[i].height &&
 			arrayOfPheremoneGaps[i].isFilledIn === false)
 			{
+				this.clickInsidePheremoneGap = true;
 				defenseGame.groundMinimManager.toggleEnRouteStatusAfterUserClick();	
 			}
 		}

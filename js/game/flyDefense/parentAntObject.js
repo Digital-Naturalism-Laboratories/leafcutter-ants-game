@@ -703,7 +703,7 @@ function ParentAntObject()
 	}
 
 	this.currentMovementTargetFromInput = {x:undefined,y:undefined};
-	
+	this.touchInsideFungusTangle = false;
 	this.handleTouchstart = function()
 	{
 		this.currentMovementTargetFromInput = vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY);
@@ -713,6 +713,8 @@ function ParentAntObject()
 			this.currentMovementTargetFromInput.y < this.fungusTangleY + this.fungusTangleHeight)
 			
 		{
+			this.touchInsideFungusTangle = true;
+
 			if (defenseGame.audioManager.sfxManager.leafMinimFootsteps.paused)
 			{
 				defenseGame.audioManager.sfxManager.leafMinimFootsteps.play();
@@ -789,6 +791,7 @@ function ParentAntObject()
 				}
 	}
 
+	this.clickInsideFungusTangle = false;
 	this.handleMouseDown = function()
 	{
 		this.currentMovementTargetFromInput = vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY);
@@ -797,6 +800,8 @@ function ParentAntObject()
 			this.currentMovementTargetFromInput.y > this.fungusTangleY &&
 			this.currentMovementTargetFromInput.y < this.fungusTangleY + this.fungusTangleHeight)
 		{
+			this.clickInsideFungusTangle = true;
+
 			if (defenseGame.audioManager.sfxManager.leafMinimFootsteps.paused)
 			{
 				defenseGame.audioManager.sfxManager.leafMinimFootsteps.play();

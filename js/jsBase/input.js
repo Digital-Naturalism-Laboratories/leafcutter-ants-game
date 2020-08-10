@@ -89,6 +89,7 @@ function onMouseDown(ev)
     {
         defenseGame.parentAntObject.handleMouseDown();
         defenseGame.background.handleMouseDown();
+        defenseGame.audioManager.handleInputFeedbackSounds();
     }
 }
 
