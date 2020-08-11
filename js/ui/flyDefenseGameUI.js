@@ -20,19 +20,21 @@ defenseGame.initialize = function()
 	this.timeLeft = 120;
 	this.decreaseCounter = function() 
 	{
-		if (defenseGame.timeLeft > 0) 
-	      {
-	        defenseGame.timeLeft--;
-	      }
-	      if(defenseGame.timeLeft === 5 && defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.paused)
-	      {
-	        defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.play();
-	      }
-	      else if (defenseGame.timeLeft === 0 && !defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.paused)
-	      {
-	        defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.pause();
-	      }
-
+		if(ui.stateIndex == DEFENSEGAMEUI)
+		{
+			if (defenseGame.timeLeft > 0) 
+			{
+				defenseGame.timeLeft--;
+			}
+			if(defenseGame.timeLeft === 5 && defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.paused)
+			{
+				defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.play();
+			}
+			else if (defenseGame.timeLeft === 0 && !defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.paused)
+			{
+				defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.pause();
+			}
+		}
 	};
     this.countdownInterval = new frameInterval(defenseGame.decreaseCounter,1000);
 

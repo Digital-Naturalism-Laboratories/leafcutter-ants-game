@@ -174,6 +174,7 @@ class Ant
 
         if(leafcuttingSFX[SFX_ANTWALK].currentTime <= 0 || leafcuttingSFX[SFX_ANTWALK].currentTime > 1.2)
         {
+            leafcuttingSFX[SFX_ANTWALK].volume = leafcuttingBGMMaxVolume/2.0;
             leafcuttingSFX[SFX_ANTWALK].currentTime = 0;
             leafcuttingSFX[SFX_ANTWALK].play();
         }
@@ -264,6 +265,9 @@ class Ant
         this.timedJawSpeedFactor = this.timedJawSpeedFactorDefault;
 
         this.leaf.getPoints(distanceBetween2AdjacentPoints);
+
+        leafcuttingSFX[SFX_LEAFSUCCESS].volume = leafcuttingBGMMaxVolume;
+        leafcuttingSFX[SFX_LEAFSUCCESS].play();
     }
 
     leafBorderTouchInput()
@@ -331,7 +335,7 @@ class Ant
                 }
             }
 
-            while(this.destinationPoints.length < 40)
+            while(this.destinationPoints.length < 20)
             {
                 if(this.destinationPoints[this.destinationPoints.length - 1].distance(this.destinationPoint) <= distanceBetween2AdjacentPoints * 1.67)
                 {
@@ -434,7 +438,11 @@ class Ant
                 {
                     if(this.jawSpeedPenalty < this.jawSpeedPenaltyTotalTurns)
                         this.jawSpeedPenalty = this.jawSpeedPenaltyTotalTurns;
+                    
                     leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_FAIL];
+
+                    leafcuttingSFX[SFX_JAWPENALTY].currentTime = 0;
+                    leafcuttingSFX[SFX_JAWPENALTY].play();
                 }
             }
             else if(isPointInCircle(vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY), this.leadingJawControlPos, this.timedJawMinRadius))
@@ -476,7 +484,11 @@ class Ant
                 {
                     if(this.jawSpeedPenalty < this.jawSpeedPenaltyTotalTurns)
                         this.jawSpeedPenalty = this.jawSpeedPenaltyTotalTurns;
+                    
                     leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_FAIL];
+
+                    leafcuttingSFX[SFX_JAWPENALTY].currentTime = 0;
+                    leafcuttingSFX[SFX_JAWPENALTY].play();
                 }
             }
         }
