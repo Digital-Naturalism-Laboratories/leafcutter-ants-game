@@ -130,6 +130,7 @@ function Fly(name,status)
 				this.status = 'leaving after planting';
 				this.currentTarget.canBeTargeted = false;
 				this.eggHasBeenPlanted = true;
+				defenseGame.background.bigAntTallyOfInfections++;
 				defenseGame.eggHasBeenPlanted = true;
 				//alert('Ant infected by a parasite. You lose!')
 				if (defenseGame.testFly1.eggHasBeenPlanted && defenseGame.testFly2.eggHasBeenPlanted && defenseGame.testFly3.eggHasBeenPlanted)

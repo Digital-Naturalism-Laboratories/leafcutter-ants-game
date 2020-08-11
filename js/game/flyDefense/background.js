@@ -32,6 +32,8 @@ function Background()
 	this.currentPheremoneGapArrayIndex = undefined;
 	this.currentPheremoneGap = undefined;
 
+	this.bigAntTallyOfInfections = 0;
+
 	this.stuckOnPheremoneGap = false;
 
 	this.initialize = function()
@@ -95,16 +97,16 @@ function Background()
 			if (defenseGame.timeLeft < 121 && defenseGame.timeLeft > 0)
 			{
 				
-				this.forageLayerImage1XCoordinate-=gameWidth*0.00025;
-				this.forageLayerImage2XCoordinate-=gameWidth*0.00025;
-				this.grassLayerImage1XCoordinate-=gameWidth*0.0005;
-				this.grassLayerImage2XCoordinate-=gameWidth*0.0005;
-				this.leavesLayerImage1XCoordinate-=gameWidth*0.00075;
-				this.leavesLayerImage2XCoordinate-=gameWidth*0.00075;
-				this.groundImage1xCoordinate-=gameWidth*0.001;
-				this.groundImage2xCoordinate-=gameWidth*0.001;
-				this.pheremoneStrip1ImageXCoordinate-=renderer.canvas.width*0.001;
-				this.pheremoneStrip2ImageXCoordinate-=renderer.canvas.width*0.001;
+				this.forageLayerImage1XCoordinate-=gameWidth*0.00025;// - (gameWidth*0.00025*this.bigAntTallyOfInfections*0.15);
+				this.forageLayerImage2XCoordinate-=gameWidth*0.00025;// - (gameWidth*0.00025*this.bigAntTallyOfInfections*0.15);
+				this.grassLayerImage1XCoordinate-=gameWidth*0.0005;// - (gameWidth*0.0005*this.bigAntTallyOfInfections*0.15);
+				this.grassLayerImage2XCoordinate-=gameWidth*0.0005;// - (gameWidth*0.0005*this.bigAntTallyOfInfections*0.15);
+				this.leavesLayerImage1XCoordinate-=gameWidth*0.00075;// - (gameWidth*0.00075*this.bigAntTallyOfInfections*0.15);
+				this.leavesLayerImage2XCoordinate-=gameWidth*0.00075;// - (gameWidth*0.00075*this.bigAntTallyOfInfections*0.15);
+				this.groundImage1xCoordinate-=gameWidth*0.001;// - (gameWidth*0.001*this.bigAntTallyOfInfections*0.15);
+				this.groundImage2xCoordinate-=gameWidth*0.001;// - (gameWidth*0.001*this.bigAntTallyOfInfections*0.15);
+				this.pheremoneStrip1ImageXCoordinate-=renderer.canvas.width*0.001;// - (gameWidth*0.001*this.bigAntTallyOfInfections*0.15);
+				this.pheremoneStrip2ImageXCoordinate-=renderer.canvas.width*0.001;// - (gameWidth*0.001*this.bigAntTallyOfInfections*0.15);
 				// this.pheremoneStrip3ImageXCoordinate-=renderer.canvas.width*0.001;
 				// this.pheremoneStrip4ImageXCoordinate-=renderer.canvas.width*0.001;
 				// this.pheremoneStrip5ImageXCoordinate-=renderer.canvas.width*0.001;
