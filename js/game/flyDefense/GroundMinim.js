@@ -227,6 +227,8 @@ function GroundMinimManager()
 			defenseGame.flyManager.arrayOfFlies[1].status = 'swatted';
 			defenseGame.flyManager.arrayOfFlies[2].status = 'swatted';
 			defenseGame.flyManager.arrayOfFlies[3].status = 'swatted';
+
+			defenseGame.background.flashAlertInterval.stop();
 		}
 	}
 }

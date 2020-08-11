@@ -10,6 +10,7 @@ defenseGame.initialize = function()
     this.backgroundMusic.setAttribute('src', 'audio/Main Nest Scene B.mp3');
     //this.backgroundMusic.setAttribute('autoplay', 'autoplay');
     this.backgroundMusic.loop = true;
+
     
 	loadDefenseGameImages();
 
@@ -120,9 +121,11 @@ defenseGame.initialize = function()
 		this.NPCBigAnt1.draw();
 		this.NPCBigAnt2.draw();
 
-		
+		defenseGame.background.pheremoneGapManager.drawAlertMessages();
+
 		this.groundMinimManager.drawGroundMinims();
 
+		renderer.fillStyle = 'purple';
 		renderer.font = '60px Helvetica';
       	let timerNumberConvertedToString = defenseGame.timeLeft.toString();
       	renderer.fillText(timerNumberConvertedToString, renderer.canvas.width * 0.85,renderer.canvas.height * 0.2);

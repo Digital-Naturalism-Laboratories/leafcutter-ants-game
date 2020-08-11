@@ -78,6 +78,7 @@ function Background()
 
 		this.pheremoneGapManager = new PheremoneGapManager();
 		this.pheremoneGapManager.instantiatePheremoneGaps();
+		this.flashAlertInterval = new frameInterval(defenseGame.background.pheremoneGapManager.toggleAlertMessageVisibility, 300);
 
 		
 
@@ -270,6 +271,7 @@ function Background()
 	}
 }
 
+let alertMessage = 'Weak Trail! Click to fix!';
 function PheremoneGap(x)
 {
 	this.x = x;
@@ -281,6 +283,14 @@ function PheremoneGap(x)
 
 	this.fillImage = pheremoneGapFillImage;
 
+	this.alertMessage = 
+	{
+		x: this.x,
+		y: this.y,
+		
+		width: renderer.measureText(alertMessage).width * 2
+	}
+
 	this.update = function()
 	{
 		if (!defenseGame.background.stuckOnPheremoneGap && defenseGame.timeLeft > 0)
@@ -289,8 +299,23 @@ function PheremoneGap(x)
 		}
 	}
 
+	this.drawAlertMessage = function()
+	{
+		if (defenseGame.background.stuckOnPheremoneGap)
+		{
+			this.alertMessage.x = this.x;
+			this.alertMessage.y = this.y;
+			renderer.fillStyle = 'red';
+			renderer.font = '30px Helvetica';
+
+			renderer.fillText(alertMessage, this.alertMessage.x - this.alertMessage.width/2,this.alertMessage.y);
+		}
+	}
+
 	this.draw = function()
 	{
+		
+
 		if (this.isFilledIn)
 		{
 			renderer.drawImage(this.fillImage, this.x*0.95,this.y, this.width*1.5,this.height);
@@ -338,6 +363,31 @@ function PheremoneGapManager()
 		}
 	}
 
+	
+	this.alertMessageShouldBeVisible = true;
+	this.toggleAlertMessageVisibility = function()
+	{
+		if (defenseGame.background.pheremoneGapManager.alertMessageShouldBeVisible)
+		{
+			defenseGame.background.pheremoneGapManager.alertMessageShouldBeVisible = false;
+		}
+		else 
+		{
+			defenseGame.background.pheremoneGapManager.alertMessageShouldBeVisible = true;
+		}
+	}
+
+	this.drawAlertMessages = function()
+	{
+		for (let i = 0; i < this.arrayOfPheremoneGaps.length; i++)
+		{
+			if (this.alertMessageShouldBeVisible)
+			{
+				this.arrayOfPheremoneGaps[i].drawAlertMessage();
+			}
+		}
+	}
+
 	this.checkForGettingStuckOnPheremoneGaps = function()
 	{
 						
@@ -351,6 +401,7 @@ function PheremoneGapManager()
 				
 				defenseGame.background.stuckOnPheremoneGap = true;
 				defenseGame.flyManager.toggleSwarm();
+				defenseGame.background.flashAlertInterval.start();
 				if (defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.paused)
 				{
 					defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.play();
