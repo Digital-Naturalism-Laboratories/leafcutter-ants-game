@@ -77,10 +77,9 @@ function Background()
 		this.fungusNestTotalTravelDistance = this.fungusNestStartingXMidpoint - renderer.canvas.width/2;
 
 		this.pheremoneGapManager = new PheremoneGapManager();
-		this.pheremoneGap1 = new PheremoneGap(renderer.canvas.width*1.01);
-		this.pheremoneGapManager.arrayOfPheremoneGaps.push(this.pheremoneGap1);
-		this.pheremoneGap2 = new PheremoneGap(renderer.canvas.width*1.01 + this.pheremoneGapWidth + renderer.canvas.width*1.01);
-		this.pheremoneGapManager.arrayOfPheremoneGaps.push(this.pheremoneGap2);
+		this.pheremoneGapManager.instantiatePheremoneGaps();
+
+		
 
 		this.currentPheremoneGapArrayIndex = 0;
 		this.currentPheremoneGap = this.pheremoneGapManager.arrayOfPheremoneGaps[this.currentPheremoneGapArrayIndex];
@@ -92,7 +91,7 @@ function Background()
 	{
 		if (!this.stuckOnPheremoneGap)
 		{
-			if (defenseGame.timeLeft < 31 && defenseGame.timeLeft > 0)
+			if (defenseGame.timeLeft < 121 && defenseGame.timeLeft > 0)
 			{
 				
 				this.forageLayerImage1XCoordinate-=gameWidth*0.00025;
@@ -105,6 +104,10 @@ function Background()
 				this.groundImage2xCoordinate-=gameWidth*0.001;
 				this.pheremoneStrip1ImageXCoordinate-=renderer.canvas.width*0.001;
 				this.pheremoneStrip2ImageXCoordinate-=renderer.canvas.width*0.001;
+				// this.pheremoneStrip3ImageXCoordinate-=renderer.canvas.width*0.001;
+				// this.pheremoneStrip4ImageXCoordinate-=renderer.canvas.width*0.001;
+				// this.pheremoneStrip5ImageXCoordinate-=renderer.canvas.width*0.001;
+				
 				
 			}
 
@@ -112,7 +115,7 @@ function Background()
 			{
 				if (defenseGame.timeLeft < 16 && defenseGame.timeLeft > 0)
 				{
-					this.fungusNestXCoordinate -= gameWidth * 0.001;
+					//this.fungusNestXCoordinate -= gameWidth * 0.001;
 				}
 
 				if (this.groundImage1xCoordinate + gameWidth < 0)
@@ -123,6 +126,7 @@ function Background()
 				{
 					this.groundImage2xCoordinate = gameWidth;
 				}
+
 				if(this.pheremoneStrip1ImageXCoordinate + gameWidth < 0)
 				{
 					this.pheremoneStrip1ImageXCoordinate = this.pheremoneStrip2ImageXCoordinate + renderer.canvas.width*1.01 + this.pheremoneGapWidth;
@@ -131,6 +135,9 @@ function Background()
 				{
 					this.pheremoneStrip2ImageXCoordinate = this.pheremoneStrip1ImageXCoordinate + renderer.canvas.width*1.01 + this.pheremoneGapWidth;
 				}
+				
+
+
 				if (this.grassLayerImage1XCoordinate + gameWidth < 0)
 				{
 					this.grassLayerImage1XCoordinate = gameWidth;
@@ -304,6 +311,16 @@ function PheremoneGapManager()
 {
 	this.arrayOfPheremoneGaps = [];
 	
+	this.instantiatePheremoneGaps = function()
+	{
+		for (let i = 0; i < 6; i++)
+		{
+			let pheremoneGap = new PheremoneGap( renderer.canvas.width * 1.01 + (defenseGame.background.pheremoneGapWidth * i) + 
+												(renderer.canvas.width * 1.01 * i) );
+
+			this.arrayOfPheremoneGaps.push(pheremoneGap);
+		}
+	}
 
 	this.updatePheremoneGaps = function()
 	{

@@ -16,7 +16,7 @@ defenseGame.initialize = function()
 	this.debugOn = false;
 
 	//timer
-	this.timeLeft = 30;
+	this.timeLeft = 120;
 	this.decreaseCounter = function() 
 	{
 		if (defenseGame.timeLeft > 0) 
