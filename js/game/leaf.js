@@ -27,9 +27,9 @@ class Leaf
         this.updatePoints = true;
     }
 
-    update()
+    update(deltaTime)
     {
-        this.winCondition();
+        this.winCondition(deltaTime);
     }
 
     draw()
@@ -92,6 +92,7 @@ class Leaf
         var prevPoints = this.points.length;
         this.points = [];
         this.borderPoints = [];
+
         for(let y = borderPixelComparionDistance; y < gameHeight-borderPixelComparionDistance; y+=borderTestResolutionFactor)
         {
             for(let x = borderPixelComparionDistance; x < gameWidth-borderPixelComparionDistance; x+=borderTestResolutionFactor)
@@ -179,7 +180,7 @@ class Leaf
             }
             else if(leafcuttingSFX[SFX_PLAYERWIN].volume > 0.4)
             {
-                leafcuttingSFX[SFX_PLAYERWIN].volume -= 0.000025 * deltaTime;
+                leafcuttingSFX[SFX_PLAYERWIN].volume -= 0.00005 * deltaTime;
             }
         }
     }

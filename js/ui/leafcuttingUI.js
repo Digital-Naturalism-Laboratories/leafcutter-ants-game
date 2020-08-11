@@ -55,15 +55,19 @@ var leafcuttingSFX = [
     document.createElement('audio'),
     document.createElement('audio'),
     document.createElement('audio'),
+    document.createElement('audio'),
+    document.createElement('audio'),
     document.createElement('audio')
 ]
 var leafcuttingSFXPaths = [
-    "audio/SFX/UI Menu Buttons.wav",
+    "audio/SFX/Jaw Penalty ALT.wav",
     "audio/SFX/Positive Feedback - Beef Up Trail.wav",
     "audio/SFX/Clock Ticking.wav",
     "audio/SFX/Leaf Minim Footsteps.wav",
     "audio/SFX/Positive Feedback - Player Wins.wav",
-    "audio/SFX/Game Over.wav"
+    "audio/SFX/Game Over.wav",
+    "audio/SFX/Jaw Penalty.wav",
+    "audio/SFX/Positive Feedback - Leaf Cut Success ALT.wav"
 ]
 var SFX_JAWBUTTON = 0;
 var SFX_JAWTIMED = 1;
@@ -71,6 +75,8 @@ var SFX_LOWTIME = 2;
 var SFX_ANTWALK = 3;
 var SFX_PLAYERWIN = 4;
 var SFX_TIMEOUT = 5;
+var SFX_JAWPENALTY = 6;
+var SFX_LEAFSUCCESS = 7;
 
 function leafcuttingResetGame()
 {
@@ -127,7 +133,7 @@ function leafcuttingUICustomDraw(deltaTime)
 
 function leafcuttingUICustomUpdate(deltaTime)
 {
-    leaf.update();
+    leaf.update(deltaTime);
     ant.update(deltaTime);
     ant2.update(deltaTime);
     
@@ -141,7 +147,24 @@ function leafcuttingUICustomUpdate(deltaTime)
     if(!ant.disabled || !ant2.disabled)
         leafcuttingTimeLeft -= deltaTime;
 
-    leafcuttingAudioHandling(deltaTime);
+    if(ui.stateIndex == LEAFCUTTINGUI)
+    {
+        leafcuttingAudioHandling(deltaTime);
+    }
+    else
+    {
+        //Resetting/Stopping all Leaf Cutting Game Audio
+        for(let i = 0; i < leafcuttingBGM.length; i++)
+        {
+            leafcuttingBGM[i].currentTime = 0;
+            leafcuttingBGM[i].pause();
+        }
+        for(let i = 0; i < leafcuttingSFX.length; i++)
+        {
+            leafcuttingSFX[i].currentTime = 0;
+            leafcuttingSFX[i].pause();
+        }
+    }
 }
 
 function leafcuttingUICustomEvents(deltaTime)
@@ -235,7 +258,7 @@ function leafcuttingAudioHandling(deltaTime)
             }
             else if(leafcuttingSFX[SFX_TIMEOUT].volume > 0.4)
             {
-                leafcuttingSFX[SFX_TIMEOUT].volume -= 0.000025 * deltaTime;
+                leafcuttingSFX[SFX_TIMEOUT].volume -= 0.00005 * deltaTime;
             }
         }
     }
