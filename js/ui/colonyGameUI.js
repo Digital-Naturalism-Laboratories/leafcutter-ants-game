@@ -1,10 +1,10 @@
 const COLONYGAMEUI = 2;
 var colonyGameUI = [];
 
-const COLONY_W = 40;
-const COLONY_H = 40;
-const COLONY_COLS = 20;
-const COLONY_ROWS = 15;
+const COLONY_W = 20;
+const COLONY_H = 20;
+const COLONY_COLS = 31;
+const COLONY_ROWS = 14;
 
 var groundBG = document.createElement('img');
 var fungusNest = document.createElement('img');
@@ -14,25 +14,24 @@ var worker_with_minims = document.createElement('img');
 var colonyTiles = [];
 
 var colonyGrid = [
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 3, 2, 2, 2, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 3, 2, 2, 2, 0, 0, 0, 0, 0, 0],
-  [0, 0, 1, 3, 2, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 60, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 2, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 3, 2, 2, 2, 2, 3, 0, 0, 0, 0, 0, 0, 0, 2, 2, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 3, 2, 2, 2, 0, 0, 0, 0, 2, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 1, 3, 2, 1, 0, 1, 1, 0, 1, 0, 0, 2, 0, 0, 2, 2, 2, 0, 9, 9, 9, 9, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
-var fungus_col = 13;
-var fungus_row = 6;
+var fungus_col = 22;
+var fungus_row = 7;
 
 var row_queue = [];
 var col_queue = [];
@@ -61,21 +60,20 @@ function distToTargetTile(){
   nodes_in_next_layer = 0;
 
   visited = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   ];
 
   visited[fungus_row][fungus_col] = 1;
@@ -83,13 +81,6 @@ function distToTargetTile(){
   while (row_queue.length > 0){
     var row = row_queue.pop();
     var col = col_queue.pop();
-
-    /*
-    if (colonyGrid[row][col] === 3){
-      reached_end = true;
-      //break;
-    }
-    */
 
     explore_neighbors(row, col);
     nodes_left_in_layer--;
@@ -122,7 +113,7 @@ function explore_neighbors(row, col){
     }
 
     if (move_count < (totalMilliseconds / 1000)){
-      renderer.drawImage(colonyTiles[COLONY_TUNNEL_4WAY], neighbor_col * COLONY_W * pixelSize, neighbor_row * COLONY_H * pixelSize, COLONY_W * pixelSize, COLONY_H * pixelSize);
+      renderer.drawImage(colonyTiles[COLONY_TUNNEL_4WAY], neighbor_col * COLONY_W * pixelSize, (neighbor_row * COLONY_H * pixelSize) + (gameHeight * 0.2), COLONY_W * pixelSize, COLONY_H * pixelSize);
     }
     
     row_queue.push(neighbor_row);
@@ -136,6 +127,7 @@ const COLONY_WALL = 0;
 const COLONY_TUNNEL_VERT = 1;
 const COLONY_TUNNEL_HOR = 2;
 const COLONY_TUNNEL_4WAY = 3;
+const COLONY_TUNNEL_START = 9;
 
 // variables from the mini-games that affect colony growth
 var geneticDiversity = 0; //from flying game
@@ -156,11 +148,12 @@ var introTimer = 5000;
 function setupColonyGameUI() {
 
   loadImages();
-  queen = new Queen((COLONY_W * 12) - 10, (COLONY_H * 6) + 20);
+  queen = new Queen((COLONY_W * 24) - 10, (COLONY_H * 11));
 
   bgmColony.setAttribute('src', 'audio/Intro Music.mp3');
   bgmColony.loop = true;
   bgmColony.volume = 0.6;
+
 }
 
 function colonyGameUICustomDraw(deltaTime) {
@@ -171,7 +164,7 @@ function colonyGameUICustomDraw(deltaTime) {
 
   digTunnel();
   drawColonyTiles();
-  renderer.drawImage(fungusNest, gameWidth * 0.75, gameHeight * 0.4, gameWidth / 5, gameHeight / 5);
+  renderer.drawImage(fungusNest, gameWidth * 0.75, gameHeight * 0.4, gameWidth / 10, gameHeight / 10);
 
   renderer.drawImage(worker_right, (colonyTiles[COLONY_TUNNEL_VERT].width * 3) * pixelSize, (colonyTiles[COLONY_TUNNEL_VERT].height * 2 - 10) * pixelSize, (worker_right.width / 2) * pixelSize, (worker_right.height / 2) * pixelSize);
   renderer.drawImage(worker_with_minims, (colonyTiles[COLONY_TUNNEL_VERT].width * 13) * pixelSize, (colonyTiles[COLONY_TUNNEL_VERT].height - 10) * pixelSize, (worker_with_minims.width / 2) * pixelSize, (worker_with_minims.height / 2) * pixelSize);
@@ -258,7 +251,7 @@ function mapTileToIndex(tileCol, tileRow) {
 function drawColonyTiles() {
   var colonyIndex = 0;
   var colonyLeftEdgeX = 0;
-  var colonyTopEdgeY = 0;
+  var colonyTopEdgeY = gameHeight * 0.2;
 
   for (var eachRow = 0; eachRow < COLONY_ROWS; eachRow++) {
 
@@ -269,10 +262,11 @@ function drawColonyTiles() {
       //var colonyTypeHere = colonyGrid[colonyIndex];
       var colonyTypeHere = colonyGrid[eachRow][eachCol];
 
-      //if (colonyGrid[colonyIndex] != COLONY_WALL) {
-      //if (colonyGrid[eachRow][eachCol] != COLONY_WALL) {
-      //  renderer.drawImage(colonyTiles[colonyTypeHere], colonyLeftEdgeX, colonyTopEdgeY, COLONY_W * pixelSize, COLONY_H * pixelSize);
-      //}
+      //renderer.drawImage(colonyTiles[COLONY_TUNNEL_VERT], colonyLeftEdgeX, colonyTopEdgeY, COLONY_W * pixelSize, COLONY_H * pixelSize);
+
+      if (colonyTypeHere === COLONY_TUNNEL_START){
+        renderer.drawImage(colonyTiles[COLONY_TUNNEL_4WAY], colonyLeftEdgeX, colonyTopEdgeY, COLONY_W * pixelSize, COLONY_H * pixelSize);
+      }
 
       colonyIndex++;
       colonyLeftEdgeX += COLONY_W * pixelSize;
