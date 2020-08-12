@@ -119,6 +119,9 @@ function SFXManager()
 	this.beefUpTrailFeedback = document.createElement('audio');
 	this.beefUpTrailFeedback.setAttribute('src', 'audio/flyDefense/beefUpTrailFeedback.mp3');
 
+	this.antInfectionSound = document.createElement('audio');
+	this.antInfectionSound.setAttribute('src', 'audio/flyDefense/antInfectionSound.mp3');
+
 	//avoid cutoff one shots
 	this.eatingFungusSound1 = document.createElement('audio');
 	this.eatingFungusSound1.setAttribute('src', 'audio/flyDefense/eatingFungus.mp3');

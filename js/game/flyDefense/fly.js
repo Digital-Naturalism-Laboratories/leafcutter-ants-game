@@ -139,7 +139,11 @@ function Fly(name,status)
 				defenseGame.plantedEggManager.arrayOfPlantedEggs.push(egg);
 				this.egg = undefined;
 				defenseGame.background.bigAntTallyOfInfections++;
+				defenseGame.background.calculateSlowDownRateFromInfections();
 				defenseGame.eggHasBeenPlanted = true;
+				defenseGame.audioManager.sfxManager.antInfectionSound.play();
+				defenseGame.parentAntObject.infectionAlertMessage.toggleVisibility();
+				setTimeout(defenseGame.parentAntObject.infectionAlertMessage.toggleVisibility,2000);
 				//alert('Ant infected by a parasite. You lose!')
 				if (defenseGame.testFly1.eggHasBeenPlanted && defenseGame.testFly2.eggHasBeenPlanted && defenseGame.testFly3.eggHasBeenPlanted)
 				{
@@ -248,7 +252,10 @@ function FlyManager()
 		defenseGame.audioManager.sfxManager.fliesSwarming.play();
 		for (let i = 0; i < this.arrayOfFlies.length; i++)
 		{
-			this.arrayOfFlies[i].status = 'planting';
+			if (this.arrayOfFlies[i].egg !== undefined)
+			{
+				this.arrayOfFlies[i].status = 'planting';
+			}
 		}
 	}
 }

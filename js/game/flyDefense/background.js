@@ -33,6 +33,17 @@ function Background()
 	this.currentPheremoneGap = undefined;
 
 	this.bigAntTallyOfInfections = 0;
+	this.slowDownRateFromInfections = 0;
+
+	this.calculateSlowDownRateFromInfections = function()
+	{
+		this.slowDownRateFromInfections = this.bigAntTallyOfInfections*0.15;
+		console.log(this.slowDownRateFromInfections);
+		if (this.slowDownRateFromInfections >  5 *0.15)
+		{
+			this.slowDownRateFromInfections =  5 *0.15;
+		}
+	}
 
 	this.stuckOnPheremoneGap = false;
 
@@ -97,16 +108,16 @@ function Background()
 			if (defenseGame.timeLeft < 121 && defenseGame.timeLeft > 0)
 			{
 				
-				this.forageLayerImage1XCoordinate-=gameWidth*0.00025 - (gameWidth*0.00025*this.bigAntTallyOfInfections*0.15);
-				this.forageLayerImage2XCoordinate-=gameWidth*0.00025 - (gameWidth*0.00025*this.bigAntTallyOfInfections*0.15);
-				this.grassLayerImage1XCoordinate-=gameWidth*0.0005 - (gameWidth*0.0005*this.bigAntTallyOfInfections*0.15);
-				this.grassLayerImage2XCoordinate-=gameWidth*0.0005 - (gameWidth*0.0005*this.bigAntTallyOfInfections*0.15);
-				this.leavesLayerImage1XCoordinate-=gameWidth*0.00075 - (gameWidth*0.00075*this.bigAntTallyOfInfections*0.15);
-				this.leavesLayerImage2XCoordinate-=gameWidth*0.00075 - (gameWidth*0.00075*this.bigAntTallyOfInfections*0.15);
-				this.groundImage1xCoordinate-=gameWidth*0.001 - (gameWidth*0.001*this.bigAntTallyOfInfections*0.15);
-				this.groundImage2xCoordinate-=gameWidth*0.001 - (gameWidth*0.001*this.bigAntTallyOfInfections*0.15);
-				this.pheremoneStrip1ImageXCoordinate-=renderer.canvas.width*0.001 - (gameWidth*0.001*this.bigAntTallyOfInfections*0.15);
-				this.pheremoneStrip2ImageXCoordinate-=renderer.canvas.width*0.001 - (gameWidth*0.001*this.bigAntTallyOfInfections*0.15);
+				this.forageLayerImage1XCoordinate-=gameWidth*0.00025 - (gameWidth*0.00025 * this.slowDownRateFromInfections);
+				this.forageLayerImage2XCoordinate-=gameWidth*0.00025 - (gameWidth*0.00025 * this.slowDownRateFromInfections);
+				this.grassLayerImage1XCoordinate-=gameWidth*0.0005 - (gameWidth*0.0005 * this.slowDownRateFromInfections);
+				this.grassLayerImage2XCoordinate-=gameWidth*0.0005 - (gameWidth*0.0005 * this.slowDownRateFromInfections);
+				this.leavesLayerImage1XCoordinate-=gameWidth*0.00075 - (gameWidth*0.00075 * this.slowDownRateFromInfections);
+				this.leavesLayerImage2XCoordinate-=gameWidth*0.00075 - (gameWidth*0.00075 * this.slowDownRateFromInfections);
+				this.groundImage1xCoordinate-=gameWidth*0.001 - (gameWidth*0.001 * this.slowDownRateFromInfections);
+				this.groundImage2xCoordinate-=gameWidth*0.001 - (gameWidth*0.001 * this.slowDownRateFromInfections);
+				this.pheremoneStrip1ImageXCoordinate-=renderer.canvas.width*0.001 - (renderer.canvas.width*0.001 * this.slowDownRateFromInfections);
+				this.pheremoneStrip2ImageXCoordinate-=renderer.canvas.width*0.001 - (renderer.canvas.width*0.001 * this.slowDownRateFromInfections);
 				// this.pheremoneStrip3ImageXCoordinate-=renderer.canvas.width*0.001;
 				// this.pheremoneStrip4ImageXCoordinate-=renderer.canvas.width*0.001;
 				// this.pheremoneStrip5ImageXCoordinate-=renderer.canvas.width*0.001;
@@ -192,6 +203,19 @@ function Background()
 		}
 	}
 
+	this.infectionTallyDiv = 
+	{
+		x: renderer.canvas.width * 0.05,
+		y: renderer.canvas.height * 0.15,
+
+		draw: function()
+		{
+			renderer.fillStyle = 'purple';
+			renderer.font = '30px Helvetica';
+			renderer.fillText('Number of Infections: ' + defenseGame.background.bigAntTallyOfInfections, this.x,this.y);
+		}
+	}
+
 	this.touchStartCoordinates = vec2();
 	this.fillInCurrentPheremoneGap = false;
 	this.touchInsidePheremoneGap = false;
@@ -269,11 +293,12 @@ function Background()
 		}
 
 		this.fungusTallyDiv.draw();
+		this.infectionTallyDiv.draw();
 		
 	}
 }
 
-let alertMessage = 'Weak Trail! Click to fix!';
+let pheremoneGapAlertMessage = 'Weak Trail! Click to fix!';
 function PheremoneGap(x)
 {
 	this.x = x;
@@ -290,14 +315,14 @@ function PheremoneGap(x)
 		x: this.x,
 		y: this.y,
 		
-		width: renderer.measureText(alertMessage).width * 2
+		width: renderer.measureText(pheremoneGapAlertMessage).width * 2
 	}
 
 	this.update = function()
 	{
 		if (!defenseGame.background.stuckOnPheremoneGap && defenseGame.timeLeft > 0)
 		{
-			this.x -= gameWidth*0.001 - (gameWidth*0.001*defenseGame.background.bigAntTallyOfInfections*0.15);
+			this.x -= renderer.canvas.width*0.001 - (renderer.canvas.width*0.001 *defenseGame.background.slowDownRateFromInfections);
 		}
 	}
 
@@ -310,7 +335,7 @@ function PheremoneGap(x)
 			renderer.fillStyle = 'red';
 			renderer.font = '30px Helvetica';
 
-			renderer.fillText(alertMessage, this.alertMessage.x - this.alertMessage.width/2,this.alertMessage.y);
+			renderer.fillText(pheremoneGapAlertMessage, this.alertMessage.x - this.alertMessage.width/2,this.alertMessage.y);
 		}
 	}
 
@@ -383,9 +408,9 @@ function PheremoneGapManager()
 	{
 		for (let i = 0; i < this.arrayOfPheremoneGaps.length; i++)
 		{
-			if (this.alertMessageShouldBeVisible)
+			if (defenseGame.background.pheremoneGapManager.alertMessageShouldBeVisible)
 			{
-				this.arrayOfPheremoneGaps[i].drawAlertMessage();
+				defenseGame.background.pheremoneGapManager.arrayOfPheremoneGaps[i].drawAlertMessage();
 			}
 		}
 	}

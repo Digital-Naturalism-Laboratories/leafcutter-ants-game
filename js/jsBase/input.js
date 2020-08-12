@@ -153,7 +153,6 @@ function onKeyDown(ev)
         break;
 
         case 68://d
-        console.log(defenseGame.debugOn);
         if (defenseGame.debugOn === false)
         {
             defenseGame.debugOn = true;

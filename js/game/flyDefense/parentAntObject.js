@@ -134,6 +134,7 @@ function ParentAntObject()
 		this.drawLeaf();
 		this.drawFungusSpores();
 		this.drawSmallAnt();
+		this.infectionAlertMessage.draw();
 
 		if (defenseGame.debugOn)
 		{
@@ -890,11 +891,52 @@ function ParentAntObject()
 	{
 		this.initializeLineSegments();
 		this.initializeArrayOfFungusSpores();
+		this.infectionAlertMessage.initialize();
 	}
 
 	this.headTarget = new Target('head target', renderer.canvas.width * 0.615,renderer.canvas.height * 0.665);
+
+	this.infectionAlertMessage = 
+	{
+		name: 'infection alert message',
+		x: renderer.canvas.width * 0.615,
+		y: renderer.canvas.height * 0.665,
+		width: undefined,
+		infectionMessageShouldBeVisible: false,
+
+		initialize: function()
+		{
+			this.width = renderer.measureText(infectionAlertString).width * 2;
+		},
+
+		draw: function() 
+		{
+			if (this.infectionMessageShouldBeVisible)
+			{
+				renderer.fillStyle = 'red';
+				renderer.font = '30px Helvetica';
+				renderer.fillText(infectionAlertString, this.x - this.width,this.y);
+			}
+		},
+
+		toggleVisibility: function()
+		{
+			console.log('inside toggle visibility');
+			if (defenseGame.parentAntObject.infectionAlertMessage.infectionMessageShouldBeVisible === false)
+			{
+				defenseGame.parentAntObject.infectionAlertMessage.infectionMessageShouldBeVisible = true;
+			}
+			else 
+			{
+				defenseGame.parentAntObject.infectionAlertMessage.infectionMessageShouldBeVisible = false;
+			}
+			console.log('this.shouldBeVisible: ' + defenseGame.parentAntObject.infectionAlertMessage.infectionMessageShouldBeVisible);
+			console.log('this.name: ' + defenseGame.parentAntObject.infectionAlertMessage.name);
+		}
+	}
 	
 }
+let infectionAlertString = 'Infection! You are slowing down!';
 
 function Target(name, x,y)
 {
