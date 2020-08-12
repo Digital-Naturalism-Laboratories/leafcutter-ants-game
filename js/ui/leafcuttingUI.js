@@ -91,6 +91,8 @@ function leafcuttingResetGame()
     ant.setSecondAnt(ant2);
     ant2.setSecondAnt(ant);
     ant2.disabled = true;
+
+    leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_START];
 }
 
 function setupLeafcuttingUI()
