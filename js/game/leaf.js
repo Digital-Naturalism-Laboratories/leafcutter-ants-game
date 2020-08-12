@@ -14,6 +14,8 @@ class Leaf
             new ImageObject("images/leafToCutStem.png", vec2(gameWidth, gameHeight)));
         this.bgSprite = new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(pixelSize*2, pixelSize*2)),
             new ImageObject("images/leafCuttingBG.png", vec2(gameWidth, gameHeight)));
+        this.bgBlackSprite = new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(pixelSize*2, pixelSize*2)),
+            new ImageObject("images/leafCuttingBGBlack.png", vec2(gameWidth, gameHeight)));
         this.points = [];
         this.borderPoints = [];
         this.voidAreas = [];
@@ -26,6 +28,9 @@ class Leaf
         this.start = true;
         this.updatePoints = true;
         this.onceUpdated = false;
+
+        this.indicationTimer = 0;
+        this.currentBorderIndicationIndex = -1;
     }
 
     update(deltaTime)
@@ -33,22 +38,33 @@ class Leaf
         this.winCondition(deltaTime);
     }
 
-    draw()
+    draw(deltaTime)
     {
         this.bgSprite.drawSc();
-        this.stemSprite.drawSc();
+        if(isFirefox) this.bgBlackSprite.drawSc();
         this.leafSprite.drawSc();
         this.updatePointsMechanism();
-        this.drawPoints(false);
+        this.stemSprite.drawSc();
+        this.drawBorderIndication(deltaTime);
+        //this.drawPoints(false);
     }
 
     updatePointsMechanism()
     {
+        if(isFirefox) this.drawVoidAreas();
+        
         if(this.start || typeof this.cutterAnt != "undefined")
         {
             if(this.updatePoints)
             {
-                this.updateLeafSprite();
+                if(!isFirefox)
+                {
+                    this.updateLeafSprite();
+                }
+                else
+                {
+                    _getPoints = true;
+                }
 
                 this.updatePoints = false;
             }
@@ -66,6 +82,26 @@ class Leaf
 
                 _getPoints = false;
             }
+        }
+    }
+
+    drawBorderIndication(deltaTime)
+    {
+        var indicationMaxSize = 15 * pixelSize;
+        this.indicationTimer += deltaTime;
+
+        if(this.currentBorderIndicationIndex == -1)
+        {
+            for(let i = 0; i < this.borderPoints.length; i++)
+            {
+                var radius = Math.sin((this.indicationTimer/500) + (i*0.05)) * indicationMaxSize;
+                drawCircle(renderer, this.borderPoints[i], radius, true, "#ffff0044", 1);
+            }
+        }
+        else if(this.currentBorderIndicationIndex >= 0)
+        {
+            var radius = Math.sin((this.indicationTimer/500) + (i*0.05)) * indicationMaxSize;
+            drawCircle(renderer, this.borderPoints[this.currentBorderIndicationIndex], radius, true, "#ffffff44", 1);
         }
     }
 

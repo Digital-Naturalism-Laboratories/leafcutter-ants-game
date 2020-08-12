@@ -126,7 +126,7 @@ function setupLeafcuttingUI()
 
 function leafcuttingUICustomDraw(deltaTime)
 {
-    leaf.draw();
+    leaf.draw(deltaTime);
     ant.draw(deltaTime);
     ant2.draw(deltaTime);
 }

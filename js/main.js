@@ -8,7 +8,6 @@ window.onload = function()
 
     bgmIntro.setAttribute('src', 'audio/Intro Music.mp3');
     bgmIntro.loop = true;
-
 };
 
 function events(deltaTime)

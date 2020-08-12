@@ -38,6 +38,8 @@ function init()
 
     bgRGB = [58, 173, 231];
     bgHEX = "#3aade7";
+
+    isFirefox = (navigator.userAgent.indexOf("Firefox") != -1 || typeof InstallTrigger !== 'undefined');
     
     //Custom Initialization START
     uiInit();

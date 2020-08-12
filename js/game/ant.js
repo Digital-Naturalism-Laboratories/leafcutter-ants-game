@@ -113,6 +113,7 @@ class Ant
                 this.rotationMode = true;
                 this.cutPointLines = [];
                 this.cutPointTimer = this.cutPointDelay;
+                this.leaf.currentBorderIndicationIndex = -2; //means no indication at all!
                 leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_JAWS];
             }
             else if(this.rotationMode && this.cutTimer > 0)
@@ -265,6 +266,7 @@ class Ant
     {
         this.leaf.cutterAnt = this;
         this.leaf.updatePoints = true;
+        this.leaf.currentBorderIndicationIndex = -1;
 
         this.rotationMode = false;
         this.leaf.borderPoints[this.pointIndex] = vec2(-10000, -10000);
@@ -300,6 +302,7 @@ class Ant
                     if(dist < this.leafBorderTouchMinimumDistance && !this.rotationMode)
                     {
                         this.destinationPoint = this.leaf.borderPoints[i];
+                        this.leaf.currentBorderIndicationIndex = i;
                         this.destinationPointsIndex = 0;
                         this.destinationPoints = [];
                         this.calculateDestinationPoints();
