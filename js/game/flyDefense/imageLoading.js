@@ -34,6 +34,21 @@ let soldierFacingLeftImage = document.createElement("img");
 
 let smallAntImage = document.createElement("img");
 
+let leafMinimWalk0 = document.createElement("img");
+let leafMinimWalk1 = document.createElement("img");
+let leafMinimWalk2 = document.createElement("img");
+let leafMinimWalk3 = document.createElement("img");
+let leafMinimWalk4 = document.createElement("img");
+let leafMinimWalk5 = document.createElement("img");
+let leafMinimWalk6 = document.createElement("img");
+let leafMinimWalk7 = document.createElement("img");
+let leafMinimWalk8 = document.createElement("img");
+let leafMinimWalk9 = document.createElement("img");
+let leafMinimWalk10 = document.createElement("img");
+let leafMinimWalk11 = document.createElement("img");
+
+
+
 let bigAntNeutralFlippedImage = document.createElement("img");
 let bigAntFrontRightForwardFlippedImage = document.createElement("img");
 let bigAntFrontLeftForwardFlippedImage = document.createElement("img");
@@ -93,6 +108,18 @@ function loadDefenseGameImages()
 
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: smallAntImage, theFile: 'images/flyDefense/Official Placeholder Art/minim.png'});
 
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: leafMinimWalk0, theFile: 'images/flyDefense/minimWalk/Minim walk cycle_00000.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: leafMinimWalk1, theFile: 'images/flyDefense/minimWalk/Minim walk cycle_00001.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: leafMinimWalk2, theFile: 'images/flyDefense/minimWalk/Minim walk cycle_00002.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: leafMinimWalk3, theFile: 'images/flyDefense/minimWalk/Minim walk cycle_00003.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: leafMinimWalk4, theFile: 'images/flyDefense/minimWalk/Minim walk cycle_00004.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: leafMinimWalk5, theFile: 'images/flyDefense/minimWalk/Minim walk cycle_00005.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: leafMinimWalk6, theFile: 'images/flyDefense/minimWalk/Minim walk cycle_00006.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: leafMinimWalk7, theFile: 'images/flyDefense/minimWalk/Minim walk cycle_00007.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: leafMinimWalk8, theFile: 'images/flyDefense/minimWalk/Minim walk cycle_00008.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: leafMinimWalk9, theFile: 'images/flyDefense/minimWalk/Minim walk cycle_00009.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: leafMinimWalk10, theFile: 'images/flyDefense/minimWalk/Minim walk cycle_00010.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: leafMinimWalk11, theFile: 'images/flyDefense/minimWalk/Minim walk cycle_00011.png'});
 
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntNeutralFlippedImage, theFile: 'images/flyDefense/creatures/bigAntNeutralFlippedImage.png'});
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntFrontRightForwardFlippedImage, theFile: 'images/flyDefense/creatures/bigAntFrontRightForwardFlipped.png'});

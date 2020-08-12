@@ -266,7 +266,7 @@ function ParentAntObject()
 
 	this.smallAntWidth = this.leafWidth*0.15;
 	this.smallAntHeight = this.leafHeight*0.15;
-	this.currentSmallAntImage = smallAntImage;
+	this.currentSmallAntImage = leafMinimWalk0;
 	// this.arrayOfSmallAntWalkingRightImages = [bigAntFrontRightForwardImage,bigAntNeutralImage,bigAntFrontLeftForwardImage];
 	// this.arrayOfSmallAntWalkingLeftImages = [bigAntFrontRightForwardFlippedImage,bigAntNeutralFlippedImage,bigAntFrontLeftForwardFlippedImage];
 	this.smallAntX = this.leafX + this.leafWidth/2 - this.smallAntWidth/2;
@@ -393,6 +393,21 @@ function ParentAntObject()
 	this.smallAntMovingDown = false;
 	this.smallAntMovingLeft = false;
 	this.smallAntMoving = false;
+
+	this.arrayOfSmallAntImages = [leafMinimWalk0,leafMinimWalk1,leafMinimWalk2,leafMinimWalk3,leafMinimWalk4,leafMinimWalk5,
+								  leafMinimWalk6,leafMinimWalk7,leafMinimWalk8,leafMinimWalk9,leafMinimWalk10,leafMinimWalk11];
+	this.currentSmallAntImageArrayIndex = 0;
+								  
+	this.cycleSmallAntImages = function()
+	{
+		this.currentSmallAntImageArrayIndex++;
+
+		if (this.currentSmallAntImageArrayIndex > this.arrayOfSmallAntImages.length - 1)
+		{
+			this.currentSmallAntImageArrayIndex = 0;
+		}
+	}
+
 	this.moveSmallAnt = function()
 	{
 
@@ -885,6 +900,11 @@ function ParentAntObject()
 	{
 		this.moveSmallAnt();
 		this.detectFungusSporeCollisions();
+		if (this.shouldBeMovingLeftOrRight || this.shouldBeMovingUpOrDown)
+		{
+			console.log('inside update check to cycle small ant walking images');
+			this.cycleSmallAntImages();
+		}
 	}
 
 	this.initialize = function()
