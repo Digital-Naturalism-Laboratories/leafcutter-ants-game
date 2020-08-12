@@ -17,8 +17,12 @@ class Leaf
         this.bgBlackSprite = new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(pixelSize*2, pixelSize*2)),
             new ImageObject("images/leafCuttingBGBlack.png", vec2(gameWidth, gameHeight)));
         this.points = [];
+        this.isAttachedToStem = [];
+        this.noScoreForUnattachedPointsRemoval = false;
         this.borderPoints = [];
         this.voidAreas = [];
+
+        this.stemPoint = vec2(30*pixelSize, 400*pixelSize);
 
         this.leafCanvas = document.createElement('canvas');
         this.leafCanvas.width = gameWidth;
@@ -47,11 +51,16 @@ class Leaf
         this.stemSprite.drawSc();
         this.drawBorderIndication(deltaTime);
         //this.drawPoints(false);
+        
     }
 
     updatePointsMechanism()
     {
-        if(isFirefox) this.drawVoidAreas();
+        if(isFirefox)
+        {
+            this.drawVoidAreas();
+            this.drawUnattachedPointVoidArea();
+        }
         
         if(this.start || typeof this.cutterAnt != "undefined")
         {
@@ -72,7 +81,7 @@ class Leaf
             if(_getPoints)
             {
                 this.getPoints(distanceBetween2AdjacentPoints);
-                if(typeof this.cutterAnt != "undefined")
+                if(typeof this.cutterAnt != "undefined" && !this.updatePoints)
                 {
                     this.cutterAnt.antDestionationAfterLeafCutSuccess();
                     this.cutterAnt = undefined;
@@ -111,14 +120,16 @@ class Leaf
         {
             for(let i = 0; i < this.points.length; i++)
             {
-                drawCircle(renderer, this.points[i], 1 * pixelSize, true, "white", 1);
+                drawCircle(renderer, this.points[i], 3 * pixelSize, true, this.isAttachedToStem[i] ? "#ffffff55" : "#00000099", 1);
             }
         }
 
         for(let i = 0; i < this.borderPoints.length; i++)
         {
-            drawCircle(renderer, this.borderPoints[i], 2 * pixelSize, true, "red", 1);
+            drawCircle(renderer, this.borderPoints[i], 1 * pixelSize, true, "red", 1);
         }
+
+        drawCircle(renderer, this.stemPoint, 2 * pixelSize, true, "white", 1);
     }
 
     getPoints(borderTestResolutionFactor)
@@ -154,11 +165,33 @@ class Leaf
                     }
 
                     this.points.push(vec2(x,y));
+                    this.isAttachedToStem.push(false);
                 }
             }
         }
-        var leafPointsRemoved = prevPoints - this.points.length;
-        if(leafPointsRemoved > 0) leafcuttingScore += leafPointsRemoved * 10;
+
+        if(!this.noScoreForUnattachedPointsRemoval)
+        {
+            var leafPointsRemoved = prevPoints - this.points.length;
+            if(leafPointsRemoved > 0) leafcuttingScore += leafPointsRemoved * 10;
+        }
+        else
+        {
+            this.noScoreForUnattachedPointsRemoval = false;
+        }
+
+        var isAnyPointUnattached = false;
+        for(let i = 0; i < this.points.length; i++)
+        {
+            if(this.calulateIsPointAttachedToStem(i))
+                isAnyPointUnattached = true;
+        }
+
+        if(isAnyPointUnattached)
+        {
+            this.noScoreForUnattachedPointsRemoval = true;
+            this.updatePoints = true;
+        }
     }
 
     drawVoidAreas()
@@ -186,6 +219,7 @@ class Leaf
 
         this.leafCanvasRenderer.globalCompositeOperation = "destination-out";
         this.drawVoidAreas();
+        this.drawUnattachedPointVoidArea();
 
         var newLeafImage = new Image();
         newLeafImage.src = this.leafCanvas.toDataURL("image/png", 1);
@@ -221,6 +255,84 @@ class Leaf
             {
                 leafcuttingSFX[SFX_PLAYERWIN].volume -= 0.00005 * deltaTime;
             }
+        }
+    }
+
+    calulateIsPointAttachedToStem(i)
+    {
+        var pointsToStem = [];
+        pointsToStem.push(vec2(this.points[i].x, this.points[i].y));
+
+        while(pointsToStem.length < 60)
+        {
+            if(pointsToStem[pointsToStem.length - 1].distance(this.stemPoint) <= distanceBetween2AdjacentPoints * 1.67)
+            {
+                pointsToStem.push(vec2(this.stemPoint.x, this.stemPoint.y));
+                break;
+            }
+
+            var adjacentPoints = [];
+            var pointToIgnore = -1;
+            for(let i = 0; i < this.points.length; i++)
+            {
+                if(pointToIgnore < 0 && isPointInCircle(pointsToStem[pointsToStem.length - 1], this.points[i], distanceBetween2AdjacentPoints / 2))
+                {
+                    pointToIgnore = i;
+                }
+                else if(isPointInCircle(pointsToStem[pointsToStem.length - 1], this.points[i], distanceBetween2AdjacentPoints * 1.67))
+                {
+                    adjacentPoints.push(vec2(this.points[i].x, this.points[i].y));
+                }
+            }
+
+            var distanceFromDestinationPoint = 999999;
+            var adjacentPointIndexCloserToDestination = vec2(99999, 99999);
+            for(let i = 0; i < adjacentPoints.length; i++)
+            {
+                var distance = this.stemPoint.distance(adjacentPoints[i]);
+                if(distance < distanceFromDestinationPoint
+                && !isVectorInArray(adjacentPoints[i], pointsToStem))
+                {
+                    distanceFromDestinationPoint = distance;
+                    adjacentPointIndexCloserToDestination = adjacentPoints[i];
+                }
+            }
+
+            if(adjacentPointIndexCloserToDestination.x < 99990)
+            {
+                pointsToStem.push(vec2(adjacentPointIndexCloserToDestination.x, adjacentPointIndexCloserToDestination.y));
+            }
+            else if(pointsToStem[pointsToStem.length-1].distance(this.stemPoint) <= distanceBetween2AdjacentPoints * 1.67)
+            {
+                pointsToStem.push(vec2(this.stemPoint.x, this.stemPoint.y));
+                break;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        this.isAttachedToStem[i] = pointsToStem[pointsToStem.length-1].x == this.stemPoint.x
+            && pointsToStem[pointsToStem.length-1].y == this.stemPoint.y;
+
+        if(!this.isAttachedToStem[i])
+            return true;
+        else
+            return false;
+
+        /*for(let n = 0; n < pointsToStem.length - 1; n++)
+        {
+            drawLine(renderer, pointsToStem[n], pointsToStem[n+1], "white");
+        }*/
+    }
+
+    drawUnattachedPointVoidArea()
+    {
+        for(let i = 0; i < this.points.length; i++)
+        {
+            if(!this.isAttachedToStem[i])
+                drawCircle(spritesRenderer, this.points[i], distanceBetween2AdjacentPoints, true, "black");
         }
     }
 }

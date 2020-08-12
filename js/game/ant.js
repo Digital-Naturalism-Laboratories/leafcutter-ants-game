@@ -6,6 +6,19 @@ function moveInDir(spr, value, offset)
     spr.transform.position.y += Math.sin(spr.transform.rotation + offset) * value;
 }
 
+function isVectorInArray(vec, array)
+{
+    for(let i = 0; i < array.length; i++)
+    {
+        if(array[i].x > vec.x - (0.5 * pixelSize)
+        && array[i].x < vec.x + (0.5 * pixelSize)
+        && array[i].y > vec.y - (0.5 * pixelSize)
+        && array[i].y < vec.y + (0.5 * pixelSize))
+            return true;
+    }
+    return false;
+}
+
 class Ant
 {
     constructor(leaf)
@@ -313,19 +326,6 @@ class Ant
         }
     }
 
-    isVectorInArray(vec, array)
-    {
-        for(let i = 0; i < array.length; i++)
-        {
-            if(array[i].x > vec.x - (0.5 * pixelSize)
-            && array[i].x < vec.x + (0.5 * pixelSize)
-            && array[i].y > vec.y - (0.5 * pixelSize)
-            && array[i].y < vec.y + (0.5 * pixelSize))
-                return true;
-        }
-        return false;
-    }
-
     calculateDestinationPoints()
     {
         if(this.destinationPoints.length <= 0)
@@ -381,7 +381,7 @@ class Ant
                 {
                     var distance = this.destinationPoint.distance(adjacentPoints[i]);
                     if(distance < distanceFromDestinationPoint
-                    && !this.isVectorInArray(adjacentPoints[i], this.destinationPoints))
+                    && !isVectorInArray(adjacentPoints[i], this.destinationPoints))
                     {
                         distanceFromDestinationPoint = distance;
                         adjacentPointIndexCloserToDestination = adjacentPoints[i];
