@@ -25,6 +25,7 @@ class Leaf
         
         this.start = true;
         this.updatePoints = true;
+        this.onceUpdated = false;
     }
 
     update(deltaTime)
@@ -38,7 +39,7 @@ class Leaf
         this.stemSprite.drawSc();
         this.leafSprite.drawSc();
         this.updatePointsMechanism();
-        //this.drawPoints(false);
+        this.drawPoints(false);
     }
 
     updatePointsMechanism()
@@ -112,6 +113,8 @@ class Leaf
                     )
                     {
                         this.borderPoints.push(vec2(x,y));
+
+                        this.onceUpdated = true;
                     }
 
                     this.points.push(vec2(x,y));
@@ -163,7 +166,7 @@ class Leaf
     winCondition(deltaTime)
     {
         if((this.borderPoints.length <= 10 || this.borderPoints.length == this.points.length)
-        && leafcuttingTimeLeft > 0 && !this.updatePoints && !_getPoints)
+        && leafcuttingTimeLeft > 0 && !this.updatePoints && !_getPoints && this.onceUpdated)
         {
             if(!areLeafcuttingAntsDisabled())
             {

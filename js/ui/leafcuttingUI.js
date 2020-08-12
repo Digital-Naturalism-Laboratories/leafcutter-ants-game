@@ -185,7 +185,8 @@ function leafcuttingDisableBothAnts()
 
 function leafcuttingAudioHandling(deltaTime)
 {
-    if(currentBGM >= 0)
+    if(currentBGM >= 0 && currentBGM < leafcuttingBGM.length
+        && leafcuttingBGM[currentBGM].readyState == 4)
     {
         if((!ant.disabled && ant.rotationMode) || (!ant2.disabled && ant2.rotationMode))
         {
@@ -204,8 +205,15 @@ function leafcuttingAudioHandling(deltaTime)
         }
         if(leafcuttingBGM[currentBGM].volume < leafcuttingBGMMaxVolume)
         {
-            leafcuttingBGM[currentBGM].volume += leafcuttingBGMVolumeStep * deltaTime;
-            if(leafcuttingBGM[currentBGM].volume > leafcuttingBGMMaxVolume) leafcuttingBGM[currentBGM].volume = leafcuttingBGMMaxVolume;
+            var value = leafcuttingBGMVolumeStep * deltaTime;
+            if(leafcuttingBGM[currentBGM].volume + value <= leafcuttingBGMMaxVolume)
+            {
+                leafcuttingBGM[currentBGM].volume += value;
+            }
+            else
+            {
+                leafcuttingBGM[currentBGM].volume = leafcuttingBGMMaxVolume;
+            }
         }
     }
 
