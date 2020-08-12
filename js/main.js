@@ -9,8 +9,6 @@ window.onload = function()
     bgmIntro.setAttribute('src', 'audio/Intro Music.mp3');
     bgmIntro.loop = true;
 
-    console.log('window.innerWidth: ' + window.innerWidth);
-    console.log('window.innerHeight: ' + window.innerHeight);
 };
 
 function events(deltaTime)

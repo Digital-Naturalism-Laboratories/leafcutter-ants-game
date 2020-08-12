@@ -72,6 +72,8 @@ defenseGame.initialize = function()
 
     this.flyManager.arrayOfFlies.push(this.testFly1,this.testFly2,this.testFly3,this.testFly4);
 
+    this.plantedEggManager = new PlantedEggManager();
+
     this.eggHasBeenPlanted = false;
 
     //ground minims
@@ -118,6 +120,7 @@ defenseGame.initialize = function()
 		//console.log('inside draw function of defense game');
 		defenseGame.background.draw();
 		defenseGame.parentAntObject.draw();
+		defenseGame.plantedEggManager.draw();
 		defenseGame.background.fungusSporeFeedbackAnimationManager.draw();
 
 		this.NPCBigAnt1.draw();

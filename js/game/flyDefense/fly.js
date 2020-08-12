@@ -9,30 +9,34 @@ function Fly(name,status)
 	this.status = status;
 	this.eggHasBeenPlanted = false;
 
+	this.x = undefined;
+	this.y = undefined;
+	this.egg = undefined;
+
 	this.assignRandomXYCoordinatesInARange = function()
 	{
 		this.x = getRandomIntInclusive(-this.width*3,renderer.canvas.width + this.width*3);
 		this.y = getRandomIntInclusive( Math.floor( -5*(this.height) ),Math.floor ( -3*(this.height) ) );
 
-		if (!this.eggHasBeenPlanted)
+		if (this.egg !== undefined)
 		{
-			this.eggX = this.x - this.width*0.025;
-			this.eggY = this.y + this.height - this.height*0.35;
+			this.egg.x = this.x - this.width*0.025;
+			this.egg.y = this.y + this.height - this.height*0.35;
+		}
+		else
+		{
+			let egg = new Egg(this.x - this.width*0.025,this.y + this.height - this.height*0.35);
+			this.egg = egg;
 		}
 	}
 	
-
-	this.eggImage = eggImage;
-	
-	this.eggWidth = this.width * 0.1;
-	this.eggHeight = this.height*0.75;
-
-	
-
 	this.draw = function()
 	{
 		renderer.drawImage(this.image, this.x,this.y, this.width,this.height);
-		renderer.drawImage(this.eggImage, this.eggX,this.eggY, this.eggWidth,this.eggHeight);
+		if (this.egg !== undefined)
+		{
+			this.egg.draw();
+		}
 
 		//collision box
 		if (defenseGame.debugOn)
@@ -70,9 +74,11 @@ function Fly(name,status)
 			if (this.x > this.currentTarget.x)//move from right to left closer to targets x
 			{
 				this.x -= this.velocityX;
-				if (!this.eggHasBeenPlanted)
+				if (this.egg !== undefined)
 				{
-					this.eggX -= this.velocityX;
+					
+					this.egg.x -= this.velocityX;
+					
 				}			
 			}
 				
@@ -80,9 +86,9 @@ function Fly(name,status)
 			else if (this.x < this.currentTarget.x)//move from left to right closer to targets x
 			{
 				this.x += this.velocityX;
-				if (!this.eggHasBeenPlanted)
+				if (this.egg !== undefined)
 				{
-					this.eggX += this.velocityX;
+					this.egg.x += this.velocityX;
 				}
 							
 			}
@@ -92,9 +98,9 @@ function Fly(name,status)
 			if (Math.abs(this.x - this.currentTarget.x) < renderer.canvas.width*0.005)
 			{
 				this.x = this.currentTarget.x;//stop jittering when x coordinate is very close to targets x
-				if (!this.eggHasBeenPlanted)
+				if (this.egg !== undefined)
 				{
-					this.eggX = this.currentTarget.x;
+					this.egg.x = this.currentTarget.x;
 				}
 				
 			}
@@ -102,9 +108,9 @@ function Fly(name,status)
 			if (this.y < this.currentTarget.y)//descend closer to target if above it
 			{
 				this.y += this.velocityY;
-				if (!this.eggHasBeenPlanted)
+				if (this.egg !== undefined)
 				{
-					this.eggY += this.velocityY;
+					this.egg.y += this.velocityY;
 				}
 			}
 
@@ -129,7 +135,9 @@ function Fly(name,status)
 				
 				this.status = 'leaving after planting';
 				this.currentTarget.canBeTargeted = false;
-				this.eggHasBeenPlanted = true;
+				let egg = new Egg(this.x - this.width*0.025,this.y + this.height - this.height*0.35);
+				defenseGame.plantedEggManager.arrayOfPlantedEggs.push(egg);
+				this.egg = undefined;
 				defenseGame.background.bigAntTallyOfInfections++;
 				defenseGame.eggHasBeenPlanted = true;
 				//alert('Ant infected by a parasite. You lose!')
@@ -149,17 +157,16 @@ function Fly(name,status)
 			if (this.y + this.height > 0)
 			{
 				this.y -= this.velocityY;
-				if (!this.eggHasBeenPlanted)
+				if (this.egg !== undefined)
 				{
-					this.eggY -= this.velocityY;
+					this.egg.y -= this.velocityY;
 				}
 			}
 			if (this.y + this.height < 0)
 			{
 				this.status = undefined;
 				this.assignRandomXYCoordinatesInARange();
-				this.eggX = this.x;
-				this.eggY = this.y;
+				
 				if (defenseGame.flyManager.currentStatus === 'swarming')
 				{
 					this.status = 'planting';
@@ -176,7 +183,8 @@ function Fly(name,status)
 			if (this.y < -this.height * 0.98)
 			{
 				
-				// this.assignRandomXYCoordinatesInARange();
+				this.assignRandomXYCoordinatesInARange();
+				this.status = 'planting';
 			}
 		}
 		
@@ -241,6 +249,36 @@ function FlyManager()
 		for (let i = 0; i < this.arrayOfFlies.length; i++)
 		{
 			this.arrayOfFlies[i].status = 'planting';
+		}
+	}
+}
+
+function Egg(x,y)
+{
+	this.x = x;
+	this.y = y;
+	this.image = eggImage;
+
+	this.width = renderer.canvas.width * 0.1 * 0.1;//one tenth of the fly width
+	this.height = renderer.canvas.height * 0.05 * 0.75;//three-fourths of the fly height
+
+	this.hasBeenPlanted = false;
+
+	this.draw = function()
+	{
+		renderer.drawImage(this.image, this.x,this.y, this.width,this.height);
+	}
+}
+
+function PlantedEggManager()
+{
+	this.arrayOfPlantedEggs = [];
+
+	this.draw = function()
+	{
+		for (let i = 0; i < this.arrayOfPlantedEggs.length; i++)
+		{
+			this.arrayOfPlantedEggs[i].draw();
 		}
 	}
 }
