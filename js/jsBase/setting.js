@@ -13,14 +13,14 @@ function init()
 
     gameWidth = window.innerWidth;
     gameHeight = window.innerHeight;
-
+    
     sizeFactor = 0;
-    if(gameWidth + (gameHeight/4) > gameHeight)
+    if(gameWidth/gameHeight > 1.25)
     {
         sizeFactor = gameHeight;
         gameWidth = gameHeight + (gameHeight/4);
     }
-    else if(gameWidth + (gameHeight/4) < gameHeight)
+    else
     {
         sizeFactor = gameWidth - (gameWidth/4);
         gameHeight = gameWidth - (gameWidth/4);
