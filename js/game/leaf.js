@@ -22,7 +22,7 @@ class Leaf
         this.borderPoints = [];
         this.voidAreas = [];
 
-        this.stemPoint = vec2(30*pixelSize, 400*pixelSize);
+        this.stemPoint = vec2(70 * pixelSize, 380 * pixelSize);
 
         this.leafCanvas = document.createElement('canvas');
         this.leafCanvas.width = gameWidth;
@@ -170,14 +170,14 @@ class Leaf
             }
         }
 
-        if(!this.noScoreForUnattachedPointsRemoval)
-        {
-            var leafPointsRemoved = prevPoints - this.points.length;
-            if(leafPointsRemoved > 0) leafcuttingScore += leafPointsRemoved * 10;
-        }
-        else
+        if(this.noScoreForUnattachedPointsRemoval)
         {
             this.noScoreForUnattachedPointsRemoval = false;
+        }
+        else if(prevPoints > 0)
+        {
+            var leafPointsRemoved = this.points.length - prevPoints;
+            if(leafPointsRemoved > 0) leafcuttingScore += leafPointsRemoved * 10;
         }
 
         var isAnyPointUnattached = false;

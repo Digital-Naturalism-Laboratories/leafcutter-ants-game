@@ -34,6 +34,15 @@ class Ant
             new ImageObject("images/jaw1.png", vec2(32,32)));
         this.cutPoint = vec2();
 
+        this.cutLeaves = [];
+        for(let i = 1; i <= 13; i++)
+        {
+            this.cutLeaves.push(new Sprite(tr(vec2(), vec2(pixelSize*2, pixelSize*2)),
+                new ImageObject("images/CutLeaves/" + i.toString() + ".png", vec2(gameWidth, gameHeight))));
+        }
+        this.cutLeafIndex = -1;
+        this.leafCarryPoint = vec2();
+
         this.cuttingJawControlPos = vec2(550 * pixelSize, 420 * pixelSize);
         this.leadingJawControlPos = vec2(400 * pixelSize, 420 * pixelSize);
         this.isCuttingJawLed = false;
@@ -119,6 +128,7 @@ class Ant
                     this.disabling = false;
                     this.destinationPoints = [];
                     this.destinationPointsIndex = -1;
+                    this.cutLeafIndex = -1;
                 }
             }
             else if(!this.rotationMode && this.pointIndex > -1)
@@ -152,6 +162,12 @@ class Ant
         this.bodySprite.drawScRot();
         this.leadingJawSprite.drawScRot();
         this.cuttingJawSprite.drawScRot();
+        if(this.cutLeafIndex > -1)
+        {
+
+            this.cutLeaves[this.cutLeafIndex].transform.position = this.leafCarryPoint;
+            this.cutLeaves[this.cutLeafIndex].drawScRot();
+        }
         this.drawJawControls();
         //this.drawDebug();
     }
@@ -213,6 +229,7 @@ class Ant
         this.leadingJawSprite.transform.rotation = this.cuttingJawSprite.transform.rotation = this.bodySprite.transform.rotation;
         this.cutPoint = vec2(this.bodySprite.transform.position.x + (Math.sin(-this.bodySprite.transform.rotation + Math.PI/2) * (31.25 * pixelSize)),
             this.bodySprite.transform.position.y + (Math.cos(-this.bodySprite.transform.rotation + Math.PI/2) * (31.25 * pixelSize)));
+        this.leafCarryPoint = vec2(this.cutPoint.x, this.cutPoint.y - (31.25 * pixelSize));
     }
 
     drawJawControls()
@@ -263,6 +280,8 @@ class Ant
 
     antDestionationAfterLeafCutSuccess()
     {
+        this.cutLeafIndex = Math.floor(Math.random() * this.cutLeaves.length);
+
         this.disabling = true;
         this.secondAnt.disabled = false;
         this.secondAnt.forcedDestination = true;
