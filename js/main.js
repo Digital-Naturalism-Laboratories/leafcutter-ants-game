@@ -35,7 +35,8 @@ function update(deltaTime)
 
 function draw(deltaTime)
 {
-    drawRect(renderer, vec2(0, 0), vec2(gameWidth, gameHeight), true, bgHEX);
+    renderer.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    drawRect(renderer, vec2(0, 0), vec2(window.innerWidth, window.innerHeight), true, bgHEX);
     switch(ui.stateIndex)
     {
         case MAINMENUUI: mainMenuUICustomDraw(deltaTime); ui.update(); break;
