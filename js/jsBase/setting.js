@@ -13,14 +13,14 @@ function init()
 
     gameWidth = window.innerWidth;
     gameHeight = window.innerHeight;
-
+    
     sizeFactor = 0;
-    if(gameWidth + (gameHeight/4) > gameHeight)
+    if(gameWidth/gameHeight > 1.25)
     {
         sizeFactor = gameHeight;
         gameWidth = gameHeight + (gameHeight/4);
     }
-    else if(gameWidth + (gameHeight/4) < gameHeight)
+    else
     {
         sizeFactor = gameWidth - (gameWidth/4);
         gameHeight = gameWidth - (gameWidth/4);
@@ -36,8 +36,10 @@ function init()
     canvasStartX = (window.innerWidth/2) - (gameWidth/2);
     canvas.style.left = canvasStartX.toString() + "px";
 
-    bgRGB = [58, 173, 231];
-    bgHEX = "#3aade7";
+    bgRGB = [0, 0, 0];
+    bgHEX = "#000000";
+
+    isFirefox = (navigator.userAgent.indexOf("Firefox") != -1 || typeof InstallTrigger !== 'undefined');
     
     //Custom Initialization START
     uiInit();

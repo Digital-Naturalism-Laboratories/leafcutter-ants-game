@@ -6,18 +6,31 @@ function moveInDir(spr, value, offset)
     spr.transform.position.y += Math.sin(spr.transform.rotation + offset) * value;
 }
 
+function isVectorInArray(vec, array)
+{
+    for(let i = 0; i < array.length; i++)
+    {
+        if(array[i].x > vec.x - (0.5 * pixelSize)
+        && array[i].x < vec.x + (0.5 * pixelSize)
+        && array[i].y > vec.y - (0.5 * pixelSize)
+        && array[i].y < vec.y + (0.5 * pixelSize))
+            return true;
+    }
+    return false;
+}
+
 class Ant
 {
     constructor(leaf)
     {
         this.leaf = leaf;
 
-        this.bodySprite = new Sprite(tr(vec2(-40 * pixelSize, 540 * pixelSize),vec2(pixelSize,pixelSize)),
+        this.bodySprite = new Sprite(tr(vec2(-40 * pixelSize, 540 * pixelSize),vec2(pixelSize/2,pixelSize/2)),
             new ImageObject("images/body.png", vec2(64,64)));
         this.bodySprite.transform.rotation = -Math.PI/4;
-        this.leadingJawSprite = new Sprite(tr(vec2(),vec2(pixelSize,pixelSize)),
+        this.leadingJawSprite = new Sprite(tr(vec2(),vec2(pixelSize/2,pixelSize/2)),
             new ImageObject("images/jaw2.png", vec2(32,32)));
-        this.cuttingJawSprite = new Sprite(tr(vec2(),vec2(pixelSize,pixelSize)),
+        this.cuttingJawSprite = new Sprite(tr(vec2(),vec2(pixelSize/2,pixelSize/2)),
             new ImageObject("images/jaw1.png", vec2(32,32)));
         this.cutPoint = vec2();
 
@@ -26,7 +39,7 @@ class Ant
         this.isCuttingJawLed = false;
         this.jawSpeedPenalty = 0;
         this.jawSpeedPenaltyTotalTurns = 3;
-        this.cutDuration = 200;
+        this.cutDuration = 100;
         this.cutTimer = 0;
         this.rotationMode = false;
         this.alternateRotation = true;
@@ -35,7 +48,7 @@ class Ant
         this.timedJawMinRadius = 45 * pixelSize;
         this.timedJawMaxRadius = 80 * pixelSize;
         this.timedJawRadius = this.timedJawMaxRadius;
-        this.timedJawSpeedFactorDefault = 0.075
+        this.timedJawSpeedFactorDefault = 0.075;
         this.timedJawSpeedFactorMax = 0.1;
         this.timedJawSpeedFactorMin = 0.05;
         this.timedJawSpeedFactor = this.timedJawSpeedFactorDefault;
@@ -46,7 +59,7 @@ class Ant
         this.timedJawCutTimeBonusFactor = 2.5;
 
         this.cutPointLines = [];
-        this.cutPointDelay = 200.0;
+        this.cutPointDelay = 100.0;
         this.cutPointTimer = this.cutPointDelay;
 
         this.forcedDestination = true;
@@ -113,6 +126,7 @@ class Ant
                 this.rotationMode = true;
                 this.cutPointLines = [];
                 this.cutPointTimer = this.cutPointDelay;
+                this.leaf.currentBorderIndicationIndex = -2; //means no indication at all!
                 leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_JAWS];
             }
             else if(this.rotationMode && this.cutTimer > 0)
@@ -134,17 +148,25 @@ class Ant
     draw(deltatime)
     {
         //this.drawDestinationPath();
-        for(let i = 0; i < this.cutPointLines.length-1; i++)
-        {
-            var pixelData1 = renderer.getImageData(this.cutPointLines[i].x, this.cutPointLines[i].y, 1, 1).data;
-            var pixelData2 = renderer.getImageData(this.cutPointLines[i+1].x, this.cutPointLines[i+1].y, 1, 1).data;
-            if(pixelData1[1] >= 70 && pixelData2[1] >= 70)
-                drawLine(renderer, this.cutPointLines[i], this.cutPointLines[i+1], "#000000");
-        }
+        this.drawLeafCuttingLines();
         this.bodySprite.drawScRot();
         this.leadingJawSprite.drawScRot();
         this.cuttingJawSprite.drawScRot();
         this.drawJawControls();
+        //this.drawDebug();
+    }
+
+    drawLeafCuttingLines()
+    {
+        var bgValueBorder = 100;
+        for(let i = 0; i < this.cutPointLines.length-1; i++)
+        {
+            var pixelData1 = renderer.getImageData(this.cutPointLines[i].x, this.cutPointLines[i].y, 1, 1).data;
+            var pixelData2 = renderer.getImageData(this.cutPointLines[i+1].x, this.cutPointLines[i+1].y, 1, 1).data;
+            if((pixelData1[0] >= bgValueBorder || pixelData1[1] >= bgValueBorder || pixelData1[2] >= bgValueBorder)
+            || (pixelData2[0] >= bgValueBorder || pixelData2[1] >= bgValueBorder || pixelData2[2] >= bgValueBorder))
+                drawLine(renderer, this.cutPointLines[i], this.cutPointLines[i+1], "#000000");
+        }
     }
 
     moveToDestination(deltaTime)
@@ -184,13 +206,13 @@ class Ant
 
     updatingJawTransform()
     {
-        this.leadingJawSprite.transform.position = vec2(this.bodySprite.transform.position.x + (Math.sin(-this.bodySprite.transform.rotation + Math.PI/1.75) * (50 * pixelSize)),
-            this.bodySprite.transform.position.y + (Math.cos(-this.bodySprite.transform.rotation + Math.PI/1.75) * (50 * pixelSize)));
-        this.cuttingJawSprite.transform.position = vec2(this.bodySprite.transform.position.x + (Math.sin(-this.bodySprite.transform.rotation + Math.PI/2.25) * (50 * pixelSize)),
-            this.bodySprite.transform.position.y + (Math.cos(-this.bodySprite.transform.rotation + Math.PI/2.25) * (50 * pixelSize)));
+        this.leadingJawSprite.transform.position = vec2(this.bodySprite.transform.position.x + (Math.sin(-this.bodySprite.transform.rotation + Math.PI/1.75) * (25 * pixelSize)),
+            this.bodySprite.transform.position.y + (Math.cos(-this.bodySprite.transform.rotation + Math.PI/1.75) * (25 * pixelSize)));
+        this.cuttingJawSprite.transform.position = vec2(this.bodySprite.transform.position.x + (Math.sin(-this.bodySprite.transform.rotation + Math.PI/2.25) * (25 * pixelSize)),
+            this.bodySprite.transform.position.y + (Math.cos(-this.bodySprite.transform.rotation + Math.PI/2.25) * (25 * pixelSize)));
         this.leadingJawSprite.transform.rotation = this.cuttingJawSprite.transform.rotation = this.bodySprite.transform.rotation;
-        this.cutPoint = vec2(this.bodySprite.transform.position.x + (Math.sin(-this.bodySprite.transform.rotation + Math.PI/2) * (62.5 * pixelSize)),
-            this.bodySprite.transform.position.y + (Math.cos(-this.bodySprite.transform.rotation + Math.PI/2) * (62.5 * pixelSize)));
+        this.cutPoint = vec2(this.bodySprite.transform.position.x + (Math.sin(-this.bodySprite.transform.rotation + Math.PI/2) * (31.25 * pixelSize)),
+            this.bodySprite.transform.position.y + (Math.cos(-this.bodySprite.transform.rotation + Math.PI/2) * (31.25 * pixelSize)));
     }
 
     drawJawControls()
@@ -212,6 +234,13 @@ class Ant
             this.leadingJawSprite.drawSc();
             this.leadingJawSprite.transform.position = tempPos;
         }
+    }
+
+    drawDebug()
+    {
+        drawCircle(renderer, this.cutPoint, 2*pixelSize, true, "white", pixelSize);
+        drawLine(renderer, this.cuttingJawSprite.transform.position, this.bodySprite.transform.position, "white");
+        drawLine(renderer, this.leadingJawSprite.transform.position, this.bodySprite.transform.position, "white");
     }
 
     addVoidAreaWhenRotationCompletes()
@@ -250,6 +279,7 @@ class Ant
     {
         this.leaf.cutterAnt = this;
         this.leaf.updatePoints = true;
+        this.leaf.currentBorderIndicationIndex = -1;
 
         this.rotationMode = false;
         this.leaf.borderPoints[this.pointIndex] = vec2(-10000, -10000);
@@ -285,6 +315,7 @@ class Ant
                     if(dist < this.leafBorderTouchMinimumDistance && !this.rotationMode)
                     {
                         this.destinationPoint = this.leaf.borderPoints[i];
+                        this.leaf.currentBorderIndicationIndex = i;
                         this.destinationPointsIndex = 0;
                         this.destinationPoints = [];
                         this.calculateDestinationPoints();
@@ -293,19 +324,6 @@ class Ant
                 }
             }
         }
-    }
-
-    isVectorInArray(vec, array)
-    {
-        for(let i = 0; i < array.length; i++)
-        {
-            if(array[i].x > vec.x - (0.5 * pixelSize)
-            && array[i].x < vec.x + (0.5 * pixelSize)
-            && array[i].y > vec.y - (0.5 * pixelSize)
-            && array[i].y < vec.y + (0.5 * pixelSize))
-                return true;
-        }
-        return false;
     }
 
     calculateDestinationPoints()
@@ -363,7 +381,7 @@ class Ant
                 {
                     var distance = this.destinationPoint.distance(adjacentPoints[i]);
                     if(distance < distanceFromDestinationPoint
-                    && !this.isVectorInArray(adjacentPoints[i], this.destinationPoints))
+                    && !isVectorInArray(adjacentPoints[i], this.destinationPoints))
                     {
                         distanceFromDestinationPoint = distance;
                         adjacentPointIndexCloserToDestination = adjacentPoints[i];
@@ -501,16 +519,16 @@ class Ant
         {
             if(!this.alternateRotation)
             {
-                this.bodySprite.transform.rotation -= (0.0125 * this.timedJawCutSpeedBonus);
-                this.rotationCounter += (0.0125 * this.timedJawCutSpeedBonus);
+                this.bodySprite.transform.rotation -= (0.025 * this.timedJawCutSpeedBonus);
+                this.rotationCounter += (0.025 * this.timedJawCutSpeedBonus);
             }
             else
             {
-                this.bodySprite.transform.rotation += (0.0125 * this.timedJawCutSpeedBonus);
-                this.rotationCounter += (0.0125 * this.timedJawCutSpeedBonus);
+                this.bodySprite.transform.rotation += (0.025 * this.timedJawCutSpeedBonus);
+                this.rotationCounter += (0.025 * this.timedJawCutSpeedBonus);
             }
             
-            moveInDir(this.bodySprite, (0.5 * pixelSize) * this.timedJawCutSpeedBonus);
+            moveInDir(this.bodySprite, (0.3 * pixelSize) * this.timedJawCutSpeedBonus);
             this.updatingJawTransform();
 
             var pixelData = renderer.getImageData(this.cutPoint.x, this.cutPoint.y, 1, 1).data;
