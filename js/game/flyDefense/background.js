@@ -38,7 +38,7 @@ function Background()
 	this.calculateSlowDownRateFromInfections = function()
 	{
 		this.slowDownRateFromInfections = this.bigAntTallyOfInfections*0.15;
-		console.log(this.slowDownRateFromInfections);
+		
 		if (this.slowDownRateFromInfections >  5 *0.15)
 		{
 			this.slowDownRateFromInfections =  5 *0.15;

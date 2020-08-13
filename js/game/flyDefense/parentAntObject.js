@@ -941,7 +941,7 @@ function ParentAntObject()
 
 		toggleVisibility: function()
 		{
-			console.log('inside toggle visibility');
+			
 			if (defenseGame.parentAntObject.infectionAlertMessage.infectionMessageShouldBeVisible === false)
 			{
 				defenseGame.parentAntObject.infectionAlertMessage.infectionMessageShouldBeVisible = true;
@@ -950,8 +950,7 @@ function ParentAntObject()
 			{
 				defenseGame.parentAntObject.infectionAlertMessage.infectionMessageShouldBeVisible = false;
 			}
-			console.log('this.shouldBeVisible: ' + defenseGame.parentAntObject.infectionAlertMessage.infectionMessageShouldBeVisible);
-			console.log('this.name: ' + defenseGame.parentAntObject.infectionAlertMessage.name);
+			
 		}
 	}
 	

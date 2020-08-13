@@ -60,6 +60,24 @@ let bigAntSwatting4Image = document.createElement('img');
 
 
 let flyFacingLeftImage = document.createElement('img');
+
+let flyFacingLeft0Image = document.createElement('img');
+let flyFacingLeft1Image = document.createElement('img');
+let flyFacingLeft2Image = document.createElement('img');
+let flyFacingLeft3Image = document.createElement('img');
+let flyFacingLeft4Image = document.createElement('img');
+let flyFacingLeft5Image = document.createElement('img');
+let flyFacingLeft6Image = document.createElement('img');
+
+let flyFacingRight0Image = document.createElement('img');
+let flyFacingRight1Image = document.createElement('img');
+let flyFacingRight2Image = document.createElement('img');
+let flyFacingRight3Image = document.createElement('img');
+let flyFacingRight4Image = document.createElement('img');
+let flyFacingRight5Image = document.createElement('img');
+let flyFacingRight6Image = document.createElement('img');
+
+
 let eggImage = document.createElement('img');
 
 let leafImage = document.createElement('img');
@@ -132,6 +150,23 @@ function loadDefenseGameImages()
 
 
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: flyFacingLeftImage, theFile: 'images/flyDefense/creatures/flyFacingLeft.png'});
+		
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: flyFacingLeft0Image, theFile: 'images/flyDefense/Fly/Fly_Upscaled_00000.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: flyFacingLeft1Image, theFile: 'images/flyDefense/Fly/Fly_Upscaled_00001.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: flyFacingLeft2Image, theFile: 'images/flyDefense/Fly/Fly_Upscaled_00002.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: flyFacingLeft3Image, theFile: 'images/flyDefense/Fly/Fly_Upscaled_00003.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: flyFacingLeft4Image, theFile: 'images/flyDefense/Fly/Fly_Upscaled_00004.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: flyFacingLeft5Image, theFile: 'images/flyDefense/Fly/Fly_Upscaled_00005.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: flyFacingLeft6Image, theFile: 'images/flyDefense/Fly/Fly_Upscaled_00006.png'});
+
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: flyFacingRight0Image, theFile: 'images/flyDefense/Fly/Fly_Upscaled_00000_Flipped.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: flyFacingRight1Image, theFile: 'images/flyDefense/Fly/Fly_Upscaled_00001_Flipped.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: flyFacingRight2Image, theFile: 'images/flyDefense/Fly/Fly_Upscaled_00002_Flipped.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: flyFacingRight3Image, theFile: 'images/flyDefense/Fly/Fly_Upscaled_00003_Flipped.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: flyFacingRight4Image, theFile: 'images/flyDefense/Fly/Fly_Upscaled_00004_Flipped.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: flyFacingRight5Image, theFile: 'images/flyDefense/Fly/Fly_Upscaled_00005_Flipped.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: flyFacingRight6Image, theFile: 'images/flyDefense/Fly/Fly_Upscaled_00006_Flipped.png'});
+
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: eggImage, theFile: 'images/flyDefense/creatures/egg.png'});
 
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: leafImage, theFile: 'images/flyDefense/Official Placeholder Art/leaf.png'});

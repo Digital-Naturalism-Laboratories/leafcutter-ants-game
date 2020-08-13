@@ -1,10 +1,34 @@
 function Fly(name,status)
 {
 	this.name = name;
-	this.image = flyFacingLeftImage;
+	this.image = flyFacingLeft0Image;
 
-	this.width = renderer.canvas.width * 0.1;
-	this.height = renderer.canvas.height * 0.05;
+	
+	this.arrayOfFacingLeftImages = [flyFacingLeft0Image,flyFacingLeft1Image,flyFacingLeft2Image,flyFacingLeft3Image,
+								    flyFacingLeft4Image,flyFacingLeft5Image,flyFacingLeft6Image];
+	this.arrayOfFacingRightImages = [flyFacingRight0Image,flyFacingRight1Image,flyFacingRight2Image,flyFacingRight3Image,
+									 flyFacingRight4Image,flyFacingRight5Image,flyFacingRight6Image];
+	this.currentImageIndex = getRandomIntInclusive(0, this.arrayOfFacingLeftImages.length - 1);//make each fly slightly different visually
+
+	this.cycleImages = function(i)
+	{
+		this.currentImageIndex++;
+		if (this.currentImageIndex > this.arrayOfFacingLeftImages.length - 1)
+		{
+			this.currentImageIndex = 0;
+		}
+		if (this.currentFacingStatus === 'facing left')
+		{
+			this.image = this.arrayOfFacingLeftImages[this.currentImageIndex];
+		}
+		else
+		{
+			this.image = this.arrayOfFacingRightImages[this.currentImageIndex];
+		}
+	}
+
+	this.width = renderer.canvas.width * 0.125;
+	this.height = renderer.canvas.height * 0.075;
 
 	this.status = status;
 	this.eggHasBeenPlanted = false;
@@ -13,20 +37,52 @@ function Fly(name,status)
 	this.y = undefined;
 	this.egg = undefined;
 
+	this.currentTarget = defenseGame.parentAntObject.headTarget;
+
 	this.assignRandomXYCoordinatesInARange = function()
 	{
-		this.x = getRandomIntInclusive(-this.width*3,renderer.canvas.width + this.width*3);
-		this.y = getRandomIntInclusive( Math.floor( -5*(this.height) ),Math.floor ( -3*(this.height) ) );
-
-		if (this.egg !== undefined)
+		let coinFlip = Math.random();
+		if (coinFlip <= 0.5)
 		{
-			this.egg.x = this.x - this.width*0.025;
-			this.egg.y = this.y + this.height - this.height*0.35;
+			this.x = getRandomIntInclusive(-this.width*3,this.currentTarget.x - this.width*1.5);
+			this.currentFacingStatus = 'facing right';
 		}
 		else
 		{
-			let egg = new Egg(this.x - this.width*0.025,this.y + this.height - this.height*0.35);
-			this.egg = egg;
+			this.x = getRandomIntInclusive(this.currentTarget.x + this.width,renderer.canvas.width + this.width*3);
+			this.currentFacingStatus = 'facing left';
+		}
+		//this.x = getRandomIntInclusive(-this.width*3,renderer.canvas.width + this.width*3);
+		this.y = getRandomIntInclusive( Math.floor( -5*(this.height) ),Math.floor ( -3*(this.height) ) );
+
+		
+		if (this.egg !== undefined)
+		{
+			if (this.currentFacingStatus === 'facing left')
+			{
+				this.egg.x = this.x;
+				this.egg.y = this.y + this.height - this.height*0.35;
+			}
+			else
+			{
+				this.egg.x = (this.x + this.width) - this.width*0.15;
+				this.egg.y = this.y + this.height - this.height*0.35;
+			}
+			
+		}
+		else
+		{
+			if (this.currentFacingStatus === 'facing left')
+			{
+				let egg = new Egg(this.x,this.y + this.height - this.height*0.35);
+				this.egg = egg;
+			}
+			else
+			{
+				let egg = new Egg((this.x + this.width) - this.width*0.15,this.y + this.height - this.height*0.35);
+				this.egg = egg;
+				
+			}	
 		}
 	}
 	
@@ -51,12 +107,16 @@ function Fly(name,status)
 		  // End point (180,47)
 		  renderer.lineTo(this.x,renderer.canvas.height);
 		  // Make the line visible
-		  renderer.stroke();						
+		  renderer.stroke();	
+
+		  renderer.fillStyle = 'brown';
+		  renderer.font = '30px Helvetica';
+		  renderer.fillText(this.name, this.x,this.y);					
 		}
 	}
 
 	
-	this.currentTarget = defenseGame.parentAntObject.headTarget;
+	
 
 	this.velocityX = renderer.canvas.width * 0.0025;
 	this.velocityY = renderer.canvas.width * 0.0025;
@@ -83,7 +143,7 @@ function Fly(name,status)
 			}
 				
 			
-			else if (this.x < this.currentTarget.x)//move from left to right closer to targets x
+			else if (this.x + this.width < this.currentTarget.x)//move from left to right closer to targets x
 			{
 				this.x += this.velocityX;
 				if (this.egg !== undefined)
@@ -234,6 +294,7 @@ function FlyManager()
 			{
 				this.arrayOfFlies[i].move();
 			}
+			this.arrayOfFlies[i].cycleImages(i);
 		}
 	}
 
