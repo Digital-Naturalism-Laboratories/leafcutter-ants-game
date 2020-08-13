@@ -189,13 +189,13 @@ function Fly(name,status)
 				    
 				}		
 
-			if (this.x > this.currentTarget.x * 0.96 && this.x < this.currentTarget.x * 1.04 && 
+			if (this.x + this.width > this.currentTarget.x * 0.96 && this.x < this.currentTarget.x * 1.04 && 
 				this.y > this.currentTarget.y * 0.96 && this.y < this.currentTarget.y * 1.04)//target reached
 			{
 				
 				this.status = 'leaving after planting';
 				this.currentTarget.canBeTargeted = false;
-				let egg = new Egg(this.x - this.width*0.025,this.y + this.height - this.height*0.35);
+				let egg = new Egg(this.egg.x,this.egg.y);
 				defenseGame.plantedEggManager.arrayOfPlantedEggs.push(egg);
 				this.egg = undefined;
 				defenseGame.background.bigAntTallyOfInfections++;
