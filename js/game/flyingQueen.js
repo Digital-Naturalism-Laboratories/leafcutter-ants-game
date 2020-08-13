@@ -2,7 +2,7 @@ class FlyingQueen {
     constructor(x, y, isPlayerControlled) {
         this.horizontalSpeed = 2;
         this.verticalSpeed = 3;
-        this.sprite = new Sprite(tr(vec2(this.x * pixelSize, this.y * pixelSize), vec2(pixelSize / 3, pixelSize / 3)), new ImageObject("Visual Assets/8bit-Queen-right.png", vec2(96, 96)));
+        this.sprite = new Sprite(tr(vec2(this.x * pixelSize, this.y * pixelSize), vec2(pixelSize / 3, pixelSize / 3)), new ImageObject("images/Animations/Queen_Fly_250px_Spritesheet.png", vec2(96, 96)));
         this.flyingMomentum = 0;
         this.fallingMomentum = 0;
         this.collisionRadius = 15;
@@ -21,8 +21,6 @@ class FlyingQueen {
             this.y = y;
         }
 
-        this.sprite = new Sprite(tr(vec2(this.x * pixelSize, this.y * pixelSize), vec2(pixelSize / 3, pixelSize / 3)), new ImageObject("Visual Assets/8bit-Queen-right.png", vec2(96, 96)));
-
         this.movementStates = {
             FLYING: "flying",
             FALLING: "falling"
@@ -30,6 +28,11 @@ class FlyingQueen {
         this.movementState = this.movementStates.FALLING;
 
         flightGameUI.push(this);
+
+        this.animationFrameLength = 4;
+        this.animationFrameCount = 60;
+        this.animationFrameCurrent = 0;
+        this.animationTimer = 0
     }
 
     event() {
@@ -42,9 +45,12 @@ class FlyingQueen {
                 y: touchPos[0].y - canvas.getBoundingClientRect().top
             }
 
+            this.animationFrameLength = 2;
+
             this.movementState = this.movementStates.FLYING;
         } else {
             this.movementState = this.movementStates.FALLING;
+            this.animationFrameLength = 5;
         }
 
     }
@@ -130,7 +136,31 @@ class FlyingQueen {
     draw() {
         renderer.save();
         renderer.translate(-camPanX, 0);
-        this.sprite.drawSc();
+
+        var inSize = {
+            x: 250,
+            y: 242
+        }
+
+        var inPos = {
+            x: (this.animationFrameCurrent * inSize.x),
+            y: 0
+        }
+
+        this.sprite.drawScIn(inPos, inSize);
+
+        if (this.animationTimer > this.animationFrameLength - 1) {
+            this.animationFrameCurrent++
+            this.animationTimer = 0;
+        }
+
+        if (this.animationFrameCurrent >= this.animationFrameCount) {
+            this.animationFrameCurrent = 0;
+        }
+
+        this.animationTimer++;
+
+
         renderer.restore();
     }
 
