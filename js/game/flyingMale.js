@@ -17,7 +17,7 @@ class FlyingMale {
 
         this.animationFrameLength = 2;
         this.animationFrameCount = 20;
-        this.animationFrameCurrent = 0;
+        this.animationFrameCurrent = Math.floor(Math.random() * 20);
         this.animationTimer = 0
     }
 
