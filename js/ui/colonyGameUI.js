@@ -149,6 +149,7 @@ function setupColonyGameUI() {
 
   loadImages();
   queen = new Queen((COLONY_W * 24) - 10, (COLONY_H * 11));
+  worker = new ColonyWorkerAnt((colonyTiles[COLONY_TUNNEL_VERT].width * 3) * pixelSize, (colonyTiles[COLONY_TUNNEL_VERT].height) * pixelSize * 1.3);
 
   bgmColony.setAttribute('src', 'audio/Intro Music.mp3');
   bgmColony.loop = true;
@@ -166,7 +167,6 @@ function colonyGameUICustomDraw(deltaTime) {
   drawColonyTiles();
   renderer.drawImage(fungusNest, gameWidth * 0.75, gameHeight * 0.4, gameWidth / 10, gameHeight / 10);
 
-  renderer.drawImage(worker_right, (colonyTiles[COLONY_TUNNEL_VERT].width * 3) * pixelSize, (colonyTiles[COLONY_TUNNEL_VERT].height * 2 - 10) * pixelSize, (worker_right.width / 2) * pixelSize, (worker_right.height / 2) * pixelSize);
   renderer.drawImage(worker_with_minims, (colonyTiles[COLONY_TUNNEL_VERT].width * 13) * pixelSize, (colonyTiles[COLONY_TUNNEL_VERT].height - 10) * pixelSize, (worker_with_minims.width / 2) * pixelSize, (worker_with_minims.height / 2) * pixelSize);
   
   renderer.fillStyle = 'black';
@@ -181,7 +181,6 @@ function colonyGameUICustomDraw(deltaTime) {
 
   renderer.fillText("Population: " + population, gameWidth - (300 * pixelSize), gameHeight - (85 * pixelSize));
   renderer.fillText("Eggs: " + eggCount, gameWidth - (300 * pixelSize), gameHeight - (50 * pixelSize));
-  //renderer.fillText("Larvae: " + larvaeCount, gameWidth - (300 * pixelSize), gameHeight - (15 * pixelSize));
   renderer.fillText("Genetic Diversity: " + (geneticDiversity * 100) + "%", gameWidth - (300 * pixelSize), gameHeight - (15 * pixelSize));
 
 
@@ -189,7 +188,6 @@ function colonyGameUICustomDraw(deltaTime) {
   renderer.textAlign = "center";
   renderer.font = (10 * pixelSize).toString() + "px Arial";
   renderer.fillText("Click for Queen Flight Game", queen.x * pixelSize, (queen.y + 30) * pixelSize);
-  renderer.fillText("Click for Leaf Cutting Game", (colonyTiles[COLONY_TUNNEL_VERT].width * 3.5) * pixelSize, (colonyTiles[COLONY_TUNNEL_VERT].height * 1.5 * pixelSize));
   renderer.fillText("Click for Fly Defense Game", (colonyTiles[COLONY_TUNNEL_VERT].width * 13.5) * pixelSize, (colonyTiles[COLONY_TUNNEL_VERT].height * 1.5 * pixelSize));
   renderer.textAlign = "left";
 
@@ -201,18 +199,14 @@ function colonyGameUICustomEvents(deltaTime)
     bgmColony.play();
 
   if (isTouched) {
-    if (getDistBtwVec2(vec2((colonyTiles[COLONY_TUNNEL_VERT].width * 3) * pixelSize, (colonyTiles[COLONY_TUNNEL_VERT].height * 2 - 10) * pixelSize), vec2(touchPos[0].x - canvas.getBoundingClientRect().left, touchPos[0].y - canvas.getBoundingClientRect().top)) < 40 * pixelSize) {
-      bgmColony.pause();
-      bgmColony.currentTime = 0;
 
-      ui.stateIndex = LEAFCUTTINGUI;
-    }
     if (getDistBtwVec2(vec2((colonyTiles[COLONY_TUNNEL_VERT].width * 13) * pixelSize, (colonyTiles[COLONY_TUNNEL_VERT].height + 20) * pixelSize), vec2(touchPos[0].x - canvas.getBoundingClientRect().left, touchPos[0].y - canvas.getBoundingClientRect().top)) < 40 * pixelSize) {
       bgmColony.pause();
       bgmColony.currentTime = 0;
 
       ui.stateIndex = DEFENSEGAMEUI;
     }
+
   }
 }
 
