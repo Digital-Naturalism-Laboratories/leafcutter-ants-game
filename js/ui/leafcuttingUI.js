@@ -27,7 +27,7 @@ var leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_START];
 
 var leafcuttingScore = 0;
 var leafcuttingTimeLeft = 0;
-var leafcuttingStartTime = 200000;
+var leafcuttingStartTime = 300000;
 var leafcuttingLowTimeAlert = 15000;
 
 var leafcuttingWinBonus = 2;
