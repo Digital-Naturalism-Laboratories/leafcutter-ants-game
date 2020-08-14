@@ -11,9 +11,9 @@ var rivalQueens = [];
 var energyBarLength = 100;
 var diversityBarLength = 0;
 
-var placeholder_BG = document.createElement('img');
-placeholder_BG.src = 'Visual Assets/placeholder_BG.png';
-var BG_image_width = placeholder_BG.width;
+var jungle_background = document.createElement('img');
+jungle_background.src = 'Visual Assets/Jungle_Background.png';
+var BG_image_width = jungle_background.width;
 var totalMilliseconds = 0;
 
 var camPanX = 0.0;
@@ -35,14 +35,14 @@ function setupFlightGameUI() {
 function flightGameUICustomDraw(deltaTime) {
 
   totalMilliseconds += deltaTime;
-  var vx = 1;
+  var vx = 0.4; //background scroll speed
   var numImages = 2;
-  var xpos = totalMilliseconds * vx % gameWidth;
+  var xpos = totalMilliseconds * vx % (jungle_background.width * (gameHeight / jungle_background.height));
 
   renderer.save();
   renderer.translate(-xpos, 0);
   for (var i = 0; i < numImages; i++) {
-    renderer.drawImage(placeholder_BG, i * gameWidth, 0, gameWidth, gameHeight);
+    renderer.drawImage(jungle_background, i * (jungle_background.width * (gameHeight / jungle_background.height)), 0, jungle_background.width * (gameHeight / jungle_background.height) + 1, gameHeight);
   }
   renderer.restore();
 
