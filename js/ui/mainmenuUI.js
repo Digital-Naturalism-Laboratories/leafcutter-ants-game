@@ -7,7 +7,7 @@ var mainMenuFontSize;
 
 function setupMainMenuUI()
 {
-    mainMenuFontSize = 32 * pixelSize;
+    mainMenuFontSize = 18 * pixelSize;
 
     menuButtons = [];
     // TextButton           constructor(transform, label, button, tooltip)
@@ -17,26 +17,26 @@ function setupMainMenuUI()
     // Button               constructor(transform, btnColor, selectColor, hoverColor, disabledColor)
 
     leafcuttingBtn = new TextButton(tr(vec2(), btnSize),
-        new Label(tr(), "  LEAFCUTTING GAME", mainMenuFontSize.toString() + "px " + uiContext.fontFamily, "white", 0),
-        new Button(tr(), "#333333ff", "#113311ff", "#224422ff"), 
+        new Label(tr(), "  LEAFCUTTING GAME", mainMenuFontSize.toString() + "px Pixelmania", "white", 0),
+        new Button(tr(), "#00000022", "#00000066", "#00000044"), 
         "");
     menuButtons.push(leafcuttingBtn);
 
     colonyBtn = new TextButton(tr(vec2(), btnSize),
-        new Label(tr(), "  COLONY GAME", mainMenuFontSize.toString() + "px " + uiContext.fontFamily, "white", 0),
-        new Button(tr(), "#333333ff", "#113311ff", "#224422ff"), 
+        new Label(tr(), "  COLONY GAME", mainMenuFontSize.toString() + "px Pixelmania", "white", 0),
+        new Button(tr(), "#00000022", "#00000066", "#00000044"), 
         "");
     menuButtons.push(colonyBtn);
 
     flightBtn = new TextButton(tr(vec2(), btnSize),
-        new Label(tr(), "  FLIGHT GAME", mainMenuFontSize.toString() + "px " + uiContext.fontFamily, "white", 0),
-        new Button(tr(), "#333333ff", "#113311ff", "#224422ff"), 
+        new Label(tr(), "  FLIGHT GAME", mainMenuFontSize.toString() + "px Pixelmania", "white", 0),
+        new Button(tr(), "#00000022", "#00000066", "#00000044"), 
         "");
     menuButtons.push(flightBtn);
 
     defenseBtn = new TextButton(tr(vec2(), btnSize),
-        new Label(tr(), "  FLY DEFENSE GAME", mainMenuFontSize.toString() + "px " + uiContext.fontFamily, "white", 0),
-        new Button(tr(), "#333333ff", "#113311ff", "#224422ff"), 
+        new Label(tr(), "  FLY DEFENSE GAME", mainMenuFontSize.toString() + "px Pixelmania", "white", 0),
+        new Button(tr(), "#00000022", "#00000066", "#00000044"), 
         "");
     menuButtons.push(defenseBtn);
 

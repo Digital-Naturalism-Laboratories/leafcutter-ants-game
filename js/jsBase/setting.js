@@ -36,8 +36,8 @@ function init()
     canvasStartX = (window.innerWidth/2) - (gameWidth/2);
     canvas.style.left = canvasStartX.toString() + "px";
 
-    bgRGB = [0, 0, 0];
-    bgHEX = "#000000";
+    bgRGB = [217, 148, 0];
+    bgHEX = "#d99400";
 
     isFirefox = (navigator.userAgent.indexOf("Firefox") != -1 || typeof InstallTrigger !== 'undefined');
     

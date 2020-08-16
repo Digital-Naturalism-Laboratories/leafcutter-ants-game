@@ -17,9 +17,9 @@ const LEAFCUTTINGHINT_TIMEOUT = 4;
 const LEAFCUTTINGHINT_WIN = 5;
 var leafcuttingHints = [
     "Click on any leaf border to start cutting the leaf.",
-    "Click on the jaw buttons alternatively. Don't press the wrong jaw button.",
-    "Leaf part cut successfully. Now, click on any leaf borders to move on cutting the next part.",
-    "You pressed the wrong jaw button! Try cutting again by clicking jaw buttons alternatively!",
+    "Click on the jaw button when the surrounding circle is green and small.",
+    "Leaf part cut successfully. Get the other ant working!",
+    "You pressed the wrong jaw button! Try cutting again by clicking jaw buttons alternatively!", //Jaw penalty hint (it is never used in game.)
     "Time out! You failed to cut the entire leaf within the given time.",
     "Excellent! You finished cutting the entire leaf within time!"
 ];
@@ -83,7 +83,7 @@ function leafcuttingResetGame()
     leafcuttingScore = 0;
     leafcuttingTimeLeft = leafcuttingStartTime;
 
-    leafcuttingFontSize = 14 * pixelSize;
+    leafcuttingFontSize = 24 * pixelSize;
 
     leaf = new Leaf();
     ant = new Ant(leaf);

@@ -30,5 +30,5 @@ function uiSettings()
     sliderSize = vec2(scrSizeFactor * 0.28, scrSizeFactor * 0.04);
     sliderKnobSize = scrSizeFactor * 0.0075;
     panelSize = vec2(scrSizeFactor * 0.32, scrSizeFactor * 0.54);
-    uiContext.set(renderer, 2, "Tahoma, Geneva, sans-serif", scrSizeFactor * 0.028);
+    uiContext.set(renderer, 2, "SmallBoldPixel", scrSizeFactor * 0.028);
 }
