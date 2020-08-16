@@ -40,6 +40,7 @@ var antHeadImages = [
     new ImageObject("images/AntHeadAnimation/head (15).png", vec2(350,250))
 ];
 
+/*
 var antLeadJawImages = [
     new ImageObject("images/AntHeadAnimation/lead (0).png", vec2(350,250)),
     new ImageObject("images/AntHeadAnimation/lead (1).png", vec2(350,250)),
@@ -77,6 +78,7 @@ var antCutJawImages = [
     new ImageObject("images/AntHeadAnimation/cut (14).png", vec2(350,250)),
     new ImageObject("images/AntHeadAnimation/cut (15).png", vec2(350,250))
 ];
+*/
 
 class Ant
 {
@@ -105,11 +107,14 @@ class Ant
         this.headImageIndex = 0;
         this.headSprite = new Sprite(tr(vec2(480 * pixelSize, 400 * pixelSize), vec2(pixelSize/1.4,pixelSize/1.4)), antHeadImages[this.headImageIndex]);
 
-        this.headLeadJawImageIndex = 0;
-        this.headLeadJawSprite = new Sprite(tr(vec2(480 * pixelSize, 400 * pixelSize), vec2(pixelSize/1.4,pixelSize/1.4)), antLeadJawImages[this.headLeadJawImageIndex]);
-
-        this.headCutJawImageIndex = 0;
-        this.headCutJawSprite = new Sprite(tr(vec2(480 * pixelSize, 400 * pixelSize), vec2(pixelSize/1.4,pixelSize/1.4)), antCutJawImages[this.headCutJawImageIndex]);
+        //this.headLeadJawImageIndex = 0;
+        this.headLeadJawRotationOffset = 0;
+        this.headLeadJawSprite = new Sprite(tr(vec2(450 * pixelSize, 450 * pixelSize), vec2(pixelSize/1.4,pixelSize/1.4), Math.PI*1.5),
+            new ImageObject("images/LeadingJaw.png", vec2(41, 86)));
+        //this.headCutJawImageIndex = 0;
+        this.headCutJawVibrationOffset = vec2();
+        this.headCutJawSprite = new Sprite(tr(vec2(500 * pixelSize, 450 * pixelSize), vec2(pixelSize/1.4,pixelSize/1.4)),
+            new ImageObject("images/CuttingJaw.png", vec2(39, 84)));
 
         this.animationTimer = 0;
         this.animationDelay = 60;
@@ -310,13 +315,21 @@ class Ant
         if(this.rotationMode)
         {
             this.headSprite.drawSc();
-            if(this.isCuttingJawLed)
-                this.headCutJawSprite.drawSc();
-            else
-                this.headLeadJawSprite.drawSc();
+
+            this.headCutJawSprite.transform.position = this.headCutJawSprite.transform.position.add(this.headCutJawVibrationOffset);
+            this.headCutJawSprite.drawSc();
+            this.headCutJawSprite.transform.position = this.headCutJawSprite.transform.position.subtract(this.headCutJawVibrationOffset);
+
+            this.headLeadJawSprite.transform.rotation += this.headLeadJawRotationOffset;
+            var tempPos = vec2(this.headLeadJawSprite.transform.position.x, this.headLeadJawSprite.transform.position.y);
+            this.headLeadJawSprite.transform.position = rotateAroundPoint(this.headLeadJawSprite.transform.position,
+                this.headLeadJawSprite.transform.position.subtract(vec2(0, 30*pixelSize)), this.headLeadJawRotationOffset);
+            this.headLeadJawSprite.drawScRot();
+            this.headLeadJawSprite.transform.rotation -= this.headLeadJawRotationOffset;
+            this.headLeadJawSprite.transform.position = tempPos;
             
-            drawCircle(renderer, this.leadingJawControlPos, this.timedJawMinRadius, !this.isCuttingJawLed, !this.isCuttingJawLed ? "#ffffff44" : "#ff000099", pixelSize);
-            drawCircle(renderer, this.cuttingJawControlPos, this.timedJawMinRadius, this.isCuttingJawLed, this.isCuttingJawLed ? "#ffffff44" : "#ff000099", pixelSize);
+            drawCircle(renderer, this.isCuttingJawLed ? this.cuttingJawControlPos : this.leadingJawControlPos,
+                this.timedJawMinRadius, true, "#ffffff44", pixelSize);
             drawCircle(renderer, this.isCuttingJawLed ? this.cuttingJawControlPos : this.leadingJawControlPos,
                 this.timedJawRadius, false, this.jawSpeedPenalty <= 0 ? rgba(Math.floor((this.timedJawRadius - this.timedJawMinRadius)*4),
                 Math.floor((this.timedJawMaxRadius - this.timedJawRadius)*4), 0, 0.75) : "#99999955", (this.timedJawRadius - this.timedJawMinRadius) * pixelSize);
@@ -542,7 +555,8 @@ class Ant
                     this.isCuttingJawLed = false;
                     this.jawSpeedPenalty--;
                 }
-                else
+                //Jaw Penalty Removed
+                /*else
                 {
                     if(this.jawSpeedPenalty < this.jawSpeedPenaltyTotalTurns)
                         this.jawSpeedPenalty = this.jawSpeedPenaltyTotalTurns;
@@ -551,7 +565,7 @@ class Ant
 
                     leafcuttingSFX[SFX_JAWPENALTY].currentTime = 0;
                     leafcuttingSFX[SFX_JAWPENALTY].play();
-                }
+                }*/
             }
             else if(isPointInCircle(vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY), this.leadingJawControlPos, this.timedJawMinRadius))
             {
@@ -588,7 +602,8 @@ class Ant
                     this.isCuttingJawLed = true;
                     leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_JAWS];
                 }
-                else
+                //Jaw Penalty Removed
+                /*else
                 {
                     if(this.jawSpeedPenalty < this.jawSpeedPenaltyTotalTurns)
                         this.jawSpeedPenalty = this.jawSpeedPenaltyTotalTurns;
@@ -597,7 +612,7 @@ class Ant
 
                     leafcuttingSFX[SFX_JAWPENALTY].currentTime = 0;
                     leafcuttingSFX[SFX_JAWPENALTY].play();
-                }
+                }*/
             }
         }
     }
@@ -643,35 +658,13 @@ class Ant
 
     updateAnimation(deltaTime)
     {
-        //Animation Timer which causes frames to move on...
+        //IMAGE TO IMAGE ANIMATION
         if(this.animationTimer <= 0)
         {
             if(this.headImageIndex + 1 < maxAnimationFrames)
                 this.headImageIndex++;
             else
                 this.headImageIndex = 0;
-
-            if(this.rotationMode)
-            {
-                if(this.isCuttingJawLed)
-                {
-                    if(this.headCutJawImageIndex + 1 < maxAnimationFrames)
-                        this.headCutJawImageIndex++;
-                    else
-                        this.headCutJawImageIndex = 0;
-                }
-                else
-                {
-                    if(this.headLeadJawImageIndex + 1 < maxAnimationFrames)
-                        this.headLeadJawImageIndex++;
-                    else
-                        this.headLeadJawImageIndex = 0;
-                }
-            }
-            else
-            {
-                this.headCutJawImageIndex = this.headLeadJawImageIndex = 0;
-            }
 
             this.animationTimer = this.animationDelay;
         }
@@ -680,9 +673,30 @@ class Ant
             this.animationTimer -= deltaTime;
         }
 
-        //Updating Image Objects for Sprites
         this.headSprite.imageObject = antHeadImages[this.headImageIndex];
-        this.headLeadJawSprite.imageObject = antLeadJawImages[this.headLeadJawImageIndex];
-        this.headCutJawSprite.imageObject = antCutJawImages[this.headCutJawImageIndex];
+
+        //PROCEDURAL/CODED ANIMATION
+        if(this.rotationMode)
+        {
+            if(this.isCuttingJawLed)
+            {
+                if(this.headLeadJawRotationOffset < Math.PI/4) this.headLeadJawRotationOffset += 0.003 * deltaTime;
+            }
+            else if(!this.isCuttingJawLed && this.headLeadJawRotationOffset > 0)
+            {
+                this.headLeadJawRotationOffset -= 0.003 * deltaTime;
+                this.headCutJawVibrationOffset = vec2((-5 + (Math.random() * 10)) * pixelSize, (-5 + (Math.random() * 10)) * pixelSize);
+            }
+            else
+            {
+                this.headLeadJawRotationOffset = vec2();
+                this.headLeadJawRotationOffset = 0;
+            }
+        }
+        else
+        {
+            this.headLeadJawRotationOffset = vec2();
+            this.headLeadJawRotationOffset = 0;
+        }
     }
 }
