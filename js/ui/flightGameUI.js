@@ -11,9 +11,22 @@ var rivalQueens = [];
 var energyBarLength = 100;
 var diversityBarLength = 0;
 
-var jungle_background = document.createElement('img');
-jungle_background.src = 'Visual Assets/Jungle_Background.png';
-var BG_image_width = jungle_background.width;
+var jungle_background_front_trees = document.createElement('img');
+var jungle_background_middle_trees = document.createElement('img');
+var jungle_background_back_trees = document.createElement('img');
+var jungle_background_sky = document.createElement('img');
+jungle_background_front_trees.src = 'images/Backgrounds/jungle_background_front_trees.png';
+jungle_background_middle_trees.src = 'images/Backgrounds/jungle_background_middle_trees.png';
+jungle_background_back_trees.src = 'images/Backgrounds/jungle_background_back_trees.png';
+jungle_background_sky.src = 'images/Backgrounds/jungle_background_sky.png';
+
+var backgrounds = []
+backgrounds.push(jungle_background_front_trees);
+backgrounds.push(jungle_background_middle_trees);
+backgrounds.push(jungle_background_back_trees);
+backgrounds.push(jungle_background_sky);
+
+var BG_image_width = jungle_background_sky.width;
 var totalMilliseconds = 0;
 
 var camPanX = 0.0;
@@ -32,20 +45,52 @@ function setupFlightGameUI() {
 
 }
 
-function flightGameUICustomDraw(deltaTime) {
+function drawParallaxBackgrounds(deltaTime) {
 
   totalMilliseconds += deltaTime;
-  var vx = 0.4; //background scroll speed
+  var vx1 = 0.4; //background1 scroll speed
+  var vx2 = 0.3; //background2 scroll speed
+  var vx3 = 0.2; //background3 scroll speed
+  var vx4 = 0.1; //background4 scroll speed
   var numImages = 2;
-  var xpos = totalMilliseconds * vx % (jungle_background.width * (gameHeight / jungle_background.height));
+  var xpos1 = totalMilliseconds * vx1 % (jungle_background_front_trees.width * (gameHeight / jungle_background_front_trees.height));
+  var xpos2 = totalMilliseconds * vx2 % (jungle_background_middle_trees.width * (gameHeight / jungle_background_middle_trees.height));
+  var xpos3 = totalMilliseconds * vx3 % (jungle_background_back_trees.width * (gameHeight / jungle_background_back_trees.height));
+  var xpos4 = totalMilliseconds * vx4 % (jungle_background_sky.width * (gameHeight / jungle_background_sky.height));
 
   renderer.save();
-  renderer.translate(-xpos, 0);
+  renderer.translate(-xpos4, 0);
   for (var i = 0; i < numImages; i++) {
-    renderer.drawImage(jungle_background, i * (jungle_background.width * (gameHeight / jungle_background.height)), 0, jungle_background.width * (gameHeight / jungle_background.height) + 1, gameHeight);
+    renderer.drawImage(jungle_background_sky, i * (jungle_background_sky.width * (gameHeight / jungle_background_sky.height)), 0, jungle_background_sky.width * (gameHeight / jungle_background_sky.height) + 1, gameHeight);
   }
   renderer.restore();
 
+  renderer.save();
+  renderer.translate(-xpos3, 0);
+  for (var i = 0; i < numImages; i++) {
+    renderer.drawImage(jungle_background_back_trees, i * (jungle_background_back_trees.width * (gameHeight / jungle_background_back_trees.height)), 0, jungle_background_back_trees.width * (gameHeight / jungle_background_back_trees.height) + 1, gameHeight);
+  }
+  renderer.restore();
+
+  renderer.save();
+  renderer.translate(-xpos2, 0);
+  for (var i = 0; i < numImages; i++) {
+    renderer.drawImage(jungle_background_middle_trees, i * (jungle_background_middle_trees.width * (gameHeight / jungle_background_middle_trees.height)), 0, jungle_background_middle_trees.width * (gameHeight / jungle_background_middle_trees.height) + 1, gameHeight);
+  }
+  renderer.restore();
+
+  renderer.save();
+  renderer.translate(-xpos1, 0);
+  for (var i = 0; i < numImages; i++) {
+    renderer.drawImage(jungle_background_front_trees, i * (jungle_background_front_trees.width * (gameHeight / jungle_background_front_trees.height)), 0, jungle_background_front_trees.width * (gameHeight / jungle_background_front_trees.height) + 1, gameHeight);
+  }
+  renderer.restore();
+
+}
+
+function flightGameUICustomDraw(deltaTime) {
+
+  drawParallaxBackgrounds(deltaTime);
 
   flyingQueen.draw(deltaTime);
 
