@@ -5,7 +5,8 @@ class FlyingMale {
         this.y = Math.random() * gameHeight;
         this.horizontalSpeed = (Math.random() * 8) + 0.2;
         this.verticalSpeed = (Math.random() * 3) + .25;
-        this.sprite = new Sprite(tr(vec2(this.x * pixelSize, this.y * pixelSize), vec2(pixelSize / 4, pixelSize / 4)), new ImageObject("images/Animations/Male_Ant_Flying_Spritesheet.png", vec2(96, 96)));
+        this.direction = 0;
+        this.sprite = new Sprite(tr(vec2(this.x * pixelSize, this.y * pixelSize), vec2(pixelSize / 3, pixelSize / 3)), new ImageObject("images/Animations/Male_Ant_Flying_Spritesheet.png", vec2(96, 96)));
         this.movementStates = {
             FLYING: "flying",
             FALLING: "falling"
@@ -54,9 +55,17 @@ class FlyingMale {
                 break;
         }
 
-        if (this.sprite.transform.position.x > gameWidth || this.sprite.transform.position.x < 0) {
+        if (this.sprite.transform.position.x > gameWidth) {
             if (!this.hasMated) {
-                this.horizontalSpeed = -this.horizontalSpeed;
+                this.direction = 1;
+                this.horizontalSpeed = (Math.random() * -8) + -2.2;
+            }
+        }
+
+        if (this.sprite.transform.position.x < 0) {
+            if (!this.hasMated) {
+                this.direction = 0;
+                this.horizontalSpeed = (Math.random() * 8) + 0.2;
             }
         }
 
@@ -84,6 +93,7 @@ class FlyingMale {
         this.hasMated = true;
         this.verticalSpeed = -4;
         this.horizontalSpeed -= 1;
+        this.direction = 1;
         this.sprite.transform.position.x = flyingQueen.x;
         this.sprite.transform.position.y = flyingQueen.y;
     }
@@ -99,7 +109,7 @@ class FlyingMale {
 
         var inPos = {
             x: (this.animationFrameCurrent * inSize.x),
-            y: 0
+            y: (0 + this.direction) * inSize.y
         }
 
         if (!this.isMating) {
