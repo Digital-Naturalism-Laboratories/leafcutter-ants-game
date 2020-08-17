@@ -3,7 +3,7 @@ class FlyingMale {
     constructor() {
         this.x = Math.random() * gameWidth;
         this.y = Math.random() * gameHeight;
-        this.horizontalSpeed = (Math.random() * 8) + 0.2 ;
+        this.horizontalSpeed = (Math.random() * 8) + 0.2;
         this.verticalSpeed = (Math.random() * 3) + .25;
         this.sprite = new Sprite(tr(vec2(this.x * pixelSize, this.y * pixelSize), vec2(pixelSize / 4, pixelSize / 4)), new ImageObject("images/Animations/Male_Ant_Flying_Spritesheet.png", vec2(96, 96)));
         this.movementStates = {
@@ -12,6 +12,8 @@ class FlyingMale {
         }
         this.movementState = this.movementStates.FALLING;
         this.collisionRadius = 10;
+        this.isMating = false;
+        this.hasMated = false;
 
         flightGameUI.push(this);
 
@@ -30,7 +32,7 @@ class FlyingMale {
         switch (this.movementState) {
             case 'flying':
 
-                if (this.sprite.transform.position.y < (gameHeight * 0.25)){
+                if (this.sprite.transform.position.y < (gameHeight * 0.25)) {
                     this.movementState = this.movementStates.FALLING;
                 }
 
@@ -40,58 +42,76 @@ class FlyingMale {
                 break;
             case 'falling':
 
-                if (this.sprite.transform.position.y > (gameHeight * 0.75)){
-                    this.movementState = this.movementStates.FLYING;
+                if (this.sprite.transform.position.y > (gameHeight * 0.75)) {
+                    if (!this.hasMated) {
+                        this.movementState = this.movementStates.FLYING;
+                    }
                 }
 
-                if (this.sprite.transform.position.y < gameHeight) {
+                if (this.sprite.transform.position.y < gameHeight || this.hasMated) {
                     this.sprite.transform.position.y += this.verticalSpeed;
                 }
                 break;
         }
 
-        if (this.sprite.transform.position.x > gameWidth || this.sprite.transform.position.x < 0){
-            this.horizontalSpeed = -this.horizontalSpeed;
+        if (this.sprite.transform.position.x > gameWidth || this.sprite.transform.position.x < 0) {
+            if (!this.hasMated) {
+                this.horizontalSpeed = -this.horizontalSpeed;
+            }
         }
 
         this.sprite.transform.position.x += this.horizontalSpeed;
 
-        if (getDistBtwVec2(flyingQueen.sprite.transform.position, this.sprite.transform.position) < flyingQueen.collisionRadius + this.collisionRadius){
-            mateCount++;
-            diversityBarLength += 5;
-            this.sprite.transform.position.y = 10000;
+        if (getDistBtwVec2(flyingQueen.sprite.transform.position, this.sprite.transform.position) < flyingQueen.collisionRadius + this.collisionRadius) {
+            if (!flyingQueen.isMating && !this.hasMated) {
+                flyingQueen.startMating(this);
+                this.sprite.transform.position.y = 10000;
+                this.verticalSpeed = 0;
+                this.horizontalSpeed = -5;
+            }
         }
 
-        for (var i = 0; i < rivalQueens.length; i++){
-            if (getDistBtwVec2(rivalQueens[i].sprite.transform.position, this.sprite.transform.position) < rivalQueens[i].collisionRadius + this.collisionRadius){
+        for (var i = 0; i < rivalQueens.length; i++) {
+            if (getDistBtwVec2(rivalQueens[i].sprite.transform.position, this.sprite.transform.position) < rivalQueens[i].collisionRadius + this.collisionRadius) {
                 this.sprite.transform.position.y = 10000;
             }
         }
-        
+
+    }
+
+    stopMating() {
+        this.isMating = false;
+        this.hasMated = true;
+        this.verticalSpeed = -7;
+        this.horizontalSpeed *= Math.abs(-0.5) * (-1);
+        this.sprite.transform.position.x = flyingQueen.x;
+        this.sprite.transform.position.y = flyingQueen.y;
     }
 
     draw() {
         renderer.save();
-        renderer.translate(-camPanX,0);
+        renderer.translate(-camPanX, 0);
 
         var inSize = {
-            x : 250,
-            y : 242
+            x: 250,
+            y: 242
         }
 
         var inPos = {
-            x : (this.animationFrameCurrent * inSize.x),
-            y : 0
+            x: (this.animationFrameCurrent * inSize.x),
+            y: 0
         }
 
-        this.sprite.drawScIn(inPos, inSize);
+        if (!this.isMating) {
+            this.sprite.drawScIn(inPos, inSize);
+        }
 
         if (this.animationTimer > this.animationFrameLength - 1) {
             this.animationFrameCurrent++
             this.animationTimer = 0;
         }
 
-        if (this.animationFrameCurrent >= this.animationFrameCount){
+        if (this.animationFrameCurrent >= this.animationFrameCount) {
             this.animationFrameCurrent = 0;
         }
 
