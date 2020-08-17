@@ -67,7 +67,7 @@ class FlyingMale {
                 flyingQueen.startMating(this);
                 this.sprite.transform.position.y = 10000;
                 this.verticalSpeed = 0;
-                this.horizontalSpeed = -5;
+                this.horizontalSpeed = -2;
             }
         }
 
@@ -82,8 +82,8 @@ class FlyingMale {
     stopMating() {
         this.isMating = false;
         this.hasMated = true;
-        this.verticalSpeed = -7;
-        this.horizontalSpeed *= Math.abs(-0.5) * (-1);
+        this.verticalSpeed = -4;
+        this.horizontalSpeed -= 1;
         this.sprite.transform.position.x = flyingQueen.x;
         this.sprite.transform.position.y = flyingQueen.y;
     }

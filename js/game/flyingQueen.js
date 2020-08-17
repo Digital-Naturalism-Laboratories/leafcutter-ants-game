@@ -34,7 +34,7 @@ class FlyingQueen {
 
         flightGameUI.push(this);
 
-        this.matingAnimationFrameLength = 30;
+        this.matingAnimationFrameLength = 12;
         this.flyingAnimationFrameLength = 4;
         this.animationFrameLength = this.flyingAnimationFrameLength;
         this.flyingAnimationFrameCount = 60;
