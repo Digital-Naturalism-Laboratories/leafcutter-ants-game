@@ -6,6 +6,9 @@ var leafcuttingUI = [];
 var leaf;
 var ant;
 var ant2;
+var autoAnts;
+var totalAutoAnts = 0;
+var maxAutoAnts = 3;
 
 var leafcuttingFontSize;
 
@@ -63,7 +66,7 @@ var leafcuttingSFXPaths = [
     "audio/SFX/Jaw Penalty ALT.wav",
     "audio/SFX/Positive Feedback - Beef Up Trail.wav",
     "audio/SFX/Clock Ticking.wav",
-    "audio/SFX/Leaf Minim Footsteps.wav",
+    "audio/SFX/Leaf Minim Footsteps Fast.wav",
     "audio/SFX/Positive Feedback - Player Wins.wav",
     "audio/SFX/Game Over.wav",
     "audio/SFX/Jaw Penalty.wav",
@@ -91,6 +94,9 @@ function leafcuttingResetGame()
     ant.setSecondAnt(ant2);
     ant2.setSecondAnt(ant);
     ant2.disabled = true;
+
+    autoAnt = [];
+    totalAutoAnts = 0;
 
     leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_START];
 }
@@ -131,6 +137,9 @@ function leafcuttingUICustomDraw(deltaTime)
     leaf.draw(deltaTime);
     ant.draw(deltaTime);
     ant2.draw(deltaTime);
+    if(typeof autoAnts != "undefined")
+        for(let i = 0; i < autoAnts.length; i++)
+            autoAnts[i].draw(deltaTime);
 }
 
 function leafcuttingUICustomUpdate(deltaTime)
@@ -138,6 +147,9 @@ function leafcuttingUICustomUpdate(deltaTime)
     leaf.update(deltaTime);
     ant.update(deltaTime);
     ant2.update(deltaTime);
+    if(typeof autoAnts != "undefined")
+        for(let i = 0; i < autoAnts.length; i++)
+            autoAnts[i].update(deltaTime);
     
     gameHintLabel.text = leafcuttingHint;
     scoreLabel.text = "SCORE: " + leafcuttingScore.toString();
@@ -173,6 +185,9 @@ function leafcuttingUICustomEvents(deltaTime)
 {
     ant.event();
     ant2.event();
+    if(typeof autoAnts != "undefined")
+        for(let i = 0; i < autoAnts.length; i++)
+            autoAnts[i].event();
 }
 
 function areLeafcuttingAntsDisabled()
