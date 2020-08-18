@@ -190,29 +190,44 @@ function Background()
 
 	this.fungusTallyDiv = 
 	{
-		x: renderer.canvas.width * 0.05,
+		x: renderer.canvas.width * 0.01,
 		y: renderer.canvas.height * 0.05,
 
 		tallyOfEatenFungusSpores: 0,
-
+		label: 'EATEN FUNGUS SPORES: ',
+		labelWidth: renderer.measureText(this.label).width,
+		labelHeight: 30,
+// uiContext.fontSize.toString() + "px " + uiContext.fontFamily
 		draw: function()
 		{
-			renderer.fillStyle = 'purple';
-			renderer.font = '30px Helvetica';
-			renderer.fillText('Eaten Fungus Spores: ' + this.tallyOfEatenFungusSpores, this.x,this.y);
+			console.log(this.labelWidth);
+			//div background fill
+			renderer.fillStyle = 'lawngreen';
+			renderer.fillRect(this.x,this.y - this.labelHeight*0.7, this.labelWidth*10.1,this.labelHeight);
+			//div text
+			renderer.fillStyle = 'mediumorchid';
+			renderer.font = '15px Pixelmania';
+			renderer.fillText(this.label + this.tallyOfEatenFungusSpores, this.x,this.y);
 		}
 	}
 
 	this.infectionTallyDiv = 
 	{
-		x: renderer.canvas.width * 0.05,
-		y: renderer.canvas.height * 0.15,
+		x: renderer.canvas.width * 0.01,
+		y: renderer.canvas.height * 0.125,
 
+		label: 'NUMBER OF INFECTIONS: ',
+		labelWidth: renderer.measureText(this.label).width,
+		labelHeight: 30,
 		draw: function()
 		{
-			renderer.fillStyle = 'purple';
-			renderer.font = '30px Helvetica';
-			renderer.fillText('Number of Infections: ' + defenseGame.background.bigAntTallyOfInfections, this.x,this.y);
+			//div background fill
+			renderer.fillStyle = 'lawngreen';
+			renderer.fillRect(this.x,this.y - this.labelHeight*0.7, this.labelWidth*9.25,this.labelHeight);
+			//div text
+			renderer.fillStyle = 'mediumorchid';//dark violet, medium orchid
+			renderer.font = '15px Pixelmania';
+			renderer.fillText(this.label + defenseGame.background.bigAntTallyOfInfections, this.x,this.y);
 		}
 	}
 
@@ -298,7 +313,7 @@ function Background()
 	}
 }
 
-let pheremoneGapAlertMessage = 'Weak Trail! Click to fix!';
+let pheremoneGapAlertMessage = 'WEAK TRAIL!     CLICK TO FIX!';
 function PheremoneGap(x)
 {
 	this.x = x;
@@ -315,7 +330,7 @@ function PheremoneGap(x)
 		x: this.x,
 		y: this.y,
 		
-		width: renderer.measureText(pheremoneGapAlertMessage).width * 2
+		width: renderer.measureText(pheremoneGapAlertMessage).width * 2.3
 	}
 
 	this.update = function()
@@ -332,8 +347,14 @@ function PheremoneGap(x)
 		{
 			this.alertMessage.x = this.x;
 			this.alertMessage.y = this.y;
+
+			this.fontSize = 14;
+
+			renderer.fillStyle = 'lawngreen';
+			renderer.fillRect(this.x  - this.alertMessage.width*0.5125,this.y - this.fontSize*1.25, this.alertMessage.width*1.25,this.fontSize*2);
+
 			renderer.fillStyle = 'red';
-			renderer.font = '30px Helvetica';
+			renderer.font = '14px Pixelmania';
 
 			renderer.fillText(pheremoneGapAlertMessage, this.alertMessage.x - this.alertMessage.width/2,this.alertMessage.y);
 		}

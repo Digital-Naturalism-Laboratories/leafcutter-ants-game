@@ -115,25 +115,38 @@ defenseGame.initialize = function()
 	    this.audioManager.sfxManager.avoidAwkwardSilenceForLoopedAudioFiles();
 	}
 
+	renderer.save();
+	renderer.font = '30px Pixelmania';
+	this.timeLabelWidth = renderer.measureText('120').width;
+	renderer.restore();
+	
 	this.draw = function()
 	{
 		//console.log('inside draw function of defense game');
 		defenseGame.background.draw();
+		
+		
+		
+
+		this.NPCBigAnt1.draw();
+		this.NPCBigAnt2.draw();
 		defenseGame.parentAntObject.draw();
 		defenseGame.plantedEggManager.draw();
 		defenseGame.background.fungusSporeFeedbackAnimationManager.draw();
 
-		this.NPCBigAnt1.draw();
-		this.NPCBigAnt2.draw();
-
 		defenseGame.background.pheremoneGapManager.drawAlertMessages();
 
 		this.groundMinimManager.drawGroundMinims();
-
-		renderer.fillStyle = 'purple';
-		renderer.font = '60px Helvetica';
+		
       	let timerNumberConvertedToString = defenseGame.timeLeft.toString();
-      	renderer.fillText(timerNumberConvertedToString, renderer.canvas.width * 0.85,renderer.canvas.height * 0.2);
+      	let labelWidth =  renderer.measureText(timerNumberConvertedToString).width;
+
+      	renderer.fillStyle = 'lawngreen';
+      	renderer.fillRect(renderer.canvas.width * 0.845,(renderer.canvas.height * 0.1) - 30, this.timeLabelWidth*1.95,this.timeLabelWidth );
+
+      	renderer.fillStyle = 'mediumorchid';
+		renderer.font = '20px Pixelmania';
+      	renderer.fillText(timerNumberConvertedToString, renderer.canvas.width * 0.85,renderer.canvas.height * 0.1);
 
 		this.flyManager.drawFlies();
 	}

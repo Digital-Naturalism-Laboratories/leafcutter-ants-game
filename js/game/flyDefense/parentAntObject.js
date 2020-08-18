@@ -923,6 +923,7 @@ function ParentAntObject()
 		y: renderer.canvas.height * 0.665,
 		width: undefined,
 		infectionMessageShouldBeVisible: false,
+		fontSize: 30, 
 
 		initialize: function()
 		{
@@ -933,9 +934,12 @@ function ParentAntObject()
 		{
 			if (this.infectionMessageShouldBeVisible)
 			{
+				renderer.fillStyle = 'lawngreen';
+				renderer.fillRect(this.x  - this.width*0.77,this.y - this.fontSize*0.7, this.width*1.6,this.fontSize);
+
 				renderer.fillStyle = 'red';
-				renderer.font = '30px Helvetica';
-				renderer.fillText(infectionAlertString, this.x - this.width,this.y);
+				renderer.font = '15px Pixelmania';
+				renderer.fillText(infectionAlertString, this.x - this.width*0.75,this.y);
 			}
 		},
 
@@ -955,7 +959,7 @@ function ParentAntObject()
 	}
 	
 }
-let infectionAlertString = 'Infection! You are slowing down!';
+let infectionAlertString = 'INFECTION! YOU ARE SLOWING DOWN';
 
 function Target(name, x,y)
 {
