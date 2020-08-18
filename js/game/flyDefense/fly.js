@@ -318,10 +318,10 @@ function FlyManager()
 		defenseGame.audioManager.sfxManager.fliesSwarming.play();
 		for (let i = 0; i < this.arrayOfFlies.length; i++)
 		{
-			if (this.arrayOfFlies[i].egg !== undefined)
-			{
+			// if (this.arrayOfFlies[i].egg !== undefined)
+			// {
 				this.arrayOfFlies[i].status = 'planting';
-			}
+			// }
 		}
 	}
 }
