@@ -1,17 +1,19 @@
 function ParentAntObject()
 {
-	this.bigAntHeight = renderer.canvas.height*0.4;
-	this.bigAntWidth = renderer.canvas.width*0.7;
-	this.bigAntX = renderer.canvas.width/2 - this.bigAntWidth*0.7;
-	this.bigAntY = renderer.canvas.height*0.55;
+	this.bigAntHeight = renderer.canvas.height*0.7;
+	this.bigAntWidth = renderer.canvas.width*1.25;
+	this.bigAntX = renderer.canvas.width/2 - this.bigAntWidth/2;
+	this.bigAntY = renderer.canvas.height*0.3;
 	
 	this.x = renderer.canvas.width/2 - this.bigAntWidth/2;
 	this.y = renderer.canvas.height*0.6;
 
 	this.leafImage = leafImage;
 	this.fungusImage = fungusImage;
-	this.currentBigAntImage = bigAntNeutralImage;
-	this.arrayOfBigAntImages = [bigAntFrontRightForwardImage,bigAntNeutralImage,bigAntFrontLeftForwardImage];
+	this.currentBigAntImage = bigAntWalkingImage0;
+	this.arrayOfBigAntWalkingImages = [bigAntWalkingImage0,bigAntWalkingImage1,bigAntWalkingImage2,bigAntWalkingImage3,bigAntWalkingImage4,
+	bigAntWalkingImage5,bigAntWalkingImage6,bigAntWalkingImage7,bigAntWalkingImage8,bigAntWalkingImage9,bigAntWalkingImage10];
+
 
 	this.leafPolygonWalkingBorderPoints = 
 		[
@@ -144,26 +146,29 @@ function ParentAntObject()
 		}
 	}
 
-	let bigAntImageIndex = 1;
+	let bigAntImageWalkingIndex = 0;
 	let bigAntImageDirection = 1;
 	this.cycleBigAntImages = function()
 	{
-		if (bigAntImageIndex === 0 || bigAntImageIndex === 2)
+		
+
+		
+
+		defenseGame.parentAntObject.currentBigAntImage = defenseGame.parentAntObject.arrayOfBigAntWalkingImages[bigAntImageWalkingIndex];
+		bigAntImageWalkingIndex++;
+		if (bigAntImageWalkingIndex > defenseGame.parentAntObject.arrayOfBigAntWalkingImages.length - 1)
 		{
-			bigAntImageDirection *= -1;
+			bigAntImageWalkingIndex = 0;
 		}
-
-		bigAntImageIndex += 1*bigAntImageDirection;
-
-		defenseGame.parentAntObject.currentBigAntImage = defenseGame.parentAntObject.arrayOfBigAntImages[bigAntImageIndex];
 	}
 
-	// this.bigAntWalkingInterval = new frameInterval(this.cycleBigAntImages, 100);
-
+	this.bigAntWalkingInterval = new frameInterval(this.cycleBigAntImages, 100);
+	this.bigAntWalkingInterval.start();
 	
 	this.drawBigAnt = function()
 	{
 		renderer.drawImage(this.currentBigAntImage, this.bigAntX,this.bigAntY, this.bigAntWidth,this.bigAntHeight);
+		console.log(bigAntImageWalkingIndex);
 	}
 
 	
@@ -905,6 +910,7 @@ function ParentAntObject()
 		{
 			this.cycleSmallAntImages();
 		}
+		//this.cycleBigAntImages();
 	}
 
 	this.initialize = function()

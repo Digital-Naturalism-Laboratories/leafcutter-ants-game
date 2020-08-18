@@ -77,6 +77,18 @@ let flyFacingRight4Image = document.createElement('img');
 let flyFacingRight5Image = document.createElement('img');
 let flyFacingRight6Image = document.createElement('img');
 
+let bigAntWalkingImage0 = document.createElement('img');
+let bigAntWalkingImage1 = document.createElement('img');
+let bigAntWalkingImage2 = document.createElement('img');
+let bigAntWalkingImage3 = document.createElement('img');
+let bigAntWalkingImage4 = document.createElement('img');
+let bigAntWalkingImage5 = document.createElement('img');
+let bigAntWalkingImage6 = document.createElement('img');
+let bigAntWalkingImage7 = document.createElement('img');
+let bigAntWalkingImage8 = document.createElement('img');
+let bigAntWalkingImage9 = document.createElement('img');
+let bigAntWalkingImage10 = document.createElement('img');
+
 
 let eggImage = document.createElement('img');
 
@@ -171,6 +183,20 @@ function loadDefenseGameImages()
 
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: leafImage, theFile: 'images/flyDefense/Official Placeholder Art/leaf.png'});
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: fungusImage, theFile: 'images/flyDefense/Official Placeholder Art/fungus.png'});
+
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntWalkingImage0, theFile: 'images/flyDefense/BigAntWalking/Worker_With_Leaf Walking_00000.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntWalkingImage1, theFile: 'images/flyDefense/BigAntWalking/Worker_With_Leaf Walking_00001.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntWalkingImage2, theFile: 'images/flyDefense/BigAntWalking/Worker_With_Leaf Walking_00002.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntWalkingImage3, theFile: 'images/flyDefense/BigAntWalking/Worker_With_Leaf Walking_00003.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntWalkingImage4, theFile: 'images/flyDefense/BigAntWalking/Worker_With_Leaf Walking_00004.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntWalkingImage5, theFile: 'images/flyDefense/BigAntWalking/Worker_With_Leaf Walking_00005.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntWalkingImage6, theFile: 'images/flyDefense/BigAntWalking/Worker_With_Leaf Walking_00006.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntWalkingImage7, theFile: 'images/flyDefense/BigAntWalking/Worker_With_Leaf Walking_00007.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntWalkingImage8, theFile: 'images/flyDefense/BigAntWalking/Worker_With_Leaf Walking_00008.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntWalkingImage9, theFile: 'images/flyDefense/BigAntWalking/Worker_With_Leaf Walking_00009.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntWalkingImage10, theFile: 'images/flyDefense/BigAntWalking/Worker_With_Leaf Walking_00010.png'});
+
+
 
 	numberOfDefenseGameImagesToLoad = arrayOfDefenseGameImagesToLoad.length;
 
