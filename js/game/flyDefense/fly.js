@@ -35,7 +35,7 @@ function Fly(name,status)
 
 	this.x = undefined;
 	this.y = undefined;
-	this.egg = undefined;
+	// this.egg = undefined;
 
 	this.currentTarget = defenseGame.parentAntObject.headTarget;
 
@@ -56,43 +56,43 @@ function Fly(name,status)
 		this.y = getRandomIntInclusive( Math.floor( -5*(this.height) ),Math.floor ( -3*(this.height) ) );
 
 		
-		if (this.egg !== undefined)
-		{
-			if (this.currentFacingStatus === 'facing left')
-			{
-				this.egg.x = this.x;
-				this.egg.y = this.y + this.height - this.height*0.35;
-			}
-			else
-			{
-				this.egg.x = (this.x + this.width) - this.width*0.15;
-				this.egg.y = this.y + this.height - this.height*0.35;
-			}
+		// if (this.egg !== undefined)
+		// {
+		// 	if (this.currentFacingStatus === 'facing left')
+		// 	{
+		// 		this.egg.x = this.x;
+		// 		this.egg.y = this.y + this.height - this.height*0.35;
+		// 	}
+		// 	else
+		// 	{
+		// 		this.egg.x = (this.x + this.width) - this.width*0.15;
+		// 		this.egg.y = this.y + this.height - this.height*0.35;
+		// 	}
 			
-		}
-		else
-		{
-			if (this.currentFacingStatus === 'facing left')
-			{
-				let egg = new Egg(this.x,this.y + this.height - this.height*0.35);
-				this.egg = egg;
-			}
-			else
-			{
-				let egg = new Egg((this.x + this.width) - this.width*0.15,this.y + this.height - this.height*0.35);
-				this.egg = egg;
+		// }
+		// else
+		// {
+		// 	if (this.currentFacingStatus === 'facing left')
+		// 	{
+		// 		let egg = new Egg(this.x,this.y + this.height - this.height*0.35);
+		// 		this.egg = egg;
+		// 	}
+		// 	else
+		// 	{
+		// 		let egg = new Egg((this.x + this.width) - this.width*0.15,this.y + this.height - this.height*0.35);
+		// 		this.egg = egg;
 				
-			}	
-		}
+		// 	}	
+		// }
 	}
 	
 	this.draw = function()
 	{
 		renderer.drawImage(this.image, this.x,this.y, this.width,this.height);
-		if (this.egg !== undefined)
-		{
-			this.egg.draw();
-		}
+		// if (this.egg !== undefined)
+		// {
+		// 	this.egg.draw();
+		// }
 
 		//collision box
 		if (defenseGame.debugOn)
@@ -134,22 +134,22 @@ function Fly(name,status)
 			if (this.x > this.currentTarget.x)//move from right to left closer to targets x
 			{
 				this.x -= this.velocityX;
-				if (this.egg !== undefined)
-				{
+				// if (this.egg !== undefined)
+				// {
 					
-					this.egg.x -= this.velocityX;
+				// 	this.egg.x -= this.velocityX;
 					
-				}			
+				// }			
 			}
 				
 			
 			else if (this.x + this.width < this.currentTarget.x)//move from left to right closer to targets x
 			{
 				this.x += this.velocityX;
-				if (this.egg !== undefined)
-				{
-					this.egg.x += this.velocityX;
-				}
+				// if (this.egg !== undefined)
+				// {
+				// 	this.egg.x += this.velocityX;
+				// }
 							
 			}
 				
@@ -158,20 +158,20 @@ function Fly(name,status)
 			if (Math.abs(this.x - this.currentTarget.x) < renderer.canvas.width*0.005)
 			{
 				this.x = this.currentTarget.x;//stop jittering when x coordinate is very close to targets x
-				if (this.egg !== undefined)
-				{
-					this.egg.x = this.currentTarget.x;
-				}
+				// if (this.egg !== undefined)
+				// {
+				// 	this.egg.x = this.currentTarget.x;
+				// }
 				
 			}
 
 			if (this.y < this.currentTarget.y)//descend closer to target if above it
 			{
 				this.y += this.velocityY;
-				if (this.egg !== undefined)
-				{
-					this.egg.y += this.velocityY;
-				}
+				// if (this.egg !== undefined)
+				// {
+				// 	this.egg.y += this.velocityY;
+				// }
 			}
 
 			//collision box detection
@@ -195,9 +195,9 @@ function Fly(name,status)
 				
 				this.status = 'leaving after planting';
 				this.currentTarget.canBeTargeted = false;
-				let egg = new Egg(this.egg.x,this.egg.y);
-				defenseGame.plantedEggManager.arrayOfPlantedEggs.push(egg);
-				this.egg = undefined;
+				// let egg = new Egg(this.egg.x,this.egg.y);
+				// defenseGame.plantedEggManager.arrayOfPlantedEggs.push(egg);
+				// this.egg = undefined;
 				defenseGame.background.bigAntTallyOfInfections++;
 				defenseGame.background.calculateSlowDownRateFromInfections();
 				defenseGame.eggHasBeenPlanted = true;
@@ -226,10 +226,10 @@ function Fly(name,status)
 			if (this.y + this.height > 0)
 			{
 				this.y -= this.velocityY;
-				if (this.egg !== undefined)
-				{
-					this.egg.y -= this.velocityY;
-				}
+				// if (this.egg !== undefined)
+				// {
+				// 	this.egg.y -= this.velocityY;
+				// }
 			}
 			if (this.y + this.height < 0)
 			{
@@ -326,33 +326,33 @@ function FlyManager()
 	}
 }
 
-function Egg(x,y)
-{
-	this.x = x;
-	this.y = y;
-	this.image = eggImage;
+// function Egg(x,y)
+// {
+// 	this.x = x;
+// 	this.y = y;
+// 	this.image = eggImage;
 
-	this.width = renderer.canvas.width * 0.1 * 0.1;//one tenth of the fly width
-	this.height = renderer.canvas.height * 0.05 * 0.75;//three-fourths of the fly height
+// 	this.width = renderer.canvas.width * 0.1 * 0.1;//one tenth of the fly width
+// 	this.height = renderer.canvas.height * 0.05 * 0.75;//three-fourths of the fly height
 
-	this.hasBeenPlanted = false;
+// 	this.hasBeenPlanted = false;
 
-	this.draw = function()
-	{
-		renderer.drawImage(this.image, this.x,this.y, this.width,this.height);
-	}
-}
+// 	this.draw = function()
+// 	{
+// 		renderer.drawImage(this.image, this.x,this.y, this.width,this.height);
+// 	}
+// }
 
-function PlantedEggManager()
-{
-	this.arrayOfPlantedEggs = [];
+// function PlantedEggManager()
+// {
+// 	this.arrayOfPlantedEggs = [];
 
-	this.draw = function()
-	{
-		for (let i = 0; i < this.arrayOfPlantedEggs.length; i++)
-		{
-			this.arrayOfPlantedEggs[i].draw();
-		}
-	}
-}
+// 	this.draw = function()
+// 	{
+// 		for (let i = 0; i < this.arrayOfPlantedEggs.length; i++)
+// 		{
+// 			this.arrayOfPlantedEggs[i].draw();
+// 		}
+// 	}
+// }
 

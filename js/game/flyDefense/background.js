@@ -200,7 +200,7 @@ function Background()
 // uiContext.fontSize.toString() + "px " + uiContext.fontFamily
 		draw: function()
 		{
-			console.log(this.labelWidth);
+			
 			//div background fill
 			renderer.fillStyle = 'lawngreen';
 			renderer.fillRect(this.x,this.y - this.labelHeight*0.7, this.labelWidth*10.1,this.labelHeight);

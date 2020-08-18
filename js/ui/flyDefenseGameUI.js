@@ -72,9 +72,9 @@ defenseGame.initialize = function()
 
     this.flyManager.arrayOfFlies.push(this.testFly1,this.testFly2,this.testFly3,this.testFly4);
 
-    this.plantedEggManager = new PlantedEggManager();
+    // this.plantedEggManager = new PlantedEggManager();
 
-    this.eggHasBeenPlanted = false;
+    // this.eggHasBeenPlanted = false;
 
     //ground minims
     this.groundMinimManager = new GroundMinimManager();
@@ -131,7 +131,7 @@ defenseGame.initialize = function()
 		this.NPCBigAnt1.draw();
 		this.NPCBigAnt2.draw();
 		defenseGame.parentAntObject.draw();
-		defenseGame.plantedEggManager.draw();
+		// defenseGame.plantedEggManager.draw();
 		defenseGame.background.fungusSporeFeedbackAnimationManager.draw();
 
 		defenseGame.background.pheremoneGapManager.drawAlertMessages();
