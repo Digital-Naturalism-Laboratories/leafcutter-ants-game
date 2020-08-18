@@ -6,7 +6,7 @@ var gameIsPaused = false;
 window.onload = function()
 {
   defenseGame = {};
-
+  
   defenseGame.initialize = function()
   {
   	defenseGame.canvas = document.getElementById("leafcutterCanvas");

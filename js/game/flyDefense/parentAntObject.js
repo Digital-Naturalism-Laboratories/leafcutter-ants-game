@@ -369,7 +369,7 @@ function ParentAntObject()
 		{
 			renderer.lineWidth = 5;
 			renderer.strokeStyle = 'red';
-			renderer.strokeRect(this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
+			renderer.strokeRect(this.smallAntX,this.smallAntY*1.1, this.smallAntWidth,this.smallAntHeight*0.6);
 
 			renderer.strokeRect(this.smallAntMidPoint.x - 5,this.smallAntMidPoint.y - 5, 5,5);
 		}
