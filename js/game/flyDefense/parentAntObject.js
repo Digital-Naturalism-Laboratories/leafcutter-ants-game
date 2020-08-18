@@ -265,7 +265,7 @@ function ParentAntObject()
 
 
 	this.smallAntWidth = this.leafWidth*0.25;
-	this.smallAntHeight = this.leafHeight*0.25;
+	this.smallAntHeight = this.leafHeight*0.2;
 	this.currentSmallAntImage = leafMinimWalk0;
 	// this.arrayOfSmallAntWalkingRightImages = [bigAntFrontRightForwardImage,bigAntNeutralImage,bigAntFrontLeftForwardImage];
 	// this.arrayOfSmallAntWalkingLeftImages = [bigAntFrontRightForwardFlippedImage,bigAntNeutralFlippedImage,bigAntFrontLeftForwardFlippedImage];

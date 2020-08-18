@@ -177,8 +177,8 @@ function Fly(name,status)
 			//collision box detection
 			if (this.x < defenseGame.parentAntObject.smallAntX + defenseGame.parentAntObject.smallAntWidth && //check for swat collisions with flies
 			    this.x + this.width > defenseGame.parentAntObject.smallAntX  &&
-			    this.y < defenseGame.parentAntObject.smallAntY*1.2 + defenseGame.parentAntObject.smallAntHeight*0.6 &&
-			    this.y + this.height > defenseGame.parentAntObject.smallAntY*1.2)
+			    this.y < defenseGame.parentAntObject.smallAntY*1.1 + defenseGame.parentAntObject.smallAntHeight*0.6 &&
+			    this.y + this.height > defenseGame.parentAntObject.smallAntY*1.1)
 				{
 				    defenseGame.audioManager.sfxManager.playFlyChasedSound();
 				    this.status = 'swatted';
