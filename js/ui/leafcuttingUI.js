@@ -63,7 +63,7 @@ var leafcuttingSFXPaths = [
     "audio/SFX/Jaw Penalty ALT.wav",
     "audio/SFX/Positive Feedback - Beef Up Trail.wav",
     "audio/SFX/Clock Ticking.wav",
-    "audio/SFX/Leaf Minim Footsteps.wav",
+    "audio/SFX/Leaf Minim Footsteps Fast.wav",
     "audio/SFX/Positive Feedback - Player Wins.wav",
     "audio/SFX/Game Over.wav",
     "audio/SFX/Jaw Penalty.wav",
