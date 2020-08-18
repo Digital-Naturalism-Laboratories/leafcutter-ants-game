@@ -202,8 +202,13 @@ function Fly(name,status)
 				defenseGame.background.calculateSlowDownRateFromInfections();
 				defenseGame.eggHasBeenPlanted = true;
 				defenseGame.audioManager.sfxManager.antInfectionSound.play();
-				defenseGame.parentAntObject.infectionAlertMessage.toggleVisibility();
-				setTimeout(defenseGame.parentAntObject.infectionAlertMessage.toggleVisibility,2000);
+				if (!defenseGame.parentAntObject.infectionAlertMessage.infectionMessageShouldBeVisible)
+				{
+					defenseGame.parentAntObject.infectionAlertMessage.toggleVisibility();
+					setTimeout(defenseGame.parentAntObject.infectionAlertMessage.toggleVisibility,2000);
+				}
+				
+				
 				//alert('Ant infected by a parasite. You lose!')
 				if (defenseGame.testFly1.eggHasBeenPlanted && defenseGame.testFly2.eggHasBeenPlanted && defenseGame.testFly3.eggHasBeenPlanted)
 				{
