@@ -41,13 +41,17 @@ Original Colony>"Nuptial Flight">Flight Game> NEW Colony
 Colony Puberty Threshold  // if threshold of number of living WORKERS is passed, some of the new brood will grow into new Male reproductives and Female Reproductives. Once there are male and female reproductives, the NUPTIAL FLIGHT game is enabled.
 
 -Infection SPREAD chance // When the infection timer of an ant goes off, what are the chances of some other amount of healthy ants also getting infected
--Leaves  // Current mass of collected leaves,Current Leaves = current leaves + Workers* (Leaf collection rate) - leaves*Fungus Conversion Rate - Workers(Worker Eating Rate)
 
--Fungus // Mass of Grown FungusCurrent Fungus = Current fungus + Leaves*FungusConversionRate  - Brood(Brood eating rate)
+-Leaves  // Current mass of collected leaves,
+Current Leaves = current leaves + Workers* (Leaf collection rate) - leaves*Fungus Conversion Rate - Workers(Worker Eating Rate)
+
+-Fungus // Mass of Grown Fungus
+Current Fungus = Current fungus + Leaves*FungusConversionRate  - Brood(Brood eating rate)
 
 -Fungus Conversion Rate  // Proportion of leaves that are converted to edible funugs for the babies  // This rate can get LOWERED temporarily by contaminants that were not cleaned by the Leaf Transport game
 
 -Brood eating Rate // How much  fungus each brood will eat
+
 -Worker eating rate // how much leaf mass each worker will eat (Much less than a brood would eat of the fungus, the workers just drink a bit of the sap for more energy, let's make this like 10% of the Brood Rate)
 
 Leaf collection rate - average input of leaves into the colony per worker. This rate can get INCREASED temporarily by playing the Leaf CUTTING and Leaf TRANSPORT games
