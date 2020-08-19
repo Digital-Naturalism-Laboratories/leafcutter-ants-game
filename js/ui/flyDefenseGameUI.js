@@ -78,8 +78,8 @@ defenseGame.initialize = function()
     // this.eggHasBeenPlanted = false;
 
     //ground minims
-    this.groundMinimManager = new GroundMinimManager();
-    this.groundMinimManager.initializeGroundMinims(5);
+    // this.groundMinimManager = new GroundMinimManager();
+    // this.groundMinimManager.initializeGroundMinims(5);
 
 	// console.log('defense game init called');
 	this.events = function()
@@ -101,8 +101,8 @@ defenseGame.initialize = function()
 			defenseGame.background.pheremoneGapManager.checkForGettingStuckOnPheremoneGaps();
 		}
 		
-		this.groundMinimManager.updateGroundMinims();
-		this.groundMinimManager.checkIfAllGroundMinimsHaveReachedPheremoneGap();
+		// this.groundMinimManager.updateGroundMinims();
+		// this.groundMinimManager.checkIfAllGroundMinimsHaveReachedPheremoneGap();
 
 		if (this.timeLeft === 0 && this.parentAntObject.arrayOfFungusSpores.length > 0)
 	    {
@@ -137,7 +137,7 @@ defenseGame.initialize = function()
 
 		defenseGame.background.pheremoneGapManager.drawAlertMessages();
 
-		this.groundMinimManager.drawGroundMinims();
+		// this.groundMinimManager.drawGroundMinims();
 		
       	let timerNumberConvertedToString = defenseGame.timeLeft.toString();
       	let labelWidth =  renderer.measureText(timerNumberConvertedToString).width;
