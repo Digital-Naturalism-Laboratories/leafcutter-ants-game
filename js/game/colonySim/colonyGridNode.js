@@ -37,8 +37,8 @@ class ColonyGridNode {
         //}
 
         //if (this.isWalkable && this.gCost < 100) {
-        if (this.isWalkable && this.distanceFromFungus < 100) {
-            renderer.drawImage(colonyTiles[COLONY_TUNNEL_4WAY], this.pixelCoord.x - (GRID_NODE_SIZE * pixelSize / 2), this.pixelCoord.y - (GRID_NODE_SIZE * pixelSize / 2), GRID_NODE_SIZE * pixelSize, GRID_NODE_SIZE * pixelSize);
+        if (this.isWalkable && this.distanceFromFungus < (totalMilliseconds / 500) || colonyGridTileMap[this.gridCoord.y][this.gridCoord.x] === 9) {
+            renderer.drawImage(colonyTiles[colonyGridTileMap[this.gridCoord.y][this.gridCoord.x]], this.pixelCoord.x - (GRID_NODE_SIZE * pixelSize / 2), this.pixelCoord.y - (GRID_NODE_SIZE * pixelSize / 2), GRID_NODE_SIZE * pixelSize, GRID_NODE_SIZE * pixelSize);
         }
 
         renderer.font = (14 * pixelSize).toString() + "px SmallBoldPixel";

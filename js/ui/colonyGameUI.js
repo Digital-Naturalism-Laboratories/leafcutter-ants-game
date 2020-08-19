@@ -14,22 +14,24 @@ var totalMilliseconds = 0;
 
 var bgmColony = document.createElement('audio');
 
-//var row_queue = [];
-//var col_queue = [];
 
-//var direction_row = [-1, 1, 0, 0];
-//var direction_col = [0, 0, 1, -1];
+var row_queue = [];
+var col_queue = [];
 
-//var move_count = 1;
-//var nodes_left_in_layer = 1;
-//var nodes_in_next_layer = 0;
+var direction_row = [-1, 1, 0, 0];
+var direction_col = [0, 0, 1, -1];
 
-//var reached_end = false;
+var move_count = 1;
+var nodes_left_in_layer = 1;
+var nodes_in_next_layer = 0;
 
-//var visited = [];
+var reached_end = false;
 
-/*
+var visited = [];
+
+
 function distToTargetTile(){
+
   move_count = 0;
   reached_end = false;
   row_queue.push(fungus_row);
@@ -38,6 +40,11 @@ function distToTargetTile(){
   nodes_in_next_layer = 0;
 
   visited = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -65,7 +72,7 @@ function distToTargetTile(){
     if (nodes_left_in_layer === 0){
       nodes_left_in_layer = nodes_in_next_layer;
       nodes_in_next_layer = 0;
-      move_count++
+      //move_count++
     }
   }
   if (reached_end){
@@ -93,14 +100,15 @@ function explore_neighbors(row, col){
     //if (move_count < (totalMilliseconds / 1000)){
     //  renderer.drawImage(colonyTiles[COLONY_TUNNEL_4WAY], neighbor_col * GRID_NODE_SIZE * pixelSize, (neighbor_row * GRID_NODE_SIZE * pixelSize) + gridStartHeightFromTop, GRID_NODE_SIZE * pixelSize, GRID_NODE_SIZE * pixelSize);
     //}
-    
+    move_count++
     row_queue.push(neighbor_row);
     col_queue.push(neighbor_col);
     visited[neighbor_row][neighbor_col] = 1;
+    colonyGridNodes[neighbor_row][neighbor_col].distanceFromFungus = move_count;
     nodes_in_next_layer++;
   }
 }
-*/
+
 // variables from the mini-games that affect colony growth
 var geneticDiversity = 0; //from flying game
 var leafMaterial = 0; //from leaf cutting game
@@ -124,21 +132,22 @@ function setupColonyGameUI() {
   var gridStartHeightFromTop = gameHeight * 0.2;
 
   createGrid();
+  distToTargetTile();
 
   loadImages();
   fungus = new Fungus(fungus_col, fungus_row);
-  queen = new Queen(fungus_col, fungus_row);
+  queen = new Queen(fungus_col, fungus_row, (GRID_NODE_SIZE * 11));
 
   for (i = 0; i < workerCount; i++) {
     //workers[i] = new ColonyWorkerAnt((colonyTiles[COLONY_TUNNEL_VERT].width * i) * pixelSize, GRID_NODE_SIZE * 0 + gridStartHeightFromTop / pixelSize);
   }
-
+/*
   for (var i = 0; i < colonyGridNodes.length; i++) {
     for (var ii = 0; ii < colonyGridNodes[i].length; ii++) {
       colonyGridNodes[i][ii].distanceFromFungus = getDistance(colonyGridNodes[i][ii], colonyGridNodes[fungus.gridCoord.row][fungus.gridCoord.col]);
     }
   }
-
+*/
   bgmColony.setAttribute('src', 'audio/Intro Music.mp3');
   bgmColony.loop = true;
   bgmColony.volume = 0.6;
@@ -253,6 +262,10 @@ function loadImages() {
     },
     {
       tunnelType: COLONY_TUNNEL_4WAY,
+      fileName: "dirt_tile.png"
+    },
+    {
+      tunnelType: COLONY_TUNNEL_START,
       fileName: "dirt_tile.png"
     }
   ];
