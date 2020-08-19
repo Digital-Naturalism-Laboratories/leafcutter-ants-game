@@ -11,8 +11,6 @@ var autoAnts2;
 var totalAutoAnts = 0;
 var maxAutoAnts = 3;
 
-var leafcuttingFontSize;
-
 const LEAFCUTTINGHINT_START = 0;
 const LEAFCUTTINGHINT_JAWS = 1;
 const LEAFCUTTINGHINT_SUCCESS = 2;
@@ -36,6 +34,9 @@ var leafcuttingLowTimeAlert = 15000;
 
 var leafcuttingWinBonus = 2;
 var leafcuttingLosePenalty = 2;
+
+var edgeDisplayDelay = 250;
+var edgeDisplayTimer = edgeDisplayDelay;
 
 var prevBGM = -1;
 var currentBGM = 0;
@@ -87,8 +88,6 @@ function leafcuttingResetGame()
     leafcuttingScore = 0;
     leafcuttingTimeLeft = leafcuttingStartTime;
 
-    leafcuttingFontSize = 24 * pixelSize;
-
     leaf = new Leaf();
     ant = new Ant(leaf);
     ant2 = new Ant(leaf);
@@ -107,19 +106,31 @@ function setupLeafcuttingUI()
 {
     leafcuttingResetGame();
 
-    gameplayLabels = [];
-    gameHintLabel = new Label(tr(), leafcuttingHint,
+    gameplayTopLeftLabels = [];
+    /*gameHintLabel = new Label(tr(), leafcuttingHint,
         leafcuttingFontSize.toString() + "px " + uiContext.fontFamily, "white", -1);
-    gameplayLabels.push(gameHintLabel);
-    scoreLabel = new Label(tr(), "SCORE: " + leafcuttingScore.toString(),
-        leafcuttingFontSize.toString() + "px " + uiContext.fontFamily, "white", -1);
-    gameplayLabels.push(scoreLabel);
-    timeLabel = new Label(tr(), "TIME LEFT: " + (leafcuttingTimeLeft/1000).toString(),
-        leafcuttingFontSize.toString() + "px " + uiContext.fontFamily, "white", -1);
-    gameplayLabels.push(timeLabel);
+    gameplayLabels.push(gameHintLabel);*/
+    scoreLabel = new Label(tr(), "LEAVES COLLECTED: " + leafcuttingScore.toString(),
+        (54*pixelSize).toString() + "px " + uiContext.fontFamily, "white", -1);
+    gameplayTopLeftLabels.push(scoreLabel);
+    timeLabel = new Label(tr(), "TIME: " + (leafcuttingTimeLeft/1000).toString(),
+        (54*pixelSize).toString() + "px " + uiContext.fontFamily, "white", -1);
+    gameplayTopLeftLabels.push(timeLabel);
 
     leafcuttingUI.push(new FlexGroup(tr(vec2(20*pixelSize, 20*pixelSize), vec2(window.innerWidth, 80*pixelSize)),
-        new SubState(tr(), gameplayLabels),false, vec2(0, 20*pixelSize), vec2(1, 4), true));
+        new SubState(tr(), gameplayTopLeftLabels),false, vec2(0, 10*pixelSize), vec2(1, 2), true));
+
+    centerLabel1 = new Label(tr(vec2(0, -40 * pixelSize), vec2(gameWidth, gameHeight)), "CLICK EDGE TO",
+        (112*pixelSize).toString() + "px " + uiContext.fontFamily, "white", 0);
+    leafcuttingUI.push(centerLabel1);
+    centerLabel2 = new Label(tr(vec2(0, 40 * pixelSize), vec2(gameWidth, gameHeight)), "START CUTTING",
+        (112*pixelSize).toString() + "px " + uiContext.fontFamily, "white", 0);
+    leafcuttingUI.push(centerLabel2);
+
+    controlHintLabel = new Label(tr(vec2(350 * pixelSize, 280 * pixelSize), vec2(240 * pixelSize, 40 * pixelSize)), "CLICK WHEN GREEN",
+        (40*pixelSize).toString() + "px " + uiContext.fontFamily, "#ffffffdd", 0);
+    leafcuttingUI.push(controlHintLabel);
+    controlHintLabel.enabled = false;
 
     for(let i = 0; i < leafcuttingBGM.length; i++)
     {
@@ -159,12 +170,37 @@ function leafcuttingUICustomUpdate(deltaTime)
         for(let i = 0; i < autoAnts2.length; i++)
             autoAnts2[i].update(deltaTime);
     
-    gameHintLabel.text = leafcuttingHint;
-    scoreLabel.text = "SCORE: " + leafcuttingScore.toString();
+    //gameHintLabel.text = leafcuttingHint;
+    scoreLabel.text = "LEAVES COLLECTED: " + leafcuttingScore.toString();
     if(leafcuttingTimeLeft > 0)
-        timeLabel.text = "TIME LEFT: " + (Math.floor(leafcuttingTimeLeft/1000)).toString();
+        timeLabel.text = "TIME: " + (Math.floor(leafcuttingTimeLeft/1000)).toString();
     else
         timeLabel.text = "TIME OUT!";
+
+    if((!ant.rotationMode && ant.pointIndex == -1 && !ant.disabled && !ant.forcedDestination)
+    || (!ant2.rotationMode && ant2.pointIndex == -1 && !ant2.disabled && !ant2.forcedDestination))
+    {
+        centerLabel1.text = "CLICK EDGE TO";
+        centerLabel2.text = "START CUTTING";
+
+        edgeDisplayTimer -= deltaTime
+        if(edgeDisplayTimer <= 0)
+            centerLabel1.enabled = centerLabel2.enabled = true;
+    }
+    else
+    {
+        edgeDisplayTimer = edgeDisplayDelay;
+        centerLabel1.enabled = centerLabel2.enabled = false;
+    }
+
+    if(ant.rotationMode || ant2.rotationMode)
+    {
+        controlHintLabel.enabled = true;
+    }
+    else
+    {
+        controlHintLabel.enabled = false;
+    }
 
     if(!ant.disabled || !ant2.disabled)
         leafcuttingTimeLeft -= deltaTime;
