@@ -2,12 +2,13 @@ const COLONYGAMEUI = 2;
 var colonyGameUI = [];
 
 var groundBG = document.createElement('img');
+var grassLayer = document.createElement('img');
 var fungusNest = document.createElement('img');
 var worker_right = document.createElement('img');
 var worker_with_minims = document.createElement('img');
 
-var fungus_col = 21;
-var fungus_row = 6;
+var fungus_col = 23;
+var fungus_row = 7;
 
 var totalMilliseconds = 0;
 
@@ -90,7 +91,7 @@ function explore_neighbors(row, col){
     }
 
     //if (move_count < (totalMilliseconds / 1000)){
-    //  renderer.drawImage(colonyTiles[COLONY_TUNNEL_4WAY], neighbor_col * GRID_NODE_SIZE * pixelSize, (neighbor_row * GRID_NODE_SIZE * pixelSize) + (gameHeight * 0.2), GRID_NODE_SIZE * pixelSize, GRID_NODE_SIZE * pixelSize);
+    //  renderer.drawImage(colonyTiles[COLONY_TUNNEL_4WAY], neighbor_col * GRID_NODE_SIZE * pixelSize, (neighbor_row * GRID_NODE_SIZE * pixelSize) + gridStartHeightFromTop, GRID_NODE_SIZE * pixelSize, GRID_NODE_SIZE * pixelSize);
     //}
     
     row_queue.push(neighbor_row);
@@ -116,16 +117,26 @@ var larvaeCount = 0;
 var population = 1000;
 
 var introTimer = 5000;
+var gridStartHeightFromTop;
 
 function setupColonyGameUI() {
+
+  var gridStartHeightFromTop = gameHeight * 0.2;
 
   createGrid();
 
   loadImages();
-  queen = new Queen((GRID_NODE_SIZE * 24) - 10, (GRID_NODE_SIZE * 11));
+  fungus = new Fungus(fungus_col, fungus_row);
+  queen = new Queen(fungus_col, fungus_row);
 
   for (i = 0; i < workerCount; i++) {
-    workers[i] = new ColonyWorkerAnt((colonyTiles[COLONY_TUNNEL_VERT].width * i) * pixelSize, GRID_NODE_SIZE * 0 + (gameHeight * 0.2) / pixelSize);
+    //workers[i] = new ColonyWorkerAnt((colonyTiles[COLONY_TUNNEL_VERT].width * i) * pixelSize, GRID_NODE_SIZE * 0 + gridStartHeightFromTop / pixelSize);
+  }
+
+  for (var i = 0; i < colonyGridNodes.length; i++) {
+    for (var ii = 0; ii < colonyGridNodes[i].length; ii++) {
+      colonyGridNodes[i][ii].distanceFromFungus = getDistance(colonyGridNodes[i][ii], colonyGridNodes[fungus.gridCoord.row][fungus.gridCoord.col]);
+    }
   }
 
   bgmColony.setAttribute('src', 'audio/Intro Music.mp3');
@@ -136,20 +147,24 @@ function setupColonyGameUI() {
 
 function colonyGameUICustomDraw(deltaTime) {
 
+  fungus.update();
+
   totalMilliseconds += deltaTime;
   var population = Math.floor(1000 + (totalMilliseconds / 1000) + (1 * geneticDiversity));
 
-  renderer.drawImage(groundBG, 0, 0, gameWidth, gameHeight - (120 * pixelSize));
+  renderer.drawImage(groundBG, 0, -(groundBG.height * 0.35 * pixelSize), gameWidth, gameHeight * 0.95);
+  renderer.drawImage(grassLayer, 0, -(groundBG.height * 0.20 * pixelSize), gameWidth, gameHeight * 0.35);
 
-  digTunnel();
+  //digTunnel();
   drawColonyTiles();
-  renderer.drawImage(fungusNest, gameWidth * 0.75, gameHeight * 0.4, gameWidth / 10, gameHeight / 10);
+  //renderer.drawImage(fungusNest, gameWidth * 0.75, gameHeight * 0.4, gameWidth / 10, gameHeight / 10);
 
   renderer.fillStyle = 'black';
-  renderer.fillRect(0, gameHeight - (120 * pixelSize), gameWidth, 120 * pixelSize);
+  //renderer.fillRect(0, gameHeight - (120 * pixelSize), gameWidth, 120 * pixelSize);
 
   renderer.fillStyle = "white";
-  renderer.font = (24 * pixelSize).toString() + "px Arial";
+  renderer.textAlign = "left";
+  renderer.font = (24 * pixelSize).toString() + "px SmallBoldPixel";
 
   renderer.fillText("Fungus: " + fungusMass + "g", 50 * pixelSize, gameHeight - (85 * pixelSize));
   renderer.fillText("Leaf Material: " + leafMaterial + "g", 50 * pixelSize, gameHeight - (50 * pixelSize));
@@ -162,16 +177,21 @@ function colonyGameUICustomDraw(deltaTime) {
 
   renderer.fillStyle = "white";
   renderer.textAlign = "center";
-  renderer.font = (10 * pixelSize).toString() + "px Arial";
-  renderer.fillText("Click to mate and start a new colony!", queen.x * pixelSize, (queen.y + 30) * pixelSize);
-  renderer.fillText("Click to protect the colony's leaves!", 800, 75);
+  renderer.font = (10 * pixelSize).toString() + "px Pixelmania";
+  //renderer.fillText("Click to mate and start a new colony!", queen.x * pixelSize, (queen.y + 30) * pixelSize);
+  //renderer.fillText("Click to protect the colony's leaves!", 800, 75);
   renderer.textAlign = "left";
 
   renderer.fillStyle = "white";
   renderer.textAlign = "center";
-  renderer.font = (10 * pixelSize).toString() + "px Arial";
-  renderer.fillText("Click to help the workers collect leaves!", 200, 75);
+  renderer.font = (10 * pixelSize).toString() + "px Pixelmania";
+  //renderer.fillText("Click to help the workers collect leaves!", 200, 75);
   renderer.textAlign = "left";
+
+  fungus.draw();
+
+  //renderer.fillStyle = 'black';
+  //renderer.fillRect(0, 0, GRID_NODE_SIZE * COLONY_COLS, GRID_NODE_SIZE * COLONY_ROWS);
 }
 
 function colonyGameUICustomEvents(deltaTime) {
@@ -193,7 +213,7 @@ function colonyGameUICustomEvents(deltaTime) {
 //#region Image Loading
 
 function beginLoadingImage(imgVar, fileName) {
-  imgVar.src = "Visual Assets/" + fileName;
+  imgVar.src = "images/" + fileName;
 }
 
 function loadImageForColonyTileCode(tunnelCode, fileName) {
@@ -205,7 +225,11 @@ function loadImages() {
 
   var imageList = [{
       varName: groundBG,
-      fileName: "Ground_Cross_Section.png"
+      fileName: "Backgrounds/Ground_Cross_Section.png"
+    },
+    {
+      varName: grassLayer,
+      fileName: "Backgrounds/grassLayer2.png"
     },
     {
       varName: fungusNest,

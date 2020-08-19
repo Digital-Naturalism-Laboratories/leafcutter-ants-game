@@ -1,24 +1,29 @@
 const GRID_NODE_SIZE = 20;
 const COLONY_COLS = 32;
-const COLONY_ROWS = 14;
+const COLONY_ROWS = 19;
 
 var colonyTiles = [];
 
 var colonyGridTileMap = [
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 9, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 9, 9, 9, 9, 9, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 9, 9, 9, 9, 9, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+  [0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 9, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+  [0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 9, 0, 9, 9, 9, 0, 1, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 9, 0, 9, 9, 9, 0, 1, 1, 1, 1, 0, 0],
+  [0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 9, 9, 9, 9, 9, 0, 0, 0, 1, 1, 0, 0],
+  [0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 9, 0, 0, 0, 0, 0, 9, 9, 0, 0, 0, 0],
+  [0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 9, 9, 9, 9, 9, 9, 9, 9, 0, 0, 0, 0],
+  [0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 9, 9, 0],
+  [0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 9, 0, 0, 0, 0, 9, 9, 9, 9, 9, 0],
+  [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 9, 9, 9, 9, 9, 9, 0, 0, 1, 0, 0],
+  [0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 9, 9, 1, 9, 0, 9, 0, 0, 0, 0, 0, 1, 0, 0],
+  [0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 9, 0, 9, 9, 0, 0, 1, 0, 0],
+  [0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 9, 9, 9, 9, 0, 1, 1, 0, 0],
+  [0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0],
+  [0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
 var colonyGridNodes = [];
@@ -69,7 +74,7 @@ return neighbors;
 function drawColonyTiles() {
   var colonyIndex = 0;
   var colonyLeftEdgeX = 0;
-  var colonyTopEdgeY = gameHeight * 0.2;
+  //var colonyTopEdgeY = gameHeight * 0.2;
 
 
   for (var eachRow = 0; eachRow < colonyGridNodes.length; eachRow++) {
@@ -85,7 +90,7 @@ function drawColonyTiles() {
 
     }
 
-    colonyTopEdgeY += GRID_NODE_SIZE * pixelSize;
+    //colonyTopEdgeY += GRID_NODE_SIZE * pixelSize;
 
   }
 
@@ -94,7 +99,7 @@ function drawColonyTiles() {
 }
 
 function digTunnel() {
-  colonyGridTileMap[rowAtYCoord(queen.y / pixelSize)][colAtXCoord(queen.x / pixelSize)] = COLONY_TUNNEL_4WAY;
+  //colonyGridTileMap[rowAtYCoord(queen.y / pixelSize)][colAtXCoord(queen.x / pixelSize)] = COLONY_TUNNEL_4WAY;
 }
 
 //#region Grid Utility Functions 
@@ -128,5 +133,22 @@ function rowAtYCoord(pixelY) {
 
 function mapTileToIndex(tileCol, tileRow) {
   return (tileCol + COLONY_COLS * tileRow);
+}
+
+function pixelCoordAtCenterOfTileCoord(col, row) {
+  xPixelCoord = ((col * GRID_NODE_SIZE) + (GRID_NODE_SIZE / 2)) * pixelSize;
+  yPixelCoord = ((row * GRID_NODE_SIZE) + (GRID_NODE_SIZE / 2)) * pixelSize;
+
+  return {
+    x: xPixelCoord,
+    y: yPixelCoord
+  }
+}
+
+function colorCircle(centerX, centerY, radius, fillColor) {
+  renderer.fillStyle = fillColor;
+  renderer.beginPath();
+  renderer.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+  renderer.fill();
 }
 //#endregion Grid Utility Functions

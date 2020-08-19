@@ -95,7 +95,7 @@ function flightGameUICustomDraw(deltaTime) {
   flyingQueen.draw(deltaTime);
 
   renderer.fillStyle = "white";
-  renderer.font = "34px Arial";
+  renderer.font = "40px SmallBoldPixel";
   renderer.fillText("Mates: " + mateCount, 50, gameHeight - 50);
 
   renderer.fillText("Genetic Diversity: ", gameWidth - 450, gameHeight - 100);
@@ -117,7 +117,7 @@ function flightGameUICustomDraw(deltaTime) {
 
   colorRect(20, 20, 100, 50, 'white');
   renderer.fillStyle = "black";
-  renderer.font = "20px Arial";
+  renderer.font = "24px SmallBoldPixel";
   renderer.fillText("Exit Game", 25, 50);
 }
 

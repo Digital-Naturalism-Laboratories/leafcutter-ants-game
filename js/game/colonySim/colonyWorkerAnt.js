@@ -56,7 +56,7 @@ class ColonyWorkerAnt {
         this.y = this.sprite.transform.position.y;
 
         this.col = colAtXCoord(this.x / pixelSize);
-        this.row = rowAtYCoord((this.y - (gameHeight * 0.2)) / pixelSize);
+        this.row = rowAtYCoord((this.y - gridStartHeightFromTop) / pixelSize);
 
         if (this.x > gameWidth * 0.66) {
             this.mode = MODES.CARRYING_LEAF;

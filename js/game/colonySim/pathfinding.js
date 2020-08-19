@@ -32,7 +32,7 @@ function findPath(originCol, originRow, destinationCol, destinationRow) {
             var newMovementCostToNeighbor = currentNode.gCost + getDistance(currentNode, neighbors[i]);
             if (newMovementCostToNeighbor < neighbors[i].gCost || !openSet.includes(neighbors[i])) {
                 neighbors[i].gCost = newMovementCostToNeighbor;
-                neighbors[i].hCost = getDistance(neighbors[i], destinationNode);
+                //neighbors[i].hCost = getDistance(neighbors[i], destinationNode);
 
                 neighbors[i].parent = currentNode;
 
@@ -47,14 +47,18 @@ function findPath(originCol, originRow, destinationCol, destinationRow) {
 }
 
 function getDistance(nodeA, nodeB) {
-    var distanceX = Math.abs(nodeA.gridCoord.x - nodeB.gridCoord.x);
-    var distanceY = Math.abs(nodeA.gridCoord.y - nodeB.gridCoord.y);
+    var distanceX = nodeA.gridCoord.x - nodeB.gridCoord.x;
+    var distanceY = nodeA.gridCoord.y - nodeB.gridCoord.y;
 
+    return Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+
+/*
     if (distanceX > distanceY) {
         return (14 * distanceY + 10 * (distanceX - distanceY));
     } else {
         return (14 * distanceX + 10 * (distanceY - distanceX));
     }
+*/
 }
 
 function retracePath(originNode, destinationNode) {

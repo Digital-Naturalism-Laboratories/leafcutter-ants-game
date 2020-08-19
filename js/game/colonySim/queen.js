@@ -1,12 +1,19 @@
 var lastTouchPos;
 
 class Queen {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
+    constructor(col, row) {
+
+        this.gridCoord = {
+            col: col,
+            row: row
+        }
+
+        this.pixelCoord = pixelCoordAtCenterOfTileCoord(col, row);
+        //this.x = this.pixelCoord.x;
+        //this.y = this.pixelCoord.y;
         this.speedX = 2;
         this.speedY = 2;
-        this.sprite = new Sprite(tr(vec2(this.x * pixelSize, this.y * pixelSize), vec2(pixelSize * 0.4, pixelSize * 0.4)), new ImageObject("Visual Assets/8bit-Queen-no-wings-left.png", vec2(0, 0)));
+        this.sprite = new Sprite(tr(vec2(this.pixelCoord.x, this.pixelCoord.y), vec2(pixelSize * 0.4, pixelSize * 0.4)), new ImageObject("Visual Assets/8bit-Queen-no-wings-left.png", vec2(0, 0)));
         this.collisionRadius = 15;
 
         colonyGameUI.push(this);
