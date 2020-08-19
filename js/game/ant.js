@@ -349,7 +349,7 @@ class Ant
         autoAnts = [];
         for(let i = 0; i < totalAutoAnts; i++)
         {
-            var an = new AutoAnt(this.leaf);
+            var an = new AutoAnt(this.leaf, vec2((-20*(i+1)) * pixelSize, (25*(i+1)) * pixelSize));
             an.setPrimaryAnt(this.secondAnt);
             autoAnts.push(an);
         }

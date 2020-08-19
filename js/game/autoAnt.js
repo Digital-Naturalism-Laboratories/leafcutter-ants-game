@@ -1,7 +1,7 @@
 
 class AutoAnt
 {
-    constructor(leaf)
+    constructor(leaf, destP)
     {
         this.leaf = leaf;
 
@@ -39,7 +39,7 @@ class AutoAnt
         this.forcedDestination = true;
         this.destinationPoints = [];
         this.destinationPointsIndex = -1;
-        this.destinationPoint = vec2(60 * pixelSize, 360 * pixelSize);
+        this.destinationPoint = vec2(60 * pixelSize, 360 * pixelSize).add(destP);
         this.pointIndex = -1;
 
         this.disabled = false;
