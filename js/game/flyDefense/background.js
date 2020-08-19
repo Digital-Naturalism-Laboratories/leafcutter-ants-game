@@ -13,7 +13,7 @@ function Background()
 	this.pheremoneStrip2Image = undefined;
 	this.currentIncomingPheremoneStripImage = undefined;
 	this.pheremoneGapFillImage = undefined;
-	this.fungusNestImage = undefined;
+//	this.fungusNestImage = undefined;
 
 	this.groundImage1xCoordinate = undefined;
 	this.groundImage2xCoordinate = undefined;
@@ -65,7 +65,7 @@ function Background()
 		this.currentIncomingPheremoneStripImage = this.pheremoneStrip2Image;
 		this.pheremoneGapFillImage = pheremoneGapFillImage;
 
-		this.fungusNestImage = fungusNestImage;
+		//this.fungusNestImage = fungusNestImage;
 
 		this.groundImage1xCoordinate = 0;
 		this.groundImage2xCoordinate = renderer.canvas.width;
@@ -289,8 +289,8 @@ function Background()
 		this.pheremoneGapManager.drawPheremoneGaps();
 
 		
-		renderer.drawImage(this.fungusNestImage, this.fungusNestXCoordinate,renderer.canvas.height*0.33, 
-												   renderer.canvas.width*0.6,renderer.canvas.height*0.6);
+		// renderer.drawImage(this.fungusNestImage, this.fungusNestXCoordinate,renderer.canvas.height*0.33, 
+		// 										   renderer.canvas.width*0.6,renderer.canvas.height*0.6);
 
 		
 		if (defenseGame.debugOn)
