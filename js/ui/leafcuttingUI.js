@@ -7,6 +7,7 @@ var leaf;
 var ant;
 var ant2;
 var autoAnts;
+var autoAnts2;
 var totalAutoAnts = 0;
 var maxAutoAnts = 3;
 
@@ -95,7 +96,8 @@ function leafcuttingResetGame()
     ant2.setSecondAnt(ant);
     ant2.disabled = true;
 
-    autoAnt = [];
+    autoAnts = [];
+    autoAnts2 = [];
     totalAutoAnts = 0;
 
     leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_START];
@@ -140,6 +142,9 @@ function leafcuttingUICustomDraw(deltaTime)
     if(typeof autoAnts != "undefined")
         for(let i = 0; i < autoAnts.length; i++)
             autoAnts[i].draw(deltaTime);
+    if(typeof autoAnts2 != "undefined")
+        for(let i = 0; i < autoAnts2.length; i++)
+            autoAnts2[i].draw(deltaTime);
 }
 
 function leafcuttingUICustomUpdate(deltaTime)
@@ -150,6 +155,9 @@ function leafcuttingUICustomUpdate(deltaTime)
     if(typeof autoAnts != "undefined")
         for(let i = 0; i < autoAnts.length; i++)
             autoAnts[i].update(deltaTime);
+    if(typeof autoAnts2 != "undefined")
+        for(let i = 0; i < autoAnts2.length; i++)
+            autoAnts2[i].update(deltaTime);
     
     gameHintLabel.text = leafcuttingHint;
     scoreLabel.text = "SCORE: " + leafcuttingScore.toString();
@@ -188,6 +196,9 @@ function leafcuttingUICustomEvents(deltaTime)
     if(typeof autoAnts != "undefined")
         for(let i = 0; i < autoAnts.length; i++)
             autoAnts[i].event();
+    if(typeof autoAnts2 != "undefined")
+        for(let i = 0; i < autoAnts2.length; i++)
+            autoAnts2[i].event();
 }
 
 function areLeafcuttingAntsDisabled()

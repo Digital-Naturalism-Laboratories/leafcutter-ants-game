@@ -57,14 +57,14 @@ class AutoAnt
 
     event()
     {
-        if(this.cutTimer <= 0)
-        {
-            this.cutTimer = this.primaryAnt.cutTimer * 1.5;
-            this.timedJawCutSpeedBonus = this.primaryAnt.timedJawCutSpeedBonus * 1.5;
-        }
-
         if(!this.disabled)
         {
+            if(this.cutTimer <= 0)
+            {
+                this.cutTimer = this.primaryAnt.cutTimer * 1.75;
+                this.timedJawCutSpeedBonus = this.primaryAnt.timedJawCutSpeedBonus * 1.5;
+            }
+
             if(this.primaryAnt.pointIndex > -1 && this.pointIndex <= -1)
             {
                 do
@@ -78,13 +78,16 @@ class AutoAnt
                         else
                             this.pointIndex++;
                     }
-                } while(this.leaf.borderPoints[this.pointIndex].distance(this.leaf.stemPoint) < 72 * pixelSize);
+                } while((this.leaf.borderPoints[this.pointIndex].distance(this.leaf.stemPoint) < 112 * pixelSize && this.leaf.borderPoints.length > 25)
+                || (this.leaf.borderPoints[this.pointIndex].x < -9999 || this.leaf.borderPoints[this.pointIndex].y < -9999));
 
                 this.destinationPoint = this.leaf.borderPoints[this.pointIndex];
                 this.destinationPointsIndex = 0;
                 this.destinationPoints = [];
                 this.calculateDestinationPoints();
             }
+
+            if(this.primaryAnt.disabled) this.disabled = true;
         }
     }
 
@@ -115,7 +118,6 @@ class AutoAnt
                 this.rotationMode = true;
                 this.cutPointLines = [];
                 this.cutPointTimer = this.cutPointDelay;
-                this.leaf.currentBorderIndicationIndex = -2; //means no indication at all!
                 leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_JAWS];
             }
             else if(this.rotationMode && this.cutTimer > 0)
@@ -133,6 +135,11 @@ class AutoAnt
             }
 
             this.updateAnimation(deltaTime);
+        }
+        
+        if(this.primaryAnt.disabling && this.rotationMode)
+        {
+            this.returnWithoutLeaf();
         }
     }
 
@@ -235,15 +242,24 @@ class AutoAnt
         return false;
     }
 
+    returnWithoutLeaf()
+    {
+        this.rotationMode = false;
+        this.leaf.borderPoints[this.pointIndex] = vec2(-10000, -10000);
+        this.pointIndex = -1;
+        this.antDestionationAfterLeafCutSuccess();
+        this.cutLeafIndex = -1; //no leaf to carry back
+        this.alternateRotation = !this.alternateRotation;
+        this.isCuttingJawLed = false;
+        this.jawSpeedPenalty = 0;
+        this.cutTimer = 0;
+        this.timedJawSpeedFactor = this.timedJawSpeedFactorDefault;
+    }
+
     antDestionationAfterLeafCutSuccess()
     {
         this.cutLeafIndex = Math.floor(Math.random() * this.cutLeaves.length);
-
         this.disabling = true;
-        this.primaryAnt.disabled = false;
-        this.primaryAnt.forcedDestination = true;
-        this.primaryAnt.destinationPoint = vec2(60 * pixelSize, 360 * pixelSize);
-
         this.forcedDestination = true;
         this.destinationPoints = [];
         this.destinationPoint = vec2(-40 * pixelSize, 540 * pixelSize);
@@ -255,24 +271,19 @@ class AutoAnt
     {
         this.leaf.cutterAnt = this;
         this.leaf.updatePoints = true;
-        this.leaf.currentBorderIndicationIndex = -1;
 
         this.rotationMode = false;
         this.leaf.borderPoints[this.pointIndex] = vec2(-10000, -10000);
         this.pointIndex = -1;
         this.alternateRotation = !this.alternateRotation;
-        leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_SUCCESS];
-
         this.isCuttingJawLed = false;
-
-        this.timedJawRadius = this.timedJawMinRadius;
         this.jawSpeedPenalty = 0;
         this.cutTimer = 0;
         this.timedJawSpeedFactor = this.timedJawSpeedFactorDefault;
 
         this.leaf.getPoints(distanceBetween2AdjacentPoints);
 
-        leafcuttingSFX[SFX_LEAFSUCCESS].volume = leafcuttingBGMMaxVolume/4;
+        leafcuttingSFX[SFX_LEAFSUCCESS].volume = leafcuttingBGMMaxVolume/5;
         leafcuttingSFX[SFX_LEAFSUCCESS].play();
     }
 
@@ -282,70 +293,57 @@ class AutoAnt
         {
             this.destinationPoints.push(vec2(this.bodySprite.transform.position.x, this.bodySprite.transform.position.y));
 
-            if(this.disabling) //go to nearest border point
+            if(this.disabling)
             {
-                var index = -1;
-                var distance = 99999;
-                for(let i = 0; i < this.leaf.borderPoints.length; i++)
-                {
-                    var tempDistance = this.leaf.borderPoints[i].distance(this.bodySprite.transform.position);
-                    if(tempDistance < distance)
-                    {
-                        distance = tempDistance;
-                        index = i;
-                    }
-                }
-
-                if(index > -1)
-                {
-                    this.destinationPoints.push(vec2(this.leaf.borderPoints[index].x,
-                    this.leaf.borderPoints[index].y));
-                }
+                this.destinationPoints.push(vec2(this.leaf.stemPoint.x, this.leaf.stemPoint.y));
+                this.destinationPoints.push(vec2(this.destinationPoint.x, this.destinationPoint.y));
             }
-
-            while(this.destinationPoints.length < 50)
+            else
             {
-                if(this.destinationPoints[this.destinationPoints.length - 1].distance(this.destinationPoint) <= distanceBetween2AdjacentPoints * 1.67)
+                while(this.destinationPoints.length < 50)
                 {
-                    this.destinationPoints.push(vec2(this.destinationPoint.x, this.destinationPoint.y));
-                    break;
-                }
-
-                var adjacentPoints = [];
-                var pointToIgnore = -1;
-                for(let i = 0; i < this.leaf.points.length; i++)
-                {
-                    if(pointToIgnore < 0 && isPointInCircle(this.destinationPoints[this.destinationPoints.length - 1], this.leaf.points[i], distanceBetween2AdjacentPoints / 2))
+                    if(this.destinationPoints[this.destinationPoints.length - 1].distance(this.destinationPoint) <= distanceBetween2AdjacentPoints * 1.67)
                     {
-                        pointToIgnore = i;
+                        this.destinationPoints.push(vec2(this.destinationPoint.x, this.destinationPoint.y));
+                        break;
                     }
-                    else if(isPointInCircle(this.destinationPoints[this.destinationPoints.length - 1], this.leaf.points[i], distanceBetween2AdjacentPoints * 1.67))
-                    {
-                        adjacentPoints.push(vec2(this.leaf.points[i].x, this.leaf.points[i].y));
-                    }
-                }
 
-                var distanceFromDestinationPoint = 999999;
-                var adjacentPointIndexCloserToDestination = vec2(99999, 99999);
-                for(let i = 0; i < adjacentPoints.length; i++)
-                {
-                    var distance = this.destinationPoint.distance(adjacentPoints[i]);
-                    if(distance < distanceFromDestinationPoint
-                    && !isVectorInArray(adjacentPoints[i], this.destinationPoints))
+                    var adjacentPoints = [];
+                    var pointToIgnore = -1;
+                    for(let i = 0; i < this.leaf.points.length; i++)
                     {
-                        distanceFromDestinationPoint = distance;
-                        adjacentPointIndexCloserToDestination = adjacentPoints[i];
+                        if(pointToIgnore < 0 && isPointInCircle(this.destinationPoints[this.destinationPoints.length - 1], this.leaf.points[i], distanceBetween2AdjacentPoints / 2))
+                        {
+                            pointToIgnore = i;
+                        }
+                        else if(isPointInCircle(this.destinationPoints[this.destinationPoints.length - 1], this.leaf.points[i], distanceBetween2AdjacentPoints * 1.67))
+                        {
+                            adjacentPoints.push(vec2(this.leaf.points[i].x, this.leaf.points[i].y));
+                        }
                     }
-                }
 
-                if(adjacentPointIndexCloserToDestination.x < 99990)
-                {
-                    this.destinationPoints.push(vec2(adjacentPointIndexCloserToDestination.x, adjacentPointIndexCloserToDestination.y));
-                }
-                else
-                {
-                    this.destinationPoints.push(vec2(this.destinationPoint.x, this.destinationPoint.y));
-                    break;
+                    var distanceFromDestinationPoint = 999999;
+                    var adjacentPointIndexCloserToDestination = vec2(99999, 99999);
+                    for(let i = 0; i < adjacentPoints.length; i++)
+                    {
+                        var distance = this.destinationPoint.distance(adjacentPoints[i]);
+                        if(distance < distanceFromDestinationPoint
+                        && !isVectorInArray(adjacentPoints[i], this.destinationPoints))
+                        {
+                            distanceFromDestinationPoint = distance;
+                            adjacentPointIndexCloserToDestination = adjacentPoints[i];
+                        }
+                    }
+
+                    if(adjacentPointIndexCloserToDestination.x < 99990)
+                    {
+                        this.destinationPoints.push(vec2(adjacentPointIndexCloserToDestination.x, adjacentPointIndexCloserToDestination.y));
+                    }
+                    else
+                    {
+                        this.destinationPoints.push(vec2(this.destinationPoint.x, this.destinationPoint.y));
+                        break;
+                    }
                 }
             }
         }
