@@ -9,9 +9,14 @@ function NPCBigAnt(x)
 	this.y = renderer.canvas.height*0.6;
 
 	this.leafImage = leafImage;
-	this.currentBigAntImage = bigAntNeutralImage;
-	this.arrayOfBigAntImages = [bigAntFrontRightForwardImage,bigAntNeutralImage,bigAntFrontLeftForwardImage];
+	
 
+	
+	this.arrayOfBigAntWalkingImages = [bigAntWalkingImage0,bigAntWalkingImage1,bigAntWalkingImage2,bigAntWalkingImage3,bigAntWalkingImage4,
+	bigAntWalkingImage5,bigAntWalkingImage6,bigAntWalkingImage7,bigAntWalkingImage8,bigAntWalkingImage9,bigAntWalkingImage10];
+	this.randomWalkingImageIndex = getRandomIntInclusive(0,this.arrayOfBigAntWalkingImages.length - 1);
+	this.currentBigAntWalkingIndex = this.randomWalkingImageIndex;
+	this.currentBigAntImage = this.arrayOfBigAntWalkingImages[this.currentBigAntWalkingIndex];
 
 	this.draw = function()
 	{
@@ -20,22 +25,18 @@ function NPCBigAnt(x)
 		this.drawSmallAnt();
 	}
 
-	let bigAntImageIndex = 1;
-	let bigAntImageDirection = 1;
+	
 	this.cycleBigAntImages = function()
 	{
-		if (bigAntImageIndex === 0 || bigAntImageIndex === 2)
+		
+		this.currentBigAntImage = this.arrayOfBigAntWalkingImages[this.currentBigAntWalkingIndex];
+		this.currentBigAntWalkingIndex++;
+		if (this.currentBigAntWalkingIndex > this.arrayOfBigAntWalkingImages.length - 1)
 		{
-			bigAntImageDirection *= -1;
+			this.currentBigAntWalkingIndex = 0;
 		}
-
-		bigAntImageIndex += 1*bigAntImageDirection;
-
-		defenseGame.parentAntObject.currentBigAntImage = defenseGame.parentAntObject.arrayOfBigAntImages[bigAntImageIndex];
+		
 	}
-
-	// this.bigAntWalkingInterval = new frameInterval(this.cycleBigAntImages, 100);
-
 	
 	this.drawBigAnt = function()
 	{
@@ -62,8 +63,8 @@ function NPCBigAnt(x)
 	this.smallAntWidth = this.leafWidth*0.2;
 	this.smallAntHeight = this.leafHeight*0.2;
 	this.currentSmallAntImage = smallAntImage;
-	this.arrayOfSmallAntWalkingRightImages = [bigAntFrontRightForwardImage,bigAntNeutralImage,bigAntFrontLeftForwardImage];
-	this.arrayOfSmallAntWalkingLeftImages = [bigAntFrontRightForwardFlippedImage,bigAntNeutralFlippedImage,bigAntFrontLeftForwardFlippedImage];
+	// this.arrayOfSmallAntWalkingRightImages = [bigAntFrontRightForwardImage,bigAntNeutralImage,bigAntFrontLeftForwardImage];
+	// this.arrayOfSmallAntWalkingLeftImages = [bigAntFrontRightForwardFlippedImage,bigAntNeutralFlippedImage,bigAntFrontLeftForwardFlippedImage];
 	this.smallAntX = this.x + this.leafX/2;
 	this.smallAntY = this.leafY;
 
@@ -88,6 +89,8 @@ function NPCBigAnt(x)
 		defenseGame.parentAntObject.swatImageIndex += 1*defenseGame.parentAntObject.swatArrayDirection;
 		defenseGame.parentAntObject.currentSwatImage = defenseGame.parentAntObject.arrayOfSwatImages[defenseGame.parentAntObject.swatImageIndex];
 	}
+
+
 
 	
 	this.drawSmallAnt = function()
@@ -174,10 +177,14 @@ function NPCBigAnt(x)
 	this.update = function()
 	{
 		// this.moveSmallAnt();
+
 	}
 
 	this.initialize = function()
 	{
+		var _this = this;
+		setInterval(function () {_this.cycleBigAntImages()},100);
+		
 		// this.bigAntWalkingInterval.start();
 	}
 

@@ -10,9 +10,10 @@ function ParentAntObject()
 
 	this.leafImage = leafImage;
 	this.fungusImage = fungusImage;
-	this.currentBigAntImage = bigAntWalkingImage0;
 	this.arrayOfBigAntWalkingImages = [bigAntWalkingImage0,bigAntWalkingImage1,bigAntWalkingImage2,bigAntWalkingImage3,bigAntWalkingImage4,
 	bigAntWalkingImage5,bigAntWalkingImage6,bigAntWalkingImage7,bigAntWalkingImage8,bigAntWalkingImage9,bigAntWalkingImage10];
+	this.randomWalkingImageIndex = getRandomIntInclusive(0,this.arrayOfBigAntWalkingImages.length - 1);
+	this.currentBigAntImage = this.arrayOfBigAntWalkingImages[this.randomWalkingImageIndex];
 
 
 	this.leafPolygonWalkingBorderPoints = 
@@ -150,20 +151,17 @@ function ParentAntObject()
 	let bigAntImageDirection = 1;
 	this.cycleBigAntImages = function()
 	{
-		
-
-		
-
 		defenseGame.parentAntObject.currentBigAntImage = defenseGame.parentAntObject.arrayOfBigAntWalkingImages[bigAntImageWalkingIndex];
 		bigAntImageWalkingIndex++;
 		if (bigAntImageWalkingIndex > defenseGame.parentAntObject.arrayOfBigAntWalkingImages.length - 1)
 		{
 			bigAntImageWalkingIndex = 0;
 		}
+		
 	}
 
-	this.bigAntWalkingInterval = new frameInterval(this.cycleBigAntImages, 100);
-	this.bigAntWalkingInterval.start();
+	this.cycleBigAntImagesInterval = new frameInterval(this.cycleBigAntImages, 100);
+	this.cycleBigAntImagesInterval.start();
 	
 	this.drawBigAnt = function()
 	{
@@ -272,8 +270,7 @@ function ParentAntObject()
 	this.smallAntWidth = this.leafWidth*0.25;
 	this.smallAntHeight = this.leafHeight*0.2;
 	this.currentSmallAntImage = leafMinimWalk0;
-	// this.arrayOfSmallAntWalkingRightImages = [bigAntFrontRightForwardImage,bigAntNeutralImage,bigAntFrontLeftForwardImage];
-	// this.arrayOfSmallAntWalkingLeftImages = [bigAntFrontRightForwardFlippedImage,bigAntNeutralFlippedImage,bigAntFrontLeftForwardFlippedImage];
+	
 	this.smallAntX = this.leafX + this.leafWidth/2 - this.smallAntWidth/2;
 	this.smallAntY = this.leafY + this.leafHeight/2 - this.smallAntHeight/2;
 	this.smallAntMidPoint = {x:this.smallAntX + this.smallAntWidth/2,y:this.smallAntY + this.smallAntHeight/2};

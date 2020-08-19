@@ -56,7 +56,8 @@ defenseGame.initialize = function()
 	//non controlled ants, just there to show the player that ants work in lines
 	this.NPCBigAnt1 = new NPCBigAnt(-renderer.canvas.width*0.33)
 	this.NPCBigAnt2 = new NPCBigAnt(renderer.canvas.width - renderer.canvas.width*0.33);
-
+	this.NPCBigAnt1.initialize();
+	this.NPCBigAnt2.initialize();
 
 	//fly stuff
 	this.flyManager = new FlyManager();
