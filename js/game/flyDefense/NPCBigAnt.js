@@ -74,8 +74,8 @@ function NPCBigAnt(x)
 	this.smallAntSwattingColliderBoxWidth = this.smallAntHeight;
 	this.smallAntSwattingColliderBoxHeight = this.smallAntWidth*0.2;
 
-	this.currentSwatImage = bigAntSwatting1Image;
-	this.arrayOfSwatImages = [bigAntSwatting1Image,bigAntSwatting2Image,bigAntSwatting3Image,bigAntSwatting4Image];
+	
+	
 	this.swatImageIndex = 0;
 	this.swatArrayDirection = -1;
 	this.changeSwatImage = function()

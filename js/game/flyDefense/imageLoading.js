@@ -21,9 +21,6 @@ let pheremoneGapFillImage = document.createElement("img");
 
 let fungusNestImage = document.createElement("img");
 
-let leftArrowButtonImage = document.createElement("img");
-let rightArrowButtonImage = document.createElement("img");
-let swatButtonImage = document.createElement("img");
 
 let bigAntNeutralImage = document.createElement("img");
 let bigAntFrontRightForwardImage = document.createElement('img');
@@ -53,10 +50,7 @@ let bigAntNeutralFlippedImage = document.createElement("img");
 let bigAntFrontRightForwardFlippedImage = document.createElement("img");
 let bigAntFrontLeftForwardFlippedImage = document.createElement("img");
 
-let bigAntSwatting1Image = document.createElement('img');
-let bigAntSwatting2Image = document.createElement('img');
-let bigAntSwatting3Image = document.createElement('img');
-let bigAntSwatting4Image = document.createElement('img');
+
 
 
 let flyFacingLeftImage = document.createElement('img');
@@ -124,11 +118,6 @@ function loadDefenseGameImages()
 
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: fungusNestImage, theFile: 'images/flyDefense/Official Placeholder Art/fungusNest.png'});
 
-
-	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: leftArrowButtonImage, theFile: 'images/flyDefense/GUI/leftArrow.png'});
-	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: rightArrowButtonImage, theFile: 'images/flyDefense/GUI/rightArrow.png'});
-	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: swatButtonImage, theFile: 'images/flyDefense/GUI/swat.png'});
-
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntNeutralImage, theFile: 'images/flyDefense/Official Placeholder Art/soldier.png'});
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntFrontRightForwardImage, theFile: 'images/flyDefense/creatures/bigAntFrontRightForward.png'});
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntFrontLeftForwardImage, theFile: 'images/flyDefense/creatures/bigAntFrontLeftForward.png'});
@@ -152,15 +141,8 @@ function loadDefenseGameImages()
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: leafMinimWalk11, theFile: 'images/flyDefense/minimWalk/Minim walk cycle_00011.png'});
 
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntNeutralFlippedImage, theFile: 'images/flyDefense/creatures/bigAntNeutralFlippedImage.png'});
-	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntFrontRightForwardFlippedImage, theFile: 'images/flyDefense/creatures/bigAntFrontRightForwardFlipped.png'});
-	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntFrontLeftForwardFlippedImage, theFile: 'images/flyDefense/creatures/bigAntFrontLeftForwardFlipped.png'});
-
-	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntSwatting1Image, theFile: 'images/flyDefense/creatures/bigAntSwattingRight90_1.png'});
-	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntSwatting2Image, theFile: 'images/flyDefense/creatures/bigAntSwattingRight30_1.png'});
-	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntSwatting3Image, theFile: 'images/flyDefense/creatures/bigAntSwattingRight60_1.png'});
-	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntSwatting4Image, theFile: 'images/flyDefense/creatures/bigAntSwattingRight90_2.png'});
-
-
+	
+	
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: flyFacingLeftImage, theFile: 'images/flyDefense/creatures/flyFacingLeft.png'});
 		
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: flyFacingLeft0Image, theFile: 'images/flyDefense/Fly/Fly_Upscaled_00000.png'});

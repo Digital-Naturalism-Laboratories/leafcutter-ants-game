@@ -168,7 +168,7 @@ function ParentAntObject()
 	this.drawBigAnt = function()
 	{
 		renderer.drawImage(this.currentBigAntImage, this.bigAntX,this.bigAntY, this.bigAntWidth,this.bigAntHeight);
-		console.log(bigAntImageWalkingIndex);
+		
 	}
 
 	
