@@ -62,7 +62,7 @@ class Leaf
             this.drawUnattachedPointVoidArea();
         }
         
-        if(this.start || typeof this.cutterAnt != "undefined")
+        if(this.start || typeof this.cutterAnt != "undefined" || typeof this.cutterAutoAnt != "undefined")
         {
             if(this.updatePoints)
             {
@@ -87,6 +87,8 @@ class Leaf
                     this.cutterAnt = undefined;
                 }
 
+                this.cutterAutoAnt = undefined;
+
                 this.start = false;
 
                 _getPoints = false;
@@ -103,14 +105,20 @@ class Leaf
         {
             for(let i = 0; i < this.borderPoints.length; i++)
             {
-                var radius = Math.sin((this.indicationTimer/500) + (i*0.05)) * indicationMaxSize;
-                drawCircle(renderer, this.borderPoints[i], radius, true, "#ffff0044", 1);
+                if(typeof this.borderPoints[i] != "undefined" && typeof this.borderPoints[i].x != "undefined" && this.borderPoints[i].x > -9999)
+                {
+                    var radius = Math.sin((this.indicationTimer/500) + (i*0.05)) * indicationMaxSize;
+                    drawCircle(renderer, this.borderPoints[i], radius, true, "#ffff0044", 1);
+                }
             }
         }
         else if(this.currentBorderIndicationIndex >= 0)
         {
-            var radius = Math.sin((this.indicationTimer/500) + (i*0.05)) * indicationMaxSize;
-            drawCircle(renderer, this.borderPoints[this.currentBorderIndicationIndex], radius, true, "#ffffff44", 1);
+            if(typeof this.borderPoints[this.currentBorderIndicationIndex] != "undefined" && typeof this.borderPoints[this.currentBorderIndicationIndex].x != "undefined" && this.borderPoints[this.currentBorderIndicationIndex].x > -9999)
+            {
+                var radius = Math.sin((this.indicationTimer/500) + (i*0.05)) * indicationMaxSize;
+                drawCircle(renderer, this.borderPoints[this.currentBorderIndicationIndex], radius, true, "#ffffff44", 1);
+            }
         }
     }
 

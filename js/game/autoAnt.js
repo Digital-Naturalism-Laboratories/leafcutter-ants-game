@@ -145,27 +145,30 @@ class AutoAnt
 
     draw(deltatime)
     {
-        //this.drawDestinationPath();
-        this.drawLeafCuttingLines();
+        if(!this.disabled)
+        {
+            //this.drawDestinationPath();
+            this.drawLeafCuttingLines();
 
-        if(!this.rotationMode && (this.pointIndex > -1 || this.forcedDestination)
-            && this.destinationPoint.distance(this.bodySprite.transform.position) > 5 * pixelSize)
-        {
-            this.bodySprite.drawScRotIn(vec2(((maxTopDownAntFrames*2) + ((this.antAnimationFrameIndex*2)%11)) * this.antAnimationFrameSize.x, 0), this.antAnimationFrameSize);
-        }
-        else if(this.rotationMode && this.cutTimer > 0)
-        {
-            this.bodySprite.drawScRotIn(vec2(((maxTopDownAntFrames*1) + this.antAnimationFrameIndex) * this.antAnimationFrameSize.x, 0), this.antAnimationFrameSize);
-        }
-        else
-        {
-            this.bodySprite.drawScRotIn(vec2(((maxTopDownAntFrames*0) + this.antAnimationFrameIndex) * this.antAnimationFrameSize.x, 0), this.antAnimationFrameSize);
-        }
+            if(!this.rotationMode && (this.pointIndex > -1 || this.forcedDestination)
+                && this.destinationPoint.distance(this.bodySprite.transform.position) > 5 * pixelSize)
+            {
+                this.bodySprite.drawScRotIn(vec2(((maxTopDownAntFrames*2) + ((this.antAnimationFrameIndex*2)%11)) * this.antAnimationFrameSize.x, 0), this.antAnimationFrameSize);
+            }
+            else if(this.rotationMode && this.cutTimer > 0)
+            {
+                this.bodySprite.drawScRotIn(vec2(((maxTopDownAntFrames*1) + this.antAnimationFrameIndex) * this.antAnimationFrameSize.x, 0), this.antAnimationFrameSize);
+            }
+            else
+            {
+                this.bodySprite.drawScRotIn(vec2(((maxTopDownAntFrames*0) + this.antAnimationFrameIndex) * this.antAnimationFrameSize.x, 0), this.antAnimationFrameSize);
+            }
 
-        if(this.cutLeafIndex > -1)
-        {
-            this.cutLeaves[this.cutLeafIndex].transform.position = this.leafCarryPoint;
-            this.cutLeaves[this.cutLeafIndex].drawScRot();
+            if(this.cutLeafIndex > -1)
+            {
+                this.cutLeaves[this.cutLeafIndex].transform.position = this.leafCarryPoint;
+                this.cutLeaves[this.cutLeafIndex].drawScRot();
+            }
         }
     }
 
@@ -190,6 +193,11 @@ class AutoAnt
             targetAngle = this.destinationPoint.angle(this.bodySprite.transform.position);
             this.bodySprite.transform.rotation = targetAngle;
         }
+        /*else if(this.disabling)
+        {
+            targetAngle = vec2(-60 * pixelSize, 550 * pixelSize).angle(this.bodySprite.transform.position);
+            this.bodySprite.transform.rotation = targetAngle;
+        }*/
         else
         {
             targetAngle = this.destinationPoints[this.destinationPointsIndex].angle(this.bodySprite.transform.position);
@@ -269,7 +277,7 @@ class AutoAnt
 
     onLeafCutSuccess()
     {
-        this.leaf.cutterAnt = this;
+        this.leaf.cutterAutoAnt = this;
         this.leaf.updatePoints = true;
 
         this.rotationMode = false;
@@ -285,6 +293,8 @@ class AutoAnt
 
         leafcuttingSFX[SFX_LEAFSUCCESS].volume = leafcuttingBGMMaxVolume/5;
         leafcuttingSFX[SFX_LEAFSUCCESS].play();
+
+        this.antDestionationAfterLeafCutSuccess();
     }
 
     calculateDestinationPoints()
@@ -296,7 +306,9 @@ class AutoAnt
             if(this.disabling)
             {
                 this.destinationPoints.push(vec2(this.leaf.stemPoint.x, this.leaf.stemPoint.y));
-                this.destinationPoints.push(vec2(this.destinationPoint.x, this.destinationPoint.y));
+                this.destinationPoints.push(vec2(-60 * pixelSize, 550 * pixelSize));
+                this.destinationPoints.push(vec2(-99999 * pixelSize, 99999 * pixelSize));
+                this.destinationPoints.push(vec2(-99999 * pixelSize, 99999 * pixelSize));
             }
             else
             {

@@ -324,6 +324,7 @@ class Ant
 
         if(typeof autoAnts != "undefined" && autoAnts.length > 0 && this == autoAnts[0].primaryAnt)
         {
+            autoAnts2.splice(0, autoAnts2.length);
             autoAnts2 = [];
             for(let i = 0; i < totalAutoAnts; i++)
             {
@@ -334,6 +335,7 @@ class Ant
         }
         else if(typeof autoAnts2 != "undefined" && autoAnts2.length > 0 && typeof autoAnts2[0].primaryAnt != "undefined" && this == autoAnts2[0].primaryAnt)
         {
+            autoAnts.splice(0, autoAnts.length);
             autoAnts = [];
             for(let i = 0; i < totalAutoAnts; i++)
             {
@@ -344,6 +346,7 @@ class Ant
         }
         else if(typeof autoAnts2 == "undefined" && typeof autoAnts != "undefined")
         {
+            autoAnts2.splice(0, autoAnts2.length);
             autoAnts2 = [];
             for(let i = 0; i < totalAutoAnts; i++)
             {
@@ -354,6 +357,7 @@ class Ant
         }
         else
         {
+            autoAnts.splice(0, autoAnts.length);
             autoAnts = [];
             for(let i = 0; i < totalAutoAnts; i++)
             {
