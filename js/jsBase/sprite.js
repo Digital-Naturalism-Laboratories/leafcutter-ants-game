@@ -176,6 +176,27 @@ class Sprite
 
         spritesRenderer.restore();
     }
+
+    drawScRotIn(inPos, inSize)
+    {
+        var img = this.imageObject.image;
+        var pos = this.transform.position;
+        var scale = this.transform.scale;
+        var ori = this.transform.origin;
+
+        spritesRenderer.save();
+
+        spritesRenderer.translate(pos.x + ori.x, pos.y + ori.y);
+        spritesRenderer.rotate(this.transform.rotation + (Math.PI / 2));
+        spritesRenderer.translate(-pos.x - ori.x, -pos.y - ori.y);
+        
+        spritesRenderer.drawImage(img,
+            inPos.x, inPos.y, inSize.x, inSize.y,
+            pos.x - ((inSize.x * scale.x) / 2), pos.y - ((inSize.y * scale.y) / 2),
+            inSize.x * scale.x, inSize.y * scale.y);
+
+        spritesRenderer.restore();
+    }
 }
 
 function drawSprites(index, noOfSprites, scaled, rotated)

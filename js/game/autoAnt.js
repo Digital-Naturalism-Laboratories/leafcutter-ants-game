@@ -6,8 +6,9 @@ class AutoAnt
         this.leaf = leaf;
 
         this.antAnimationFrameIndex = 0;
-        this.bodySprite = new Sprite(tr(vec2(-40 * pixelSize, 540 * pixelSize),vec2(pixelSize/2,pixelSize/2)),
-            antIdleImages[this.antAnimationFrameIndex]);
+        this.antAnimationFrameSize = vec2(150, 150);
+        this.bodySprite = new Sprite(tr(vec2(-40 * pixelSize, 540 * pixelSize),vec2(pixelSize/2.5,pixelSize/2.5)),
+            new ImageObject("images/Animations/TopDown_Soldier_Ant_Spritesheet.png"), vec2(4950, 150) );
         this.bodySprite.transform.rotation = -Math.PI/4;
         this.cutPoint = vec2();
 
@@ -19,17 +20,6 @@ class AutoAnt
         }
         this.cutLeafIndex = -1;
         this.leafCarryPoint = vec2();
-
-        this.headImageIndex = 0;
-        this.headSprite = new Sprite(tr(vec2(475 * pixelSize, 380 * pixelSize), vec2(pixelSize, pixelSize)), antHeadImages[this.headImageIndex]);
-        
-        this.headLeadJawRotationOffset = 0;
-        this.headLeadJawSprite = new Sprite(tr(vec2(430 * pixelSize, 450 * pixelSize), vec2(pixelSize, pixelSize), Math.PI*1.5),
-            new ImageObject("images/LeadingJaw.png", vec2(41, 86)));
-        
-        this.headCutJawVibrationOffset = vec2();
-        this.headCutJawSprite = new Sprite(tr(vec2(500 * pixelSize, 450 * pixelSize), vec2(pixelSize, pixelSize)),
-            new ImageObject("images/CuttingJaw.png", vec2(39, 84)));
 
         this.animationTimer = 0;
         this.animationDelay = 60/2;
@@ -150,7 +140,21 @@ class AutoAnt
     {
         //this.drawDestinationPath();
         this.drawLeafCuttingLines();
-        this.bodySprite.drawScRot();
+
+        if(!this.rotationMode && (this.pointIndex > -1 || this.forcedDestination)
+            && this.destinationPoint.distance(this.bodySprite.transform.position) > 5 * pixelSize)
+        {
+            this.bodySprite.drawScRotIn(vec2(((maxTopDownAntFrames*2) + ((this.antAnimationFrameIndex*2)%11)) * this.antAnimationFrameSize.x, 0), this.antAnimationFrameSize);
+        }
+        else if(this.rotationMode && this.cutTimer > 0)
+        {
+            this.bodySprite.drawScRotIn(vec2(((maxTopDownAntFrames*1) + this.antAnimationFrameIndex) * this.antAnimationFrameSize.x, 0), this.antAnimationFrameSize);
+        }
+        else
+        {
+            this.bodySprite.drawScRotIn(vec2(((maxTopDownAntFrames*0) + this.antAnimationFrameIndex) * this.antAnimationFrameSize.x, 0), this.antAnimationFrameSize);
+        }
+
         if(this.cutLeafIndex > -1)
         {
             this.cutLeaves[this.cutLeafIndex].transform.position = this.leafCarryPoint;
@@ -399,7 +403,6 @@ class AutoAnt
 
     updateAnimation(deltaTime)
     {
-        //IMAGE TO IMAGE ANIMATION
         if(this.animationTimer <= 0)
         {
             if(this.headImageIndex + 1 < maxHeadFrames)
@@ -417,46 +420,6 @@ class AutoAnt
         else
         {
             this.animationTimer -= deltaTime;
-        }
-
-        this.headSprite.imageObject = antHeadImages[this.headImageIndex];
-        
-        if(!this.rotationMode && (this.pointIndex > -1 || this.forcedDestination)
-            && this.destinationPoint.distance(this.bodySprite.transform.position) > 5 * pixelSize)
-        {
-            this.bodySprite.imageObject = antWalkImages[this.antAnimationFrameIndex];
-        }
-        else if(this.rotationMode && this.cutTimer > 0)
-        {
-            this.bodySprite.imageObject = antRotateImages[this.antAnimationFrameIndex];
-        }
-        else
-        {
-            this.bodySprite.imageObject = antIdleImages[this.antAnimationFrameIndex];
-        }
-
-        //PROCEDURAL/CODED ANIMATION
-        if(this.rotationMode)
-        {
-            if(this.isCuttingJawLed)
-            {
-                if(this.headLeadJawRotationOffset < Math.PI/4) this.headLeadJawRotationOffset += 0.003 * deltaTime;
-            }
-            else if(!this.isCuttingJawLed && this.headLeadJawRotationOffset > 0)
-            {
-                this.headLeadJawRotationOffset -= 0.003 * deltaTime;
-                this.headCutJawVibrationOffset = vec2((-5 + (Math.random() * 10)) * pixelSize, (-5 + (Math.random() * 10)) * pixelSize);
-            }
-            else
-            {
-                this.headLeadJawRotationOffset = vec2();
-                this.headLeadJawRotationOffset = 0;
-            }
-        }
-        else
-        {
-            this.headLeadJawRotationOffset = vec2();
-            this.headLeadJawRotationOffset = 0;
         }
     }
 }

@@ -19,94 +19,8 @@ function isVectorInArray(vec, array)
     return false;
 }
 
-var maxHeadFrames = 16*2;
-var antHeadImages = [
-    new ImageObject("images/AntHeadAnimation/head (0).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (0).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (1).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (1).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (2).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (2).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (3).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (3).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (4).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (4).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (5).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (5).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (6).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (6).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (7).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (7).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (8).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (8).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (9).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (9).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (10).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (10).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (11).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (11).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (12).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (12).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (13).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (13).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (14).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (14).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (15).png", vec2(350,250)),
-    new ImageObject("images/AntHeadAnimation/head (15).png", vec2(350,250))
-];
-
+var maxHeadFrames = 32;
 var maxTopDownAntFrames = 11;
-var antIdleImages = [
-    new ImageObject("images/SoldierAntAnimations/idle0.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/idle1.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/idle2.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/idle3.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/idle4.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/idle5.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/idle6.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/idle7.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/idle8.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/idle9.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/idle10.png", vec2(150,150)),
-]
-var antRotateImages = [
-    new ImageObject("images/SoldierAntAnimations/rotate0.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/rotate1.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/rotate2.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/rotate3.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/rotate4.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/rotate5.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/rotate6.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/rotate7.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/rotate8.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/rotate9.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/rotate10.png", vec2(150,150)),
-]
-var antWalkImages = [
-    new ImageObject("images/SoldierAntAnimations/walk0.png", vec2(150,150)),
-    //new ImageObject("images/SoldierAntAnimations/walk1.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/walk2.png", vec2(150,150)),
-    //new ImageObject("images/SoldierAntAnimations/walk3.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/walk4.png", vec2(150,150)),
-    //new ImageObject("images/SoldierAntAnimations/walk5.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/walk6.png", vec2(150,150)),
-    //new ImageObject("images/SoldierAntAnimations/walk7.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/walk8.png", vec2(150,150)),
-    //new ImageObject("images/SoldierAntAnimations/walk9.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/walk10.png", vec2(150,150)),
-
-    //new ImageObject("images/SoldierAntAnimations/walk0.png", vec2(150,150)),
-    //new ImageObject("images/SoldierAntAnimations/walk1.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/walk2.png", vec2(150,150)),
-    //new ImageObject("images/SoldierAntAnimations/walk3.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/walk4.png", vec2(150,150)),
-    //new ImageObject("images/SoldierAntAnimations/walk5.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/walk6.png", vec2(150,150)),
-    //new ImageObject("images/SoldierAntAnimations/walk7.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/walk8.png", vec2(150,150)),
-    //new ImageObject("images/SoldierAntAnimations/walk9.png", vec2(150,150)),
-    new ImageObject("images/SoldierAntAnimations/walk10.png", vec2(150,150)),
-]
 
 class Ant
 {
@@ -115,8 +29,9 @@ class Ant
         this.leaf = leaf;
 
         this.antAnimationFrameIndex = 0;
+        this.antAnimationFrameSize = vec2(150, 150);
         this.bodySprite = new Sprite(tr(vec2(-40 * pixelSize, 540 * pixelSize),vec2(pixelSize/2,pixelSize/2)),
-            antIdleImages[this.antAnimationFrameIndex]);
+            new ImageObject("images/Animations/TopDown_Soldier_Ant_Spritesheet.png"), vec2(4950, 150) );
         this.bodySprite.transform.rotation = -Math.PI/4;
         this.cutPoint = vec2();
 
@@ -130,7 +45,9 @@ class Ant
         this.leafCarryPoint = vec2();
 
         this.headImageIndex = 0;
-        this.headSprite = new Sprite(tr(vec2(475 * pixelSize, 380 * pixelSize), vec2(pixelSize, pixelSize)), antHeadImages[this.headImageIndex]);
+        this.headImageFrameSize = vec2(350, 250);
+        this.headSprite = new Sprite(tr(vec2(475 * pixelSize, 380 * pixelSize), vec2(pixelSize, pixelSize)),
+            new ImageObject("images/Animations/Ant_Head_Spritesheet.png", vec2(5600, 250)));
         
         this.headLeadJawRotationOffset = 0;
         this.headLeadJawSprite = new Sprite(tr(vec2(430 * pixelSize, 450 * pixelSize), vec2(pixelSize, pixelSize), Math.PI*1.5),
@@ -263,7 +180,21 @@ class Ant
     {
         //this.drawDestinationPath();
         this.drawLeafCuttingLines();
-        this.bodySprite.drawScRot();
+
+        if(!this.rotationMode && (this.pointIndex > -1 || this.forcedDestination)
+            && this.destinationPoint.distance(this.bodySprite.transform.position) > 5 * pixelSize)
+        {
+            this.bodySprite.drawScRotIn(vec2(((maxTopDownAntFrames*2) + ((this.antAnimationFrameIndex*2)%11)) * this.antAnimationFrameSize.x, 0), this.antAnimationFrameSize);
+        }
+        else if(this.rotationMode && this.cutTimer > 0)
+        {
+            this.bodySprite.drawScRotIn(vec2(((maxTopDownAntFrames*1) + this.antAnimationFrameIndex) * this.antAnimationFrameSize.x, 0), this.antAnimationFrameSize);
+        }
+        else
+        {
+            this.bodySprite.drawScRotIn(vec2(((maxTopDownAntFrames*0) + this.antAnimationFrameIndex) * this.antAnimationFrameSize.x, 0), this.antAnimationFrameSize);
+        }
+
         if(this.cutLeafIndex > -1)
         {
             this.cutLeaves[this.cutLeafIndex].transform.position = this.leafCarryPoint;
@@ -332,7 +263,7 @@ class Ant
         if(this.rotationMode)
         {
             renderer.globalAlpha = 0.6;
-            this.headSprite.drawSc();
+            this.headSprite.drawScIn(vec2((Math.floor(this.headImageIndex/2.0)) * this.headImageFrameSize.x, 0), this.headImageFrameSize);
 
             this.headCutJawSprite.transform.position = this.headCutJawSprite.transform.position.add(this.headCutJawVibrationOffset);
             this.headCutJawSprite.drawSc();
@@ -697,22 +628,6 @@ class Ant
         else
         {
             this.animationTimer -= deltaTime;
-        }
-
-        this.headSprite.imageObject = antHeadImages[this.headImageIndex];
-        
-        if(!this.rotationMode && (this.pointIndex > -1 || this.forcedDestination)
-            && this.destinationPoint.distance(this.bodySprite.transform.position) > 5 * pixelSize)
-        {
-            this.bodySprite.imageObject = antWalkImages[this.antAnimationFrameIndex];
-        }
-        else if(this.rotationMode && this.cutTimer > 0)
-        {
-            this.bodySprite.imageObject = antRotateImages[this.antAnimationFrameIndex];
-        }
-        else
-        {
-            this.bodySprite.imageObject = antIdleImages[this.antAnimationFrameIndex];
         }
 
         //PROCEDURAL/CODED ANIMATION
