@@ -1,21 +1,27 @@
 function NPCBigAnt(x)
 {
-	this.bigAntHeight = renderer.canvas.height*0.25;
-	this.bigAntWidth = renderer.canvas.width*0.4;
+	this.bigAntHeight = renderer.canvas.height*0.33;
+	this.bigAntWidth = renderer.canvas.width*0.5;
 	this.bigAntX = x;
-	this.bigAntY = renderer.canvas.height*0.6;
+	this.bigAntY = renderer.canvas.height - this.bigAntHeight*1.2;
+	this.bigAntWalkingSourceWidth = 553;
+	this.bigAntWalkingSourceHeight = 320;
 	
 	this.x = this.bigAntX;
 	this.y = renderer.canvas.height*0.6;
 
 	this.leafImage = leafImage;
-	
 
+	this.currentBigAntWalkingImageIndex = getRandomIntInclusive(0,10);
 	
-	this.arrayOfBigAntWalkingImages = [bigAntWalkingSpriteSheet];
-	//this.randomWalkingImageIndex = getRandomIntInclusive(0,this.arrayOfBigAntWalkingImages.length - 1);
-	//this.currentBigAntWalkingIndex = this.randomWalkingImageIndex;
-	this.currentBigAntImage = this.arrayOfBigAntWalkingImages[0];
+	this.cycleBigAntImages = function()
+	{
+		this.currentBigAntWalkingImageIndex++;
+		if (this.currentBigAntWalkingImageIndex > 10)
+		{
+			this.currentBigAntWalkingImageIndex = 0;
+		}
+	}
 
 	this.draw = function()
 	{
@@ -23,30 +29,19 @@ function NPCBigAnt(x)
 		this.drawLeaf();
 		this.drawSmallAnt();
 	}
-
-	
-	this.cycleBigAntImages = function()
-	{
-		
-		this.currentBigAntImage = this.arrayOfBigAntWalkingImages[this.currentBigAntWalkingIndex];
-		this.currentBigAntWalkingIndex++;
-		if (this.currentBigAntWalkingIndex > this.arrayOfBigAntWalkingImages.length - 1)
-		{
-			this.currentBigAntWalkingIndex = 0;
-		}
-		
-	}
 	
 	this.drawBigAnt = function()
 	{
-		renderer.drawImage(bigAntWalkingSpriteSheet, this.bigAntX,this.bigAntY, this.bigAntWidth,this.bigAntHeight);
+		renderer.drawImage(bigAntWalkingSpriteSheet, 
+		this.bigAntWalkingSourceWidth*this.currentBigAntWalkingImageIndex,0, this.bigAntWalkingSourceWidth,this.bigAntWalkingSourceHeight,
+		this.bigAntX,this.bigAntY, this.bigAntWidth,this.bigAntHeight);
 	}
 
 	
-	this.leafWidth = this.bigAntWidth*0.5;
-	this.leafHeight = this.bigAntHeight*2.5;
-	this.leafX = this.bigAntX + this.bigAntWidth - this.leafWidth*0.75;
-	this.leafY = this.bigAntY + this.bigAntHeight/2 - this.leafHeight;
+	this.leafWidth = this.bigAntWidth*0.7;
+	this.leafHeight = this.bigAntHeight*2;
+	this.leafX = this.bigAntX + this.bigAntWidth*0.55;
+	this.leafY = this.bigAntY + this.bigAntHeight/2 - this.leafHeight*1.05;
 	
 	this.drawLeaf = function()
 	{
