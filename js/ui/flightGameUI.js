@@ -20,6 +20,17 @@ jungle_background_middle_trees.src = 'images/Backgrounds/jungle_background_middl
 jungle_background_back_trees.src = 'images/Backgrounds/jungle_background_back_trees.png';
 jungle_background_sky.src = 'images/Backgrounds/jungle_background_sky.png';
 
+var flyingGameSFX = [
+  document.createElement('audio')
+]
+
+var flyingGameSFXPaths = [
+  "audio/SFX/Collecting A Mate.wav"
+]
+
+//SFX Indexes
+var SFX_MATING = 0;
+
 var backgrounds = []
 backgrounds.push(jungle_background_front_trees);
 backgrounds.push(jungle_background_middle_trees);
@@ -41,6 +52,11 @@ function setupFlightGameUI() {
   }
   for (i = 0; i < rivalQueenCount; i++) {
     rivalQueens[i] = new FlyingQueen(Math.random() * gameWidth, Math.random() * gameHeight, false);
+  }
+
+  for (let i = 0; i < flyingGameSFX.length; i++) {
+    flyingGameSFX[i].setAttribute('src', flyingGameSFXPaths[i]);
+    flyingGameSFX[i].volume = 1;
   }
 
 }

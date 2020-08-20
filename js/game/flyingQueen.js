@@ -162,6 +162,10 @@ class FlyingQueen {
         this.animationFrameLength = this.matingAnimationFrameLength;
         this.animationTimer = 0;
         this.animationFrameCurrent = 0;
+
+        if (!flyingGameSFX[SFX_MATING].isPlaying) {
+            flyingGameSFX[SFX_MATING].play();
+        }
     }
 
     stopMating() {
@@ -217,10 +221,10 @@ class FlyingQueen {
         if (this.animationFrameCurrent >= this.animationFrameCount) {
             this.animationFrameCurrent = 0;
 
-            if (this.isMating){
+            if (this.isMating) {
                 this.stopMating();
             }
-            
+
         }
 
         this.animationTimer++;
