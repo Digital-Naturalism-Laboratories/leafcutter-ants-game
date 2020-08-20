@@ -1,3 +1,11 @@
+var colonlyAntStates = {
+    BROOD: brood,
+    WORKER: workerCount,
+    MALE_REPRODUCTIVE: male_reproductive,
+    FEMALE_REPRODUCTIVE: female_reproductive,
+    QUEEN_ANT: queen_ant 
+}
+
 class ColonyAnt {
     constructor(col, row) {
 
@@ -5,6 +13,14 @@ class ColonyAnt {
             col: col,
             row: row
         }
+
+        this.state; // BROOD or WORKER or MALE REPRODUCTIVE or FEMALE REPRODUCTIVE or QUEEN
+        this.isAlive = true;
+        this.age = 0; // How many cycles this ant has been going since it was born 
+        this.deathAge = 100; // Past this age, this ant will automatically dies, Queens aren't affected by this
+        this.energy = 100 // Goes down if there are no leaves until the ant dies
+        this.infectionTimer = 100 // Null for healthy ants, but for infected Starts a timer for this ant, once the time happens, this ant rolls against its infection death chance to see if it will die. This infection will also trigger the colony class to decide if a number of other ants get infected too.
+        this.infectionDeathChance = 0.9; // Generally a pretty high number between 0-1.0 //1.0 means it will always die, 0.0 is never die// Most ants have a .9 let's say
 
         this.pixelCoord = pixelCoordAtCenterOfTileCoord(col, row);
 
