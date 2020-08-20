@@ -35,9 +35,6 @@ var leafcuttingLowTimeAlert = 15000;
 var leafcuttingWinBonus = 2;
 var leafcuttingLosePenalty = 2;
 
-var edgeDisplayDelay = 250;
-var edgeDisplayTimer = edgeDisplayDelay;
-
 var prevBGM = -1;
 var currentBGM = 0;
 
@@ -83,6 +80,9 @@ var SFX_TIMEOUT = 5;
 var SFX_JAWPENALTY = 6;
 var SFX_LEAFSUCCESS = 7;
 
+var clickEdgeDisplayStart = true;
+var clickGreenDisplayStart = 1500;
+
 function leafcuttingResetGame()
 {
     leafcuttingScore = 0;
@@ -100,6 +100,9 @@ function leafcuttingResetGame()
     totalAutoAnts = 0;
 
     leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_START];
+
+    clickEdgeDisplayStart = true;
+    clickGreenDisplayStart = 1500;
 }
 
 function setupLeafcuttingUI()
@@ -148,27 +151,31 @@ function setupLeafcuttingUI()
 function leafcuttingUICustomDraw(deltaTime)
 {
     leaf.draw(deltaTime);
-    ant.draw(deltaTime);
-    ant2.draw(deltaTime);
+
     if(typeof autoAnts != "undefined")
         for(let i = 0; i < autoAnts.length; i++)
             autoAnts[i].draw(deltaTime);
     if(typeof autoAnts2 != "undefined")
         for(let i = 0; i < autoAnts2.length; i++)
             autoAnts2[i].draw(deltaTime);
+
+    ant.draw(deltaTime);
+    ant2.draw(deltaTime);
 }
 
 function leafcuttingUICustomUpdate(deltaTime)
 {
     leaf.update(deltaTime);
-    ant.update(deltaTime);
-    ant2.update(deltaTime);
+
     if(typeof autoAnts != "undefined")
         for(let i = 0; i < autoAnts.length; i++)
             autoAnts[i].update(deltaTime);
     if(typeof autoAnts2 != "undefined")
         for(let i = 0; i < autoAnts2.length; i++)
             autoAnts2[i].update(deltaTime);
+
+    ant.update(deltaTime);
+    ant2.update(deltaTime);
     
     //gameHintLabel.text = leafcuttingHint;
     scoreLabel.text = "LEAVES COLLECTED: " + leafcuttingScore.toString();
@@ -180,22 +187,24 @@ function leafcuttingUICustomUpdate(deltaTime)
     if((!ant.rotationMode && ant.pointIndex == -1 && !ant.disabled && !ant.forcedDestination)
     || (!ant2.rotationMode && ant2.pointIndex == -1 && !ant2.disabled && !ant2.forcedDestination))
     {
-        centerLabel1.text = "CLICK EDGE TO";
-        centerLabel2.text = "START CUTTING";
-
-        edgeDisplayTimer -= deltaTime
-        if(edgeDisplayTimer <= 0)
+        if(clickEdgeDisplayStart)
+        {
+            centerLabel1.text = "CLICK EDGE TO";
+            centerLabel2.text = "START CUTTING";
             centerLabel1.enabled = centerLabel2.enabled = true;
+            clickEdgeDisplayStart = false;
+        }
     }
     else
     {
-        edgeDisplayTimer = edgeDisplayDelay;
         centerLabel1.enabled = centerLabel2.enabled = false;
     }
 
-    if(ant.rotationMode || ant2.rotationMode)
+    if((ant.rotationMode && (clickGreenDisplayStart > 0 || ant.timedJawSpeedFactor <= ant.timedJawSpeedFactorMin * 1.5))
+    || (ant2.rotationMode && (clickGreenDisplayStart > 0 || ant2.timedJawSpeedFactor <= ant2.timedJawSpeedFactorMin * 1.5)))
     {
         controlHintLabel.enabled = true;
+        clickGreenDisplayStart -= deltaTime;
     }
     else
     {
@@ -227,14 +236,17 @@ function leafcuttingUICustomUpdate(deltaTime)
 
 function leafcuttingUICustomEvents(deltaTime)
 {
-    ant.event();
-    ant2.event();
+    //leaf.event();
+
     if(typeof autoAnts != "undefined")
         for(let i = 0; i < autoAnts.length; i++)
             autoAnts[i].event();
     if(typeof autoAnts2 != "undefined")
         for(let i = 0; i < autoAnts2.length; i++)
             autoAnts2[i].event();
+
+    ant.event();
+    ant2.event();
 }
 
 function areLeafcuttingAntsDisabled()

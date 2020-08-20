@@ -6,7 +6,7 @@ class Leaf
 {
     constructor()
     {
-        distanceBetween2AdjacentPoints = pixelSize*24;
+        distanceBetween2AdjacentPoints = pixelSize*26;
 
         this.leafSprite = new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(pixelSize*2, pixelSize*2)),
             new ImageObject("images/UncutLeaf.png", vec2(gameWidth, gameHeight)));
@@ -35,6 +35,7 @@ class Leaf
 
         this.indicationTimer = 0;
         this.currentBorderIndicationIndex = -1;
+        this.pointsUpdated = 2;
     }
 
     update(deltaTime)
@@ -103,6 +104,12 @@ class Leaf
 
         if(this.currentBorderIndicationIndex == -1)
         {
+            if(this.pointsUpdated > 0)
+            {
+                this.getPoints(distanceBetween2AdjacentPoints);
+                this.pointsUpdated--;
+            }
+
             for(let i = 0; i < this.borderPoints.length; i++)
             {
                 if(typeof this.borderPoints[i] != "undefined" && typeof this.borderPoints[i].x != "undefined" && this.borderPoints[i].x > -9999)
@@ -114,11 +121,16 @@ class Leaf
         }
         else if(this.currentBorderIndicationIndex >= 0)
         {
+            this.pointsUpdated = 2;
             if(typeof this.borderPoints[this.currentBorderIndicationIndex] != "undefined" && typeof this.borderPoints[this.currentBorderIndicationIndex].x != "undefined" && this.borderPoints[this.currentBorderIndicationIndex].x > -9999)
             {
                 var radius = Math.sin((this.indicationTimer/500) + (i*0.05)) * indicationMaxSize;
                 drawCircle(renderer, this.borderPoints[this.currentBorderIndicationIndex], radius, true, "#ffffff44", 1);
             }
+        }
+        else
+        {
+            this.pointsUpdated = 2;
         }
     }
 
@@ -142,29 +154,43 @@ class Leaf
 
     getPoints(borderTestResolutionFactor)
     {
+        var leftOffset = gameWidth * 0.1;
+        var rightOffset = gameWidth * 0.01;
+
+        var topOffset = gameHeight * 0.105;
+        var bottomOffset = gameHeight * 0.125;
+
         var borderPixelComparionDistance = borderTestResolutionFactor;
+
         var bgValueBorder = 100;
 
         var prevPoints = this.points.length;
         this.points = [];
         this.borderPoints = [];
 
-        for(let y = borderPixelComparionDistance; y < gameHeight-borderPixelComparionDistance; y+=borderTestResolutionFactor)
+        for(let y = topOffset + borderPixelComparionDistance; y < gameHeight-borderPixelComparionDistance - bottomOffset; y+=borderTestResolutionFactor)
         {
-            for(let x = borderPixelComparionDistance; x < gameWidth-borderPixelComparionDistance; x+=borderTestResolutionFactor)
+            for(let x = leftOffset + borderPixelComparionDistance; x < gameWidth-borderPixelComparionDistance - rightOffset; x+=borderTestResolutionFactor)
             {
                 var thisPixel = spritesRenderer.getImageData(x, y, 1, 1).data;
                 var leftPixel = spritesRenderer.getImageData(x-borderPixelComparionDistance, y, 1, 1).data;
                 var rightPixel = spritesRenderer.getImageData(x+borderPixelComparionDistance, y, 1, 1).data;
                 var upPixel = spritesRenderer.getImageData(x, y-borderPixelComparionDistance, 1, 1).data;
                 var downPixel = spritesRenderer.getImageData(x, y+borderPixelComparionDistance, 1, 1).data;
-                if(!(thisPixel[0] < bgValueBorder && thisPixel[1] < bgValueBorder && thisPixel[2] < bgValueBorder))
+                if(!(thisPixel[0] < bgValueBorder && thisPixel[1] < bgValueBorder && thisPixel[2] < bgValueBorder)
+                && !(thisPixel[0] >= 254 && thisPixel[1] >= 254 && thisPixel[2] >= 254))
                 {
                     if(
                         (leftPixel[0] < bgValueBorder && leftPixel[1] < bgValueBorder && leftPixel[2] < bgValueBorder)
                         || (rightPixel[0] < bgValueBorder && rightPixel[1] < bgValueBorder && rightPixel[2] < bgValueBorder)
                         || (upPixel[0] < bgValueBorder && upPixel[1] < bgValueBorder && upPixel[2] < bgValueBorder)
                         || (downPixel[0] < bgValueBorder && downPixel[1] < bgValueBorder && downPixel[2] < bgValueBorder)
+
+                        && !
+                        ((leftPixel[0] >= 254 && leftPixel[1] >= 254 && leftPixel[2] >= 254)
+                        || (rightPixel[0] >= 254 && rightPixel[1] >= 254 && rightPixel[2] >= 254)
+                        || (upPixel[0] >= 254 && upPixel[1] >= 254 && upPixel[2] >= 254)
+                        || (downPixel[0] >= 254 && downPixel[1] >= 254 && downPixel[2] >= 254))
                     )
                     {
                         this.borderPoints.push(vec2(x,y));
@@ -243,7 +269,7 @@ class Leaf
 
     winCondition(deltaTime)
     {
-        if((this.borderPoints.length <= 10 || this.borderPoints.length == this.points.length)
+        if((this.borderPoints.length <= 15 || this.borderPoints.length == this.points.length)
         && leafcuttingTimeLeft > 0 && !this.updatePoints && !_getPoints && this.onceUpdated)
         {
             if(!areLeafcuttingAntsDisabled())

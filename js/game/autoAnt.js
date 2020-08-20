@@ -277,7 +277,9 @@ class AutoAnt
 
     onLeafCutSuccess()
     {
-        this.leaf.cutterAutoAnt = this;
+        //this.leaf.cutterAutoAnt = this;
+        this.leaf.cutterAnt = this;
+
         this.leaf.updatePoints = true;
 
         this.rotationMode = false;
