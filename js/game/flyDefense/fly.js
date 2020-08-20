@@ -192,7 +192,11 @@ function Fly(name,status)
 			if (this.x + this.width > this.currentTarget.x * 0.96 && this.x < this.currentTarget.x * 1.04 && 
 				this.y > this.currentTarget.y * 0.96 && this.y < this.currentTarget.y * 1.04)//target reached
 			{
-				
+				if (!defenseGame.parentAntObject.hasBeenInfected)
+				{
+					defenseGame.parentAntObject.hasBeenInfected = true;
+					setInterval(function() {defenseGame.parentAntObject.toggleSpriteSheet()},200);
+				}
 				this.status = 'leaving after planting';
 				this.currentTarget.canBeTargeted = false;
 				// let egg = new Egg(this.egg.x,this.egg.y);

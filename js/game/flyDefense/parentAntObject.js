@@ -1,5 +1,6 @@
 function ParentAntObject()
 {
+	this.name = 'big ant';
 	this.bigAntHeight = renderer.canvas.height*0.33;
 	this.bigAntWidth = renderer.canvas.width*0.5;
 	this.bigAntX = renderer.canvas.width/2 - this.bigAntWidth/2;
@@ -14,7 +15,24 @@ function ParentAntObject()
 	this.fungusImage = fungusImage;
 
 	this.currentBigAntWalkingImageIndex = getRandomIntInclusive(0,10);
-	
+
+	this.currentSpriteSheet = bigAntWalkingSpriteSheet;
+	this.hasBeenInfected = false;
+	this.toggleSpriteSheet = function()
+	{
+		console.log('inside toggle spritesheet');
+		console.log('this.name: ' + this.name);
+		if (this.currentSpriteSheet === bigAntWalkingSpriteSheet)
+		{
+			console.log('inside switch to infected spritesheet');
+			this.currentSpriteSheet = bigAntWalkingInfectedSpriteSheet;
+		}
+		else
+		{
+			this.currentSpriteSheet = bigAntWalkingSpriteSheet;
+		}
+	}
+
 	this.cycleBigAntImages = function()
 	{
 		this.currentBigAntWalkingImageIndex++;
@@ -29,7 +47,7 @@ function ParentAntObject()
 	
 	this.drawBigAnt = function()
 	{
-		renderer.drawImage(bigAntWalkingSpriteSheet, 
+		renderer.drawImage(this.currentSpriteSheet, 
 			this.bigAntWalkingSourceWidth*this.currentBigAntWalkingImageIndex,0, this.bigAntWalkingSourceWidth,this.bigAntWalkingSourceHeight,
 			this.bigAntX,this.bigAntY, this.bigAntWidth,this.bigAntHeight);
 	}

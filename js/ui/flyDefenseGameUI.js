@@ -151,5 +151,6 @@ defenseGame.initialize = function()
       	renderer.fillText(timerNumberConvertedToString, renderer.canvas.width * 0.85,renderer.canvas.height * 0.1);
 
 		this.flyManager.drawFlies();
+
 	}
 }

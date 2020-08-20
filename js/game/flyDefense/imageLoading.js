@@ -80,7 +80,7 @@ function loadDefenseGameImages()
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: fungusImage, theFile: 'images/flyDefense/Official Placeholder Art/fungus.png'});
 
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntWalkingSpriteSheet, theFile: 'images/flyDefense/BigAntWalking/bigAntWalkingSpriteSheet.png'});
-	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntWalkingInfectedSpriteSheet, theFile: 'images/flyDefense/BigAntWalking/bigAntWalkingSpriteSheet.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntWalkingInfectedSpriteSheet, theFile: 'images/flyDefense/BigAntInfectedWalking/bigAntInfectedWalkingSpriteSheet.png'});
 
 
 	numberOfDefenseGameImagesToLoad = arrayOfDefenseGameImagesToLoad.length;
