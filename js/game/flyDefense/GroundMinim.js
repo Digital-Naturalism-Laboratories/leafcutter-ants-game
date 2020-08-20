@@ -27,18 +27,19 @@ function GroundMinim()
 		}
 	}
 
+	this.currentSpriteSheet = undefined;
 	this.coinFlipAMeanderDirection = function()
 	{
 		let randomNumber = Math.random();
 		if (randomNumber <= 0.5)
 		{
 			this.currentStatus = 'meanderingLeft';
-			this.currentImage = soldierFacingLeftImage;
+			this.currentSpriteSheet = groundMinimWalkingLeftSpriteSheet;
 		}
 		else
 		{
 			this.currentStatus = 'meanderingRight';
-			this.currentImage = soldierFacingRightImage;
+			this.currentSpriteSheet = groundMinimWalkingRightSpriteSheet;
 		}
 	}
 
@@ -46,15 +47,41 @@ function GroundMinim()
 	{
 		this.defineMeanderBoundaries();
 		this.coinFlipAMeanderDirection();
+
+		var _this = this;
+		setInterval(function() {_this.cycleImages()},50);
 	}
 
-	this.currentImage = undefined;
+	this.currentSpriteSheet = undefined;
 
 	this.velocity = getRandomIntInclusive(1,3);
 
+	this.imageSourceWidth = 63;
+	this.imageSourceHeight = 38;
+	this.currentImageIndex = getRandomIntInclusive(0,10);
 	this.draw = function()
 	{
-		renderer.drawImage(this.currentImage, this.x,this.y, this.width,this.height);
+		//(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+		renderer.drawImage(this.currentSpriteSheet, 
+			this.currentImageIndex*this.imageSourceWidth,0, this.imageSourceWidth,this.imageSourceHeight,
+			this.x,this.y, this.width,this.height);
+
+		if (defenseGame.debugOn)
+		{
+			renderer.strokeStyle = 'brown';
+			renderer.moveTo(this.x + this.width/2, this.y + this.height/2);
+			renderer.moveTo(this.x + this.width/2, 0);
+			renderer.stroke();
+		}
+	}
+
+	this.cycleImages = function()
+	{
+		this.currentImageIndex++;
+		if (this.currentImageIndex > 10)
+		{
+			this.currentImageIndex = 0;
+		}
 	}
 
 	this.update = function(i)
@@ -75,7 +102,7 @@ function GroundMinim()
 			if (this.x - this.meanderBoundaryLeft <= renderer.canvas.width*0.005)
 			{
 				this.currentStatus = 'meanderingRight';
-				this.currentImage = soldierFacingRightImage;
+				this.currentSpriteSheet = groundMinimWalkingRightSpriteSheet;
 				
 			}	
 		}
@@ -90,7 +117,7 @@ function GroundMinim()
 			if (this.meanderBoundaryRight - (this.x + this.width) <= renderer.canvas.width*0.005)
 			{
 				this.currentStatus = 'meanderingLeft';
-				this.currentImage = soldierFacingLeftImage;
+				this.currentSpriteSheet = groundMinimWalkingLeftSpriteSheet;
 				
 			}
 		}
@@ -100,12 +127,12 @@ function GroundMinim()
 			if (this.x + this.width < defenseGame.background.currentPheremoneGap.x)
 			{
 				this.x += this.velocity;
-				this.currentImage = soldierFacingRightImage;
+				this.currentSpriteSheet = groundMinimWalkingRightSpriteSheet;
 			}
 			else if (this.x > defenseGame.background.currentPheremoneGap.x + defenseGame.background.currentPheremoneGap.width)
 			{
 				this.x -= this.velocity;
-				this.currentImage = soldierFacingLeftImage;
+				this.currentSpriteSheet = groundMinimWalkingLeftSpriteSheet;
 			}
 			else
 			{

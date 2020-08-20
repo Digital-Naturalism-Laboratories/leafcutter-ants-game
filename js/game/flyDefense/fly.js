@@ -176,7 +176,7 @@ function Fly(name,status)
 
 			//collision box detection
 			if (this.x < defenseGame.parentAntObject.smallAntX + defenseGame.parentAntObject.smallAntWidth*0.8 && //check for swat collisions with flies
-			    this.x + this.width > defenseGame.parentAntObject.smallAntX  &&
+			    this.x + this.width > defenseGame.parentAntObject.smallAntX + defenseGame.parentAntObject.smallAntWidth*0.1 &&
 			    this.y < defenseGame.parentAntObject.smallAntY + defenseGame.parentAntObject.smallAntHeight*0.5 &&
 			    this.y + this.height > defenseGame.parentAntObject.smallAntY*1.25)
 				{

@@ -21,7 +21,8 @@ let pheremoneGapFillImage = document.createElement("img");
 
 //let fungusNestImage = document.createElement("img");
 
-let groundMinimWalkingSpriteSheet = document.createElement("img");
+let groundMinimWalkingLeftSpriteSheet = document.createElement("img");
+let groundMinimWalkingRightSpriteSheet = document.createElement("img");
 
 let leafMinimWalkingSpriteSheet = document.createElement("img");
 
@@ -64,7 +65,8 @@ function loadDefenseGameImages()
 	//arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: fungusNestImage, theFile: 'images/flyDefense/Official Placeholder Art/fungusNest.png'});
 
 	
-	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: groundMinimWalkingSpriteSheet, theFile: 'images/flyDefense/GroundMinimWalking/groundMinimWalkingSpriteSheet.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: groundMinimWalkingLeftSpriteSheet, theFile: 'images/flyDefense/GroundMinimWalking/groundMinimWalkingLeftSpriteSheet.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: groundMinimWalkingRightSpriteSheet, theFile: 'images/flyDefense/GroundMinimWalking/groundMinimWalkingRightSpriteSheet.png'});
 	//63 x 38
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: leafMinimWalkingSpriteSheet, theFile: 'images/flyDefense/LeafMinimWalking/leafMinimWalking.png'});
 	//120 x 108
