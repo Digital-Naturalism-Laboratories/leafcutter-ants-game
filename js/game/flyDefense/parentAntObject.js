@@ -10,10 +10,9 @@ function ParentAntObject()
 
 	this.leafImage = leafImage;
 	this.fungusImage = fungusImage;
-	this.arrayOfBigAntWalkingImages = [bigAntWalkingImage0,bigAntWalkingImage1,bigAntWalkingImage2,bigAntWalkingImage3,bigAntWalkingImage4,
-	bigAntWalkingImage5,bigAntWalkingImage6,bigAntWalkingImage7,bigAntWalkingImage8,bigAntWalkingImage9,bigAntWalkingImage10];
-	this.randomWalkingImageIndex = getRandomIntInclusive(0,this.arrayOfBigAntWalkingImages.length - 1);
-	this.currentBigAntImage = this.arrayOfBigAntWalkingImages[this.randomWalkingImageIndex];
+	this.arrayOfBigAntWalkingImages = [bigAntWalkingSpriteSheet];
+	//this.randomWalkingImageIndex = getRandomIntInclusive(0,this.arrayOfBigAntWalkingImages.length - 1);
+	this.currentBigAntImage = this.arrayOfBigAntWalkingImages[0];
 
 
 	this.leafPolygonWalkingBorderPoints = 

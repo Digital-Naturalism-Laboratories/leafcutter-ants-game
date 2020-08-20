@@ -12,11 +12,10 @@ function NPCBigAnt(x)
 	
 
 	
-	this.arrayOfBigAntWalkingImages = [bigAntWalkingImage0,bigAntWalkingImage1,bigAntWalkingImage2,bigAntWalkingImage3,bigAntWalkingImage4,
-	bigAntWalkingImage5,bigAntWalkingImage6,bigAntWalkingImage7,bigAntWalkingImage8,bigAntWalkingImage9,bigAntWalkingImage10];
-	this.randomWalkingImageIndex = getRandomIntInclusive(0,this.arrayOfBigAntWalkingImages.length - 1);
-	this.currentBigAntWalkingIndex = this.randomWalkingImageIndex;
-	this.currentBigAntImage = this.arrayOfBigAntWalkingImages[this.currentBigAntWalkingIndex];
+	this.arrayOfBigAntWalkingImages = [bigAntWalkingSpriteSheet];
+	//this.randomWalkingImageIndex = getRandomIntInclusive(0,this.arrayOfBigAntWalkingImages.length - 1);
+	//this.currentBigAntWalkingIndex = this.randomWalkingImageIndex;
+	this.currentBigAntImage = this.arrayOfBigAntWalkingImages[0];
 
 	this.draw = function()
 	{
@@ -40,7 +39,7 @@ function NPCBigAnt(x)
 	
 	this.drawBigAnt = function()
 	{
-		renderer.drawImage(this.currentBigAntImage, this.bigAntX,this.bigAntY, this.bigAntWidth,this.bigAntHeight);
+		renderer.drawImage(bigAntWalkingSpriteSheet, this.bigAntX,this.bigAntY, this.bigAntWidth,this.bigAntHeight);
 	}
 
 	
