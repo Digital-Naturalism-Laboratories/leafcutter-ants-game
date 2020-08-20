@@ -256,24 +256,13 @@ function ParentAntObject()
 
 
 
-	this.smallAntWidth = this.leafWidth*0.25;
-	this.smallAntHeight = this.leafHeight*0.2;
-	this.currentSmallAntImage = leafMinimWalkingSpriteSheet;
-	
+	this.smallAntWidth = this.leafWidth*0.3;
+	this.smallAntHeight = this.leafHeight*0.3;
 	this.smallAntX = this.leafX + this.leafWidth/2 - this.smallAntWidth/2;
 	this.smallAntY = this.leafY + this.leafHeight/2 - this.smallAntHeight/2;
 	this.smallAntMidPoint = {x:this.smallAntX + this.smallAntWidth/2,y:this.smallAntY + this.smallAntHeight/2};
 	// this.standingAntY = (this.smallAntY + this.smallAntHeight) - this.smallAntWidth;
 
-	// this.smallAntSwattingColliderBoxX = this.smallAntX;
-	// this.smallAntSwattingColliderBoxY = this.standingAntY;
-	// this.smallAntSwattingColliderBoxWidth = this.smallAntHeight;
-	// this.smallAntSwattingColliderBoxHeight = this.smallAntWidth*0.2;
-
-	// this.currentSwatImage = bigAntSwatting1Image;
-	// this.arrayOfSwatImages = [bigAntSwatting1Image,bigAntSwatting2Image,bigAntSwatting3Image,bigAntSwatting4Image];
-	// this.swatImageIndex = 0;
-	// this.swatArrayDirection = -1;
 	// this.changeSwatImage = function()
 	// {
 	// 	if (defenseGame.parentAntObject.swatImageIndex === 0 || 
@@ -285,12 +274,17 @@ function ParentAntObject()
 	// 	defenseGame.parentAntObject.currentSwatImage = defenseGame.parentAntObject.arrayOfSwatImages[defenseGame.parentAntObject.swatImageIndex];
 	// }
 
-	
+	this.smallAntSourceWidth = 120;
+	this.smallAntSourceHeight = 108;
 	this.drawSmallAnt = function()
 	{
 		if (this.currentSmallAntDirection === 'up')
 		{
-			renderer.drawImage(this.currentSmallAntImage, this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
+		//(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+		console.log('this.currentSmallAntImageArrayIndex: ' + this.currentSmallAntImageArrayIndex);
+			renderer.drawImage(leafMinimWalkingSpriteSheet, 
+				this.currentSmallAntImageArrayIndex*this.smallAntSourceWidth,0, this.smallAntSourceWidth,this.smallAntSourceHeight,
+				this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
 		}
 		else if (this.currentSmallAntDirection === 'upRight')
 		{
@@ -298,7 +292,9 @@ function ParentAntObject()
 			renderer.translate(this.smallAntMidPoint.x,this.smallAntMidPoint.y);
 			renderer.rotate(45 * Math.PI / 180);
 			renderer.translate(-this.smallAntMidPoint.x,-this.smallAntMidPoint.y);
-			renderer.drawImage(this.currentSmallAntImage, this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
+			renderer.drawImage(leafMinimWalkingSpriteSheet, 
+				this.currentSmallAntImageArrayIndex*this.smallAntSourceWidth,0, this.smallAntSourceWidth,this.smallAntSourceHeight,
+				this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
 			renderer.restore();
 		}
 		else if (this.currentSmallAntDirection === 'right')
@@ -307,7 +303,9 @@ function ParentAntObject()
 			renderer.translate(this.smallAntMidPoint.x,this.smallAntMidPoint.y);
 			renderer.rotate(90 * Math.PI / 180);
 			renderer.translate(-this.smallAntMidPoint.x,-this.smallAntMidPoint.y);
-			renderer.drawImage(this.currentSmallAntImage, this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
+			renderer.drawImage(leafMinimWalkingSpriteSheet, 
+				this.currentSmallAntImageArrayIndex*this.smallAntSourceWidth,0, this.smallAntSourceWidth,this.smallAntSourceHeight,
+				this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
 			renderer.restore();
 		}
 		else if (this.currentSmallAntDirection === 'downRight')
@@ -316,7 +314,9 @@ function ParentAntObject()
 			renderer.translate(this.smallAntMidPoint.x,this.smallAntMidPoint.y);
 			renderer.rotate(135 * Math.PI / 180);
 			renderer.translate(-this.smallAntMidPoint.x,-this.smallAntMidPoint.y);
-			renderer.drawImage(this.currentSmallAntImage, this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
+			renderer.drawImage(leafMinimWalkingSpriteSheet, 
+				this.currentSmallAntImageArrayIndex*this.smallAntSourceWidth,0, this.smallAntSourceWidth,this.smallAntSourceHeight,
+				this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
 			renderer.restore();
 		}
 		else if (this.currentSmallAntDirection === 'down')
@@ -325,7 +325,9 @@ function ParentAntObject()
 			renderer.translate(this.smallAntMidPoint.x,this.smallAntMidPoint.y);
 			renderer.rotate(180 * Math.PI / 180);
 			renderer.translate(-this.smallAntMidPoint.x,-this.smallAntMidPoint.y);
-			renderer.drawImage(this.currentSmallAntImage, this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
+			renderer.drawImage(leafMinimWalkingSpriteSheet, 
+				this.currentSmallAntImageArrayIndex*this.smallAntSourceWidth,0, this.smallAntSourceWidth,this.smallAntSourceHeight,
+				this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
 			renderer.restore();
 		}
 		else if (this.currentSmallAntDirection === 'downLeft')
@@ -334,7 +336,9 @@ function ParentAntObject()
 			renderer.translate(this.smallAntMidPoint.x,this.smallAntMidPoint.y);
 			renderer.rotate(225 * Math.PI / 180);
 			renderer.translate(-this.smallAntMidPoint.x,-this.smallAntMidPoint.y);
-			renderer.drawImage(this.currentSmallAntImage, this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
+			renderer.drawImage(leafMinimWalkingSpriteSheet, 
+				this.currentSmallAntImageArrayIndex*this.smallAntSourceWidth,0, this.smallAntSourceWidth,this.smallAntSourceHeight,
+				this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
 			renderer.restore();
 		}
 		else if (this.currentSmallAntDirection === 'left')
@@ -343,7 +347,9 @@ function ParentAntObject()
 			renderer.translate(this.smallAntMidPoint.x,this.smallAntMidPoint.y);
 			renderer.rotate(270 * Math.PI / 180);
 			renderer.translate(-this.smallAntMidPoint.x,-this.smallAntMidPoint.y);
-			renderer.drawImage(this.currentSmallAntImage, this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
+			renderer.drawImage(leafMinimWalkingSpriteSheet, 
+				this.currentSmallAntImageArrayIndex*this.smallAntSourceWidth,0, this.smallAntSourceWidth,this.smallAntSourceHeight,
+				this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
 			renderer.restore();
 		}
 		else if (this.currentSmallAntDirection === 'upLeft')
@@ -352,7 +358,9 @@ function ParentAntObject()
 			renderer.translate(this.smallAntMidPoint.x,this.smallAntMidPoint.y);
 			renderer.rotate(315 * Math.PI / 180);
 			renderer.translate(-this.smallAntMidPoint.x,-this.smallAntMidPoint.y);
-			renderer.drawImage(this.currentSmallAntImage, this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
+			renderer.drawImage(leafMinimWalkingSpriteSheet, 
+				this.currentSmallAntImageArrayIndex*this.smallAntSourceWidth,0, this.smallAntSourceWidth,this.smallAntSourceHeight,
+				this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
 			renderer.restore();
 		}
 
@@ -385,18 +393,19 @@ function ParentAntObject()
 	this.smallAntMovingLeft = false;
 	this.smallAntMoving = false;
 
-	this.arrayOfSmallAntImages = [leafMinimWalkingSpriteSheet];
 	this.currentSmallAntImageArrayIndex = 0;
 								  
 	this.cycleSmallAntImages = function()
 	{
-		this.currentSmallAntImageArrayIndex++;
+		if (this.shouldBeMovingLeftOrRight || this.shouldBeMovingUpOrDown)
+		{
+			this.currentSmallAntImageArrayIndex++;
+		}
 
-		if (this.currentSmallAntImageArrayIndex > this.arrayOfSmallAntImages.length - 1)
+		if (this.currentSmallAntImageArrayIndex > 11)
 		{
 			this.currentSmallAntImageArrayIndex = 0;
 		}
-		this.currentSmallAntImage = this.arrayOfSmallAntImages[this.currentSmallAntImageArrayIndex];
 	}
 
 	this.moveSmallAnt = function()
@@ -891,11 +900,6 @@ function ParentAntObject()
 	{
 		this.moveSmallAnt();
 		this.detectFungusSporeCollisions();
-		if (this.shouldBeMovingLeftOrRight || this.shouldBeMovingUpOrDown)
-		{
-			this.cycleSmallAntImages();
-		}
-		//this.cycleBigAntImages();
 	}
 
 	this.initialize = function()
@@ -906,6 +910,7 @@ function ParentAntObject()
 		console.log(this.currentBigAntWalkingImageIndex);
 		var _this = this;
 		setInterval(function() {_this.cycleBigAntImages()},100);
+		setInterval(function() {_this.cycleSmallAntImages()},25);
 	}
 
 	this.headTarget = new Target('head target', renderer.canvas.width * 0.615,renderer.canvas.height * 0.665);
