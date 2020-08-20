@@ -15,10 +15,10 @@ var jungle_background_front_trees = document.createElement('img');
 var jungle_background_middle_trees = document.createElement('img');
 var jungle_background_back_trees = document.createElement('img');
 var jungle_background_sky = document.createElement('img');
-jungle_background_front_trees.src = 'images/Backgrounds/jungle_background_front_trees.png';
-jungle_background_middle_trees.src = 'images/Backgrounds/jungle_background_middle_trees.png';
-jungle_background_back_trees.src = 'images/Backgrounds/jungle_background_back_trees.png';
-jungle_background_sky.src = 'images/Backgrounds/jungle_background_sky.png';
+jungle_background_front_trees.src = 'images/Backgrounds/Jungle_Background_Front_Trees.png';
+jungle_background_middle_trees.src = 'images/Backgrounds/Jungle_Background_Middle_Trees.png';
+jungle_background_back_trees.src = 'images/Backgrounds/Jungle_Background_Back_Trees.png';
+jungle_background_sky.src = 'images/Backgrounds/Jungle_Background_Sky.png';
 
 var flyingGameSFX = [
   document.createElement('audio')
