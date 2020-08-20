@@ -194,7 +194,7 @@ function Background()
 		y: renderer.canvas.height * 0.05,
 
 		tallyOfEatenFungusSpores: 0,
-		label: 'EATEN FUNGUS SPORES: ',
+		label: 'LEAF CONTAMINANTS CLEANED: ',
 		labelWidth: renderer.measureText(this.label).width,
 		labelHeight: 30,
 // uiContext.fontSize.toString() + "px " + uiContext.fontFamily
@@ -202,11 +202,11 @@ function Background()
 		{
 			
 			//div background fill
-			renderer.fillStyle = 'lawngreen';
-			renderer.fillRect(this.x,this.y - this.labelHeight*0.7, this.labelWidth*10.1,this.labelHeight);
+			// renderer.fillStyle = 'lawngreen';
+			// renderer.fillRect(this.x,this.y - this.labelHeight*0.7, this.labelWidth*10.1,this.labelHeight);
 			//div text
-			renderer.fillStyle = 'mediumorchid';
-			renderer.font = '15px Pixelmania';
+			renderer.fillStyle = 'white';
+			renderer.font = '45px SmallBoldPixel';
 			renderer.fillText(this.label + this.tallyOfEatenFungusSpores, this.x,this.y);
 		}
 	}
@@ -216,17 +216,17 @@ function Background()
 		x: renderer.canvas.width * 0.01,
 		y: renderer.canvas.height * 0.125,
 
-		label: 'NUMBER OF INFECTIONS: ',
+		label: 'PARASITE INFECTIONS: ',
 		labelWidth: renderer.measureText(this.label).width,
 		labelHeight: 30,
 		draw: function()
 		{
 			//div background fill
-			renderer.fillStyle = 'lawngreen';
-			renderer.fillRect(this.x,this.y - this.labelHeight*0.7, this.labelWidth*9.25,this.labelHeight);
+			// renderer.fillStyle = 'lawngreen';
+			// renderer.fillRect(this.x,this.y - this.labelHeight*0.7, this.labelWidth*9.25,this.labelHeight);
 			//div text
-			renderer.fillStyle = 'mediumorchid';//dark violet, medium orchid
-			renderer.font = '15px Pixelmania';
+			renderer.fillStyle = 'white';//dark violet, medium orchid
+			renderer.font = '45px SmallBoldPixel';
 			renderer.fillText(this.label + defenseGame.background.bigAntTallyOfInfections, this.x,this.y);
 		}
 	}
@@ -307,13 +307,12 @@ function Background()
 			renderer.stroke();
 		}
 
-		this.fungusTallyDiv.draw();
-		this.infectionTallyDiv.draw();
+		
 		
 	}
 }
 
-let pheremoneGapAlertMessage = 'WEAK TRAIL!     CLICK TO FIX!';
+let pheremoneGapAlertMessage = 'CLICK TO REPAIR PATH --->';
 function PheremoneGap(x)
 {
 	this.x = x;
@@ -348,15 +347,15 @@ function PheremoneGap(x)
 			this.alertMessage.x = this.x;
 			this.alertMessage.y = this.y;
 
-			this.fontSize = 14;
+			this.fontSize = 45;
 
-			renderer.fillStyle = 'lawngreen';
-			renderer.fillRect(this.x  - this.alertMessage.width*0.5125,this.y - this.fontSize*1.25, this.alertMessage.width*1.25,this.fontSize*2);
+			// renderer.fillStyle = 'lawngreen';
+			// renderer.fillRect(this.x  - this.alertMessage.width,this.y - this.fontSize*1.25, this.alertMessage.width*1.25,this.fontSize*2);
 
-			renderer.fillStyle = 'red';
-			renderer.font = '14px Pixelmania';
-
-			renderer.fillText(pheremoneGapAlertMessage, this.alertMessage.x - this.alertMessage.width/2,this.alertMessage.y);
+			renderer.fillStyle = 'white';
+			renderer.font = '45px SmallBoldPixel';
+			this.alertMessage.width = renderer.measureText(pheremoneGapAlertMessage).width;
+			renderer.fillText(pheremoneGapAlertMessage, this.alertMessage.x - this.alertMessage.width,this.alertMessage.y + this.alertMessage.width*0.1);
 		}
 	}
 

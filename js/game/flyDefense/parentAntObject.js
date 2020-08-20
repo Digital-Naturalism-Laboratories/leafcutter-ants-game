@@ -20,11 +20,10 @@ function ParentAntObject()
 	this.hasBeenInfected = false;
 	this.toggleSpriteSheet = function()
 	{
-		console.log('inside toggle spritesheet');
-		console.log('this.name: ' + this.name);
+		
 		if (this.currentSpriteSheet === bigAntWalkingSpriteSheet)
 		{
-			console.log('inside switch to infected spritesheet');
+			
 			this.currentSpriteSheet = bigAntWalkingInfectedSpriteSheet;
 		}
 		else
@@ -940,23 +939,23 @@ function ParentAntObject()
 		y: renderer.canvas.height * 0.665,
 		width: undefined,
 		infectionMessageShouldBeVisible: false,
-		fontSize: 30, 
+		fontSize: 45, 
 
 		initialize: function()
 		{
-			this.width = renderer.measureText(infectionAlertString).width * 2;
+			this.width = renderer.measureText(infectionAlertString).width;
 		},
 
 		draw: function() 
 		{
 			if (this.infectionMessageShouldBeVisible)
 			{
-				renderer.fillStyle = 'lawngreen';
-				renderer.fillRect(this.x  - this.width*0.77,this.y - this.fontSize*0.7, this.width*1.6,this.fontSize);
+				renderer.fillStyle = 'DarkGoldenRod';
+				renderer.fillRect(0,this.y, renderer.canvas.width,this.fontSize);
 
 				renderer.fillStyle = 'red';
-				renderer.font = '15px Pixelmania';
-				renderer.fillText(infectionAlertString, this.x - this.width*0.75,this.y);
+				renderer.font = '45px SmallBoldPixel';
+				renderer.fillText(infectionAlertString, renderer.canvas.width/2 - this.width/2,this.y + this.fontSize*0.75);
 			}
 		},
 
@@ -976,7 +975,7 @@ function ParentAntObject()
 	}
 	
 }
-let infectionAlertString = 'INFECTION! YOU ARE SLOWING DOWN';
+let infectionAlertString = 'ALERT! PHORID FLY INFECTION!';
 
 function Target(name, x,y)
 {

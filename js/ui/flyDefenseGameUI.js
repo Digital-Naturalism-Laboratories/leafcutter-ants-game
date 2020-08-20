@@ -140,17 +140,23 @@ defenseGame.initialize = function()
 
 		this.groundMinimManager.drawGroundMinims();
 		
-      	let timerNumberConvertedToString = defenseGame.timeLeft.toString();
-      	let labelWidth =  renderer.measureText(timerNumberConvertedToString).width;
+      	
 
-      	renderer.fillStyle = 'lawngreen';
-      	renderer.fillRect(renderer.canvas.width * 0.845,(renderer.canvas.height * 0.1) - 30, this.timeLabelWidth*1.95,this.timeLabelWidth );
-
-      	renderer.fillStyle = 'mediumorchid';
-		renderer.font = '20px Pixelmania';
-      	renderer.fillText(timerNumberConvertedToString, renderer.canvas.width * 0.85,renderer.canvas.height * 0.1);
+      	
 
 		this.flyManager.drawFlies();
 
+		this.background.fungusTallyDiv.draw();
+		this.background.infectionTallyDiv.draw();
+
+		// renderer.fillStyle = 'lawngreen';
+  //     	renderer.fillRect(renderer.canvas.width * 0.845,(renderer.canvas.height * 0.1) - 30, this.timeLabelWidth*1.95,this.timeLabelWidth );
+
+      	let timerNumberConvertedToString = defenseGame.timeLeft.toString();
+      	let labelWidth =  renderer.measureText(timerNumberConvertedToString).width;
+
+      	renderer.fillStyle = 'white';
+		renderer.font = '75px SmallBoldPixel';
+      	renderer.fillText('TIME LEFT: ' + timerNumberConvertedToString, renderer.canvas.width * 0.01,renderer.canvas.height * 0.25);
 	}
 }
