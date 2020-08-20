@@ -225,7 +225,8 @@ function Fly(name,status)
 		{
 			if (this.y + this.height > 0)
 			{
-				this.y -= this.velocityY;
+				this.y -= this.velocityY*2;
+				this.x -= this.velocityX*2;
 				// if (this.egg !== undefined)
 				// {
 				// 	this.egg.y -= this.velocityY;
