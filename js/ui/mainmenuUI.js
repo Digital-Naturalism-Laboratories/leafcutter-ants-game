@@ -14,7 +14,7 @@ var animationTimer = 0
 function setupMainMenuUI()
 {
 
-    titleScreenSprite = new Sprite(tr(vec2(500, 375), vec2(1, 1)), new ImageObject("images/animations/Title_Screen_Spritesheet.png", vec2(1000, 750)));
+    titleScreenSprite = new Sprite(tr(vec2(500, 375), vec2(1, 1)), new ImageObject("images/Animations/Title_Screen_Spritesheet.png", vec2(1000, 750)));
 
     mainMenuFontSize = 18 * pixelSize;
 

@@ -1,9 +1,9 @@
 var colonlyAntStates = {
-    BROOD: brood,
-    WORKER: workerCount,
-    MALE_REPRODUCTIVE: male_reproductive,
-    FEMALE_REPRODUCTIVE: female_reproductive,
-    QUEEN_ANT: queen_ant 
+    BROOD: "brood",
+    WORKER: "workerCount",
+    MALE_REPRODUCTIVE: "male_reproductive",
+    FEMALE_REPRODUCTIVE: "female_reproductive",
+    QUEEN_ANT: "queen_ant"
 }
 
 class ColonyAnt {
