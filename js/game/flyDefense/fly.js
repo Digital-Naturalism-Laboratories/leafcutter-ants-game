@@ -1,27 +1,26 @@
 function Fly(name,status)
 {
 	this.name = name;
-	this.image = flyFacingLeftSpriteSheet;
 
-	
-	this.arrayOfFacingLeftImages = [flyFacingLeftSpriteSheet];
-	this.arrayOfFacingRightImages = [flyFacingRightSpriteSheet];
-	this.currentImageIndex = getRandomIntInclusive(0, this.arrayOfFacingLeftImages.length - 1);//make each fly slightly different visually
+	this.currentImageIndex = getRandomIntInclusive(0, 6);//make each fly slightly different visually
+	this.currentSpriteSheet = flyFacingRightSpriteSheet;
+	this.flySourceWidth = 100;
+	this.flySourceHeight = 140;
 
 	this.cycleImages = function(i)
 	{
 		this.currentImageIndex++;
-		if (this.currentImageIndex > this.arrayOfFacingLeftImages.length - 1)
+		if (this.currentImageIndex > 6)
 		{
 			this.currentImageIndex = 0;
 		}
 		if (this.currentFacingStatus === 'facing left')
 		{
-			this.image = this.arrayOfFacingLeftImages[this.currentImageIndex];
+			this.currentSpriteSheet = flyFacingLeftSpriteSheet;
 		}
 		else
 		{
-			this.image = this.arrayOfFacingRightImages[this.currentImageIndex];
+			this.currentSpriteSheet = flyFacingRightSpriteSheet;
 		}
 	}
 
@@ -86,7 +85,10 @@ function Fly(name,status)
 	
 	this.draw = function()
 	{
-		renderer.drawImage(this.image, this.x,this.y, this.width,this.height);
+		//(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+		renderer.drawImage(this.currentSpriteSheet, 
+			this.currentImageIndex*this.flySourceWidth,0, this.flySourceWidth,this.flySourceHeight,
+			this.x,this.y, this.width,this.height);
 		// if (this.egg !== undefined)
 		// {
 		// 	this.egg.draw();
@@ -297,7 +299,6 @@ function FlyManager()
 			{
 				this.arrayOfFlies[i].move();
 			}
-			this.arrayOfFlies[i].cycleImages(i);
 		}
 	}
 
@@ -320,6 +321,15 @@ function FlyManager()
 			// {
 				this.arrayOfFlies[i].status = 'planting';
 			// }
+		}
+	}
+
+	this.initialize = function()
+	{
+		let _this = this;
+		for (let i = 0; i < this.arrayOfFlies.length; i++)
+		{
+			setInterval(function() {_this.arrayOfFlies[i].cycleImages()},25);
 		}
 	}
 }

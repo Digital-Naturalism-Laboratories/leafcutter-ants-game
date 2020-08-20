@@ -72,6 +72,7 @@ defenseGame.initialize = function()
     this.testFly4.assignRandomXYCoordinatesInARange();
 
     this.flyManager.arrayOfFlies.push(this.testFly1,this.testFly2,this.testFly3,this.testFly4);
+    this.flyManager.initialize();
 
     // this.plantedEggManager = new PlantedEggManager();
 

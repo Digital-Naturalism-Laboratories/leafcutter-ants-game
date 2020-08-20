@@ -913,7 +913,7 @@ function ParentAntObject()
 		setInterval(function() {_this.cycleSmallAntImages()},25);
 	}
 
-	this.headTarget = new Target('head target', renderer.canvas.width * 0.615,renderer.canvas.height * 0.665);
+	this.headTarget = new Target('head target', renderer.canvas.width*0.65,renderer.canvas.height * 0.7);
 
 	this.infectionAlertMessage = 
 	{
