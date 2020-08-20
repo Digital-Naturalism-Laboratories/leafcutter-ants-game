@@ -154,6 +154,7 @@ function flightGameUICustomEvents(deltaTime) {
     energyBarLength = 100;
     diversityBarLength = 0;
     mateCount = 0;
+    resetColonySimGame();
     ui.stateIndex = COLONYGAMEUI;
   }
 

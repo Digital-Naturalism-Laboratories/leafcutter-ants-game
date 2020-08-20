@@ -160,6 +160,11 @@ function setupColonyGameUI() {
 
 }
 
+function resetColonySimGame() {
+  totalMilliseconds = 0;
+  //reset appropriate stats from colony object
+}
+
 function colonyGameUICustomDraw(deltaTime) {
 
   fungus.update();
@@ -177,38 +182,9 @@ function colonyGameUICustomDraw(deltaTime) {
   renderer.fillStyle = 'black';
   //renderer.fillRect(0, gameHeight - (120 * pixelSize), gameWidth, 120 * pixelSize);
 
-  renderer.fillStyle = "white";
-  renderer.textAlign = "left";
-  renderer.font = (24 * pixelSize).toString() + "px SmallBoldPixel";
-
-  renderer.fillText("Fungus: " + fungusMass + "g", 50 * pixelSize, gameHeight - (85 * pixelSize));
-  renderer.fillText("Leaf Material: " + leafMaterial + "g", 50 * pixelSize, gameHeight - (50 * pixelSize));
-  renderer.fillText("Workers: " + workerCount, 50 * pixelSize, gameHeight - (15 * pixelSize));
-
-  renderer.fillText("Population: " + population, gameWidth - (300 * pixelSize), gameHeight - (85 * pixelSize));
-  renderer.fillText("Eggs: " + eggCount, gameWidth - (300 * pixelSize), gameHeight - (50 * pixelSize));
-  renderer.fillText("Genetic Diversity: " + (geneticDiversity * 100) + "%", gameWidth - (300 * pixelSize), gameHeight - (15 * pixelSize));
-
-
-  renderer.fillStyle = "white";
-  renderer.textAlign = "center";
-  renderer.font = (10 * pixelSize).toString() + "px Pixelmania";
-  //renderer.fillText("Click to mate and start a new colony!", queen.x * pixelSize, (queen.y + 30) * pixelSize);
-  //renderer.fillText("Click to protect the colony's leaves!", 800, 75);
-  renderer.textAlign = "left";
-
-  renderer.fillStyle = "white";
-  renderer.textAlign = "center";
-  renderer.font = (10 * pixelSize).toString() + "px Pixelmania";
-  //renderer.fillText("Click to help the workers collect leaves!", 200, 75);
-  renderer.textAlign = "left";
-
   fungus.draw();
 
-  colorRect(gameWidth - 105, gameHeight * 0.8, 100, 50, 'white');
-  //renderer.fillStyle = "black";
-  renderer.font = "24px SmallBoldPixel";
-  //renderer.fillText("Full Screen", gameWidth - 100, gameHeight * 0.84);
+  drawStatsBlock();
 
   //renderer.fillStyle = 'black';
   //renderer.fillRect(0, 0, GRID_NODE_SIZE * COLONY_COLS, GRID_NODE_SIZE * COLONY_ROWS);
