@@ -269,7 +269,7 @@ function ParentAntObject()
 
 	this.smallAntWidth = this.leafWidth*0.25;
 	this.smallAntHeight = this.leafHeight*0.2;
-	this.currentSmallAntImage = leafMinimWalk0;
+	this.currentSmallAntImage = leafMinimWalkingSpriteSheet;
 	
 	this.smallAntX = this.leafX + this.leafWidth/2 - this.smallAntWidth/2;
 	this.smallAntY = this.leafY + this.leafHeight/2 - this.smallAntHeight/2;
@@ -396,8 +396,7 @@ function ParentAntObject()
 	this.smallAntMovingLeft = false;
 	this.smallAntMoving = false;
 
-	this.arrayOfSmallAntImages = [leafMinimWalk0,leafMinimWalk1,leafMinimWalk2,leafMinimWalk3,leafMinimWalk4,leafMinimWalk5,
-								  leafMinimWalk6,leafMinimWalk7,leafMinimWalk8,leafMinimWalk9,leafMinimWalk10,leafMinimWalk11];
+	this.arrayOfSmallAntImages = [leafMinimWalkingSpriteSheet];
 	this.currentSmallAntImageArrayIndex = 0;
 								  
 	this.cycleSmallAntImages = function()

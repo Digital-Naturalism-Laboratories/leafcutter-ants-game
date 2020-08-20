@@ -62,9 +62,7 @@ function NPCBigAnt(x)
 
 	this.smallAntWidth = this.leafWidth*0.2;
 	this.smallAntHeight = this.leafHeight*0.2;
-	this.currentSmallAntImage = smallAntImage;
-	// this.arrayOfSmallAntWalkingRightImages = [bigAntFrontRightForwardImage,bigAntNeutralImage,bigAntFrontLeftForwardImage];
-	// this.arrayOfSmallAntWalkingLeftImages = [bigAntFrontRightForwardFlippedImage,bigAntNeutralFlippedImage,bigAntFrontLeftForwardFlippedImage];
+
 	this.smallAntX = this.x + this.leafX/2;
 	this.smallAntY = this.leafY;
 

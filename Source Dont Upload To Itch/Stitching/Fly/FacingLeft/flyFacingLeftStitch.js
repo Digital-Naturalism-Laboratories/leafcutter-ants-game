@@ -1,12 +1,12 @@
 //3 bindings to fill in. Also, change the names of the pngs that are 10 and above to have similar naming pattern.
 //example, 00010, not 0010
 
-var baseName = undefined; //**fill me in** similar part of filepath, ex: 'Worker_no_Leaf Walking_000';
+var baseName = 'Fly_Upscaled_000'; //**fill me in** similar part of filepath, ex: 'Worker_no_Leaf Walking_000';
 
 var animPics = []; //array for holding individual pngs of sheet
 
-var picsToLoad = undefined; //**fill me in** total number of pngs 
-var totalPics = undefined; //**fill me in** total number of pngs
+var picsToLoad = 7; //**fill me in** total number of pngs 
+var totalPics = 7; //**fill me in** total number of pngs
 
 var canvas, canvasContext;
 
@@ -24,6 +24,7 @@ function loadingDoneSoStartGame()
 	var dimensionHeight = animPics[0].height;
 
 	console.log('dimensionWidth: ' + dimensionWidth);
+	console.log('dimensionHeight: ' + dimensionHeight);
 
 	canvas.width = dimensionWidth*totalPics;
 	canvas.height = dimensionHeight;

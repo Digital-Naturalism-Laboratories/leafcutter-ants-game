@@ -53,9 +53,6 @@ function InputManager()
 		defenseGame.inputManager.moveRightIsBeingHeld = false;
 		defenseGame.inputManager.moveDownIsBeingHeld = false;
 		defenseGame.inputManager.swatIsBeingHeld = false;
-
-		defenseGame.parentAntObject.smallAntY = defenseGame.parentAntObject.y*0.9;
-		defenseGame.parentAntObject.currentSmallAntImage = bigAntNeutralImage;
 	}
 
 	this.keydown = function(builtInDocumentEventObject)
@@ -134,12 +131,7 @@ function InputManager()
 	        break;
 
         	case 32://spacebar
-   //      	defenseGame.inputManager.swatIsBeingHeld = false;
-
-	  //       defenseGame.parentAntObject.smallAntY = defenseGame.parentAntObject.y*0.9;
-			// defenseGame.parentAntObject.currentSmallAntImage = bigAntNeutralImage;
-
-			// defenseGame.parentAntObject.swatInterval.stop();
+   
 			break;
 	    }
 	}

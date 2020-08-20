@@ -1,13 +1,11 @@
 function Fly(name,status)
 {
 	this.name = name;
-	this.image = flyFacingLeft0Image;
+	this.image = flyFacingLeftSpriteSheet;
 
 	
-	this.arrayOfFacingLeftImages = [flyFacingLeft0Image,flyFacingLeft1Image,flyFacingLeft2Image,flyFacingLeft3Image,
-								    flyFacingLeft4Image,flyFacingLeft5Image,flyFacingLeft6Image];
-	this.arrayOfFacingRightImages = [flyFacingRight0Image,flyFacingRight1Image,flyFacingRight2Image,flyFacingRight3Image,
-									 flyFacingRight4Image,flyFacingRight5Image,flyFacingRight6Image];
+	this.arrayOfFacingLeftImages = [flyFacingLeftSpriteSheet];
+	this.arrayOfFacingRightImages = [flyFacingRightSpriteSheet];
 	this.currentImageIndex = getRandomIntInclusive(0, this.arrayOfFacingLeftImages.length - 1);//make each fly slightly different visually
 
 	this.cycleImages = function(i)
