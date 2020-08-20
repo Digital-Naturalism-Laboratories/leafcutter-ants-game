@@ -5,8 +5,17 @@ var mainMenuUI = [];
 
 var mainMenuFontSize;
 
+var titleScreenSprite;
+var animationFrameLength = 5;
+var animationFrameCount = 29;
+var animationFrameCurrent = 0;
+var animationTimer = 0
+
 function setupMainMenuUI()
 {
+
+    titleScreenSprite = new Sprite(tr(vec2(500, 375), vec2(1, 1)), new ImageObject("images/animations/Title_Screen_Spritesheet.png", vec2(1000, 750)));
+
     mainMenuFontSize = 18 * pixelSize;
 
     menuButtons = [];
@@ -54,6 +63,28 @@ function setupMainMenuUI()
 
 function mainMenuUICustomDraw(deltaTime)
 {
+    var inSize = {
+        x: 1000,
+        y: 750
+    }
+
+    var inPos = {
+        x: (animationFrameCurrent * inSize.x),
+        y: 0
+    }
+
+    if (animationTimer > animationFrameLength - 1) {
+        animationFrameCurrent++
+        animationTimer = 0;
+    }
+
+    if (animationFrameCurrent >= animationFrameCount) {
+        animationFrameCurrent = 0;
+    }
+
+    animationTimer++
+    titleScreenSprite.drawScIn(inPos, inSize);
+
 }
 
 function mainMenuUICustomUpdate(deltaTime)
