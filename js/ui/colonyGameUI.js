@@ -119,7 +119,7 @@ var infectedAntsReturning = 0; //from defense game
 var fungusMass = 5; //grams
 var incomingLeaves = 0; //grams
 var workerCount = 6;
-var colonyAntCount = 100;
+var colonyAntCount = 50;
 var workers = [];
 var colonyAnts = [];
 var eggCount = 0;
@@ -145,7 +145,7 @@ function setupColonyGameUI() {
   }
 
   for (i = 0; i < colonyAntCount; i++) {
-    //colonyAnts[i] = new ColonyAnt(fungus.gridCoord.col, fungus.gridCoord.row);
+    colonyAnts[i] = new ColonyAnt(fungus.gridCoord.col, fungus.gridCoord.row);
   }
   /*
     for (var i = 0; i < colonyGridNodes.length; i++) {

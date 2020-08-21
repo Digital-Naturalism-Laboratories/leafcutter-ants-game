@@ -10,6 +10,7 @@ class ColonyGridNode {
 
         //this.tileType = tileType;
         this.isWalkable = (tileType === COLONY_WALL) ? false : true;
+        this.isTunneled = false;
 
         this.neighborNodes = [];
         this.parentNode;
@@ -38,9 +39,13 @@ class ColonyGridNode {
 
         //if (this.isWalkable && this.gCost < 100) {
         if (this.isWalkable && this.distanceFromFungus < (totalMilliseconds / 500) || colonyGridTileMap[this.gridCoord.y][this.gridCoord.x] === 9) {
+            this.isTunneled = true;
+        }
+        
+        if (this.isTunneled){
             renderer.drawImage(colonyTiles[colonyGridTileMap[this.gridCoord.y][this.gridCoord.x]], this.pixelCoord.x - (GRID_NODE_SIZE * pixelSize / 2), this.pixelCoord.y - (GRID_NODE_SIZE * pixelSize / 2), GRID_NODE_SIZE * pixelSize, GRID_NODE_SIZE * pixelSize);
         }
-
+        
         renderer.font = (14 * pixelSize).toString() + "px SmallBoldPixel";
         renderer.fillStyle = "white";
         renderer.textAlign = "center";

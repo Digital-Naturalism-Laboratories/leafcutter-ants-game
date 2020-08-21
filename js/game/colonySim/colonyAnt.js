@@ -37,35 +37,17 @@ class ColonyAnt {
     }
 
     update() {
+
+        this.bounceOffWallTileAtPixelCoord(this.pixelCoord.x, this.pixelCoord.y);
+
         this.pixelCoord.x += this.speedX;
         this.pixelCoord.y += this.speedY;
 
         this.sprite.transform.position.x = this.pixelCoord.x;
         this.sprite.transform.position.y = this.pixelCoord.y;
 
-        this.XNextFrame = this.pixelCoord.x + this.speedX;
-        this.YNextFrame = this.pixelCoord.y + this.speedY;
-
-        this.colNextFrame = colAtXCoord(this.XNextFrame / pixelSize);
-        this.rowNextFrame = rowAtYCoord(this.YNextFrame / pixelSize);
-
         this.gridCoord.col = colAtXCoord(this.pixelCoord.x / pixelSize);
         this.gridCoord.row = rowAtYCoord(this.pixelCoord.y / pixelSize);
-
-        if (colonyGridNodes[this.rowNextFrame][this.colNextFrame] === undefined) {
-            this.speedX *= -1;
-            this.speedY *= -1;
-        } else if (!colonyGridNodes[this.rowNextFrame][this.colNextFrame].isWalkable) {
-
-            this.speedX = (Math.random() - 0.5) * 3;
-            this.speedY = (Math.random() - 0.5) * 3;
-
-            //var prevSpeedX = this.speedX;
-            //var prevSpeedY = this.speedY;
-
-            //this.speedX = prevSpeedY;
-            //this.speedY = prevSpeedX;
-        }
 
     }
 
@@ -84,4 +66,46 @@ class ColonyAnt {
 
         this.sprite.drawScIn(inPos, inSize);
     }
+
+    bounceOffWallTileAtPixelCoord(pixelX, pixelY) {
+
+        if (this.gridCoord.col < 0 || this.gridCoord.col >= COLONY_COLS ||
+            this.gridCoord.row < 0 || this.gridCoord.row >= COLONY_ROWS) {
+            return false;
+        }
+
+        if (colonyGridTileMap[this.gridCoord.row][this.gridCoord.col] == COLONY_WALL ||
+            colonyGridNodes[this.gridCoord.row][this.gridCoord.col].isTunneled === false) {
+
+            var prevX = this.pixelCoord.x - this.speedX;
+            var prevY = this.pixelCoord.y - this.speedY
+            var prevTileCol = colAtXCoord(prevX / pixelSize);
+            var prevTileRow = rowAtYCoord(prevY / pixelSize);
+
+            var bothTestsFailed = true;
+
+            if (prevTileCol != this.gridCoord.col) {
+  
+                if (colonyGridTileMap[this.gridCoord.row][prevTileCol] != COLONY_WALL) {
+                    this.speedX *= -1;
+                    bothTestsFailed = false;
+                }
+            }
+
+            if (prevTileRow != this.gridCoord.col) {
+ 
+                if (colonyGridTileMap[prevTileRow][this.gridCoord.col] != COLONY_WALL) {
+                    this.speedY *= -1;
+                    bothTestsFailed = false;
+                }
+            }
+
+            if (bothTestsFailed) {
+                this.speedX *= -1;
+                this.speedY *= -1;
+            }
+
+        }
+    }
+
 }
