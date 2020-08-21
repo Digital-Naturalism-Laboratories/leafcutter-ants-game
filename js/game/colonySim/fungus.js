@@ -7,8 +7,8 @@ class Fungus {
         }
 
         this.pixelCoord = pixelCoordAtCenterOfTileCoord(col, row);
-        this.width = fungusNest.width / 2;
-        this.height = fungusNest.height / 2;
+        this.width = (fungusNest.width / 2) * pixelSize;
+        this.height = (fungusNest.height / 2) * pixelSize;
     }
 
     update = function(){

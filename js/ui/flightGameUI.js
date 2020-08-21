@@ -111,30 +111,32 @@ function flightGameUICustomDraw(deltaTime) {
   flyingQueen.draw(deltaTime);
 
   renderer.fillStyle = "white";
-  renderer.font = "40px SmallBoldPixel";
-  renderer.fillText("Mates: " + mateCount, 50, gameHeight - 50);
+  renderer.font = (30 * pixelSize) + "px SmallBoldPixel";
+  renderer.fillText("Mates: " + mateCount, 25 * pixelSize, 25 * pixelSize);
 
-  renderer.fillText("Genetic Diversity: ", gameWidth - 450, gameHeight - 100);
-  renderer.fillText("Energy: ", gameWidth - 300, gameHeight - 50);
+  renderer.fillText("Genetic Diversity: ", 25 * pixelSize, 75  * pixelSize);
+  renderer.fillText("Energy: ", 140 * pixelSize, 50  * pixelSize);
 
+  //draw genetic diversity bar
   renderer.fillStyle = 'blue';
-  renderer.fillRect(gameWidth - 150, gameHeight - 125, diversityBarLength, 34);
+  renderer.fillRect(225 * pixelSize, 58 * pixelSize, energyBarLength * pixelSize, 20 * pixelSize);
   renderer.beginPath();
   renderer.strokeStyle = 'white';
-  renderer.rect(gameWidth - 150, gameHeight - 125, 100, 34);
+  renderer.rect(225 * pixelSize, 58 * pixelSize, 100 * pixelSize, 20 * pixelSize);
   renderer.stroke();
 
+  //draw energy bar
   renderer.fillStyle = 'green';
-  renderer.fillRect(gameWidth - 150, gameHeight - 75, energyBarLength, 34);
+  renderer.fillRect(225 * pixelSize, 32 * pixelSize, energyBarLength * pixelSize, 20 * pixelSize);
   renderer.beginPath();
   renderer.strokeStyle = 'white';
-  renderer.rect(gameWidth - 150, gameHeight - 75, 100, 34);
+  renderer.rect(225 * pixelSize, 32 * pixelSize, 100 * pixelSize, 20 * pixelSize);
   renderer.stroke();
 
-  colorRect(20, 20, 100, 50, 'white');
-  renderer.fillStyle = "black";
-  renderer.font = "24px SmallBoldPixel";
-  renderer.fillText("Exit Game", 25, 50);
+  //colorRect(20 * pixelSize, 20 * pixelSize, 100 * pixelSize, 50 * pixelSize, 'white');
+  //renderer.fillStyle = "black";
+  //renderer.font = (24 * pixelSize) + "px SmallBoldPixel";
+  //renderer.fillText("Exit Game", 25 * pixelSize, 50 * pixelSize);
 }
 
 function flightGameUICustomEvents(deltaTime) {
