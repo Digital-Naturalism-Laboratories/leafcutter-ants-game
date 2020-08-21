@@ -129,6 +129,8 @@ var population = 1000;
 var introTimer = 5000;
 var gridStartHeightFromTop;
 
+var banner;
+
 function setupColonyGameUI() {
 
   //var gridStartHeightFromTop = gameHeight * 0.2;
@@ -139,6 +141,8 @@ function setupColonyGameUI() {
   loadImages();
   fungus = new Fungus(fungus_col, fungus_row);
   queen = new Queen(fungus_col, fungus_row, (GRID_NODE_SIZE * 11));
+
+  banner = new ColonyMessageBanner();
 
   for (i = 0; i < workerCount; i++) {
     workers[i] = new ColonyWorkerAnt(COLONY_COLS / workerCount * i, 1);
@@ -185,6 +189,7 @@ function colonyGameUICustomDraw(deltaTime) {
   fungus.draw();
 
   drawStatsBlock();
+  banner.draw();
 
   //renderer.fillStyle = 'black';
   //renderer.fillRect(0, 0, GRID_NODE_SIZE * COLONY_COLS, GRID_NODE_SIZE * COLONY_ROWS);
