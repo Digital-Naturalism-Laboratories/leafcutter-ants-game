@@ -1,11 +1,17 @@
 const COLONYGAMEUI = 2;
 var colonyGameUI = [];
 
+var isGameMuted = false;
+
 var groundBG = document.createElement('img');
 var grassLayer = document.createElement('img');
 var fungusNest = document.createElement('img');
 var worker_right = document.createElement('img');
 var worker_with_minims = document.createElement('img');
+var top_mound = document.createElement('img');
+var fullscreen_button = document.createElement('img');
+var mute_button = document.createElement('img');
+var unmute_button = document.createElement('img');
 
 var fungus_col = 23;
 var fungus_row = 7;
@@ -13,7 +19,6 @@ var fungus_row = 7;
 var totalMilliseconds = 0;
 
 var bgmColony = document.createElement('audio');
-
 
 var row_queue = [];
 var col_queue = [];
@@ -178,6 +183,7 @@ function colonyGameUICustomDraw(deltaTime) {
 
   renderer.drawImage(groundBG, 0, -(groundBG.height * 0.35 * pixelSize), gameWidth, gameHeight * 0.95);
   renderer.drawImage(grassLayer, 0, -(groundBG.height * 0.20 * pixelSize), gameWidth, gameHeight * 0.35);
+  renderer.drawImage(top_mound, (GRID_NODE_SIZE * 18.4) * pixelSize, 5 * pixelSize, (top_mound.width / 2) * pixelSize, (top_mound.height / 2 ) * pixelSize);
 
   //digTunnel();
   drawColonyTiles();
@@ -191,8 +197,9 @@ function colonyGameUICustomDraw(deltaTime) {
   drawStatsBlock();
   banner.draw();
 
-  //renderer.fillStyle = 'black';
-  //renderer.fillRect(0, 0, GRID_NODE_SIZE * COLONY_COLS, GRID_NODE_SIZE * COLONY_ROWS);
+  //test circle
+  //colorCircle(gameWidth - (50 * pixelSize), 100 * pixelSize, 30 * pixelSize)
+
 }
 
 function colonyGameUICustomEvents(deltaTime) {
@@ -211,6 +218,41 @@ function colonyGameUICustomEvents(deltaTime) {
     if (getDistBtwVec2(vec2(gameWidth - 50, gameHeight * 0.84), vec2(lastTouchPos.x, lastTouchPos.y)) < 50) {
       //enableFullScreen(canvas);
     }
+
+    //click to mute/unmute
+    if (getDistBtwVec2(vec2(gameWidth - (50 * pixelSize), 100 * pixelSize), vec2(lastTouchPos.x, lastTouchPos.y)) < 50) {
+      isGameMuted = !isGameMuted;
+    }
+
+    //click to enable fullscreen
+    if (getDistBtwVec2(vec2(gameWidth - (50 * pixelSize), 50 * pixelSize), vec2(lastTouchPos.x, lastTouchPos.y)) < 50) {
+      enableFullScreen(canvas);
+
+      //reset screen size variables to new screen size
+      gameWidth = window.innerWidth;
+      gameHeight = window.innerHeight;
+
+      sizeFactor = 0;
+      if (gameWidth / gameHeight > 1.25) {
+        sizeFactor = gameHeight;
+        gameWidth = gameHeight + (gameHeight / 4);
+      } else {
+        sizeFactor = gameWidth - (gameWidth / 4);
+        gameHeight = gameWidth - (gameWidth / 4);
+      }
+
+      pixelSize = sizeFactor / 500.0;
+
+      canvas.width = gameWidth;
+      canvas.height = gameHeight;
+      canvas.style.position = "absolute";
+      canvasStartY = (window.innerHeight / 2) - (gameHeight / 2);
+      canvas.style.top = canvasStartY.toString() + "px";
+      canvasStartX = (window.innerWidth / 2) - (gameWidth / 2);
+      canvas.style.left = canvasStartX.toString() + "px";
+    }
+
+
 
   }
 }
@@ -247,6 +289,22 @@ function loadImages() {
     {
       varName: worker_with_minims,
       fileName: "8bit_Worker_With_Minims.png"
+    },
+    {
+      varName: top_mound,
+      fileName: "Top_Mound.png"
+    },
+    {
+      varName: fullscreen_button,
+      fileName: "Game-UI-Fullscreen.png"
+    },
+    {
+      varName: mute_button,
+      fileName: "Game-UI-mute.png"
+    },
+    {
+      varName: unmute_button,
+      fileName: "Game-UI-unmute.png"
     },
     {
       tunnelType: COLONY_TUNNEL_VERT,

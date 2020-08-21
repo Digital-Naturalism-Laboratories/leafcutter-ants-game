@@ -32,4 +32,15 @@ function drawStatsBlock() {
     //renderer.fillStyle = "black";
     renderer.font = "24px SmallBoldPixel";
     //renderer.fillText("Full Screen", gameWidth - 100, gameHeight * 0.84);
+
+    //draw full screen button
+    renderer.drawImage(fullscreen_button, 0, 0, gameWidth, gameHeight);
+
+    //draw mute/unmute buttons
+    if (isGameMuted){
+        renderer.drawImage(unmute_button, 0, 0, gameWidth, gameHeight);
+    } else {
+        renderer.drawImage(mute_button, 0, 0, gameWidth, gameHeight);
+    }
+
 }
