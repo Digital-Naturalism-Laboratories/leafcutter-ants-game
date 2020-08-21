@@ -34,11 +34,10 @@ function ParentAntObject()
 		}
 		else 
 		{
-			console.log('inside else check of toggle sprite sheet');
-			console.log('this.currentSpriteSheet: ' + this.currentSpriteSheet.src);
+			
 			if (this.currentSpriteSheet === bigAntWalkingSpriteSheet || this.currentSpriteSheet === bigAntWalkingInfectedSpriteSheet)
 			{
-				console.log('should switch to big ant idle infected sprite sheet');
+				
 				this.currentSpriteSheet = bigAntIdleInfectedSpriteSheet;
 				return;
 			}

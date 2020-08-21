@@ -284,6 +284,7 @@ function GroundMinimManager()
 			{
 				defenseGame.parentAntObject.currentSpriteSheet = bigAntWalkingSpriteSheet;
 			}
+			
 		}
 	}
 }

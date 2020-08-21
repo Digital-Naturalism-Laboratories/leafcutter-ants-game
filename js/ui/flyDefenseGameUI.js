@@ -42,6 +42,7 @@ defenseGame.initialize = function()
     this.audioManager = new AudioManager();
     
     
+    
 
     //background section
 	defenseGame.background = new Background();
@@ -83,6 +84,9 @@ defenseGame.initialize = function()
     this.groundMinimManager.initializeGroundMinims(5);
 
 	// console.log('defense game init called');
+
+	this.drawWhatAboutMe = false;
+
 	this.events = function()
 	{
 		// console.log('inside custom events');
@@ -124,51 +128,73 @@ defenseGame.initialize = function()
 	
 	this.draw = function()
 	{
-		//console.log('inside draw function of defense game');
-		defenseGame.background.draw();
+		
+				//console.log('inside draw function of defense game');
+			defenseGame.background.draw();
+			
+			
+			
+
+			this.NPCBigAnt1.draw();
+			this.NPCBigAnt2.draw();
+			defenseGame.parentAntObject.draw();
+			// defenseGame.plantedEggManager.draw();
+			defenseGame.background.fungusSporeFeedbackAnimationManager.draw();
+
+			defenseGame.background.pheremoneGapManager.drawAlertMessages();
+
+			this.groundMinimManager.drawGroundMinims();
+			
+		  	
+
+		  	
+
+			this.flyManager.drawFlies();
+
+			this.background.fungusTallyDiv.draw();
+			this.background.infectionTallyDiv.draw();
+
+			// renderer.fillStyle = 'lawngreen';
+		//     	renderer.fillRect(renderer.canvas.width * 0.845,(renderer.canvas.height * 0.1) - 30, this.timeLabelWidth*1.95,this.timeLabelWidth );
+
+		  	let timerNumberConvertedToString = defenseGame.timeLeft.toString();
+		  	let labelWidth =  renderer.measureText(timerNumberConvertedToString).width;
+
+		  	renderer.fillStyle = 'white';
+			renderer.font = '75px SmallBoldPixel';
+		  	renderer.fillText('TIME LEFT: ' + timerNumberConvertedToString, renderer.canvas.width * 0.01,renderer.canvas.height * 0.25);
+
+			if (this.colonyReached)
+			{
+				renderer.fillStyle = 'white';
+				let fontSize = 150;
+				let stringedFontSize = fontSize.toString();
+				renderer.font = stringedFontSize + 'px SmallBoldPixel';
+				let colonyReachedText = 'COLONY REACHED!';
+				let colonyReachedTextWidth = renderer.measureText(colonyReachedText).width;
+				renderer.fillText(colonyReachedText, renderer.canvas.width/2 - colonyReachedTextWidth/2,
+													 renderer.canvas.height/2 - fontSize/2);
+			}
+
 		
 		
 		
-
-		this.NPCBigAnt1.draw();
-		this.NPCBigAnt2.draw();
-		defenseGame.parentAntObject.draw();
-		// defenseGame.plantedEggManager.draw();
-		defenseGame.background.fungusSporeFeedbackAnimationManager.draw();
-
-		defenseGame.background.pheremoneGapManager.drawAlertMessages();
-
-		this.groundMinimManager.drawGroundMinims();
 		
-      	
+	}//end of draw
 
-      	
-
-		this.flyManager.drawFlies();
-
-		this.background.fungusTallyDiv.draw();
-		this.background.infectionTallyDiv.draw();
-
-		// renderer.fillStyle = 'lawngreen';
-  //     	renderer.fillRect(renderer.canvas.width * 0.845,(renderer.canvas.height * 0.1) - 30, this.timeLabelWidth*1.95,this.timeLabelWidth );
-
-      	let timerNumberConvertedToString = defenseGame.timeLeft.toString();
-      	let labelWidth =  renderer.measureText(timerNumberConvertedToString).width;
-
-      	renderer.fillStyle = 'white';
-		renderer.font = '75px SmallBoldPixel';
-      	renderer.fillText('TIME LEFT: ' + timerNumberConvertedToString, renderer.canvas.width * 0.01,renderer.canvas.height * 0.25);
-	
-		if (this.colonyReached)
-		{
-			renderer.fillStyle = 'white';
-			let fontSize = 150;
-			let stringedFontSize = fontSize.toString();
-			renderer.font = stringedFontSize + 'px SmallBoldPixel';
-			let colonyReachedText = 'COLONY REACHED!';
-			let colonyReachedTextWidth = renderer.measureText(colonyReachedText).width;
-			renderer.fillText(colonyReachedText, renderer.canvas.width/2 - colonyReachedTextWidth/2,
-												 renderer.canvas.height/2 - fontSize/2);
-		}
-	}
+	// this.startingWhatAboutMeImageWidth = 300;
+	// this.currentWhatAboutMeImageWidth = 300;
+	// this.startingWhatAboutMeImageHeight = 300;
+	// this.currentWhatAboutMeImageHeight = 300;
+	// this.increaseWhatAboutMeDimensions = function()
+	// {
+	// 	let _this = this;
+	// 	console.log('inside increaseWhatAboutMeDimensions');
+	// 	console.log('this.currentWhatAboutMeImageWidth: ' + this.currentWhatAboutMeImageWidth);
+	// 	if (this.currentWhatAboutMeImageWidth < 900)
+	// 	{
+	// 		this.currentWhatAboutMeImageWidth = this.currentWhatAboutMeImageWidth + this.startingWhatAboutMeImageWidth;
+	// 		this.currentWhatAboutMeImageHeight = this.currentWhatAboutMeImageHeight + this.startingWhatAboutMeImageHeight;
+	// 	}
+	// }
 }

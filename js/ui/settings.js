@@ -7,6 +7,7 @@ function uiInit()
     setupColonyGameUI();
     setupLeafcuttingUI();
     defenseGame.initialize();
+    defenseGame.audioManager.populateMasterArrayOfAudioTags();
 
     uistates = [];
     uistates.push(new UIState(mainMenuUI));

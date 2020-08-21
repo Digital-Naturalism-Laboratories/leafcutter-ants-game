@@ -225,6 +225,7 @@ function colonyGameUICustomEvents(deltaTime) {
     //click to mute/unmute
     if (getDistBtwVec2(vec2(gameWidth - (50 * pixelSize), 100 * pixelSize), vec2(lastTouchPos.x, lastTouchPos.y)) < 50) {
       isGameMuted = !isGameMuted;
+      defenseGame.audioManager.toggleMuteForAllAudioTags();
     }
 
     //click to enable fullscreen

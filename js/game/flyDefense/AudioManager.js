@@ -1,5 +1,47 @@
 function AudioManager()
 {
+	this.arrayOfAllAudioTags = [];
+
+	this.populateMasterArrayOfAudioTags = function()
+	{
+		this.arrayOfAllAudioTags.push(bgmIntro,this.ambienceManager.ambienceWash,this.ambienceManager.scatteredBirdChirp,
+		this.ambienceManager.cicada1,this.ambienceManager.cicada2,this.ambienceManager.cicada3,this.ambienceManager.cicada4,
+		this.sfxManager.stuckSwarmAlertSound,this.sfxManager.beefUpTrailFeedback,this.sfxManager.antInfectionSound,
+		this.sfxManager.eatingFungusSound1,this.sfxManager.eatingFungusSound2,this.sfxManager.eatingFungusSound3,
+		this.sfxManager.flyChasedSound1,this.sfxManager.flyChasedSound2,this.sfxManager.flyChasedSound3,
+		this.sfxManager.pheremoneGapTouchedSound1,this.sfxManager.pheremoneGapTouchedSound2,this.sfxManager.pheremoneGapTouchedSound3,
+		this.sfxManager.leafTouchedSound1,this.sfxManager.leafTouchedSound2,this.sfxManager.leafTouchedSound3,
+		this.sfxManager.thatDoesNothingSound1,this.sfxManager.thatDoesNothingSound2,this.sfxManager.thatDoesNothingSound3,
+		this.sfxManager.flyBuzzingNormal,this.sfxManager.fliesSwarming,this.sfxManager.groundMinimFootsteps,
+		this.sfxManager.groundMinimFootstepsAccelerated,this.sfxManager.leafMinimFootsteps,
+		this.sfxManager.timeIsAlmostOutClockTickingLoop,
+
+		bgmColony,flyingGameSFX,flyingGameSFXPaths,leafcuttingBGM[0],leafcuttingBGM[1],leafcuttingSFX[0],leafcuttingSFX[1],
+		leafcuttingSFX[2],leafcuttingSFX[3],leafcuttingSFX[4],leafcuttingSFX[5],leafcuttingSFX[6],leafcuttingSFX[7]);
+	}
+
+	this.isMutingEverything = false;
+	this.toggleMuteForAllAudioTags = function()
+	{
+		if (this.isMutingEverything)
+		{
+			for (let i = 0; i < this.arrayOfAllAudioTags.length; i++)
+			{
+				this.arrayOfAllAudioTags[i].muted = false;
+				this.isMutingEverything = false;
+			}
+		}
+		else
+		{
+			for (let i = 0; i < this.arrayOfAllAudioTags.length; i++)
+			{
+				this.arrayOfAllAudioTags[i].muted = true;
+				this.isMutingEverything = true;
+			}
+		}
+		
+	}
+
 	this.ambienceManager = new AmbienceManager();
 	this.sfxManager = new SFXManager();
 
@@ -121,6 +163,9 @@ function SFXManager()
 
 	this.antInfectionSound = document.createElement('audio');
 	this.antInfectionSound.setAttribute('src', 'audio/flyDefense/antInfectionSound.mp3');
+
+	this.whatAboutMeSound = document.createElement('audio');
+	this.whatAboutMeSound.setAttribute('src', 'audio/flyDefense/WhatAboutMeSound.mp3');
 
 	//avoid cutoff one shots
 	this.eatingFungusSound1 = document.createElement('audio');
