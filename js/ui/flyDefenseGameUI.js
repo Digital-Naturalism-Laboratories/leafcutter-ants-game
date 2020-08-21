@@ -51,6 +51,9 @@ defenseGame.initialize = function()
 	this.muteButton = new flyDefenseMuteButton();
     this.muteButton.initialize();
 
+    this.fullScreenButton = new defenseGameFullScreenButton();
+
+
 	//center ant with the controllable minim
 	this.parentAntObject = new ParentAntObject();
 	this.parentAntObject.initialize();
@@ -177,7 +180,7 @@ defenseGame.initialize = function()
 
 		
 			this.muteButton.draw();
-		
+			//this.fullScreenButton.draw();
 		
 	}//end of draw
 

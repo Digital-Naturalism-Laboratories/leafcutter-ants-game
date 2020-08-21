@@ -472,18 +472,34 @@ function enableFullScreen(e)
 {
     if (!FULLSCREEN_ENABLED) return;
 
-  try {
-    if (e.requestFullscreen)
-    e.requestFullscreen();
-  else if (e.msRequestFullscreen)
-    e.msRequestFullscreen();
-  else if (e.mozRequestFullScreen)
-    e.mozRequestFullScreen();
-  else if (e.webkitRequestFullScreen)
-    e.webkitRequestFullScreen();
-  } catch(e) {
-      console.log("browser refused fullscreen request. ignoring.")
-  }
+    if (!fullScreenActive)
+    {
+      try {
+        if (e.requestFullscreen)
+        {
+          e.requestFullscreen();
+          fullScreenActive = true;
+        }
+        else if (e.msRequestFullscreen)
+        {
+          e.msRequestFullscreen();
+          fullScreenActive = true;
+        }
+        else if (e.mozRequestFullScreen)
+        {
+          e.mozRequestFullScreen();
+          fullScreenActive = true;
+        } 
+        else if (e.webkitRequestFullScreen)
+        {
+          e.webkitRequestFullScreen();
+          fullScreenActive = true;
+        }
+        } catch(e) {
+            console.log("browser refused fullscreen request. ignoring.")
+        }
+    }
+  
 }
 
 function disableFullscreen(e) 
@@ -493,14 +509,32 @@ function disableFullscreen(e)
   // FIXME: if user hits ESC while playing (or alt-tab etc) the game bugs out below
   // because we are not longer in fullscreen mode
   // solution: listen for exitfullscreen event and set FULLSCREEN_ENABLED to false
+  console.log('inside disableFullscreen');
   if (e.exitFullscreen)
+  {
+    console.log('found e.exitFullscreen');
     e.exitFullscreen();
+    fullScreenActive = false;
+  }
   else if (e.mozCancelFullScreen)
+  {
+    console.log('found e.mozCancelFullScreen');
     e.mozCancelFullScreen();
+    fullScreenActive = false;
+  }
   else if (e.webkitExitFullscreen)
+  {
+    console.log('found e.webkitExitFullscreen');
     e.webkitExitFullscreen();
+    document.exitfullscreen();
+    fullScreenActive = false;
+  }
   else if (e.msExitFullscreen)
+  {
+    console.log('found e.msExitFullscreen');
     e.msExitFullscreen();
+    fullScreenActive = false;
+  }
 }
 
 // example:

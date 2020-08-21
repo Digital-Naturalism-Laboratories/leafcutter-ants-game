@@ -251,8 +251,9 @@ function Background()
 	this.handleTouchStart = function()
 	{
 		this.touchStartCoordinates = vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY);
-		console.log(this.touchStartCoordinates);
+		
 		defenseGame.muteButton.handleInput(this.touchStartCoordinates);
+		defenseGame.fullScreenButton.handleInput(this.touchStartCoordinates);
 		let arrayOfPheremoneGaps = this.pheremoneGapManager.arrayOfPheremoneGaps;
 		for (let i = 0; i < arrayOfPheremoneGaps.length; i++)
 		{
@@ -271,8 +272,9 @@ function Background()
 	this.handleMouseDown = function()
 	{
 		this.mouseDownCoordinates = vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY);
-		console.log(this.mouseDownCoordinates);
+		
 		defenseGame.muteButton.handleInput(this.mouseDownCoordinates);
+		defenseGame.fullScreenButton.handleInput(this.mouseDownCoordinates);
 		let arrayOfPheremoneGaps = this.pheremoneGapManager.arrayOfPheremoneGaps;
 		for (let i = 0; i < arrayOfPheremoneGaps.length; i++)
 		{
@@ -353,7 +355,7 @@ function PheremoneGap(x)
 
 	this.update = function()
 	{
-		if (!defenseGame.background.stuckOnPheremoneGap && defenseGame.timeLeft > 0)
+		if (!defenseGame.background.stuckOnPheremoneGap && defenseGame.timeLeft > 0 && !defenseGame.colonyReached)
 		{
 			this.x -= renderer.canvas.width*0.001 - (renderer.canvas.width*0.001 *defenseGame.background.slowDownRateFromInfections);
 		}
@@ -577,11 +579,53 @@ function flyDefenseMuteButton()
 	this.hitBoxBottomY = this.hitBoxTopY + gameHeight*0.15;
 	this.handleInput = function(inputCoordinates)
 	{
-		console.log(inputCoordinates);
+		
 		if (inputCoordinates.x > this.hitBoxLeftX && inputCoordinates.x < this.hitBoxRightX &&
 			inputCoordinates.y > this.hitBoxTopY && inputCoordinates.y < this.hitBoxBottomY)
 		{
 			this.toggle();
 		}
+	}
+}
+
+function defenseGameFullScreenButton()
+{
+	this.currentImage = fullscreen_button;
+
+	this.draw = function()
+	{
+		renderer.drawImage(this.currentImage, 0,0, renderer.canvas.width,renderer.canvas.height);
+		if (defenseGame.debugOn)
+		{
+			renderer.strokeStyle = 'black';
+			renderer.strokeRect(gameWidth*0.85,0, gameWidth*0.15,gameHeight*0.15);
+		}
+	}
+
+	this.toggle = function()
+	{
+		console.log('fullScreenActive: ' + fullScreenActive);
+		if (fullScreenActive === false)
+		{
+			enableFullScreen(canvas);
+		}
+		else if (fullScreenActive === true)
+		{
+			console.log('inside fullScreenActive is true check');
+			disableFullscreen(canvas);
+		}
+	}
+
+	this.hitBoxLeftX = gameWidth*0.85;
+	this.hitBoxTopY = 0;
+	this.hitBoxRightX = this.hitBoxLeftX + gameWidth*0.15;
+	this.hitBoxBottomY = this.hitBoxTopY + gameHeight*0.15;
+	this.handleInput = function(inputCoordinates)
+	{
+		// if (inputCoordinates.x > this.hitBoxLeftX && inputCoordinates.x < this.hitBoxRightX &&
+		// 	inputCoordinates.y > this.hitBoxTopY && inputCoordinates.y < this.hitBoxBottomY)
+		// {
+		// 	this.toggle();
+		// }
 	}
 }

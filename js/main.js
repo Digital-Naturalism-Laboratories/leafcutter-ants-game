@@ -1,5 +1,5 @@
 var bgmIntro = document.createElement('audio');
-
+var fullScreenActive = false;
 window.onload = function()
 {
     init();
