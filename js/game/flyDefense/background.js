@@ -463,6 +463,14 @@ function PheremoneGapManager()
 			{
 				
 				defenseGame.background.stuckOnPheremoneGap = true;
+				if (defenseGame.parentAntObject.hasBeenInfected)
+				{
+					defenseGame.parentAntObject.currentSpriteSheet = bigAntIdleInfectedSpriteSheet;
+				}
+				else
+				{
+					defenseGame.parentAntObject.currentSpriteSheet = bigAntIdleSpriteSheet;
+				}
 				defenseGame.flyManager.toggleSwarm();
 				defenseGame.background.flashAlertInterval.start();
 				if (defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.paused)

@@ -20,16 +20,39 @@ function ParentAntObject()
 	this.hasBeenInfected = false;
 	this.toggleSpriteSheet = function()
 	{
+		if (!defenseGame.background.stuckOnPheremoneGap && !defenseGame.colonyReached)
+		{
+			if (this.currentSpriteSheet === bigAntWalkingSpriteSheet)
+			{
+				
+				this.currentSpriteSheet = bigAntWalkingInfectedSpriteSheet;
+			}
+			else
+			{
+				this.currentSpriteSheet = bigAntWalkingSpriteSheet;
+			}
+		}
+		else 
+		{
+			console.log('inside else check of toggle sprite sheet');
+			console.log('this.currentSpriteSheet: ' + this.currentSpriteSheet.src);
+			if (this.currentSpriteSheet === bigAntWalkingSpriteSheet || this.currentSpriteSheet === bigAntWalkingInfectedSpriteSheet)
+			{
+				console.log('should switch to big ant idle infected sprite sheet');
+				this.currentSpriteSheet = bigAntIdleInfectedSpriteSheet;
+				return;
+			}
+
+			if (this.currentSpriteSheet === bigAntIdleInfectedSpriteSheet)
+			{
+				this.currentSpriteSheet = bigAntIdleSpriteSheet;
+			}
+			else
+			{
+				this.currentSpriteSheet = bigAntIdleInfectedSpriteSheet;
+			}
+		}
 		
-		if (this.currentSpriteSheet === bigAntWalkingSpriteSheet)
-		{
-			
-			this.currentSpriteSheet = bigAntWalkingInfectedSpriteSheet;
-		}
-		else
-		{
-			this.currentSpriteSheet = bigAntWalkingSpriteSheet;
-		}
 	}
 
 	this.cycleBigAntImages = function()

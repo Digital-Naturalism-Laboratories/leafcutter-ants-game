@@ -195,6 +195,10 @@ function Fly(name,status)
 				if (!defenseGame.parentAntObject.hasBeenInfected)
 				{
 					defenseGame.parentAntObject.hasBeenInfected = true;
+					if (defenseGame.background.stuckOnPheremoneGap)
+					{
+						defenseGame.parentAntObject.currentSpriteSheet = bigAntIdleInfectedSpriteSheet;
+					}
 					setInterval(function() {defenseGame.parentAntObject.toggleSpriteSheet()},200);
 				}
 				this.status = 'leaving after planting';
