@@ -25,10 +25,13 @@ class FlyingQueen {
         this.collisionRadius = 15;
         this.isMating = false;
         this.lastMate;
+        this.isKnockedBack = false;
+        this.knockbackTimer = 15;
+        this.knockbackTimerCurrent = 0;
 
         this.movementStates = {
             FLYING: "flying",
-            FALLING: "falling"
+            FALLING: "falling",
         }
         this.movementState = this.movementStates.FALLING;
 
@@ -71,7 +74,18 @@ class FlyingQueen {
 
             //if (this.isMating) return;
 
-            if (isTouched) {
+            if (this.isKnockedBack) {
+                console.log ("knocked back");
+
+                this.knockbackTimerCurrent++;
+                this.x += this.horizontalSpeed * -6 ;
+                this.y += this.verticalSpeed * -4;
+                if (this.knockbackTimerCurrent >= this.knockbackTimer){
+                    this.isKnockedBack = false;
+                    this.knockbackTimerCurrent = 0;
+                }
+
+            } else if (isTouched) {
                 if (this.x < lastTouchPos.x) {
                     this.x += this.horizontalSpeed;
                 }
@@ -112,6 +126,8 @@ class FlyingQueen {
             this.sprite.transform.position.y = this.y;
             this.matingSprite.transform.position.x = this.x;
             this.matingSprite.transform.position.y = this.y;
+
+            this.collideWithRivalQueen();
 
         } else {
 
@@ -177,6 +193,17 @@ class FlyingQueen {
         this.animationFrameLength = this.flyingAnimationFrameLength;
         this.animationTimer = 0;
         this.animationFrameCurrent = 0;
+    }
+
+    collideWithRivalQueen() {
+        if (!this.isPlayerControlled) return;
+
+        for (var i = 0; i < rivalQueens.length; i++) {
+            if (getDistBtwVec2(rivalQueens[i].sprite.transform.position, this.sprite.transform.position) < rivalQueens[i].collisionRadius + this.collisionRadius) {
+                this.isKnockedBack = true;
+            }
+        }
+
     }
 
     draw() {
