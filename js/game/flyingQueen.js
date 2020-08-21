@@ -75,7 +75,6 @@ class FlyingQueen {
             //if (this.isMating) return;
 
             if (this.isKnockedBack) {
-                console.log ("knocked back");
 
                 this.knockbackTimerCurrent++;
                 this.x += this.horizontalSpeed * -6 ;

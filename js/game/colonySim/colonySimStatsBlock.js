@@ -3,15 +3,15 @@ function drawStatsBlock() {
     renderer.textAlign = "left";
     renderer.font = (36 * pixelSize).toString() + "px SmallBoldPixel";
 
-    renderer.fillText("LEAVES: " + leafMaterial + "mg", 50 * pixelSize, gameHeight - (85 * pixelSize));
-    renderer.fillText("FUNGUS: " + leafMaterial + "mg", 50 * pixelSize, gameHeight - (65 * pixelSize));
+    renderer.fillText("LEAVES: " + Math.floor(colony.leaves) + "mg", 50 * pixelSize, gameHeight - (85 * pixelSize));
+    renderer.fillText("FUNGUS: " + Math.floor(colony.fungus) + "mg", 50 * pixelSize, gameHeight - (65 * pixelSize));
     renderer.fillText("TOTAL EGGS LAID: " + eggCount, 50 * pixelSize, gameHeight - (15 * pixelSize));
 
-    renderer.fillText("POPULATION:   " + population, gameWidth - (250 * pixelSize), gameHeight - (85 * pixelSize));
+    renderer.fillText("POPULATION:   " + colony.population, gameWidth - (250 * pixelSize), gameHeight - (85 * pixelSize));
     renderer.font = (30 * pixelSize).toString() + "px SmallBoldPixel";
-    renderer.fillText("WORKERS:         " + workerCount, gameWidth - (250 * pixelSize), gameHeight - (60 * pixelSize));
-    renderer.fillText("BROOD:           " + 0, gameWidth - (250 * pixelSize), gameHeight - (40 * pixelSize));
-    renderer.fillText("REPRODUCTIVES:   " + 0, gameWidth - (250 * pixelSize), gameHeight - (20 * pixelSize));
+    renderer.fillText("WORKERS:         " + colony.workers, gameWidth - (250 * pixelSize), gameHeight - (60 * pixelSize));
+    renderer.fillText("BROOD:           " + colony.brood, gameWidth - (250 * pixelSize), gameHeight - (40 * pixelSize));
+    renderer.fillText("REPRODUCTIVES:   " + colony.reproductives, gameWidth - (250 * pixelSize), gameHeight - (20 * pixelSize));
 
 
     renderer.fillStyle = "white";

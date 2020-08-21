@@ -7,8 +7,8 @@ class Fungus {
         }
 
         this.pixelCoord = pixelCoordAtCenterOfTileCoord(col, row);
-        this.width = (fungusNest.width / 2) * pixelSize;
-        this.height = (fungusNest.height / 2) * pixelSize;
+        this.width = (fungusNest.width / 3) * pixelSize;
+        this.height = (fungusNest.height / 3) * pixelSize;
     }
 
     update = function(){
@@ -16,7 +16,7 @@ class Fungus {
     }
 
     draw = function(){
-        renderer.drawImage(fungusNest, this.pixelCoord.x - (this.width / 2), this.pixelCoord.y - (this.height / 2), this.width, this.height);
+        renderer.drawImage(fungusNest, this.pixelCoord.x - (this.width / 2), this.pixelCoord.y - 25 * pixelSize, this.width, this.height);
         //colorCircle(this.pixelCoord.x, this.pixelCoord.y, GRID_NODE_SIZE, 'green');
     }
 

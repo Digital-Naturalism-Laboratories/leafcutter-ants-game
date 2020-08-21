@@ -121,6 +121,7 @@ var badFungusFromLeaves = 0; //from defense game
 var timeToReturnWithLeaves = 0; //from defense game
 var infectedAntsReturning = 0; //from defense game
 
+var colony;
 var fungusMass = 5; //grams
 var incomingLeaves = 0; //grams
 var workerCount = 6;
@@ -146,6 +147,7 @@ function setupColonyGameUI() {
   loadImages();
   fungus = new Fungus(fungus_col, fungus_row);
   queen = new Queen(fungus_col, fungus_row, (GRID_NODE_SIZE * 11));
+  colony = new Colony();
 
   banner = new ColonyMessageBanner();
 
@@ -177,6 +179,7 @@ function resetColonySimGame() {
 function colonyGameUICustomDraw(deltaTime) {
 
   fungus.update();
+  colony.update();
 
   totalMilliseconds += deltaTime;
   var population = Math.floor(1000 + (totalMilliseconds / 1000) + (1 * geneticDiversity));
@@ -319,8 +322,76 @@ function loadImages() {
       fileName: "dirt_tile.png"
     },
     {
-      tunnelType: COLONY_TUNNEL_START,
-      fileName: "dirt_tile.png"
+      tunnelType: COLONY_TUNNEL_START_VERT,
+      fileName: "tunnel_tile_vert.png"
+    },
+    {
+      tunnelType: COLONY_TUNNEL_START_HOR,
+      fileName: "tunnel_tile_hor.png"
+    },
+    {
+      tunnelType: COLONY_TUNNEL_START_LEFT_WALL,
+      fileName: "dirt_tile_left_wall.png"
+    },
+    {
+      tunnelType: COLONY_TUNNEL_START_UP_WALL,
+      fileName: "dirt_tile_up_wall.png"
+    },
+    {
+      tunnelType: COLONY_TUNNEL_START_RIGHT_WALL,
+      fileName: "dirt_tile_right_wall.png"
+    },
+    {
+      tunnelType: COLONY_TUNNEL_START_DOWN_WALL,
+      fileName: "dirt_tile_down_wall.png"
+    },
+    {
+      tunnelType: COLONY_TUNNEL_START_CORNER_DOWN_RIGHT,
+      fileName: "dirt_tile_corner_down_right.png"
+    },
+    {
+      tunnelType: COLONY_TUNNEL_START_CORNER_DOWN_LEFT,
+      fileName: "dirt_tile_corner_down_left.png"
+    },
+    {
+      tunnelType: COLONY_TUNNEL_START_CORNER_UP_LEFT,
+      fileName: "dirt_tile_corner_up_left.png"
+    },
+    {
+      tunnelType: COLONY_TUNNEL_START_CORNER_UP_RIGHT,
+      fileName: "dirt_tile_corner_up_right.png"
+    },
+    {
+      tunnelType: COLONY_TUNNEL_CORNER_DOWN_RIGHT,
+      fileName: "dirt_tile_corner_down_right.png"
+    },
+    {
+      tunnelType: COLONY_TUNNEL_CORNER_DOWN_LEFT,
+      fileName: "dirt_tile_corner_down_left.png"
+    },
+    {
+      tunnelType: COLONY_TUNNEL_CORNER_UP_LEFT,
+      fileName: "dirt_tile_corner_up_left.png"
+    },
+    {
+      tunnelType: COLONY_TUNNEL_CORNER_UP_RIGHT,
+      fileName: "dirt_tile_corner_up_right.png"
+    },
+    {
+      tunnelType: COLONY_TUNNEL_LEFT_WALL,
+      fileName: "dirt_tile_left_wall.png"
+    },
+    {
+      tunnelType: COLONY_TUNNEL_UP_WALL,
+      fileName: "dirt_tile_up_wall.png"
+    },
+    {
+      tunnelType: COLONY_TUNNEL_RIGHT_WALL,
+      fileName: "dirt_tile_right_wall.png"
+    },
+    {
+      tunnelType: COLONY_TUNNEL_DOWN_WALL,
+      fileName: "dirt_tile_down_wall.png"
     }
   ];
 

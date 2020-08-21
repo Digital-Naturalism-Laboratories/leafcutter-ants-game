@@ -24,7 +24,7 @@ class ColonyAnt {
 
         this.pixelCoord = pixelCoordAtCenterOfTileCoord(col, row);
 
-        this.sprite = new Sprite(tr(vec2(this.pixelCoord.x, this.pixelCoord.y), vec2(pixelSize * 0.25, pixelSize * 0.25)), new ImageObject("images/Animations/Soldier_Topdown_Walk_UpDown_Spritesheet.png", vec2(0, 0)));
+        this.sprite = new Sprite(tr(vec2(this.pixelCoord.x, this.pixelCoord.y), vec2(pixelSize * 0.15, pixelSize * 0.15)), new ImageObject("images/Animations/Soldier_Topdown_Walk_UpDown_Spritesheet.png", vec2(0, 0)));
 
         this.speedX = (Math.random() - 0.5) * 3;
         this.speedY = (Math.random() - 0.5) * 3;

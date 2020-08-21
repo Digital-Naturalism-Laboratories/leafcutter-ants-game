@@ -38,7 +38,7 @@ class ColonyGridNode {
         //}
 
         //if (this.isWalkable && this.gCost < 100) {
-        if (this.isWalkable && this.distanceFromFungus < (totalMilliseconds / 500) || colonyGridTileMap[this.gridCoord.y][this.gridCoord.x] === 9) {
+        if (this.isWalkable && this.distanceFromFungus < (totalMilliseconds / 500) || colonyGridTileMap[this.gridCoord.y][this.gridCoord.x] >= 90) {
             this.isTunneled = true;
         }
         
