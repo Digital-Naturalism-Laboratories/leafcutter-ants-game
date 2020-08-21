@@ -59,8 +59,8 @@ function Background()
 		this.groundLayerImage2 = groundLayerImage2;
 		this.grassLayerImage1 = grassLayerImage1;
 		this.grassLayerImage2 = grassLayerImage2;
-		this.leavesLayerImage1 = leavesLayerImage1;
-		this.leavesLayerImage2 = leavesLayerImage2;
+		this.leavesLayerImage1 = grassLayerImage2;
+		this.leavesLayerImage2 = grassLayerImage1;
 		this.forageLayerImage1 = forageLayerImage1;
 		this.forageLayerImage2 = forageLayerImage2;
 			
@@ -118,10 +118,10 @@ function Background()
 				
 				this.forageLayerImage1XCoordinate-=gameWidth*0.00025 - (gameWidth*0.00025 * this.slowDownRateFromInfections);
 				this.forageLayerImage2XCoordinate-=gameWidth*0.00025 - (gameWidth*0.00025 * this.slowDownRateFromInfections);
-				this.grassLayerImage1XCoordinate-=gameWidth*0.0005 - (gameWidth*0.0005 * this.slowDownRateFromInfections);
-				this.grassLayerImage2XCoordinate-=gameWidth*0.0005 - (gameWidth*0.0005 * this.slowDownRateFromInfections);
-				this.leavesLayerImage1XCoordinate-=gameWidth*0.00075 - (gameWidth*0.00075 * this.slowDownRateFromInfections);
-				this.leavesLayerImage2XCoordinate-=gameWidth*0.00075 - (gameWidth*0.00075 * this.slowDownRateFromInfections);
+				this.grassLayerImage1XCoordinate-=gameWidth*0.00075 - (gameWidth*0.00075 * this.slowDownRateFromInfections);
+				this.grassLayerImage2XCoordinate-=gameWidth*0.00075 - (gameWidth*0.00075 * this.slowDownRateFromInfections);
+				this.leavesLayerImage1XCoordinate-=gameWidth*0.0005 - (gameWidth*0.0005 * this.slowDownRateFromInfections);
+				this.leavesLayerImage2XCoordinate-=gameWidth*0.0005 - (gameWidth*0.0005 * this.slowDownRateFromInfections);
 				this.groundImage1xCoordinate-=gameWidth*0.001 - (gameWidth*0.001 * this.slowDownRateFromInfections);
 				this.groundImage2xCoordinate-=gameWidth*0.001 - (gameWidth*0.001 * this.slowDownRateFromInfections);
 				this.pheremoneStrip1ImageXCoordinate-=renderer.canvas.width*0.001 - (renderer.canvas.width*0.001 * this.slowDownRateFromInfections);
@@ -293,10 +293,10 @@ function Background()
 
 		renderer.drawImage(this.forageLayerImage1, this.forageLayerImage1XCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
 		renderer.drawImage(this.forageLayerImage2, this.forageLayerImage2XCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
+		renderer.drawImage(this.leavesLayerImage1, this.leavesLayerImage1XCoordinate,-renderer.canvas.height*0.1, renderer.canvas.width*1.01,renderer.canvas.height*1.25);
+		renderer.drawImage(this.leavesLayerImage2, this.leavesLayerImage2XCoordinate,-renderer.canvas.height*0.1, renderer.canvas.width*1.01,renderer.canvas.height*1.25);
 		renderer.drawImage(this.grassLayerImage1, this.grassLayerImage1XCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
 		renderer.drawImage(this.grassLayerImage2, this.grassLayerImage2XCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
-		renderer.drawImage(this.leavesLayerImage1, this.leavesLayerImage1XCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
-		renderer.drawImage(this.leavesLayerImage2, this.leavesLayerImage2XCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
 		renderer.drawImage(this.groundLayerImage1, this.groundImage1xCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
 		renderer.drawImage(this.groundLayerImage2, this.groundImage2xCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
 
