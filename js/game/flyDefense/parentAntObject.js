@@ -58,10 +58,21 @@ function ParentAntObject()
 	this.cycleBigAntImages = function()
 	{
 		this.currentBigAntWalkingImageIndex++;
-		if (this.currentBigAntWalkingImageIndex > 10)
+		if (!defenseGame.background.stuckOnPheremoneGap && !defenseGame.goalReached)
 		{
-			this.currentBigAntWalkingImageIndex = 0;
+			if (this.currentBigAntWalkingImageIndex > 10)
+			{
+				this.currentBigAntWalkingImageIndex = 0;
+			}
 		}
+		else
+		{
+			if (this.currentBigAntWalkingImageIndex > 20)
+			{
+				this.currentBigAntWalkingImageIndex = 0;
+			}
+		}
+			
 	}
 
 	// this.cycleBigAntImagesInterval = new frameInterval(this.cycleBigAntImages, 100);
