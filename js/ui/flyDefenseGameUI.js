@@ -42,13 +42,14 @@ defenseGame.initialize = function()
     this.audioManager = new AudioManager();
     
     
-    
+
 
     //background section
 	defenseGame.background = new Background();
 	defenseGame.background.initialize();
 
-
+	this.muteButton = new flyDefenseMuteButton();
+    this.muteButton.initialize();
 
 	//center ant with the controllable minim
 	this.parentAntObject = new ParentAntObject();
@@ -84,8 +85,6 @@ defenseGame.initialize = function()
     this.groundMinimManager.initializeGroundMinims(5);
 
 	// console.log('defense game init called');
-
-	this.drawWhatAboutMe = false;
 
 	this.events = function()
 	{
@@ -177,7 +176,7 @@ defenseGame.initialize = function()
 			}
 
 		
-		
+			this.muteButton.draw();
 		
 		
 	}//end of draw

@@ -39,7 +39,7 @@ function resetKeyPressed() { keysPressed = []; }
 function onTouchStart(ev)
 {
     isTouched = true;
-
+    
     for (let i = 0; i < ev.touches.length; i++)
         touchPos[i] = vec2(ev.touches[i].clientX, ev.touches[i].clientY);
 
@@ -65,6 +65,7 @@ function onTouchMove(ev)
 
 function onTouchEnd(ev)
 {
+    ev.preventDefault();
     for(let i = 0; i < 5; i++)
     {
         if(i >= ev.touches.length)

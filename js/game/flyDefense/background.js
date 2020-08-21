@@ -251,6 +251,8 @@ function Background()
 	this.handleTouchStart = function()
 	{
 		this.touchStartCoordinates = vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY);
+		console.log(this.touchStartCoordinates);
+		defenseGame.muteButton.handleInput(this.touchStartCoordinates);
 		let arrayOfPheremoneGaps = this.pheremoneGapManager.arrayOfPheremoneGaps;
 		for (let i = 0; i < arrayOfPheremoneGaps.length; i++)
 		{
@@ -261,7 +263,6 @@ function Background()
 				this.touchInsidePheremoneGap = true;
 				defenseGame.groundMinimManager.toggleEnRouteStatusAfterUserClick();	
 			}
-
 		}
 	}
 
@@ -270,6 +271,8 @@ function Background()
 	this.handleMouseDown = function()
 	{
 		this.mouseDownCoordinates = vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY);
+		console.log(this.mouseDownCoordinates);
+		defenseGame.muteButton.handleInput(this.mouseDownCoordinates);
 		let arrayOfPheremoneGaps = this.pheremoneGapManager.arrayOfPheremoneGaps;
 		for (let i = 0; i < arrayOfPheremoneGaps.length; i++)
 		{
@@ -525,6 +528,60 @@ function FungusSporeFeedbackAnimationManager()
 		for (let i = 0; i < this.arrayOfFungusSporeVisualFeedbackAnimations.length; i++)
 		{
 			this.arrayOfFungusSporeVisualFeedbackAnimations[i].draw();
+		}
+	}
+}
+
+function flyDefenseMuteButton()
+{
+	this.currentImage = undefined;
+
+	this.initialize = function()
+	{
+		if (defenseGame.audioManager.isMutingEverything)
+		{
+			this.currentImage = mute_button;
+		}
+		else
+		{
+			this.currentImage = unmute_button;
+		}
+	}
+
+	this.toggle = function()
+	{
+		if (defenseGame.audioManager.isMutingEverything)
+		{
+			this.currentImage = unmute_button;
+		}
+		else if (!defenseGame.audioManager.isMutingEverything)
+		{
+			this.currentImage = mute_button;
+		}
+		defenseGame.audioManager.toggleMuteForAllAudioTags();
+	}
+
+	this.draw = function()
+	{
+		renderer.drawImage(this.currentImage, 0,0, renderer.canvas.width,renderer.canvas.height);
+		if (defenseGame.debugOn)
+		{
+			renderer.strokeStyle = 'black';
+			renderer.strokeRect(gameWidth*0.85,gameHeight*0.15, gameWidth*0.15,gameHeight*0.15);
+		}
+	}
+
+	this.hitBoxLeftX = gameWidth*0.85;
+	this.hitBoxRightX = this.hitBoxLeftX + gameWidth*0.15;
+	this.hitBoxTopY = gameHeight*0.15;
+	this.hitBoxBottomY = this.hitBoxTopY + gameHeight*0.15;
+	this.handleInput = function(inputCoordinates)
+	{
+		console.log(inputCoordinates);
+		if (inputCoordinates.x > this.hitBoxLeftX && inputCoordinates.x < this.hitBoxRightX &&
+			inputCoordinates.y > this.hitBoxTopY && inputCoordinates.y < this.hitBoxBottomY)
+		{
+			this.toggle();
 		}
 	}
 }

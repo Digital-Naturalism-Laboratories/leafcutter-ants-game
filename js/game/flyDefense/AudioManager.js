@@ -164,9 +164,6 @@ function SFXManager()
 	this.antInfectionSound = document.createElement('audio');
 	this.antInfectionSound.setAttribute('src', 'audio/flyDefense/antInfectionSound.mp3');
 
-	this.whatAboutMeSound = document.createElement('audio');
-	this.whatAboutMeSound.setAttribute('src', 'audio/flyDefense/WhatAboutMeSound.mp3');
-
 	//avoid cutoff one shots
 	this.eatingFungusSound1 = document.createElement('audio');
 	this.eatingFungusSound1.setAttribute('src', 'audio/flyDefense/eatingFungus.mp3');
