@@ -78,10 +78,20 @@ function GroundMinim()
 	this.cycleImages = function()
 	{
 		this.currentImageIndex++;
-		if (this.currentImageIndex > 10)
+		if (this.currentSpriteSheet === groundMinimWalkingLeftSpriteSheet || this.currentSpriteSheet === groundMinimWalkingRightSpriteSheet)
+			{
+				if (this.currentImageIndex > 10)
+				{
+					this.currentImageIndex = 0;
+				}
+			}
+		else if (this.currentSpriteSheet === groundMinimIdleFacingLeftSpriteSheet || this.currentSpriteSheet === groundMinimIdleFacingRightSpriteSheet)
 		{
-			this.currentImageIndex = 0;
-		}
+				if (this.currentImageIndex > 21)
+				{
+					this.currentImageIndex = 0;
+				}
+		}	
 	}
 
 	this.update = function(i)
@@ -136,7 +146,17 @@ function GroundMinim()
 			}
 			else
 			{
+
 				this.currentStatus = 'repairing';
+				if (this.currentSpriteSheet === groundMinimWalkingRightSpriteSheet)
+				{
+					this.currentSpriteSheet = groundMinimIdleFacingRightSpriteSheet;
+				}
+				else if (this.currentSpriteSheet === groundMinimWalkingLeftSpriteSheet)
+				{
+					this.currentSpriteSheet = groundMinimIdleFacingLeftSpriteSheet;
+				}
+
 			}
 		}
 		// else if (this.currentStatus === 'returning')

@@ -22,6 +22,8 @@ let pheremoneGapFillImage = document.createElement("img");
 
 let groundMinimWalkingLeftSpriteSheet = document.createElement("img");
 let groundMinimWalkingRightSpriteSheet = document.createElement("img");
+let groundMinimIdleFacingLeftSpriteSheet = document.createElement("img");
+let groundMinimIdleFacingRightSpriteSheet = document.createElement("img");
 
 let leafMinimWalkingSpriteSheet = document.createElement("img");
 
@@ -65,6 +67,9 @@ function loadDefenseGameImages()
 
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: groundMinimWalkingLeftSpriteSheet, theFile: 'images/flyDefense/GroundMinimWalking/groundMinimWalkingLeftSpriteSheet.png'});
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: groundMinimWalkingRightSpriteSheet, theFile: 'images/flyDefense/GroundMinimWalking/groundMinimWalkingRightSpriteSheet.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: groundMinimIdleFacingLeftSpriteSheet, theFile: 'images/flyDefense/GroundMinimIdle/groundMinimIdleFacingLeftSpriteSheet.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: groundMinimIdleFacingRightSpriteSheet, theFile: 'images/flyDefense/GroundMinimIdle/groundMinimIdleFacingRightSpriteSheet.png'});
+
 	//63 x 38
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: leafMinimWalkingSpriteSheet, theFile: 'images/flyDefense/LeafMinimWalking/leafMinimWalking.png'});
 	//120 x 108
