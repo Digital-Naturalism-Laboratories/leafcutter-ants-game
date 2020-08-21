@@ -137,6 +137,7 @@ function Background()
 					defenseGame.colonyReached = true;
 					defenseGame.NPCBigAnt1.currentSpriteSheet = bigAntIdleSpriteSheet;
 					defenseGame.NPCBigAnt2.currentSpriteSheet = bigAntIdleSpriteSheet;
+					defenseGame.parentAntObject.currentSpriteSheet = bigAntIdleSpriteSheet;
 				}
 			}
 
