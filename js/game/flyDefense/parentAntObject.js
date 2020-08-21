@@ -52,6 +52,7 @@ function ParentAntObject()
 			}
 		}
 		
+		
 	}
 
 	this.cycleBigAntImages = function()

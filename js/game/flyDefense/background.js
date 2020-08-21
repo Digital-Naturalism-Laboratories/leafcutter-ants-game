@@ -135,7 +135,8 @@ function Background()
 				if (defenseGame.parentAntObject.bigAntX + defenseGame.parentAntObject.bigAntWidth >= this.colonyMoundMidpoint)
 				{
 					defenseGame.colonyReached = true;
-
+					defenseGame.NPCBigAnt1.currentSpriteSheet = bigAntIdleSpriteSheet;
+					defenseGame.NPCBigAnt2.currentSpriteSheet = bigAntIdleSpriteSheet;
 				}
 			}
 
