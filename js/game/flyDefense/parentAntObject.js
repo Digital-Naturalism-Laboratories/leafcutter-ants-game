@@ -298,7 +298,7 @@ function ParentAntObject()
 		if (this.currentSmallAntDirection === 'up')
 		{
 		//(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
-		console.log('this.currentSmallAntImageArrayIndex: ' + this.currentSmallAntImageArrayIndex);
+		
 			renderer.drawImage(leafMinimWalkingSpriteSheet, 
 				this.currentSmallAntImageArrayIndex*this.smallAntSourceWidth,0, this.smallAntSourceWidth,this.smallAntSourceHeight,
 				this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);

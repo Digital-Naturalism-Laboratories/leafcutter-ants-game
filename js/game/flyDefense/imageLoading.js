@@ -14,12 +14,11 @@ let leavesLayerImage2 = document.createElement("img");
 let forageLayerImage1 = document.createElement("img");
 let forageLayerImage2 = document.createElement("img");
 
+let colonyMoundImage = document.createElement("img");
+
 let pheremoneStripImage1 = document.createElement("img");
 let pheremoneStripImage2 = document.createElement("img");
 let pheremoneGapFillImage = document.createElement("img");
-
-
-//let fungusNestImage = document.createElement("img");
 
 let groundMinimWalkingLeftSpriteSheet = document.createElement("img");
 let groundMinimWalkingRightSpriteSheet = document.createElement("img");
@@ -61,10 +60,9 @@ function loadDefenseGameImages()
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: pheremoneStripImage1, theFile: 'images/flyDefense/Official Placeholder Art/pheremoneStrip1.png'});
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: pheremoneStripImage2, theFile: 'images/flyDefense/Official Placeholder Art/pheremoneStrip2.png'});
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: pheremoneGapFillImage, theFile: 'images/flyDefense/Official Placeholder Art/pheremoneGapFill.png'});
-
-	//arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: fungusNestImage, theFile: 'images/flyDefense/Official Placeholder Art/fungusNest.png'});
-
 	
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: colonyMoundImage, theFile: 'images/flyDefense/Top Mound orig Full Raster.png'});
+
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: groundMinimWalkingLeftSpriteSheet, theFile: 'images/flyDefense/GroundMinimWalking/groundMinimWalkingLeftSpriteSheet.png'});
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: groundMinimWalkingRightSpriteSheet, theFile: 'images/flyDefense/GroundMinimWalking/groundMinimWalkingRightSpriteSheet.png'});
 	//63 x 38

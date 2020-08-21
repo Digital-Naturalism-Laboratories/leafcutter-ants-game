@@ -13,7 +13,12 @@ function Background()
 	this.pheremoneStrip2Image = undefined;
 	this.currentIncomingPheremoneStripImage = undefined;
 	this.pheremoneGapFillImage = undefined;
-//	this.fungusNestImage = undefined;
+	this.colonyMoundImage = undefined;
+
+	this.colonyMoundXCoordinate = undefined;
+	this.colonyMoundYCoordinate = undefined;
+	this.colonyMoundWidth = undefined;
+	this.colonyMoundHeight = undefined;
 
 	this.groundImage1xCoordinate = undefined;
 	this.groundImage2xCoordinate = undefined;
@@ -65,7 +70,7 @@ function Background()
 		this.currentIncomingPheremoneStripImage = this.pheremoneStrip2Image;
 		this.pheremoneGapFillImage = pheremoneGapFillImage;
 
-		//this.fungusNestImage = fungusNestImage;
+		this.colonyMoundImage = colonyMoundImage;
 
 		this.groundImage1xCoordinate = 0;
 		this.groundImage2xCoordinate = renderer.canvas.width;
@@ -84,11 +89,14 @@ function Background()
 
 		this.pheremoneStrip2ImageXCoordinate = renderer.canvas.width*1.01 + this.pheremoneGapWidth;
 
-		this.fungusNestXCoordinate = renderer.canvas.width;
-		this.fungusNestWidth = renderer.canvas.width*0.6;
-		this.fungusNestStartingXMidpoint = this.fungusNestXCoordinate + this.fungusNestWidth/2;
-		this.fungusNestTotalTravelDistance = this.fungusNestStartingXMidpoint - renderer.canvas.width/2;
+		//this.colonyMoundXCoordinate = (renderer.canvas.width + this.pheremoneGapWidth)*4;
 
+		this.colonyMoundWidth = renderer.canvas.width*0.85;
+		this.colonyMoundHeight = renderer.canvas.height*0.7;
+		this.colonyMoundXCoordinate = 2.7*renderer.canvas.width;
+		this.colonyMoundYCoordinate = renderer.canvas.height - this.colonyMoundHeight*0.85;
+		this.colonyMoundMidpoint = this.colonyMoundXCoordinate + this.colonyMoundWidth/2;
+		
 		this.pheremoneGapManager = new PheremoneGapManager();
 		this.pheremoneGapManager.instantiatePheremoneGaps();
 		this.flashAlertInterval = new frameInterval(defenseGame.background.pheremoneGapManager.toggleAlertMessageVisibility, 300);
@@ -103,7 +111,7 @@ function Background()
 
 	this.scrollGroundImages = function()
 	{
-		if (!this.stuckOnPheremoneGap)
+		if (!this.stuckOnPheremoneGap && !defenseGame.colonyReached)
 		{
 			if (defenseGame.timeLeft < 121 && defenseGame.timeLeft > 0)
 			{
@@ -118,11 +126,17 @@ function Background()
 				this.groundImage2xCoordinate-=gameWidth*0.001 - (gameWidth*0.001 * this.slowDownRateFromInfections);
 				this.pheremoneStrip1ImageXCoordinate-=renderer.canvas.width*0.001 - (renderer.canvas.width*0.001 * this.slowDownRateFromInfections);
 				this.pheremoneStrip2ImageXCoordinate-=renderer.canvas.width*0.001 - (renderer.canvas.width*0.001 * this.slowDownRateFromInfections);
+				this.colonyMoundXCoordinate-=renderer.canvas.width*0.001 - (renderer.canvas.width*0.001 * this.slowDownRateFromInfections);
+				this.colonyMoundMidpoint = this.colonyMoundXCoordinate + this.colonyMoundWidth/2;
 				// this.pheremoneStrip3ImageXCoordinate-=renderer.canvas.width*0.001;
 				// this.pheremoneStrip4ImageXCoordinate-=renderer.canvas.width*0.001;
 				// this.pheremoneStrip5ImageXCoordinate-=renderer.canvas.width*0.001;
 				
-				
+				if (defenseGame.parentAntObject.bigAntX + defenseGame.parentAntObject.bigAntWidth >= this.colonyMoundMidpoint)
+				{
+					defenseGame.colonyReached = true;
+
+				}
 			}
 
 			if (!this.stuckOnPheremoneGap)
@@ -288,7 +302,9 @@ function Background()
 
 		this.pheremoneGapManager.drawPheremoneGaps();
 
-		
+		renderer.drawImage(this.colonyMoundImage, this.colonyMoundXCoordinate,this.colonyMoundYCoordinate, 
+				           this.colonyMoundWidth,this.colonyMoundHeight);
+
 		// renderer.drawImage(this.fungusNestImage, this.fungusNestXCoordinate,renderer.canvas.height*0.33, 
 		// 										   renderer.canvas.width*0.6,renderer.canvas.height*0.6);
 
