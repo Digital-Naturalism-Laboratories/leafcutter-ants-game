@@ -13,13 +13,24 @@ function NPCBigAnt(x)
 	this.leafImage = leafImage;
 
 	this.currentBigAntWalkingImageIndex = getRandomIntInclusive(0,10);
+	this.currentSpriteSheet = bigAntWalkingSpriteSheet;
 	
 	this.cycleBigAntImages = function()
 	{
 		this.currentBigAntWalkingImageIndex++;
-		if (this.currentBigAntWalkingImageIndex > 10)
+		if (!defenseGame.background.stuckOnPheremoneGap && !defenseGame.goalReached)
 		{
-			this.currentBigAntWalkingImageIndex = 0;
+			if (this.currentBigAntWalkingImageIndex > 10)
+			{
+				this.currentBigAntWalkingImageIndex = 0;
+			}
+		}
+		else
+		{
+			if (this.currentBigAntWalkingImageIndex > 20)
+			{
+				this.currentBigAntWalkingImageIndex = 0;
+			}
 		}
 	}
 
@@ -32,7 +43,7 @@ function NPCBigAnt(x)
 	
 	this.drawBigAnt = function()
 	{
-		renderer.drawImage(bigAntWalkingSpriteSheet, 
+		renderer.drawImage(this.currentSpriteSheet, 
 		this.bigAntWalkingSourceWidth*this.currentBigAntWalkingImageIndex,0, this.bigAntWalkingSourceWidth,this.bigAntWalkingSourceHeight,
 		this.bigAntX,this.bigAntY, this.bigAntWidth,this.bigAntHeight);
 	}

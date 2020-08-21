@@ -471,6 +471,8 @@ function PheremoneGapManager()
 				{
 					defenseGame.parentAntObject.currentSpriteSheet = bigAntIdleSpriteSheet;
 				}
+				defenseGame.NPCBigAnt1.currentSpriteSheet = bigAntIdleSpriteSheet;
+				defenseGame.NPCBigAnt2.currentSpriteSheet = bigAntIdleSpriteSheet;
 				defenseGame.flyManager.toggleSwarm();
 				defenseGame.background.flashAlertInterval.start();
 				if (defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.paused)

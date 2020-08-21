@@ -276,6 +276,14 @@ function GroundMinimManager()
 			defenseGame.flyManager.arrayOfFlies[3].status = 'swatted';
 
 			defenseGame.background.flashAlertInterval.stop();
+
+			defenseGame.NPCBigAnt1.currentSpriteSheet = bigAntWalkingSpriteSheet;
+			defenseGame.NPCBigAnt2.currentSpriteSheet = bigAntWalkingSpriteSheet;
+			console.log('defenseGame.NPCBigAnt1.currentSpriteSheet: ' + defenseGame.NPCBigAnt1.currentSpriteSheet);
+			if (!defenseGame.parentAntObject.hasBeenInfected)
+			{
+				defenseGame.parentAntObject.currentSpriteSheet = bigAntWalkingSpriteSheet;
+			}
 		}
 	}
 }
