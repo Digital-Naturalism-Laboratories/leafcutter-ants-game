@@ -11,25 +11,9 @@ var autoAnts2;
 var totalAutoAnts = 0;
 var maxAutoAnts = 3;
 
-const LEAFCUTTINGHINT_START = 0;
-const LEAFCUTTINGHINT_JAWS = 1;
-const LEAFCUTTINGHINT_SUCCESS = 2;
-const LEAFCUTTINGHINT_FAIL = 3;
-const LEAFCUTTINGHINT_TIMEOUT = 4;
-const LEAFCUTTINGHINT_WIN = 5;
-var leafcuttingHints = [
-    "Click on any leaf border to start cutting the leaf.",
-    "Click on the jaw button when the surrounding circle is green and small.",
-    "Leaf part cut successfully. Get the other ant working!",
-    "You pressed the wrong jaw button! Try cutting again by clicking jaw buttons alternatively!", //Jaw penalty hint (it is never used in game.)
-    "Time out! You failed to cut the entire leaf within the given time.",
-    "Excellent! You finished cutting the entire leaf within time!"
-];
-var leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_START];
-
 var leafcuttingScore = 0;
 var leafcuttingTimeLeft = 0;
-var leafcuttingStartTime = 300000;
+var leafcuttingStartTime = 180000;
 var leafcuttingLowTimeAlert = 15000;
 
 var leafcuttingWinBonus = 2;
@@ -99,8 +83,6 @@ function leafcuttingResetGame()
     autoAnts2 = [];
     totalAutoAnts = 0;
 
-    leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_START];
-
     clickEdgeDisplayStart = true;
     clickGreenDisplayStart = 1500;
 }
@@ -110,9 +92,6 @@ function setupLeafcuttingUI()
     leafcuttingResetGame();
 
     gameplayTopLeftLabels = [];
-    /*gameHintLabel = new Label(tr(), leafcuttingHint,
-        leafcuttingFontSize.toString() + "px " + uiContext.fontFamily, "white", -1);
-    gameplayLabels.push(gameHintLabel);*/
     scoreLabel = new Label(tr(), "LEAVES COLLECTED: " + leafcuttingScore.toString(),
         (54*pixelSize).toString() + "px " + uiContext.fontFamily, "white", -1);
     gameplayTopLeftLabels.push(scoreLabel);
@@ -177,7 +156,6 @@ function leafcuttingUICustomUpdate(deltaTime)
     ant.update(deltaTime);
     ant2.update(deltaTime);
     
-    //gameHintLabel.text = leafcuttingHint;
     scoreLabel.text = "LEAVES COLLECTED: " + leafcuttingScore.toString();
     if(leafcuttingTimeLeft > 0)
         timeLabel.text = "TIME: " + (Math.floor(leafcuttingTimeLeft/1000)).toString();
@@ -195,7 +173,7 @@ function leafcuttingUICustomUpdate(deltaTime)
             clickEdgeDisplayStart = false;
         }
     }
-    else
+    else if(!(ant.disabled && ant2.disabled))
     {
         centerLabel1.enabled = centerLabel2.enabled = false;
     }
@@ -332,6 +310,18 @@ function leafcuttingAudioHandling(deltaTime)
             {
                 leafcuttingSFX[SFX_TIMEOUT].volume = leafcuttingBGMMaxVolume;
                 leafcuttingSFX[SFX_TIMEOUT].play();
+
+                if(leafcuttingScore >= 1000)
+                    centerLabel1.text = "AMAZING AMOUNT OF";
+                else if(leafcuttingScore >= 700)
+                    centerLabel1.text = "GOOD AMOUNT OF";
+                else if(leafcuttingScore >= 250)
+                    centerLabel1.text = "OK AMOUNT OF";
+                else
+                    centerLabel1.text = "BARELY ANY";
+                centerLabel2.text = "LEAVES COLLECTED";
+                centerLabel1.enabled = centerLabel2.enabled = true;
+
                 leafcuttingDisableBothAnts();
             }
             else if(!leafcuttingSFX[SFX_TIMEOUT].isPlaying && leafcuttingSFX[SFX_TIMEOUT].volume <= 0.4)

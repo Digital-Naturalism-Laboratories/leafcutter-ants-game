@@ -156,7 +156,6 @@ class Ant
                 this.cutPointLines = [];
                 this.cutPointTimer = this.cutPointDelay;
                 this.leaf.currentBorderIndicationIndex = -2; //means no indication at all!
-                leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_JAWS];
             }
             else if(this.rotationMode && this.cutTimer > 0)
             {
@@ -378,7 +377,6 @@ class Ant
         this.leaf.borderPoints[this.pointIndex] = vec2(-10000, -10000);
         this.pointIndex = -1;
         this.alternateRotation = !this.alternateRotation;
-        leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_SUCCESS];
 
         this.isCuttingJawLed = false;
 
@@ -540,8 +538,6 @@ class Ant
                 {
                     if(this.jawSpeedPenalty < this.jawSpeedPenaltyTotalTurns)
                         this.jawSpeedPenalty = this.jawSpeedPenaltyTotalTurns;
-                    
-                    leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_FAIL];
 
                     leafcuttingSFX[SFX_JAWPENALTY].currentTime = 0;
                     leafcuttingSFX[SFX_JAWPENALTY].play();
@@ -580,15 +576,12 @@ class Ant
                     this.timedJawCutSpeedBonus = 1;
 
                     this.isCuttingJawLed = true;
-                    leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_JAWS];
                 }
                 //Jaw Penalty Removed
                 /*else
                 {
                     if(this.jawSpeedPenalty < this.jawSpeedPenaltyTotalTurns)
                         this.jawSpeedPenalty = this.jawSpeedPenaltyTotalTurns;
-                    
-                    leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_FAIL];
 
                     leafcuttingSFX[SFX_JAWPENALTY].currentTime = 0;
                     leafcuttingSFX[SFX_JAWPENALTY].play();

@@ -270,13 +270,24 @@ class Leaf
     winCondition(deltaTime)
     {
         if((this.borderPoints.length <= 15 || this.borderPoints.length == this.points.length)
-        && leafcuttingTimeLeft > 0 && !this.updatePoints && !_getPoints && this.onceUpdated)
+        && leafcuttingTimeLeft > 0 && this.onceUpdated)
         {
             if(!areLeafcuttingAntsDisabled())
             {
+                if(leafcuttingScore >= 1000)
+                    centerLabel1.text = "AMAZING AMOUNT OF";
+                else if(leafcuttingScore >= 700)
+                    centerLabel1.text = "GOOD AMOUNT OF";
+                else if(leafcuttingScore >= 250)
+                    centerLabel1.text = "OK AMOUNT OF";
+                else
+                    centerLabel1.text = "BARELY ANY";
+                centerLabel2.text = "LEAVES COLLECTED";
+                centerLabel1.enabled = centerLabel2.enabled = true;
+
                 leafcuttingSFX[SFX_PLAYERWIN].volume = leafcuttingBGMMaxVolume;
                 leafcuttingSFX[SFX_PLAYERWIN].play();
-                leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_WIN];
+
                 leafcuttingDisableBothAnts();
             }
             else if(!leafcuttingSFX[SFX_PLAYERWIN].isPlaying && leafcuttingSFX[SFX_PLAYERWIN].volume <= 0.4)
@@ -297,7 +308,7 @@ class Leaf
         var pointsToStem = [];
         pointsToStem.push(vec2(this.points[i].x, this.points[i].y));
 
-        while(pointsToStem.length < 60)
+        while(pointsToStem.length < 40)
         {
             if(pointsToStem[pointsToStem.length - 1].distance(this.stemPoint) <= distanceBetween2AdjacentPoints * 1.67)
             {

@@ -118,7 +118,6 @@ class AutoAnt
                 this.rotationMode = true;
                 this.cutPointLines = [];
                 this.cutPointTimer = this.cutPointDelay;
-                leafcuttingHint = leafcuttingHints[LEAFCUTTINGHINT_JAWS];
             }
             else if(this.rotationMode && this.cutTimer > 0)
             {
