@@ -13,17 +13,10 @@ class ColonyWorkerAnt {
 
         this.pixelCoord = pixelCoordAtCenterOfTileCoord(col, row);
 
-        //this.x = this.pixelCoord.x;
-        //this.y = this.pixelCoord.y;
-        //this.col = colAtXCoord(this.x);
-        //this.row = rowAtYCoord(this.y);
-
         this.horizontalSpeed = -1;
         this.verticalSpeed = 2;
         this.sprite = new Sprite(tr(vec2(this.pixelCoord.x, this.pixelCoord.y - 10), vec2(pixelSize * 0.4, pixelSize * 0.4)), new ImageObject("images/Animations/Worker_Walking_Spritesheet.png", vec2(0, 0)));
         this.collisionRadius = 15;
-
-        this.pathToDestination = [];
 
         this.animationFrameLength = 4;
         this.animationFrameCount = 11;
@@ -63,16 +56,11 @@ class ColonyWorkerAnt {
         this.pixelCoord.x = this.sprite.transform.position.x;
         this.pixelCoord.y = this.sprite.transform.position.y;
 
-        //this.col = colAtXCoord(this.x / pixelSize);
-        //this.row = rowAtYCoord((this.y - gridStartHeightFromTop) / pixelSize);
-
         if (this.x > gameWidth * 0.66) {
             this.mode = MODES.CARRYING_LEAF;
         } else {
             this.mode = MODES.NO_LEAF;
         }
-
-        //this.pathToDestination = findPath(this.col, this.row, fungus_col, fungus_row);
 
     }
 

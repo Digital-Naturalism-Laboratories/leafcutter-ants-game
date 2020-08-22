@@ -12,7 +12,7 @@ class Fungus {
     }
 
     update = function(){
-        findPath(this.gridCoord.col, this.gridCoord.row, 16, 5);
+        //findPath(this.gridCoord.col, this.gridCoord.row, 16, 5);
     }
 
     draw = function(){

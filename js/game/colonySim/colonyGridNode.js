@@ -2,13 +2,12 @@ class ColonyGridNode {
     constructor(row, col, tileType) {
 
         this.gridCoord = {
-            x: col,
-            y: row
+            col: col,
+            row: row
         }
 
         this.pixelCoord = pixelCoordAtCenterOfTileCoord(col, row);
 
-        //this.tileType = tileType;
         this.isWalkable = (tileType === COLONY_WALL) ? false : true;
         this.isTunneled = false;
 
@@ -32,39 +31,23 @@ class ColonyGridNode {
     }
 
     draw = function () {
-        //if (this.isWalkable) {
-        //renderer.fillStyle = 'green';
-        //renderer.fillRect(this.pixelCoord.x, this.pixelCoord.y, GRID_NODE_SIZE * pixelSize, GRID_NODE_SIZE * pixelSize);
-        //}
 
-        //if (this.isWalkable && this.gCost < 100) {
-        if (this.isWalkable && this.distanceFromFungus < (totalMilliseconds / 500) || colonyGridTileMap[this.gridCoord.y][this.gridCoord.x] >= 90) {
+        if (this.isWalkable && this.distanceFromFungus < colony.population || colonyGridTileMap[this.gridCoord.row][this.gridCoord.col] >= 90) {
             this.isTunneled = true;
         }
         
         if (this.isTunneled){
-            renderer.drawImage(colonyTiles[colonyGridTileMap[this.gridCoord.y][this.gridCoord.x]], this.pixelCoord.x - (GRID_NODE_SIZE * pixelSize / 2), this.pixelCoord.y - (GRID_NODE_SIZE * pixelSize / 2), GRID_NODE_SIZE * pixelSize, GRID_NODE_SIZE * pixelSize);
+            renderer.drawImage(colonyTiles[colonyGridTileMap[this.gridCoord.row][this.gridCoord.col]], this.pixelCoord.x - (GRID_NODE_SIZE * pixelSize / 2), this.pixelCoord.y - (GRID_NODE_SIZE * pixelSize / 2), GRID_NODE_SIZE * pixelSize, GRID_NODE_SIZE * pixelSize);
         }
         
         renderer.font = (14 * pixelSize).toString() + "px SmallBoldPixel";
         renderer.fillStyle = "white";
         renderer.textAlign = "center";
 
-        if (this.distanceFromFungus != null) {
+        //write distance to fungus value on each tile for troublshooting
+        //if (this.distanceFromFungus != null) {
             //renderer.fillText(Math.floor(this.distanceFromFungus), this.pixelCoord.x, this.pixelCoord.y);
-        }
-
-        //if (worker.pathToDestination != undefined) {
-        //    for (var k = 0; k < worker.pathToDestination.length; k++) {
-        //        if (worker.pathToDestination[k] === this) {
-        //            renderer.fillStyle = 'yellow';
-        //            renderer.fillRect(this.pixelCoord.x, this.pixelCoord.y, GRID_NODE_SIZE * pixelSize, GRID_NODE_SIZE * pixelSize);
-        //        }
-        //    }
         //}
 
-        //if (this.gCost < (totalMilliseconds / 1000) && this.isWalkable) {
-        //    renderer.drawImage(colonyTiles[COLONY_TUNNEL_4WAY], this.pixelCoord.x, this.pixelCoord.y, GRID_NODE_SIZE * pixelSize, GRID_NODE_SIZE * pixelSize);
-        //}
     }
 }

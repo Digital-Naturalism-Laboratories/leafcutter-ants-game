@@ -5,13 +5,13 @@ function drawStatsBlock() {
 
     renderer.fillText("LEAVES: " + Math.floor(colony.leaves) + "mg", 50 * pixelSize, gameHeight - (85 * pixelSize));
     renderer.fillText("FUNGUS: " + Math.floor(colony.fungus) + "mg", 50 * pixelSize, gameHeight - (65 * pixelSize));
-    renderer.fillText("TOTAL EGGS LAID: " + eggCount, 50 * pixelSize, gameHeight - (15 * pixelSize));
+    renderer.fillText("TOTAL EGGS LAID: " + colony.totalEggsLaid, 50 * pixelSize, gameHeight - (15 * pixelSize));
 
     renderer.fillText("POPULATION:   " + colony.population, gameWidth - (250 * pixelSize), gameHeight - (85 * pixelSize));
     renderer.font = (30 * pixelSize).toString() + "px SmallBoldPixel";
-    renderer.fillText("WORKERS:         " + colony.workers, gameWidth - (250 * pixelSize), gameHeight - (60 * pixelSize));
-    renderer.fillText("BROOD:           " + colony.brood, gameWidth - (250 * pixelSize), gameHeight - (40 * pixelSize));
-    renderer.fillText("REPRODUCTIVES:   " + colony.reproductives, gameWidth - (250 * pixelSize), gameHeight - (20 * pixelSize));
+    renderer.fillText("WORKERS:         " + colony.workerCount, gameWidth - (250 * pixelSize), gameHeight - (60 * pixelSize));
+    renderer.fillText("BROOD:           " + colony.broodCount, gameWidth - (250 * pixelSize), gameHeight - (40 * pixelSize));
+    renderer.fillText("REPRODUCTIVES:   " + colony.reproductiveCount, gameWidth - (250 * pixelSize), gameHeight - (20 * pixelSize));
 
 
     renderer.fillStyle = "white";
@@ -37,7 +37,7 @@ function drawStatsBlock() {
     renderer.drawImage(fullscreen_button, 0, 0, gameWidth, gameHeight);
 
     //draw mute/unmute buttons
-    if (isGameMuted){
+    if (defenseGame.audioManager.isMutingEverything){
         renderer.drawImage(unmute_button, 0, 0, gameWidth, gameHeight);
     } else {
         renderer.drawImage(mute_button, 0, 0, gameWidth, gameHeight);
