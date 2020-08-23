@@ -62,6 +62,7 @@ class Queen {
     }
 
     draw() {
+        if (isAtInfoScreen) return;
         this.sprite.drawSc();
     }
 

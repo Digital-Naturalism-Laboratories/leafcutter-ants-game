@@ -104,6 +104,8 @@ class ColonyAnt {
 
     draw() {
 
+        if (isAtInfoScreen) return;
+
         var inSize = {
             x: 150,
             y: 150

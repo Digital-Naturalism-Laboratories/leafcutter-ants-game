@@ -16,6 +16,7 @@ class Fungus {
     }
 
     draw = function(){
+        if (isAtInfoScreen) return;
         renderer.drawImage(fungusNest, this.pixelCoord.x - (this.width / 2), this.pixelCoord.y - 25 * pixelSize, this.width, this.height);
         //colorCircle(this.pixelCoord.x, this.pixelCoord.y, GRID_NODE_SIZE, 'green');
     }
