@@ -31,6 +31,7 @@ var totalCycles = 0;
 var colony;
 var fungusMass = 5; //grams
 var incomingLeaves = 0; //grams
+var previousEggTotal = 0;
 
 var deadAnts = [];
 var workerCount = 6;
@@ -72,6 +73,18 @@ function setupColonyGameUI() {
 
 function resetColonySimGame() {
   totalMilliseconds = 0;
+  previousEggTotal += colony.totalEggsLaid
+  colony = new Colony();
+  colonyGrid = [];
+  createGrid();
+  setDistFromFungusOnEachColonyNode();
+
+  for (i = 0; i < colonyAnts.length; i++) {
+    colonyAnts[i].killAnt();
+  }
+  for (i = 0; i < colony.population; i++) {
+    new ColonyAnt(fungus.gridCoord.col, fungus.gridCoord.row, 0);
+  }
   //reset appropriate stats from colony object
 }
 
@@ -117,6 +130,10 @@ function colonyGameUICustomEvents(deltaTime) {
     bgmColony.play();
 
   if (isTouched) {
+    lastTouchPos = {
+      x: touchPos[0].x - canvas.getBoundingClientRect().left,
+      y: touchPos[0].y - canvas.getBoundingClientRect().top
+  }
 
     if (getDistBtwVec2(vec2((colonyTiles[COLONY_TUNNEL_VERT].width * 13) * pixelSize, (colonyTiles[COLONY_TUNNEL_VERT].height + 20) * pixelSize), vec2(touchPos[0].x - canvas.getBoundingClientRect().left, touchPos[0].y - canvas.getBoundingClientRect().top)) < 40 * pixelSize) {
       bgmColony.pause();

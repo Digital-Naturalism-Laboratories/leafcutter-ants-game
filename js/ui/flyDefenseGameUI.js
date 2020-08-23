@@ -34,6 +34,7 @@ defenseGame.initialize = function()
 			else if (defenseGame.timeLeft === 0 && !defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.paused)
 			{
 				defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.pause();
+				ui.stateIndex = COLONYGAMEUI;
 			}
 		}
 	};

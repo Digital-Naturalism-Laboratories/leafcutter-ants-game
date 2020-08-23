@@ -111,7 +111,7 @@ class Colony {
         this.adultCount = this.workerCount + this.reproductiveCount;
         this.population = this.adultCount + this.broodCount;
 
-        this.totalEggsLaid = colonyAnts.length;
+        this.totalEggsLaid = colonyAnts.length + previousEggTotal;
 
         if (this.workerCount >= this.colonyPubertyThreshold) {
             this.colonyPubertyThresholdReached = true;

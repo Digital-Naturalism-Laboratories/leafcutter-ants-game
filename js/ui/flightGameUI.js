@@ -119,7 +119,7 @@ function flightGameUICustomDraw(deltaTime) {
 
   //draw genetic diversity bar
   renderer.fillStyle = 'blue';
-  renderer.fillRect(225 * pixelSize, 58 * pixelSize, energyBarLength * pixelSize, 20 * pixelSize);
+  renderer.fillRect(225 * pixelSize, 58 * pixelSize, diversityBarLength * pixelSize, 20 * pixelSize);
   renderer.beginPath();
   renderer.strokeStyle = 'white';
   renderer.rect(225 * pixelSize, 58 * pixelSize, 100 * pixelSize, 20 * pixelSize);
@@ -127,7 +127,7 @@ function flightGameUICustomDraw(deltaTime) {
 
   //draw energy bar
   renderer.fillStyle = 'green';
-  renderer.fillRect(225 * pixelSize, 32 * pixelSize, energyBarLength * pixelSize, 20 * pixelSize);
+  renderer.fillRect(225 * pixelSize, 32 * pixelSize,  energyBarLength * pixelSize, 20 * pixelSize);
   renderer.beginPath();
   renderer.strokeStyle = 'white';
   renderer.rect(225 * pixelSize, 32 * pixelSize, 100 * pixelSize, 20 * pixelSize);
