@@ -140,25 +140,25 @@ function mainMenuUICustomEvents(deltaTime)
         if(//leafcuttingBtn.button.output == UIOUTPUT_SELECT)
         playMenuBtn.label.text == gameModes[0])
         {
-            ui.stateIndex = LEAFCUTTINGUI;
+            ui.stateIndex = LEAFCUTTINGINTROUI;
             //leafcuttingBtn.button.resetOutput();
         }
         else if(//flightBtn.button.output == UIOUTPUT_SELECT)
         playMenuBtn.label.text == gameModes[1])
         {
-            ui.stateIndex = FLIGHTGAMEUI;
+            ui.stateIndex = FLIGHTGAMEINTROUI;
             //flightBtn.button.resetOutput();
         }
         else if(//colonyBtn.button.output == UIOUTPUT_SELECT)
         playMenuBtn.label.text == gameModes[2])
         {
-            ui.stateIndex = COLONYGAMEUI;
+            ui.stateIndex = COLONYGAMEINTROUI;
             //colonyBtn.button.resetOutput();
         }
         else if(//defenseBtn.button.output == UIOUTPUT_SELECT)
         playMenuBtn.label.text == gameModes[3])
         {
-            ui.stateIndex = DEFENSEGAMEUI;
+            ui.stateIndex = DEFENSEGAMEINTROUI;
             //defenseBtn.button.resetOutput();
             defenseGame.audioManager.sfxManager.populateArrayOfEatingFungusSounds();
             defenseGame.audioManager.sfxManager.populateArrayOfFlyChasedSounds();

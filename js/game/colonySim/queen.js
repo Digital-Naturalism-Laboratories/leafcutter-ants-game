@@ -29,7 +29,7 @@ class Queen {
             }
 
             if (getDistBtwVec2(this.sprite.transform.position, vec2(lastTouchPos.x, lastTouchPos.y)) < 20) {
-                ui.stateIndex = FLIGHTGAMEUI;
+                ui.stateIndex = FLIGHTGAMEINTROUI;
             }
 
         }
@@ -62,7 +62,7 @@ class Queen {
     }
 
     draw() {
-        if (isAtInfoScreen) return;
+        //if (ui.getActiveState() != COLONYGAMEUI) return;
         this.sprite.drawSc();
     }
 

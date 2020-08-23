@@ -328,7 +328,7 @@ function leafcuttingAudioHandling(deltaTime)
             {
                 leafMaterial += leafcuttingScore / leafcuttingLosePenalty;
                 leafcuttingResetGame();
-                ui.stateIndex = DEFENSEGAMEUI;
+                ui.stateIndex = DEFENSEGAMEINTROUI;
             }
             else if(leafcuttingSFX[SFX_TIMEOUT].volume > 0.4)
             {

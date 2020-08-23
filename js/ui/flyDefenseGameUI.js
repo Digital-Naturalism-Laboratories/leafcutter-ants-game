@@ -21,7 +21,7 @@ defenseGame.initialize = function()
 	this.timeLeft = 120;
 	this.decreaseCounter = function() 
 	{
-		if(ui.stateIndex == DEFENSEGAMEUI)
+		if(ui.stateIndex == DEFENSEGAMEINTROUI)
 		{
 			if (defenseGame.timeLeft > 0) 
 			{
@@ -34,7 +34,7 @@ defenseGame.initialize = function()
 			else if (defenseGame.timeLeft === 0 && !defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.paused)
 			{
 				defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.pause();
-				ui.stateIndex = COLONYGAMEUI;
+				ui.stateIndex = COLONYGAMEINTROUI;
 			}
 		}
 	};
@@ -179,7 +179,7 @@ defenseGame.initialize = function()
 				renderer.fillText(colonyReachedText, renderer.canvas.width/2 - colonyReachedTextWidth/2,
 													 renderer.canvas.height/2 - fontSize/2);
 				if (isTouched) {
-					ui.stateIndex = COLONYGAMEUI;
+					ui.stateIndex = COLONYGAMEINTROUI;
 				}
 			}
 

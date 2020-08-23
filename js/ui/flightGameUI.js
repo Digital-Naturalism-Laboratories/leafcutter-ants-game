@@ -147,7 +147,7 @@ function flightGameUICustomEvents(deltaTime) {
   if (isTouched) {
 
     if (getDistBtwVec2(vec2(70, 45), vec2(lastTouchPos.x, lastTouchPos.y)) < 50) {
-      ui.stateIndex = COLONYGAMEUI;
+      ui.stateIndex = COLONYGAMEINTROUI;
     }
   }
 
@@ -157,7 +157,7 @@ function flightGameUICustomEvents(deltaTime) {
     diversityBarLength = 0;
     mateCount = 0;
     resetColonySimGame();
-    ui.stateIndex = COLONYGAMEUI;
+    ui.stateIndex = COLONYGAMEINTROUI;
   }
 
   //cameraFollow();

@@ -3,9 +3,13 @@ function uiInit()
 {
     uiSettings();
     setupMainMenuUI();
+    setupFlightGameIntroUI();
     setupFlightGameUI();
+    setupColonyGameIntroUI();
     setupColonyGameUI();
+    setupLeafcuttingIntroUI();
     setupLeafcuttingUI();
+    setupDefenseGameIntroUI();
     defenseGame.initialize();
     defenseGame.audioManager.populateMasterArrayOfAudioTags();
 
@@ -15,6 +19,10 @@ function uiInit()
     uistates.push(new UIState(colonyGameUI));
     uistates.push(new UIState(leafcuttingUI));
     uistates.push(new UIState(defenseGame.arrayOfUIObjects))
+    uistates.push(new UIState(colonyGameIntroUI));
+    uistates.push(new UIState(flightGameIntroUI));
+    uistates.push(new UIState(leafcuttingIntroUI));
+    uistates.push(new UIState(defenseGameIntroUI));
     ui = new UI(uistates, 0);
 }
 

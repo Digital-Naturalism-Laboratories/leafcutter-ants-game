@@ -294,7 +294,7 @@ class Leaf
             {
                 leafMaterial += leafcuttingScore * leafcuttingWinBonus;
                 leafcuttingResetGame();
-                ui.stateIndex = DEFENSEGAMEUI;
+                ui.stateIndex = DEFENSEGAMEINTROUI;
 
                 //copied here from mainmenuUI to fix crash when starting game from leafcutting game rather than the main menu
 	            defenseGame.audioManager.sfxManager.populateArrayOfEatingFungusSounds();

@@ -66,6 +66,7 @@ class ColonyWorkerAnt {
 
     draw() {
 
+        //if (ui.getActiveState() != COLONYGAMEUI) return;
         var inSize = {
             x: 120,
             y: 108
@@ -78,11 +79,11 @@ class ColonyWorkerAnt {
 
         switch (this.mode) {
             case MODES.NO_LEAF:
-                this.gameMode = LEAFCUTTINGUI
+                this.gameMode = LEAFCUTTINGINTROUI;
                 inPos.y = inSize.y * 2;
                 break;
             case MODES.CARRYING_LEAF:
-                this.gameMode = DEFENSEGAMEUI
+                this.gameMode = DEFENSEGAMEUI;
                 break;
         }
 

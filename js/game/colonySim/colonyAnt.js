@@ -104,7 +104,7 @@ class ColonyAnt {
 
     draw() {
 
-        if (isAtInfoScreen) return;
+        //if (ui.getActiveState() != COLONYGAMEUI) return;
 
         var inSize = {
             x: 150,

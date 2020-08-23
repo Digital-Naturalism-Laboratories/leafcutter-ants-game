@@ -18,6 +18,10 @@ function events(deltaTime)
         case FLIGHTGAMEUI: flightGameUICustomEvents(deltaTime); ui.event(); break;
         case COLONYGAMEUI: colonyGameUICustomEvents(deltaTime); ui.event(); break;
         case LEAFCUTTINGUI: leafcuttingUICustomEvents(deltaTime); ui.event(); break;
+        case COLONYGAMEINTROUI: colonyGameIntroUICustomEvents(deltaTime); ui.event(); break;
+        case FLIGHTGAMEINTROUI: flightGameIntroUICustomEvents(deltaTime); ui.event(); break;
+        case LEAFCUTTINGINTROUI:leafcuttingIntroUICustomEvents(deltaTime); ui.event(); break;
+        case DEFENSEGAMEINTROUI: defenseGameIntroUICustomEvents(deltaTime); ui.event(); break;
     }
 }
 
@@ -44,6 +48,10 @@ function draw(deltaTime)
         case COLONYGAMEUI: colonyGameUICustomDraw(deltaTime); ui.update(); break;
         case LEAFCUTTINGUI: leafcuttingUICustomDraw(deltaTime); ui.update(); break;
         case DEFENSEGAMEUI: defenseGame.draw(); break;
+        case COLONYGAMEINTROUI: colonyGameIntroUICustomDraw(deltaTime); ui.update(); break;
+        case FLIGHTGAMEINTROUI: flightGameIntroUICustomDraw(deltaTime); ui.update(); break;
+        case LEAFCUTTINGINTROUI: leafcuttingIntroUICustomDraw(deltaTime); ui.update(); break;
+        case DEFENSEGAMEINTROUI: defenseGameIntroUICustomDraw(deltaTime); ui.update(); break;
     }
     
     ui.draw();
