@@ -77,6 +77,8 @@ function resetColonySimGame() {
 
 function colonyGameUICustomDraw(deltaTime) {
 
+  console.log(leafMaterial);
+
   fungus.update();
   colony.update();
   for (i = 0; i < colonyAnts.length; i++){

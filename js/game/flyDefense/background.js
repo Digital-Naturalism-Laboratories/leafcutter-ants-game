@@ -523,7 +523,10 @@ function FungusSporeFeedbackAnimationManager()
 			{
 				this.arrayOfFungusSporeVisualFeedbackAnimations.splice(i, 1);
 			}
-			this.arrayOfFungusSporeVisualFeedbackAnimations[i].y -= renderer.canvas.height * 0.0025;
+			if (this.arrayOfFungusSporeVisualFeedbackAnimations[i] != undefined){
+				this.arrayOfFungusSporeVisualFeedbackAnimations[i].y -= renderer.canvas.height * 0.0025;
+			}
+			
 		}
 	}
 

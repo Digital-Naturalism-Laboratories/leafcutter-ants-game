@@ -3,6 +3,7 @@ var defenseGame = {};
 
 defenseGame.initialize = function()
 {
+
 	this.arrayOfUIObjects = [];
 
 	
@@ -176,6 +177,9 @@ defenseGame.initialize = function()
 				let colonyReachedTextWidth = renderer.measureText(colonyReachedText).width;
 				renderer.fillText(colonyReachedText, renderer.canvas.width/2 - colonyReachedTextWidth/2,
 													 renderer.canvas.height/2 - fontSize/2);
+				if (isTouched) {
+					ui.stateIndex = COLONYGAMEUI;
+				}
 			}
 
 		

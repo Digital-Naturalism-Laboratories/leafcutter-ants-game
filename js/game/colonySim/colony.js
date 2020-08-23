@@ -19,7 +19,7 @@ class Colony {
         this.leaves = 100; // Current mass of collected leaves. Current leaves + Workers* (Leaf collection rate) - leaves*Fungus Conversion Rate - Workers(Worker Eating Rate)
         this.fungus = 0; // Mass of Grown Fungus. Current fungus + Leaves*FungusConversionRate  - Brood(Brood eating rate)
 
-        this.fungusConversionRate = (0.01 / 60) * geneticDiversity; // Proportion of leaves that are converted to edible funugs for the babies  // This rate can get LOWERED temporarily by contaminants that were not cleaned by the Leaf Transport game (roughly per frame)
+        this.fungusConversionRate = (0.002 / 60); // Proportion of leaves that are converted to edible funugs for the babies  // This rate can get LOWERED temporarily by contaminants that were not cleaned by the Leaf Transport game (roughly per frame)
         this.broodEatingRate = (0.005 / 60); // How much  fungus each brood will eat
         this.workerEatingRate = (0.005 / 60); // how much leaf mass each worker will eat (Much less than a brood would eat of the fungus, the workers just drink a bit of the sap for more energy, let's make this like 10% of the Brood Rate)
         this.leafCollectionRate = (0.5 / 60); // average input of leaves into the colony per worker. This rate can get INCREASED temporarily by playing the Leaf CUTTING and Leaf TRANSPORT games
@@ -34,16 +34,16 @@ class Colony {
     }
 
     update() {
-        this.newAntsPerCycle = Math.floor(this.leaves * 0.01);
-
+       
         this.updatePopulationCounts();
         //this.updateConversionRates();
         this.updateResourceCounts();
-
         this.reproduction();
     }
 
     reproduction() {
+
+        this.newAntsPerCycle = Math.floor(this.leaves * 0.01);
 
         this.reproductionTimerCount++;
         if (this.reproductionTimerCount >= this.reproductionTimerLength) {
@@ -67,9 +67,9 @@ class Colony {
 
         this.fungus = Math.max(0, this.fungus);
 
-        this.leaves += this.workerCount * this.leafCollectionRate;
+        this.leaves += Math.max(this.leafCollectionRate, this.workerCount * this.leafCollectionRate);
         this.leaves = this.leaves - (this.leaves * this.fungusConversionRate);
-        this.leaves -= this.workerCount * (this.leaves * this.workerEatingRate);
+        this.leaves -= this.adultCount * (this.leaves * this.workerEatingRate);
         this.leaves = Math.max(0, this.leaves);
     }
 

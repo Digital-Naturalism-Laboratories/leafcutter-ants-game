@@ -21,6 +21,7 @@ class ColonyAnt {
         this.pubertyAge = 20;
         this.deathAge = 40; // Past this age, this ant will automatically dies, Queens aren't affected by this
         this.energy = 100 // Goes down if there are no leaves until the ant dies
+        this.isInfected = false;
         this.infectionTimer = 100 // Null for healthy ants, but for infected Starts a timer for this ant, once the time happens, this ant rolls against its infection death chance to see if it will die. This infection will also trigger the colony class to decide if a number of other ants get infected too.
         this.infectionDeathChance = 0.9; // Generally a pretty high number between 0-1.0 //1.0 means it will always die, 0.0 is never die// Most ants have a .9 let's say
 
@@ -67,11 +68,38 @@ class ColonyAnt {
         if (this.age >= this.deathAge){
             this.killAnt();
         }
+
+        this.updateEnergyLevel();
     }
 
     killAnt(){
         this.isAlive = false;
         this.state = colonyAntStates.DEAD;
+    }
+
+    infectOtherAnts(){
+
+    }
+
+    updateEnergyLevel(){
+        if (colony.leaves <= 0){
+            this.energy -= (1 / 30);
+        }
+
+        if (this.engery <= 0){
+            this.killAnt();
+        }
+    }
+
+    updateInfectionLevel(){
+        if (this.isInfected){
+            this.infectionTimer -= (1 / 30);
+        }
+
+        if (this.infectionTimer <= 0){
+            this.killAnt();
+            this.infectOtherAnts();
+        }
     }
 
     draw() {
@@ -87,7 +115,10 @@ class ColonyAnt {
             y: 0
         }
 
-        this.sprite.drawScIn(inPos, inSize);
+        if (this.state != colonyAntStates.DEAD){
+            this.sprite.drawScIn(inPos, inSize);
+        }
+        
     }
 
     bounceOffWallTileAtPixelCoord(pixelX, pixelY) {
