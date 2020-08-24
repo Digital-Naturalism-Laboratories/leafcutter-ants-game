@@ -146,9 +146,9 @@ function flightGameUICustomEvents(deltaTime) {
 
   if (isTouched) {
 
-    if (getDistBtwVec2(vec2(70, 45), vec2(lastTouchPos.x, lastTouchPos.y)) < 50) {
-      ui.stateIndex = COLONYGAMEINTROUI;
-    }
+    //if (getDistBtwVec2(vec2(70, 45), vec2(lastTouchPos.x, lastTouchPos.y)) < 50) {
+    //  ui.stateIndex = COLONYGAMEINTROUI;
+    //}
   }
 
   if (energyBarLength <= 0 || diversityBarLength >= 100) {

@@ -24,7 +24,7 @@ class Colony {
         this.workerEatingRate = (0.005 / 60); // how much leaf mass each worker will eat (Much less than a brood would eat of the fungus, the workers just drink a bit of the sap for more energy, let's make this like 10% of the Brood Rate)
         this.leafCollectionRate = (0.5 / 60); // average input of leaves into the colony per worker. This rate can get INCREASED temporarily by playing the Leaf CUTTING and Leaf TRANSPORT games
 
-        this.geneticDiversity = 1; // Basically just gives a new colony permanently elevated stats, a very slight boost to all the positives  and slight decline in all the negatives. For instance the Infection Spread chance would be lower for a colony with a higher genetic diversity
+        this.geneticDiversity = geneticDiversity; // Basically just gives a new colony permanently elevated stats, a very slight boost to all the positives  and slight decline in all the negatives. For instance the Infection Spread chance would be lower for a colony with a higher genetic diversity
         this.newInfections; // this many new ants will be infected in the main simulation
         this.contaminantsCleaned;
 
@@ -34,7 +34,7 @@ class Colony {
     }
 
     update() {
-       
+        this.geneticDiversity = geneticDiversity;
         this.updatePopulationCounts();
         //this.updateConversionRates();
         this.updateResourceCounts();

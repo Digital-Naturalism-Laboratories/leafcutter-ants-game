@@ -76,6 +76,7 @@ function defenseGameIntroUICustomEvents(deltaTime) {
       defenseCurrentScreen = DEFENSE_INSTRUCTIONS_SCREEN;
     } else {
       defenseIntroStartDelay = 60;
+      defenseCurrentScreen = DEFENSE_INFO_SCREEN;
       ui.stateIndex = DEFENSEGAMEUI;
     }
 

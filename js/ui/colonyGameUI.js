@@ -142,6 +142,7 @@ function colonyGameUICustomDraw(deltaTime) {
   for (i = 0; i < colonyAnts.length; i++) {
     colonyAnts[i].update();
   }
+  banner.update();
 
   totalMilliseconds += deltaTime;
   totalCycles = Math.floor(totalMilliseconds / cycleLength);
