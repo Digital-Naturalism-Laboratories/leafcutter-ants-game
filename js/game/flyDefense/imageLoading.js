@@ -65,7 +65,7 @@ function loadDefenseGameImages()
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: pheremoneStripImage2, theFile: 'images/flyDefense/Official Placeholder Art/pheremoneStrip2.png'});
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: pheremoneGapFillImage, theFile: 'images/flyDefense/Official Placeholder Art/pheremoneGapFill.png'});
 	
-	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: colonyMoundImage, theFile: 'images/flyDefense/Top Mound orig Full Raster.png'});
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: colonyMoundImage, theFile: 'images/flyDefense/Leaf transport FULL SIZETop Mound orig Full Raster copy 2.png'});
 
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: groundMinimWalkingLeftSpriteSheet, theFile: 'images/flyDefense/GroundMinimWalking/groundMinimWalkingLeftSpriteSheet.png'});
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: groundMinimWalkingRightSpriteSheet, theFile: 'images/flyDefense/GroundMinimWalking/groundMinimWalkingRightSpriteSheet.png'});
