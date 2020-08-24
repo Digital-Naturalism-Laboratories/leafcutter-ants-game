@@ -12,6 +12,7 @@ function uiInit()
     setupDefenseGameIntroUI();
     defenseGame.initialize();
     defenseGame.audioManager.populateMasterArrayOfAudioTags();
+    defenseGame.audioManager.populateArrayOfDefenseGameSounds();
 
     uistates = [];
     uistates.push(new UIState(mainMenuUI));

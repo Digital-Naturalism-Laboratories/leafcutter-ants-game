@@ -200,8 +200,17 @@ defenseGame.initialize = function()
 	this.passStats = function()
 	{
 		console.log('put stats code here');
+		let tallyOfLeafContaminantsCleaned = defenseGame.background.fungusTallyDiv.tallyOfEatenFungusSpores;
+		console.log('tallyOfLeafContaminantsCleaned: ' + tallyOfLeafContaminantsCleaned);
+
+		let elapsedTime = 120 - this.timeLeft;
+		console.log('elapsedTime: ' + elapsedTime);
+
+		let bigAntTallyOfInfections = defenseGame.background.bigAntTallyOfInfections;
+		console.log('bigAntTallyOfInfections: ' + bigAntTallyOfInfections);
 	}
 
+	this.arrayOfTimeouts = [];
 	this.reset = function()
 	{
 		//console.log('put reset code here');
@@ -213,10 +222,13 @@ defenseGame.initialize = function()
 			console.log('stopped frameIntervals');
 		}
 
-		let tallyOfLeafContaminantsCleaned = defenseGame.background.fungusTallyDiv.tallyOfEatenFungusSpores;
-		console.log('tallyOfLeafContaminantsCleaned: ' + tallyOfLeafContaminantsCleaned);
+		for (let i = 0; i < this.arrayOfTimeouts.length; i++)
+		{
+			clearTimeout(this.arrayOfTimeouts[i]);
+		}
 
-		let elapsedTime = 120 - this.timeLeft;
-		console.log('elapsedTime: ' + elapsedTime);
+		this.colonyReached = false;
+
+		this.audioManager.resetFlyDefenseAudio();
 	}
 }

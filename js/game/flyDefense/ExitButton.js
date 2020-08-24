@@ -33,6 +33,7 @@ function ExitButton()
 		{
 			defenseGame.passStats();
 			defenseGame.reset();
+			ui.stateIndex = COLONYGAMEUI;
 		}
 	}
 }

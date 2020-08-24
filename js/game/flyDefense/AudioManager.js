@@ -20,6 +20,32 @@ function AudioManager()
 		leafcuttingSFX[2],leafcuttingSFX[3],leafcuttingSFX[4],leafcuttingSFX[5],leafcuttingSFX[6],leafcuttingSFX[7]);
 	}
 
+	this.arrayOfDefenseGameSounds = [];
+
+	this.populateArrayOfDefenseGameSounds = function()
+	{
+		this.arrayOfDefenseGameSounds.push(this.ambienceManager.ambienceWash,this.ambienceManager.scatteredBirdChirp,
+		this.ambienceManager.cicada1,this.ambienceManager.cicada2,this.ambienceManager.cicada3,this.ambienceManager.cicada4,
+		this.sfxManager.stuckSwarmAlertSound,this.sfxManager.beefUpTrailFeedback,this.sfxManager.antInfectionSound,
+		this.sfxManager.eatingFungusSound1,this.sfxManager.eatingFungusSound2,this.sfxManager.eatingFungusSound3,
+		this.sfxManager.flyChasedSound1,this.sfxManager.flyChasedSound2,this.sfxManager.flyChasedSound3,
+		this.sfxManager.pheremoneGapTouchedSound1,this.sfxManager.pheremoneGapTouchedSound2,this.sfxManager.pheremoneGapTouchedSound3,
+		this.sfxManager.leafTouchedSound1,this.sfxManager.leafTouchedSound2,this.sfxManager.leafTouchedSound3,
+		this.sfxManager.thatDoesNothingSound1,this.sfxManager.thatDoesNothingSound2,this.sfxManager.thatDoesNothingSound3,
+		this.sfxManager.flyBuzzingNormal,this.sfxManager.fliesSwarming,this.sfxManager.groundMinimFootsteps,
+		this.sfxManager.groundMinimFootstepsAccelerated,this.sfxManager.leafMinimFootsteps,
+		this.sfxManager.timeIsAlmostOutClockTickingLoop);
+	}
+
+	this.resetFlyDefenseAudio = function()
+	{
+		for (let i = 0; i < this.arrayOfDefenseGameSounds.length; i++)
+		{
+			this.arrayOfDefenseGameSounds[i].pause();
+			this.arrayOfDefenseGameSounds[i].currentTime = 0;
+		}
+	}
+
 	this.isMutingEverything = false;
 	this.toggleMuteForAllAudioTags = function()
 	{
@@ -93,6 +119,7 @@ function AmbienceManager()
     {
     	this.setBirdChirpScatterInterval();
     	
+    	window.scatteredBirdChirpInterval = 
     	setTimeout
     		(
     		function()
@@ -104,6 +131,8 @@ function AmbienceManager()
 
     		defenseGame.audioManager.ambienceManager.scatteredBirdChirpInterval
     		);
+
+    	defenseGame.arrayOfTimeouts.push(window.scatteredBirdChirpInterval);
 
     }
 
@@ -132,6 +161,7 @@ function AmbienceManager()
     {
     	this.setScatteredCicadaInterval();
 
+    	window.scatteredCicadaInterval = 
     	setTimeout
     	(
     		function()
@@ -145,6 +175,8 @@ function AmbienceManager()
 
     		defenseGame.audioManager.ambienceManager.scatteredCicadaInterval
     	);
+
+    	defenseGame.arrayOfTimeouts.push(window.scatteredCicadaInterval);
     }
 
 }
