@@ -11,12 +11,21 @@ var animationFrameCount = 29;
 var animationFrameCurrent = 0;
 var animationTimer = 0
 
+var isGameSelectEnabled = false;
+
 var gameModes = [
-    "CUTTER",
-    "FLIGHT",
     "COLONY",
-    "DEFENSE"
+    "CUTTER",
+    "DEFENSE",
+    "FLIGHT"
 ];
+
+var languages = [
+    "Español",
+    "English"
+]
+
+var currentLanguage = "Español";
 
 function setupMainMenuUI()
 {
@@ -69,43 +78,66 @@ function setupMainMenuUI()
         vec2(1, 4), 
         true));*/
 
+    
     menuBigPlayButton = new Button(tr(vec2(gameWidth*0.2,gameHeight*0.67), vec2(gameWidth*0.6, gameHeight*0.2)), "#00000000", "#00000000", "#00000000");
     mainMenuUI.push(menuBigPlayButton);
 
+    
     gameModeButtons = [];
 
-    emptyMenuBtn = new TextButton(tr(vec2(), btnSize),
-        new Label(tr(), "", mainMenuFontSize.toString() + "px Pixelmania", "white", 0),
+    if (!isGameSelectEnabled) {
+
+        languageBtn = new TextButton(tr(vec2(), btnSize),
+        new Label(tr(), "LANGUAGE: " + languages[0], 30 * pixelSize + "px SmallBoldPixel", "white", 0),
         new Button(tr(), "#00000000", "#00000000", "#00000000"), 
         "");
-    gameModeButtons.push(emptyMenuBtn);
+        gameModeButtons.push(languageBtn);
 
-    prevMenuBtn = new TextButton(tr(vec2(), btnSize),
-        new Label(tr(), "PREV", mainMenuFontSize.toString() + "px Pixelmania", "white", 0),
-        new Button(tr(), "#00000011", "#00000055", "#00000033"), 
-        "");
-    gameModeButtons.push(prevMenuBtn);
-    
-    playMenuBtn = new TextButton(tr(vec2(), btnSize),
-        new Label(tr(), gameModes[0], mainMenuFontSize.toString() + "px Pixelmania", "white", 0),
-        new Button(tr(), "#00000000", "#00000044", "#00000022"), 
-        "");
-    gameModeButtons.push(playMenuBtn);
+    } else {
 
-    nextMenuBtn = new TextButton(tr(vec2(), btnSize),
-        new Label(tr(), "NEXT", mainMenuFontSize.toString() + "px Pixelmania", "white", 0),
-        new Button(tr(), "#00000011", "#00000055", "#00000033"), 
-        "");
-    gameModeButtons.push(nextMenuBtn);
+        emptyMenuBtn = new TextButton(tr(vec2(), btnSize),
+            new Label(tr(), "", mainMenuFontSize.toString() + "px Pixelmania", "white", 0),
+            new Button(tr(), "#00000000", "#00000000", "#00000000"), 
+            "");
+        gameModeButtons.push(emptyMenuBtn);
 
-    mainMenuUI.push(
+        prevMenuBtn = new TextButton(tr(vec2(), btnSize),
+            new Label(tr(), "PREV", mainMenuFontSize.toString() + "px Pixelmania", "white", 0),
+            new Button(tr(), "#00000011", "#00000055", "#00000033"), 
+            "");
+        gameModeButtons.push(prevMenuBtn);
+
+        playMenuBtn = new TextButton(tr(vec2(), btnSize),
+            new Label(tr(), gameModes[0], mainMenuFontSize.toString() + "px Pixelmania", "white", 0),
+            new Button(tr(), "#00000000", "#00000044", "#00000022"), 
+            "");
+        gameModeButtons.push(playMenuBtn);
+
+        nextMenuBtn = new TextButton(tr(vec2(), btnSize),
+            new Label(tr(), "NEXT", mainMenuFontSize.toString() + "px Pixelmania", "white", 0),
+            new Button(tr(), "#00000011", "#00000055", "#00000033"), 
+            "");
+        gameModeButtons.push(nextMenuBtn);
+    }
+
+    if (isGameSelectEnabled){
+        mainMenuUI.push(
         new FlexGroup(tr(vec2(0, gameHeight*0.86), vec2(gameWidth, 60 * pixelSize)),
         new SubState(tr(), gameModeButtons),
         false, 
         vec2(), 
         vec2(5, 1), 
-        true)
-    );
+        true));
+    } else {
+        mainMenuUI.push(
+        new FlexGroup(tr(vec2(gameHeight / 2 + 30, gameHeight*0.86), vec2(gameWidth, 60 * pixelSize)),
+        new SubState(tr(), gameModeButtons),
+        false, 
+        vec2(), 
+        vec2(5, 1), 
+        true));
+    }
+    
 }
 
 function mainMenuUICustomDraw(deltaTime)
@@ -127,6 +159,10 @@ function mainMenuUICustomDraw(deltaTime)
     }
     animationTimer++
     titleScreenSprite.drawScIn(inPos, inSize);
+
+    //renderer.strokeStyle = 'red';
+    //renderer.lineWidth = 5;
+    //renderer.strokeRect(0, 0, gameWidth, gameHeight*0.87, 'white');
 }
 
 function mainMenuUICustomUpdate(deltaTime)
@@ -135,30 +171,55 @@ function mainMenuUICustomUpdate(deltaTime)
 
 function mainMenuUICustomEvents(deltaTime)
 {
-    if(playMenuBtn.button.output == UIOUTPUT_SELECT || menuBigPlayButton.output == UIOUTPUT_SELECT)
-    {
-        if(//leafcuttingBtn.button.output == UIOUTPUT_SELECT)
-        playMenuBtn.label.text == gameModes[0])
+    if (!isGameSelectEnabled) {
+        if(menuBigPlayButton.output == UIOUTPUT_SELECT) {
+            ui.stateIndex = COLONYGAMEINTROUI;
+        } else if(languageBtn.button.output == UIOUTPUT_SELECT)
         {
-            ui.stateIndex = LEAFCUTTINGINTROUI;
+            var done = false;
+            for(let i = 1; i < languages.length; i++)
+            {
+                if(languageBtn.label.text == "LANGUAGE: " + languages[i])
+                {
+                    languageBtn.label.text = "LANGUAGE: " + languages[i - 1];
+                    done = true;
+                    break;
+                }
+            }
+            if(!done) languageBtn.label.text = "LANGUAGE: " + languages[languages.length - 1];
+            languageBtn.button.resetOutput();
+
+            if(languageBtn.label.text == "LANGUAGE: Español"){
+                currentLanguage = "Español";
+            } else {
+                currentLanguage = "English";
+            }
+            
+        }
+    } else if(playMenuBtn.button.output == UIOUTPUT_SELECT || menuBigPlayButton.output == UIOUTPUT_SELECT) {
+
+        if(//leafcuttingBtn.button.output == UIOUTPUT_SELECT)
+        playMenuBtn.label.text == gameModes[0]) 
+        {
+            ui.stateIndex = COLONYGAMEINTROUI;
             //leafcuttingBtn.button.resetOutput();
         }
         else if(//flightBtn.button.output == UIOUTPUT_SELECT)
         playMenuBtn.label.text == gameModes[1])
         {
-            ui.stateIndex = FLIGHTGAMEINTROUI;
+            ui.stateIndex = LEAFCUTTINGINTROUI;
             //flightBtn.button.resetOutput();
         }
         else if(//colonyBtn.button.output == UIOUTPUT_SELECT)
         playMenuBtn.label.text == gameModes[2])
         {
-            ui.stateIndex = COLONYGAMEINTROUI;
+            ui.stateIndex = DEFENSEGAMEINTROUI;
             //colonyBtn.button.resetOutput();
         }
         else if(//defenseBtn.button.output == UIOUTPUT_SELECT)
         playMenuBtn.label.text == gameModes[3])
         {
-            ui.stateIndex = DEFENSEGAMEINTROUI;
+            ui.stateIndex = FLIGHTGAMEINTROUI;
             //defenseBtn.button.resetOutput();
             
         }
@@ -195,4 +256,5 @@ function mainMenuUICustomEvents(deltaTime)
         if(!done) playMenuBtn.label.text = gameModes[0];
         nextMenuBtn.button.resetOutput();
     }
+    
 }
