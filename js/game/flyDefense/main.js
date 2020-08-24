@@ -157,6 +157,7 @@ window.onload = function()
 
       defenseGame.NPCBigAnt1.draw();
       defenseGame.NPCBigAnt2.draw();
+      defenseGame.NPCBigAntNegative1.draw();
 
       defenseGame.testFly1.draw();
       defenseGame.testFly2.draw();

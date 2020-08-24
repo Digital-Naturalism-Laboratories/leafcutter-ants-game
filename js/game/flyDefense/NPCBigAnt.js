@@ -1,5 +1,6 @@
-function NPCBigAnt(x)
+function NPCBigAnt(x,name)
 {
+	this.name = name;
 	this.bigAntHeight = renderer.canvas.height*0.33;
 	this.bigAntWidth = renderer.canvas.width*0.5;
 	this.bigAntX = x;
@@ -12,9 +13,14 @@ function NPCBigAnt(x)
 
 	this.leafImage = leafImage;
 
+
+
 	this.currentBigAntWalkingImageIndex = getRandomIntInclusive(0,10);
 	this.currentSpriteSheet = bigAntWalkingSpriteSheet;
 	
+	this.smallAntSpriteSheet = leafMinimWalkingSpriteSheet;
+	this.currentSmallAntSpriteSheetIndex = 0;
+
 	this.cycleBigAntImages = function()
 	{
 		this.currentBigAntWalkingImageIndex++;
@@ -38,7 +44,16 @@ function NPCBigAnt(x)
 	{
 		this.drawBigAnt();
 		this.drawLeaf();
+		this.drawFungusSpores();
 		this.drawSmallAnt();
+
+		if (defenseGame.debugOn)
+		{
+
+			renderer.fillStyle = 'white';
+			renderer.font = '30px Helvetica';
+			renderer.fillText('NPCBig Ant ' + this.name, this.bigAntX + this.width,this.bigAntY);
+		}
 	}
 	
 	this.drawBigAnt = function()
@@ -54,6 +69,41 @@ function NPCBigAnt(x)
 	this.leafX = this.bigAntX + this.bigAntWidth*0.55;
 	this.leafY = this.bigAntY + this.bigAntHeight/2 - this.leafHeight*1.05;
 	
+	this.leafPolygonFungusBorderPoints = 
+	[
+
+		{name:'1',x:this.leafX+this.leafWidth*0.04,y:this.leafY + this.leafHeight*0.575},
+		{name:'2',x:this.leafX+this.leafWidth*0.375,y:this.leafY + this.leafHeight*0.2},
+		{name:'3',x:this.leafX+this.leafWidth*0.425,y:this.leafY + this.leafHeight*0.05},
+		{name:'4',x:this.leafX+this.leafWidth*0.625,y:this.leafY + this.leafHeight*0.05},
+		{name:'5',x:this.leafX+this.leafWidth*0.75,y:this.leafY + this.leafHeight*0.22},
+		{name:'6',x:this.leafX+this.leafWidth*0.975,y:this.leafY + this.leafHeight*0.32},
+		{name:'7',x:this.leafX+this.leafWidth*0.975,y:this.leafY + this.leafHeight*0.48},
+		{name:'8',x:this.leafX+this.leafWidth*0.87,y:this.leafY + this.leafHeight*0.46},
+		{name:'9',x:this.leafX+this.leafWidth*0.86,y:this.leafY + this.leafHeight*0.66},
+		{name:'10',x:this.leafX+this.leafWidth*0.725,y:this.leafY + this.leafHeight*0.88},
+		{name:'11',x:this.leafX+this.leafWidth*0.45,y:this.leafY + this.leafHeight*0.975},
+		{name:'12',x:this.leafX+this.leafWidth*0.35,y:this.leafY + this.leafHeight*0.95},
+		{name:'13',x:this.leafX+this.leafWidth*0.15,y:this.leafY + this.leafHeight*0.7},
+		{name:'14',x:this.leafX+this.leafWidth*0.04,y:this.leafY + this.leafHeight*0.575}
+
+	];
+
+	this.leafPolygonFungusBorderLineSegments = [];
+
+	this.initializeLineSegments = function()
+	{
+		for (let i = 0; i < this.leafPolygonFungusBorderPoints.length - 1; i++)
+		{
+			let lineSegment = {name:this.leafPolygonFungusBorderPoints[i].name, 
+							   x1:this.leafPolygonFungusBorderPoints[i].x,y1:this.leafPolygonFungusBorderPoints[i].y, 
+							   x2:this.leafPolygonFungusBorderPoints[i + 1].x,y2:this.leafPolygonFungusBorderPoints[i + 1].y};
+
+			this.leafPolygonFungusBorderLineSegments.push(lineSegment);
+
+		}
+	}
+
 	this.drawLeaf = function()
 	{
 		renderer.drawImage(this.leafImage, this.leafX,this.leafY, this.leafWidth,this.leafHeight);
@@ -62,14 +112,34 @@ function NPCBigAnt(x)
 			renderer.strokeStyle = 'red';
 			renderer.lineWidth = 5;
 			renderer.strokeRect(this.leafX,this.leafY, this.leafWidth,this.leafHeight);
+
+
+			renderer.strokeStyle = 'white';
+			renderer.lineWidth = 5;
+			renderer.strokeRect(this.fungusTangleX,this.fungusTangleY, this.fungusTangleWidth,this.fungusTangleHeight);
+
+			renderer.moveTo(this.leafPolygonFungusBorderPoints[0].x,this.leafPolygonFungusBorderPoints[0].y);
+			for (let i = 1; i < this.leafPolygonFungusBorderPoints.length; i++)
+			{
+				
+				
+				renderer.fillStyle = 'black';
+				renderer.fillRect(this.leafPolygonFungusBorderPoints[i].x,this.leafPolygonFungusBorderPoints[i].y, 5,5);
+				renderer.font = '20px Helvetica';
+				renderer.fillText(this.leafPolygonFungusBorderPoints[i].name, this.leafPolygonFungusBorderPoints[i].x,this.leafPolygonFungusBorderPoints[i].y);
+
+				renderer.lineTo(this.leafPolygonFungusBorderPoints[i].x,this.leafPolygonFungusBorderPoints[i].y);
+			}
+			renderer.strokeStyle = 'white';
+			renderer.stroke();
 		}
 	}
 
-	this.smallAntWidth = this.leafWidth*0.2;
-	this.smallAntHeight = this.leafHeight*0.2;
+	this.smallAntWidth = this.leafWidth*0.3;
+	this.smallAntHeight = this.leafHeight*0.3;
 
-	this.smallAntX = this.x + this.leafX/2;
-	this.smallAntY = this.leafY;
+	this.smallAntX = this.leafX + this.leafWidth/2 - this.smallAntWidth/2;
+	this.smallAntY = this.leafY + this.leafHeight/2 - this.smallAntHeight/2;
 
 	this.standingAntY = (this.smallAntY + this.smallAntHeight) - this.smallAntWidth;
 
@@ -95,12 +165,16 @@ function NPCBigAnt(x)
 
 
 
-	
+	this.smallAntSourceWidth = 120;
+	this.smallAntSourceHeight = 108;
 	this.drawSmallAnt = function()
 	{
 		// if (!defenseGame.inputManager.swatIsBeingHeld)
 		// {
-		// 			defenseGame.canvasContext.drawImage(this.currentSmallAntImage, this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
+					renderer.drawImage(leafMinimWalkingSpriteSheet, 
+				this.currentSmallAntSpriteSheetIndex*this.smallAntSourceWidth,0, this.smallAntSourceWidth,this.smallAntSourceHeight,
+				this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
+
 		// }
 		// else
 		// {
@@ -116,7 +190,51 @@ function NPCBigAnt(x)
 		// }
 	}
 
+	
 
+	this.arrayOfFungusSpores = [];
+	this.randomPotentialFungusPoint = undefined;
+	this.initializeArrayOfFungusSpores = function()
+	{
+		// for (let i = 0; i < 200; i++)
+		// {
+		// 	let randomXWithinFungusTangle = getRandomIntInclusive(Math.floor(this.fungusTangleX),Math.floor(this.fungusTangleX + this.fungusTangleWidth));
+		// 	let randomYWithinFungusTangle = getRandomIntInclusive(Math.floor(this.fungusTangleY),Math.floor(this.fungusTangleY + this.fungusTangleHeight));
+		// 	let fungusSpore = new FungusSpore(randomXWithinFungusTangle,randomYWithinFungusTangle);
+		// 	this.arrayOfFungusSpores.push(fungusSpore);
+		// }
+		// if (leafcutterGame.inputManager.debugOn)
+		// {
+		// 	leafcutterGame.canvasContext.strokeStyle = 'red';
+		// 	leafcutterGame.canvasContext.lineWidth = 5;
+		// 	leafcutterGame.strokeRect(this.fungusTangleX,this.fungusTangleY, this.fungusTangleWidth,this.fungusTangleHeight);
+		// }
+		this.arrayOfFungusSpores = [];
+		console.log('this.leafPolygonFungusBorderLineSegments')
+		for (let i = 0; i < 200; i++)
+		{
+			let potentialFungusPoint = {x:Math.floor(getRandomIntInclusive(this.leafX,this.leafX + this.leafWidth)),
+											  y:Math.floor(getRandomIntInclusive(this.leafY,this.leafY + this.leafHeight))};
+
+			while(this.tallyRaycastIntersectionsWithLeafPolygon(potentialFungusPoint, this.leafPolygonFungusBorderLineSegments) === 0 || 
+				this.tallyRaycastIntersectionsWithLeafPolygon(potentialFungusPoint, this.leafPolygonFungusBorderLineSegments) % 2 === 0)
+			{
+				potentialFungusPoint = {x:Math.floor(getRandomIntInclusive(this.leafX,this.leafX + this.leafWidth)),
+											  y:Math.floor(getRandomIntInclusive(this.leafY,this.leafY + this.leafHeight))};
+			}
+			
+			let fungusSpore = new FungusSpore(potentialFungusPoint.x,potentialFungusPoint.y);
+			this.arrayOfFungusSpores.push(fungusSpore);
+		}
+	}
+
+	this.drawFungusSpores = function()
+	{
+		for (let i = 0; i < this.arrayOfFungusSpores.length; i++)
+		{
+			this.arrayOfFungusSpores[i].draw();
+		}
+	}
 
 	this.antVelocity = renderer.canvas.width*0.0075;
 	
@@ -180,7 +298,16 @@ function NPCBigAnt(x)
 	this.update = function()
 	{
 		// this.moveSmallAnt();
-
+		if (defenseGame.transitioningToUninfectedAnt)
+		{
+			this.bigAntX += renderer.canvas.width*0.004;
+			this.leafX += renderer.canvas.width*0.004;
+			for (let i = 0; i < this.arrayOfFungusSpores.length; i++)
+			{
+				this.arrayOfFungusSpores[i].x += renderer.canvas.width*0.004;
+			}
+			this.smallAntX += renderer.canvas.width*0.004;
+		}
 	}
 
 	this.initialize = function()
@@ -191,8 +318,49 @@ function NPCBigAnt(x)
 		
 		defenseGame.arrayOfIntervals.push(window.NPCBigAntAnimationInterval);
 		// this.bigAntWalkingInterval.start();
+		this.initializeLineSegments();
+		this.initializeArrayOfFungusSpores();
 	}
 
+this.tallyRaycastIntersectionsWithLeafPolygon = function(pointToRaycast, arrayOfLines)
+	{
+		let numberOfIntersections = 0;
+		
+		for (let i = 0; i < arrayOfLines.length; i++)
+		{
+			
+
+			//raycast line from potential fungus point
+			let x1 = pointToRaycast.x;
+			let x2 = pointToRaycast.x;
+			let y1 = pointToRaycast.y;
+			let y2 = 1;
+
+			//polygon line segment
+			let x3 = arrayOfLines[i].x1;
+			let x4 = arrayOfLines[i].x2;
+			let y3 = arrayOfLines[i].y1;
+			let y4 = arrayOfLines[i].y2;
+
+			let denominator = (x1 - x2)*(y3 - y4) - (y1 - y2)*(x3 - x4);
+			if (denominator === 0)
+			{
+				continue;
+			}
+
+			let numeratorForT = (x1 - x3)*(y3 - y4) - (y1 - y3)*(x3 - x4);
+			let numeratorForU = (x1 - x2)*(y1 - y3) - (y1 - y2)*(x1 - x3);
+			let t = numeratorForT/denominator;
+			let u = -(numeratorForU/denominator);
+
+			if (t > 0 && t < 1 && u > 0 && u < 1)
+			{
+				numberOfIntersections++;
+			}
+			
+		}
+		return numberOfIntersections;
+	}
 	// this.headTarget = new Target('head target', defenseGame.canvas.width * 0.435,defenseGame.canvas.height * 0.575);
 	// this.thoraxTarget = new Target('thorax target', defenseGame.canvas.width * 0.35,defenseGame.canvas.height * 0.6);
 	// this.abdomenTarget = new Target('abdomen target', defenseGame.canvas.width * 0.285,defenseGame.canvas.height * 0.6);

@@ -126,152 +126,158 @@ function Fly(name,status)
 			//		   2.check for jittering and correct if so
 			//         3.check for swat collision with flies
 			//		   4.check for fly/egg reaching target
-
-		if (this.status === 'planting')
+		if (!defenseGame.transitioningToUninfectedAnt)
 		{
-			
-
-			if (this.x > this.currentTarget.x)//move from right to left closer to targets x
-			{
-				this.x -= this.velocityX;
-				// if (this.egg !== undefined)
-				// {
-					
-				// 	this.egg.x -= this.velocityX;
-					
-				// }			
-			}
-				
-			
-			else if (this.x + this.width < this.currentTarget.x)//move from left to right closer to targets x
-			{
-				this.x += this.velocityX;
-				// if (this.egg !== undefined)
-				// {
-				// 	this.egg.x += this.velocityX;
-				// }
-							
-			}
-				
-			
-
-			if (Math.abs(this.x - this.currentTarget.x) < renderer.canvas.width*0.005)
-			{
-				this.x = this.currentTarget.x;//stop jittering when x coordinate is very close to targets x
-				// if (this.egg !== undefined)
-				// {
-				// 	this.egg.x = this.currentTarget.x;
-				// }
-				
-			}
-
-			if (this.y < this.currentTarget.y)//descend closer to target if above it
-			{
-				this.y += this.velocityY;
-				// if (this.egg !== undefined)
-				// {
-				// 	this.egg.y += this.velocityY;
-				// }
-			}
-
-			//collision box detection
-			if (this.x < defenseGame.parentAntObject.smallAntX + defenseGame.parentAntObject.smallAntWidth*0.8 && //check for swat collisions with flies
-			    this.x + this.width > defenseGame.parentAntObject.smallAntX + defenseGame.parentAntObject.smallAntWidth*0.1 &&
-			    this.y < defenseGame.parentAntObject.smallAntY + defenseGame.parentAntObject.smallAntHeight*0.5 &&
-			    this.y + this.height > defenseGame.parentAntObject.smallAntY*1.25)
+			if (this.status === 'planting')
 				{
-				    defenseGame.audioManager.sfxManager.playFlyChasedSound();
-				    this.status = 'swatted';
-				    if (defenseGame.flyManager.currentStatus !== 'swarming')
-				    {
-				    	defenseGame.flyManager.toggleNextFlysStatusToPlant();
-				    }
-				    
-				}		
+					
 
-			if (this.x + this.width > this.currentTarget.x * 0.96 && this.x < this.currentTarget.x * 1.04 && 
-				this.y > this.currentTarget.y * 0.96 && this.y < this.currentTarget.y * 1.04)//target reached
-			{
-				if (!defenseGame.parentAntObject.hasBeenInfected)
-				{
-					defenseGame.parentAntObject.hasBeenInfected = true;
-					if (defenseGame.background.stuckOnPheremoneGap)
+					if (this.x > this.currentTarget.x)//move from right to left closer to targets x
 					{
-						defenseGame.parentAntObject.currentSpriteSheet = bigAntIdleInfectedSpriteSheet;
+						this.x -= this.velocityX;
+						// if (this.egg !== undefined)
+						// {
+							
+						// 	this.egg.x -= this.velocityX;
+							
+						// }			
 					}
-					window.parentAntSpriteSheetToggleInterval = 
-					setInterval(function() {defenseGame.parentAntObject.toggleSpriteSheet()},200);
+						
+					
+					else if (this.x + this.width < this.currentTarget.x)//move from left to right closer to targets x
+					{
+						this.x += this.velocityX;
+						// if (this.egg !== undefined)
+						// {
+						// 	this.egg.x += this.velocityX;
+						// }
+									
+					}
+						
+					
 
-					defenseGame.arrayOfIntervals.push(window.parentAntSpriteSheetToggleInterval);
-				}
-				this.status = 'leaving after planting';
-				this.currentTarget.canBeTargeted = false;
-				// let egg = new Egg(this.egg.x,this.egg.y);
-				// defenseGame.plantedEggManager.arrayOfPlantedEggs.push(egg);
-				// this.egg = undefined;
-				defenseGame.background.bigAntTallyOfInfections++;
-				defenseGame.background.calculateSlowDownRateFromInfections();
-				defenseGame.eggHasBeenPlanted = true;
-				defenseGame.audioManager.sfxManager.antInfectionSound.play();
-				if (!defenseGame.parentAntObject.infectionAlertMessage.infectionMessageShouldBeVisible)
-				{
-					defenseGame.parentAntObject.infectionAlertMessage.toggleVisibility();
-					setTimeout(defenseGame.parentAntObject.infectionAlertMessage.toggleVisibility,2000);
-				}
-				
-				
-				//alert('Ant infected by a parasite. You lose!')
-				if (defenseGame.testFly1.eggHasBeenPlanted && defenseGame.testFly2.eggHasBeenPlanted && defenseGame.testFly3.eggHasBeenPlanted)
-				{
-					//alert('You Lose!');
-				}
-				else
-				{
-					defenseGame.flyManager.toggleNextFlysStatusToPlant();
-				}
-			}
-			
-		}
-		else if (this.status === 'swatted')
-		{
-			if (this.y + this.height > 0)
-			{
-				this.y -= this.velocityY*2;
-				this.x -= this.velocityX*2;
-				// if (this.egg !== undefined)
-				// {
-				// 	this.egg.y -= this.velocityY;
-				// }
-			}
-			if (this.y + this.height < 0)
-			{
-				this.status = undefined;
-				this.assignRandomXYCoordinatesInARange();
-				
-				if (defenseGame.flyManager.currentStatus === 'swarming')
-				{
-					this.status = 'planting';
-				}
-			}
-		}
-		else if (this.status === 'leaving after planting')
-		{
-			if (this.y > -this.height)
-			{
-				this.y -= this.velocityY;
-			}
+					if (Math.abs(this.x - this.currentTarget.x) < renderer.canvas.width*0.005)
+					{
+						this.x = this.currentTarget.x;//stop jittering when x coordinate is very close to targets x
+						// if (this.egg !== undefined)
+						// {
+						// 	this.egg.x = this.currentTarget.x;
+						// }
+						
+					}
 
-			if (this.y < -this.height * 0.98)
-			{
+					if (this.y < this.currentTarget.y)//descend closer to target if above it
+					{
+						this.y += this.velocityY;
+						// if (this.egg !== undefined)
+						// {
+						// 	this.egg.y += this.velocityY;
+						// }
+					}
+
+					//collision box detection
+					if (this.x < defenseGame.parentAntObject.smallAntX + defenseGame.parentAntObject.smallAntWidth*0.8 && //check for swat collisions with flies
+					    this.x + this.width > defenseGame.parentAntObject.smallAntX + defenseGame.parentAntObject.smallAntWidth*0.1 &&
+					    this.y < defenseGame.parentAntObject.smallAntY + defenseGame.parentAntObject.smallAntHeight*0.5 &&
+					    this.y + this.height > defenseGame.parentAntObject.smallAntY*1.25)
+						{
+						    defenseGame.audioManager.sfxManager.playFlyChasedSound();
+						    this.status = 'swatted';
+						    if (defenseGame.flyManager.currentStatus !== 'swarming')
+						    {
+						    	defenseGame.flyManager.toggleNextFlysStatusToPlant();
+						    }
+						    
+						}		
+
+					if (this.x + this.width > this.currentTarget.x * 0.96 && this.x < this.currentTarget.x * 1.04 && 
+						this.y > this.currentTarget.y * 0.96 && this.y < this.currentTarget.y * 1.04)//target reached
+					{
+						if (!defenseGame.parentAntObject.hasBeenInfected)
+						{
+							defenseGame.parentAntObject.hasBeenInfected = true;
+							if (defenseGame.background.stuckOnPheremoneGap)
+							{
+								defenseGame.parentAntObject.currentSpriteSheet = bigAntIdleInfectedSpriteSheet;
+							}
+							window.parentAntSpriteSheetToggleInterval = 
+							setInterval(function() {defenseGame.parentAntObject.toggleSpriteSheet()},200);
+
+							defenseGame.arrayOfIntervals.push(window.parentAntSpriteSheetToggleInterval);
+						}
+						this.status = 'leaving after planting';
+						this.currentTarget.canBeTargeted = false;
+						// let egg = new Egg(this.egg.x,this.egg.y);
+						// defenseGame.plantedEggManager.arrayOfPlantedEggs.push(egg);
+						// this.egg = undefined;
+						defenseGame.background.bigAntTallyOfInfections++;
+						defenseGame.background.calculateSlowDownRateFromInfections();
+						defenseGame.eggHasBeenPlanted = true;
+						defenseGame.audioManager.sfxManager.antInfectionSound.play();
+						if (!defenseGame.parentAntObject.infectionAlertMessage.infectionMessageShouldBeVisible)
+						{
+							defenseGame.parentAntObject.infectionAlertMessage.toggleVisibility();
+							setTimeout(defenseGame.parentAntObject.infectionAlertMessage.toggleVisibility,2000);
+						}
+						
+						
+						//alert('Ant infected by a parasite. You lose!')
+						if (defenseGame.testFly1.eggHasBeenPlanted && defenseGame.testFly2.eggHasBeenPlanted && defenseGame.testFly3.eggHasBeenPlanted)
+						{
+							//alert('You Lose!');
+						}
+						else
+						{
+							defenseGame.flyManager.toggleNextFlysStatusToPlant();
+						}
+
+						defenseGame.transitioningToUninfectedAnt = true;
+						defenseGame.background.transitionOveride = renderer.canvas.width*0.002;
+					}
+					
+				}
+				else if (this.status === 'swatted')
+				{
+					if (this.y + this.height > 0)
+					{
+						this.y -= this.velocityY*2;
+						this.x -= this.velocityX*2;
+						// if (this.egg !== undefined)
+						// {
+						// 	this.egg.y -= this.velocityY;
+						// }
+					}
+					if (this.y + this.height < 0)
+					{
+						this.status = undefined;
+						this.assignRandomXYCoordinatesInARange();
+						
+						if (defenseGame.flyManager.currentStatus === 'swarming')
+						{
+							this.status = 'planting';
+						}
+					}
+				}
+				else if (this.status === 'leaving after planting')
+				{
+					if (this.y > -this.height)
+					{
+						this.y -= this.velocityY;
+					}
+
+					if (this.y < -this.height * 0.98)
+					{
+						
+						this.assignRandomXYCoordinatesInARange();
+						this.status = 'planting';
+					}
+				}
 				
-				this.assignRandomXYCoordinatesInARange();
-				this.status = 'planting';
+
+
 			}
 		}
 		
-
-
-	}
 }
 
 function FlyManager()

@@ -106,7 +106,7 @@ function ParentAntObject()
 			{name:'11',x:this.leafX+this.leafWidth*0.45,y:this.leafY + this.leafHeight*1.0125},
 			{name:'12',x:this.leafX+this.leafWidth*0.275,y:this.leafY + this.leafHeight*0.95},
 			{name:'13',x:this.leafX+this.leafWidth*0.15,y:this.leafY + this.leafHeight*0.75},
-			{name:'19',x:this.leafX-this.leafWidth*0.025,y:this.leafY + this.leafHeight*0.575}
+			{name:'14',x:this.leafX-this.leafWidth*0.025,y:this.leafY + this.leafHeight*0.575}
 
 		];
 
@@ -126,7 +126,7 @@ function ParentAntObject()
 		{name:'11',x:this.leafX+this.leafWidth*0.45,y:this.leafY + this.leafHeight*0.975},
 		{name:'12',x:this.leafX+this.leafWidth*0.35,y:this.leafY + this.leafHeight*0.95},
 		{name:'13',x:this.leafX+this.leafWidth*0.15,y:this.leafY + this.leafHeight*0.7},
-		{name:'19',x:this.leafX+this.leafWidth*0.04,y:this.leafY + this.leafHeight*0.575}
+		{name:'14',x:this.leafX+this.leafWidth*0.04,y:this.leafY + this.leafHeight*0.575}
 
 	];
 
@@ -220,38 +220,38 @@ function ParentAntObject()
 		renderer.drawImage(this.leafImage, this.leafX,this.leafY, this.leafWidth,this.leafHeight);
 		if (defenseGame.debugOn === true)
 		{
-			// renderer.strokeStyle = 'white';
-			// renderer.lineWidth = 5;
-			// renderer.strokeRect(this.fungusTangleX,this.fungusTangleY, this.fungusTangleWidth,this.fungusTangleHeight);
+			renderer.strokeStyle = 'white';
+			renderer.lineWidth = 5;
+			renderer.strokeRect(this.fungusTangleX,this.fungusTangleY, this.fungusTangleWidth,this.fungusTangleHeight);
 
-			// renderer.moveTo(this.leafPolygonFungusBorderPoints[0].x,this.leafPolygonFungusBorderPoints[0].y);
-			// for (let i = 1; i < this.leafPolygonFungusBorderPoints.length; i++)
-			// {
-				
-				
-			// 	renderer.fillStyle = 'black';
-			// 	renderer.fillRect(this.leafPolygonFungusBorderPoints[i].x,this.leafPolygonFungusBorderPoints[i].y, 5,5);
-			// 	renderer.font = '20px Helvetica';
-			// 	renderer.fillText(this.leafPolygonFungusBorderPoints[i].name, this.leafPolygonFungusBorderPoints[i].x,this.leafPolygonFungusBorderPoints[i].y);
-
-			// 	renderer.lineTo(this.leafPolygonFungusBorderPoints[i].x,this.leafPolygonFungusBorderPoints[i].y);
-			// }
-			// renderer.strokeStyle = 'white';
-			// renderer.stroke();
-
-			renderer.moveTo(this.leafPolygonWalkingBorderPoints[0].x,this.leafPolygonWalkingBorderPoints[0].y);
-			for (let i = 1; i < this.leafPolygonWalkingBorderPoints.length; i++)
+			renderer.moveTo(this.leafPolygonFungusBorderPoints[0].x,this.leafPolygonFungusBorderPoints[0].y);
+			for (let i = 1; i < this.leafPolygonFungusBorderPoints.length; i++)
 			{
 				
-				renderer.fillStyle = 'lawngreen';
-				renderer.fillRect(this.leafPolygonWalkingBorderPoints[i].x,this.leafPolygonWalkingBorderPoints[i].y, 5,5);
+				
+				renderer.fillStyle = 'black';
+				renderer.fillRect(this.leafPolygonFungusBorderPoints[i].x,this.leafPolygonFungusBorderPoints[i].y, 5,5);
 				renderer.font = '20px Helvetica';
-				renderer.fillText(this.leafPolygonWalkingBorderPoints[i].name, this.leafPolygonWalkingBorderPoints[i].x,this.leafPolygonWalkingBorderPoints[i].y);
+				renderer.fillText(this.leafPolygonFungusBorderPoints[i].name, this.leafPolygonFungusBorderPoints[i].x,this.leafPolygonFungusBorderPoints[i].y);
 
-				renderer.lineTo(this.leafPolygonWalkingBorderPoints[i].x,this.leafPolygonWalkingBorderPoints[i].y);
+				renderer.lineTo(this.leafPolygonFungusBorderPoints[i].x,this.leafPolygonFungusBorderPoints[i].y);
 			}
-			renderer.strokeStyle = 'green';
+			renderer.strokeStyle = 'white';
 			renderer.stroke();
+
+			// renderer.moveTo(this.leafPolygonWalkingBorderPoints[0].x,this.leafPolygonWalkingBorderPoints[0].y);
+			// for (let i = 1; i < this.leafPolygonWalkingBorderPoints.length; i++)
+			// {
+				
+			// 	renderer.fillStyle = 'lawngreen';
+			// 	renderer.fillRect(this.leafPolygonWalkingBorderPoints[i].x,this.leafPolygonWalkingBorderPoints[i].y, 5,5);
+			// 	renderer.font = '20px Helvetica';
+			// 	renderer.fillText(this.leafPolygonWalkingBorderPoints[i].name, this.leafPolygonWalkingBorderPoints[i].x,this.leafPolygonWalkingBorderPoints[i].y);
+
+			// 	renderer.lineTo(this.leafPolygonWalkingBorderPoints[i].x,this.leafPolygonWalkingBorderPoints[i].y);
+			// }
+			// renderer.strokeStyle = 'green';
+			// renderer.stroke();
 		}
 	}
 
@@ -329,6 +329,8 @@ function ParentAntObject()
 	this.smallAntSourceHeight = 108;
 	this.drawSmallAnt = function()
 	{
+		
+
 		if (this.currentSmallAntDirection === 'up')
 		{
 		//(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
@@ -347,10 +349,13 @@ function ParentAntObject()
 				this.currentSmallAntImageArrayIndex*this.smallAntSourceWidth,0, this.smallAntSourceWidth,this.smallAntSourceHeight,
 				this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
 			renderer.restore();
+
+			
 		}
 		else if (this.currentSmallAntDirection === 'right')
 		{
 			renderer.save();
+			
 			renderer.translate(this.smallAntMidPoint.x,this.smallAntMidPoint.y);
 			renderer.rotate(90 * Math.PI / 180);
 			renderer.translate(-this.smallAntMidPoint.x,-this.smallAntMidPoint.y);
@@ -358,10 +363,13 @@ function ParentAntObject()
 				this.currentSmallAntImageArrayIndex*this.smallAntSourceWidth,0, this.smallAntSourceWidth,this.smallAntSourceHeight,
 				this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
 			renderer.restore();
+
+			
 		}
 		else if (this.currentSmallAntDirection === 'downRight')
 		{
 			renderer.save();
+			
 			renderer.translate(this.smallAntMidPoint.x,this.smallAntMidPoint.y);
 			renderer.rotate(135 * Math.PI / 180);
 			renderer.translate(-this.smallAntMidPoint.x,-this.smallAntMidPoint.y);
@@ -369,10 +377,13 @@ function ParentAntObject()
 				this.currentSmallAntImageArrayIndex*this.smallAntSourceWidth,0, this.smallAntSourceWidth,this.smallAntSourceHeight,
 				this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
 			renderer.restore();
+
+			
 		}
 		else if (this.currentSmallAntDirection === 'down')
 		{
 			renderer.save();
+			
 			renderer.translate(this.smallAntMidPoint.x,this.smallAntMidPoint.y);
 			renderer.rotate(180 * Math.PI / 180);
 			renderer.translate(-this.smallAntMidPoint.x,-this.smallAntMidPoint.y);
@@ -380,10 +391,13 @@ function ParentAntObject()
 				this.currentSmallAntImageArrayIndex*this.smallAntSourceWidth,0, this.smallAntSourceWidth,this.smallAntSourceHeight,
 				this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
 			renderer.restore();
+
+			
 		}
 		else if (this.currentSmallAntDirection === 'downLeft')
 		{
 			renderer.save();
+			
 			renderer.translate(this.smallAntMidPoint.x,this.smallAntMidPoint.y);
 			renderer.rotate(225 * Math.PI / 180);
 			renderer.translate(-this.smallAntMidPoint.x,-this.smallAntMidPoint.y);
@@ -391,10 +405,13 @@ function ParentAntObject()
 				this.currentSmallAntImageArrayIndex*this.smallAntSourceWidth,0, this.smallAntSourceWidth,this.smallAntSourceHeight,
 				this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
 			renderer.restore();
+
+			
 		}
 		else if (this.currentSmallAntDirection === 'left')
 		{
 			renderer.save();
+			
 			renderer.translate(this.smallAntMidPoint.x,this.smallAntMidPoint.y);
 			renderer.rotate(270 * Math.PI / 180);
 			renderer.translate(-this.smallAntMidPoint.x,-this.smallAntMidPoint.y);
@@ -402,10 +419,13 @@ function ParentAntObject()
 				this.currentSmallAntImageArrayIndex*this.smallAntSourceWidth,0, this.smallAntSourceWidth,this.smallAntSourceHeight,
 				this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
 			renderer.restore();
+
+			
 		}
 		else if (this.currentSmallAntDirection === 'upLeft')
 		{
 			renderer.save();
+			
 			renderer.translate(this.smallAntMidPoint.x,this.smallAntMidPoint.y);
 			renderer.rotate(315 * Math.PI / 180);
 			renderer.translate(-this.smallAntMidPoint.x,-this.smallAntMidPoint.y);
@@ -413,6 +433,8 @@ function ParentAntObject()
 				this.currentSmallAntImageArrayIndex*this.smallAntSourceWidth,0, this.smallAntSourceWidth,this.smallAntSourceHeight,
 				this.smallAntX,this.smallAntY, this.smallAntWidth,this.smallAntHeight);
 			renderer.restore();
+
+			
 		}
 
 		if (defenseGame.debugOn)
@@ -947,10 +969,62 @@ function ParentAntObject()
 				}
 	}
 
+	
 	this.update = function()
 	{
-		this.moveSmallAnt();
-		this.detectFungusSporeCollisions();
+		
+			this.moveSmallAnt();
+			this.detectFungusSporeCollisions();
+		
+		
+
+		if (defenseGame.transitioningToUninfectedAnt)
+		{
+			this.bigAntX += renderer.canvas.width*0.004;
+			this.leafX += renderer.canvas.width*0.004;
+			for (let i = 0; i < this.arrayOfFungusSpores.length; i++)
+			{
+				this.arrayOfFungusSpores[i].x += renderer.canvas.width*0.004;
+			}
+
+			if (this.currentSmallAntDirection === 'down')
+			{
+				this.smallAntX -= renderer.canvas.width*0.004;
+			}
+			else if (this.currentSmallAntDirection === 'up')
+			{
+				this.smallAntX += renderer.canvas.width*0.004;
+			}
+			else if (this.currentSmallAntDirection === 'right')
+			{
+				this.smallAntY -= renderer.canvas.width*0.004;
+			}
+			else if (this.currentSmallAntDirection === 'left')
+			{
+				this.smallAntY += renderer.canvas.width*0.004;
+			}
+			else if (this.currentSmallAntDirection === 'upRight')
+			{
+				this.smallAntX += renderer.canvas.width*0.004;
+				this.smallAntY -= renderer.canvas.width*0.004;
+			}
+			else if (this.currentSmallAntDirection === 'upLeft')
+			{
+				this.smallAntX += renderer.canvas.width*0.004;
+				this.smallAntY += renderer.canvas.width*0.004;
+			}
+			else if (this.currentSmallAntDirection === 'downRight')
+			{
+				this.smallAntX -= renderer.canvas.width*0.004;
+				this.smallAntY -= renderer.canvas.width*0.004;
+			}
+			else if (this.currentSmallAntDirection === 'downLeft')
+			{
+				this.smallAntX -= renderer.canvas.width*0.004;
+				this.smallAntY += renderer.canvas.width*0.004;
+			}
+			
+		}
 	}
 
 	this.initialize = function()

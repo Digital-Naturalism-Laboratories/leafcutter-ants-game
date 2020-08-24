@@ -283,6 +283,7 @@ function GroundMinimManager()
 
 			defenseGame.NPCBigAnt1.currentSpriteSheet = bigAntWalkingSpriteSheet;
 			defenseGame.NPCBigAnt2.currentSpriteSheet = bigAntWalkingSpriteSheet;
+			defenseGame.NPCBigAntNegative1.currentSpriteSheet = bigAntWalkingSpriteSheet;
 			console.log('defenseGame.NPCBigAnt1.currentSpriteSheet: ' + defenseGame.NPCBigAnt1.currentSpriteSheet);
 			if (!defenseGame.parentAntObject.hasBeenInfected)
 			{

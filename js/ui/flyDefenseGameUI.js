@@ -64,10 +64,12 @@ defenseGame.initialize = function()
 	this.parentAntObject.initialize();
 
 	//non controlled ants, just there to show the player that ants work in lines
-	this.NPCBigAnt1 = new NPCBigAnt(-renderer.canvas.width*0.33)
-	this.NPCBigAnt2 = new NPCBigAnt(renderer.canvas.width - renderer.canvas.width*0.33);
+	this.NPCBigAnt1 = new NPCBigAnt(-renderer.canvas.width*0.33,'1')
+	this.NPCBigAnt2 = new NPCBigAnt(renderer.canvas.width - renderer.canvas.width*0.33,'2');
 	this.NPCBigAnt1.initialize();
 	this.NPCBigAnt2.initialize();
+	this.NPCBigAntNegative1 = new NPCBigAnt( (renderer.canvas.width/2 - renderer.canvas.width*0.5/2) - renderer.canvas.width,'-1');
+	this.NPCBigAntNegative1.initialize();
 
 	//fly stuff
 	this.flyManager = new FlyManager();
@@ -96,6 +98,8 @@ defenseGame.initialize = function()
 
 	// console.log('defense game init called');
 	this.arrayOfFrameIntervals = [this.countdownInterval,this.background.flashAlertInterval];
+
+	this.transitioningToUninfectedAnt = false;
 
 	this.events = function()
 	{
@@ -129,6 +133,10 @@ defenseGame.initialize = function()
 	    }
 
 	    this.audioManager.sfxManager.avoidAwkwardSilenceForLoopedAudioFiles();
+
+	    this.NPCBigAnt1.update();
+	    this.NPCBigAnt2.update();
+	    this.NPCBigAntNegative1.update();
 	}
 
 	renderer.save();
@@ -147,6 +155,7 @@ defenseGame.initialize = function()
 
 			this.NPCBigAnt1.draw();
 			this.NPCBigAnt2.draw();
+			this.NPCBigAntNegative1.draw();
 			defenseGame.parentAntObject.draw();
 			// defenseGame.plantedEggManager.draw();
 			defenseGame.background.fungusSporeFeedbackAnimationManager.draw();
