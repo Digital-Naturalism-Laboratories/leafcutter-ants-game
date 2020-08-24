@@ -103,10 +103,10 @@ function setupLeafcuttingUI()
         new SubState(tr(), gameplayTopLeftLabels),false, vec2(0, 10*pixelSize), vec2(1, 2), true));
 
     centerLabel1 = new Label(tr(vec2(0, -40 * pixelSize), vec2(gameWidth, gameHeight)), "CLICK EDGE TO",
-        (112*pixelSize).toString() + "px " + uiContext.fontFamily, "white", 0);
+        (96*pixelSize).toString() + "px " + uiContext.fontFamily, "white", 0);
     leafcuttingUI.push(centerLabel1);
     centerLabel2 = new Label(tr(vec2(0, 40 * pixelSize), vec2(gameWidth, gameHeight)), "START CUTTING",
-        (112*pixelSize).toString() + "px " + uiContext.fontFamily, "white", 0);
+        (96*pixelSize).toString() + "px " + uiContext.fontFamily, "white", 0);
     leafcuttingUI.push(centerLabel2);
 
     controlHintLabel = new Label(tr(vec2(350 * pixelSize, 280 * pixelSize), vec2(240 * pixelSize, 40 * pixelSize)), "CLICK WHEN GREEN",
