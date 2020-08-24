@@ -46,7 +46,8 @@ defenseGame.initialize = function()
 
     this.audioManager = new AudioManager();
     
-    
+    this.arrayOfIntervals = [];
+	
 
     //background section
 	defenseGame.background = new Background();
@@ -80,6 +81,8 @@ defenseGame.initialize = function()
     this.testFly4 = new Fly('testFly4',undefined);
     this.testFly4.assignRandomXYCoordinatesInARange();
 
+    
+    
     this.flyManager.arrayOfFlies.push(this.testFly1,this.testFly2,this.testFly3,this.testFly4);
     this.flyManager.initialize();
 
@@ -92,7 +95,6 @@ defenseGame.initialize = function()
     this.groundMinimManager.initializeGroundMinims(5);
 
 	// console.log('defense game init called');
-
 	this.arrayOfFrameIntervals = [this.countdownInterval,this.background.flashAlertInterval];
 
 	this.events = function()
@@ -156,8 +158,9 @@ defenseGame.initialize = function()
 		  	
 
 		  	
-
+			
 			this.flyManager.drawFlies();
+
 
 			this.background.fungusTallyDiv.draw();
 			this.background.infectionTallyDiv.draw();
@@ -211,11 +214,12 @@ defenseGame.initialize = function()
 	}
 
 	this.arrayOfTimeouts = [];
+	
 	this.reset = function()
 	{
 		//console.log('put reset code here');
-		this.timeLeft = 120;
-
+		
+		//clearing intervals and timeouts for potential performance issues
 		for (let i = 0; i < this.arrayOfFrameIntervals.length; i++)
 		{
 			this.arrayOfFrameIntervals[i].stop();
@@ -227,8 +231,99 @@ defenseGame.initialize = function()
 			clearTimeout(this.arrayOfTimeouts[i]);
 		}
 
+		for (let i = 0; i < this.arrayOfIntervals.length; i++)
+		{
+			clearInterval(this.arrayOfIntervals[i]);
+			console.log('this.arrayOfIntervals: ' + this.arrayOfIntervals);
+		}
+
+		//other settings
+		this.timeLeft = 120;
 		this.colonyReached = false;
+		this.background.slowDownRateFromInfections = 1;
+		this.background.groundImage1xCoordinate = 0;
+		this.background.groundImage2xCoordinate = renderer.canvas.width;
+		this.background.grassLayerImage1XCoordinate = 0;
+		this.background.grassLayerImage2XCoordinate = renderer.canvas.width;
+		this.background.leavesLayerImage1XCoordinate = 0;
+		this.background.leavesLayerImage2XCoordinate = renderer.canvas.width;
+		this.background.forageLayerImage1XCoordinate = 0;
+		this.background.forageLayerImage2XCoordinate = renderer.canvas.width;
+
+		this.background.pheremoneStrip1ImageXCoordinate = 0;
+		this.background.pheremoneStrip2ImageXCoordinate = renderer.canvas.width*1.01 + this.pheremoneGapWidth;
+		this.background.colonyMoundXCoordinate = 2.7*renderer.canvas.width;
+		this.background.colonyMoundMidpoint = this.colonyMoundXCoordinate + this.colonyMoundWidth/2;
+		this.background.pheremoneGapManager = new PheremoneGapManager();
+		this.background.pheremoneGapManager.instantiatePheremoneGaps();
+
+		this.background.currentPheremoneGapArrayIndex = 0;
+		this.background.currentPheremoneGap = this.background.pheremoneGapManager.arrayOfPheremoneGaps[this.background.currentPheremoneGapArrayIndex];
+		console.log(this.background.pheremoneGapManager.arrayOfPheremoneGaps);
+		console.log(this.background.currentPheremoneGap);
+
+		this.background.fungusTallyDiv.tallyOfEatenFungusSpores = 0;
+		defenseGame.background.bigAntTallyOfInfections = 0;
+
+
+		this.parentAntObject.currentSpriteSheet = bigAntWalkingSpriteSheet;
+		this.parentAntObject.initializeArrayOfFungusSpores();
+
 
 		this.audioManager.resetFlyDefenseAudio();
+
+		for (let i = 0; i < this.flyManager.arrayOfFlies.length; i++)
+		{
+			this.flyManager.arrayOfFlies[i].assignRandomXYCoordinatesInARange();
+			console.log('reset fly coordinates called at exit');
+		}
+
+		
+	}
+
+	this.arrayOfIntervalsToRestart = [];
+	this.restartIntervals = function()
+	{
+		// for (let i = 0; i < this.arrayOfIntervals.length; i++)
+		// {
+		// 	console.log('this.arrayOfIntervals[i]: ' + this.arrayOfIntervals[i]);
+		// 	this.arrayOfIntervals[i].start();
+		// }
+		
 	}
 }
+
+function DefenseGameButton()
+{
+	this.x = 0;
+	this.y = 0;
+	this.width = 100;
+	this.height = 100;
+
+
+	this.draw = function()
+	{
+		renderer.fillStyle = 'black';
+		renderer.fillRect(this.x,this.y, this.width,this.height);
+	}
+
+	this.handleInput = function(inputCoordinates)
+	{
+		if (inputCoordinates.x > this.x && inputCoordinates.x < this.x + this.width && 
+			inputCoordinates.y > this.y && inputCoordinates.y < this.y + this.height)
+		{
+			ui.stateIndex = DEFENSEGAMEUI;
+			// defenseGame.restartIntervals();
+			defenseGame.initialize();
+			defenseGame.audioManager.sfxManager.populateArrayOfEatingFungusSounds();
+      defenseGame.audioManager.sfxManager.populateArrayOfFlyChasedSounds();
+      defenseGame.audioManager.ambienceManager.startAmbience();
+      defenseGame.audioManager.sfxManager.calculateAndSetAvoidAwkwardSilenceTimestamps();
+      defenseGame.audioManager.sfxManager.flyBuzzingNormal.play();
+      defenseGame.audioManager.sfxManager.groundMinimFootsteps.play();
+      bgmColony.pause();
+		}
+	}
+}
+
+let defenseGameButton = new DefenseGameButton();

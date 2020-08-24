@@ -49,7 +49,10 @@ function GroundMinim()
 		this.coinFlipAMeanderDirection();
 
 		var _this = this;
+		window.groundMinimAnimationInterval = 
 		setInterval(function() {_this.cycleImages()},50);
+
+		defenseGame.arrayOfIntervals.push(window.groundMinimAnimationInterval);
 	}
 
 	this.currentSpriteSheet = undefined;
@@ -191,6 +194,7 @@ function GroundMinimManager()
 
 	this.initializeGroundMinims = function(numberOfGroundMinimsToCreate)
 	{
+		this.arrayOfGroundMinims = [];
 		for (let i = 0; i < numberOfGroundMinimsToCreate; i++)
 		{
 			let groundMinim = new GroundMinim();

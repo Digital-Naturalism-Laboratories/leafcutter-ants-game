@@ -277,7 +277,7 @@ function ParentAntObject()
 		// 	leafcutterGame.canvasContext.lineWidth = 5;
 		// 	leafcutterGame.strokeRect(this.fungusTangleX,this.fungusTangleY, this.fungusTangleWidth,this.fungusTangleHeight);
 		// }
-
+		this.arrayOfFungusSpores = [];
 		
 		for (let i = 0; i < 200; i++)
 		{
@@ -960,8 +960,13 @@ function ParentAntObject()
 		this.infectionAlertMessage.initialize();
 		
 		var _this = this;
+		window.parentAntAnimationInterval = 
 		setInterval(function() {_this.cycleBigAntImages()},100);
+		defenseGame.arrayOfIntervals.push(window.parentAntAnimationInterval);
+
+		window.smallAntAnimationInterval = 
 		setInterval(function() {_this.cycleSmallAntImages()},25);
+		defenseGame.arrayOfIntervals.push(window.smallAntAnimationInterval);
 	}
 
 	this.headTarget = new Target('head target', renderer.canvas.width*0.65,renderer.canvas.height * 0.7);

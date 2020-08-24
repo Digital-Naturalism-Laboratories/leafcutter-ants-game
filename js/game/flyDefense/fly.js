@@ -199,7 +199,10 @@ function Fly(name,status)
 					{
 						defenseGame.parentAntObject.currentSpriteSheet = bigAntIdleInfectedSpriteSheet;
 					}
+					window.parentAntSpriteSheetToggleInterval = 
 					setInterval(function() {defenseGame.parentAntObject.toggleSpriteSheet()},200);
+
+					defenseGame.arrayOfIntervals.push(window.parentAntSpriteSheetToggleInterval);
 				}
 				this.status = 'leaving after planting';
 				this.currentTarget.canBeTargeted = false;
@@ -338,7 +341,10 @@ function FlyManager()
 		let _this = this;
 		for (let i = 0; i < this.arrayOfFlies.length; i++)
 		{
+			let flyAnimation = 
 			setInterval(function() {_this.arrayOfFlies[i].cycleImages()},25);
+
+			defenseGame.arrayOfIntervals.push(flyAnimation);
 		}
 	}
 }

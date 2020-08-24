@@ -186,8 +186,10 @@ function NPCBigAnt(x)
 	this.initialize = function()
 	{
 		var _this = this;
+		window.NPCBigAntAnimationInterval = 
 		setInterval(function () {_this.cycleBigAntImages()},100);
 		
+		defenseGame.arrayOfIntervals.push(window.NPCBigAntAnimationInterval);
 		// this.bigAntWalkingInterval.start();
 	}
 

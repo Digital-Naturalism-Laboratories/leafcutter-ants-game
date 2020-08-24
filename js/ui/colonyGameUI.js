@@ -135,7 +135,7 @@ function colonyGameUICustomDraw(deltaTime) {
   //animateSprite(colonyInfoScreenSprite, colonyAnimationFrameLength, colonyAnimationFrameCount);
   //} else {
 
-  console.log(leafMaterial);
+  //console.log(leafMaterial);
 
   fungus.update();
   colony.update();
@@ -146,7 +146,7 @@ function colonyGameUICustomDraw(deltaTime) {
 
   totalMilliseconds += deltaTime;
   totalCycles = Math.floor(totalMilliseconds / cycleLength);
-  console.log("Total Cycles: " + totalCycles);
+  //console.log("Total Cycles: " + totalCycles);
   //console.log("Ant Age" + colonyAnts[0].age);
 
   //colony.population = (Math.floor(totalCycles + (1 * geneticDiversity)) - colony.deadCount);
@@ -166,6 +166,9 @@ function colonyGameUICustomDraw(deltaTime) {
   drawStatsBlock();
   banner.draw();
 
+  
+  defenseGameButton.draw();
+
   //test circle
   //colorCircle(gameWidth - (50 * pixelSize), 100 * pixelSize, 30 * pixelSize)
   //}
@@ -181,6 +184,8 @@ function colonyGameUICustomEvents(deltaTime) {
       x: touchPos[0].x - canvas.getBoundingClientRect().left,
       y: touchPos[0].y - canvas.getBoundingClientRect().top
     }
+
+    defenseGameButton.handleInput(lastTouchPos);
 
     if (getDistBtwVec2(vec2((colonyTiles[COLONY_TUNNEL_VERT].width * 13) * pixelSize, (colonyTiles[COLONY_TUNNEL_VERT].height + 20) * pixelSize), vec2(touchPos[0].x - canvas.getBoundingClientRect().left, touchPos[0].y - canvas.getBoundingClientRect().top)) < 40 * pixelSize) {
       bgmColony.pause();
