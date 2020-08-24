@@ -21,7 +21,7 @@ class ColonyMessageBanner {
         }
 
         if (timeToReturnWithLeaves > 0){
-            this.messages.push("TIME TO RETURN WITH LEAVES: " + timeToReturnWithLeaves + "s");
+            this.messages.push("TIME BONUS ON RETURN WITH LEAVES: " + timeToReturnWithLeaves);
         }
 
         if (infectedAntsReturning > 0){
