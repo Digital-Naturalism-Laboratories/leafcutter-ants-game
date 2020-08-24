@@ -45,8 +45,6 @@ class AutoAnt
         this.disabled = false;
         this.disabling = false;
 
-        this.leafBorderTouchMinimumDistance = 50 * pixelSize;
-
         this.updatingJawTransform();
     }
 
@@ -214,7 +212,7 @@ class AutoAnt
         if(this.bodySprite.transform.rotation == targetAngle)
             moveInDir(this.bodySprite, 5 * pixelSize);
 
-        if(!leafcuttingSFX[SFX_ANTWALK].isPlaying)//leafcuttingSFX[SFX_ANTWALK].currentTime <= 0 || leafcuttingSFX[SFX_ANTWALK].currentTime > 1.2)
+        if(!leafcuttingSFX[SFX_ANTWALK].isPlaying && this.bodySprite.transform.position.x > 0)//leafcuttingSFX[SFX_ANTWALK].currentTime <= 0 || leafcuttingSFX[SFX_ANTWALK].currentTime > 1.2)
         {
             leafcuttingSFX[SFX_ANTWALK].volume = leafcuttingBGMMaxVolume/2.0;
             //leafcuttingSFX[SFX_ANTWALK].currentTime = 0;

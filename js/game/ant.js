@@ -98,8 +98,6 @@ class Ant
         this.disabled = false;
         this.disabling = false;
 
-        this.noTouchCounter = 0;
-
         this.leafBorderTouchMinimumDistance = 50 * pixelSize;
 
         this.updatingJawTransform();
@@ -114,15 +112,11 @@ class Ant
     {
         if(!this.disabled)
         {
-            if(isTouched && this.noTouchCounter > 10)
+            if(isTouched)
             {
-                this.noTouchCounter = 0;
                 this.leafBorderTouchInput();
                 this.jawButtonsInput();
-            }
-            else
-            {
-                this.noTouchCounter++;
+                isTouched = false;
             }
         }
     }

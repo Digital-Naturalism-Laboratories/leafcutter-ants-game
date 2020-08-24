@@ -133,10 +133,9 @@ function onKeyDown(ev)
 {
     if(keysDown.indexOf(ev.key) == -1)
         keysDown.push(ev.key);
-
+    
     switch(ev.keyCode)
     {
-
         case 37://left arrow
         leftArrowIsBeingHeld = true;
         break;
@@ -178,7 +177,6 @@ function onKeyDown(ev)
         }
         break;
     }
-    
 }
 
 leftArrowIsBeingHeld = false;
@@ -188,15 +186,9 @@ downArrowIsBeingHeld = false;
 
 function onKeyPress(ev)
 {
-
     //keysPressed is a custom event
     /*if(keysPressed.indexOf(ev.key) == -1)
         keysPressed.push(ev.key);*/
-        switch(ev.keyCode)
-      {
-        
-      }
-      
 }
 
 function onKeyUp(ev)
@@ -227,19 +219,17 @@ function onKeyUp(ev)
 
 function inputSetup()
 {
-    window.addEventListener("resize", onResize);
-    
-    //For Mobile
+    //window.addEventListener("resize", onResize);
+
     window.addEventListener("touchstart", onTouchStart);
     window.addEventListener("touchmove", onTouchMove);
     window.addEventListener("touchend", onTouchEnd);
 
-    //For PC
     window.addEventListener("mousedown", onMouseDown);
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseup", onMouseUp);
-    window.addEventListener("wheel", onMouseWheelScroll);
-
+    
+    //window.addEventListener("wheel", onMouseWheelScroll);
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("keypress", onKeyPress);
     window.addEventListener("keyup", onKeyUp);
