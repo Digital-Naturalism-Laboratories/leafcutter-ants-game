@@ -40,6 +40,9 @@ function Background()
 	this.bigAntTallyOfInfections = 0;
 	this.slowDownRateFromInfections = 0;
 
+	this.exitButton = new ExitButton();
+
+
 	this.calculateSlowDownRateFromInfections = function()
 	{
 		this.slowDownRateFromInfections = this.bigAntTallyOfInfections*0.15;
@@ -256,6 +259,7 @@ function Background()
 		
 		defenseGame.muteButton.handleInput(this.touchStartCoordinates);
 		defenseGame.fullScreenButton.handleInput(this.touchStartCoordinates);
+		defenseGame.background.exitButton.handleInput(this.touchStartCoordinates);
 		let arrayOfPheremoneGaps = this.pheremoneGapManager.arrayOfPheremoneGaps;
 		for (let i = 0; i < arrayOfPheremoneGaps.length; i++)
 		{
@@ -277,6 +281,7 @@ function Background()
 		
 		defenseGame.muteButton.handleInput(this.mouseDownCoordinates);
 		defenseGame.fullScreenButton.handleInput(this.mouseDownCoordinates);
+		defenseGame.background.exitButton.handleInput(this.mouseDownCoordinates);
 		let arrayOfPheremoneGaps = this.pheremoneGapManager.arrayOfPheremoneGaps;
 		for (let i = 0; i < arrayOfPheremoneGaps.length; i++)
 		{
@@ -315,7 +320,8 @@ function Background()
 		// renderer.drawImage(this.fungusNestImage, this.fungusNestXCoordinate,renderer.canvas.height*0.33, 
 		// 										   renderer.canvas.width*0.6,renderer.canvas.height*0.6);
 
-		
+		this.exitButton.draw();
+
 		if (defenseGame.debugOn)
 		{
 			

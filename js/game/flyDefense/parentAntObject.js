@@ -958,7 +958,7 @@ function ParentAntObject()
 		this.initializeLineSegments();
 		this.initializeArrayOfFungusSpores();
 		this.infectionAlertMessage.initialize();
-		console.log(this.currentBigAntWalkingImageIndex);
+		
 		var _this = this;
 		setInterval(function() {_this.cycleBigAntImages()},100);
 		setInterval(function() {_this.cycleSmallAntImages()},25);

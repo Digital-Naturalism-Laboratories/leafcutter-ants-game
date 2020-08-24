@@ -78,6 +78,12 @@ function defenseGameIntroUICustomEvents(deltaTime) {
       defenseIntroStartDelay = 60;
       defenseCurrentScreen = DEFENSE_INFO_SCREEN;
       ui.stateIndex = DEFENSEGAMEUI;
+      defenseGame.audioManager.sfxManager.populateArrayOfEatingFungusSounds();
+      defenseGame.audioManager.sfxManager.populateArrayOfFlyChasedSounds();
+      defenseGame.audioManager.ambienceManager.startAmbience();
+      defenseGame.audioManager.sfxManager.calculateAndSetAvoidAwkwardSilenceTimestamps();
+      defenseGame.audioManager.sfxManager.flyBuzzingNormal.play();
+      defenseGame.audioManager.sfxManager.groundMinimFootsteps.play();
     }
 
   }

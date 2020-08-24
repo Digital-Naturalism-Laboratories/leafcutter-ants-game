@@ -21,7 +21,7 @@ defenseGame.initialize = function()
 	this.timeLeft = 120;
 	this.decreaseCounter = function() 
 	{
-		if(ui.stateIndex == DEFENSEGAMEINTROUI)
+		if(ui.stateIndex == DEFENSEGAMEUI)
 		{
 			if (defenseGame.timeLeft > 0) 
 			{
@@ -47,7 +47,6 @@ defenseGame.initialize = function()
     this.audioManager = new AudioManager();
     
     
-
 
     //background section
 	defenseGame.background = new Background();
@@ -93,6 +92,8 @@ defenseGame.initialize = function()
     this.groundMinimManager.initializeGroundMinims(5);
 
 	// console.log('defense game init called');
+
+	this.arrayOfFrameIntervals = [this.countdownInterval,this.background.flashAlertInterval];
 
 	this.events = function()
 	{
@@ -191,23 +192,31 @@ defenseGame.initialize = function()
 
 		
 			this.muteButton.draw();
+			this.background.exitButton.draw();
 			//this.fullScreenButton.draw();
 		
 	}//end of draw
 
-	// this.startingWhatAboutMeImageWidth = 300;
-	// this.currentWhatAboutMeImageWidth = 300;
-	// this.startingWhatAboutMeImageHeight = 300;
-	// this.currentWhatAboutMeImageHeight = 300;
-	// this.increaseWhatAboutMeDimensions = function()
-	// {
-	// 	let _this = this;
-	// 	console.log('inside increaseWhatAboutMeDimensions');
-	// 	console.log('this.currentWhatAboutMeImageWidth: ' + this.currentWhatAboutMeImageWidth);
-	// 	if (this.currentWhatAboutMeImageWidth < 900)
-	// 	{
-	// 		this.currentWhatAboutMeImageWidth = this.currentWhatAboutMeImageWidth + this.startingWhatAboutMeImageWidth;
-	// 		this.currentWhatAboutMeImageHeight = this.currentWhatAboutMeImageHeight + this.startingWhatAboutMeImageHeight;
-	// 	}
-	// }
+	this.passStats = function()
+	{
+		console.log('put stats code here');
+	}
+
+	this.reset = function()
+	{
+		//console.log('put reset code here');
+		this.timeLeft = 120;
+
+		for (let i = 0; i < this.arrayOfFrameIntervals.length; i++)
+		{
+			this.arrayOfFrameIntervals[i].stop();
+			console.log('stopped frameIntervals');
+		}
+
+		let tallyOfLeafContaminantsCleaned = defenseGame.background.fungusTallyDiv.tallyOfEatenFungusSpores;
+		console.log('tallyOfLeafContaminantsCleaned: ' + tallyOfLeafContaminantsCleaned);
+
+		let elapsedTime = 120 - this.timeLeft;
+		console.log('elapsedTime: ' + elapsedTime);
+	}
 }

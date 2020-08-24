@@ -23,4 +23,5 @@ function frameInterval(updateFunction, frameRate) {
         frameRate = newRate;
         return this.stop().start();
     }
+
 }
