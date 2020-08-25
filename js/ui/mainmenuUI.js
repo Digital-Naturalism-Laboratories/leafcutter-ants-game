@@ -5,7 +5,7 @@ var mainMenuUI = [];
 
 var mainMenuFontSize;
 
-var titleScreenSprite;
+var titleScreenSprites = [];
 var animationFrameLength = 5;
 var animationFrameCount = 29;
 var animationFrameCurrent = 0;
@@ -37,8 +37,10 @@ var currentLanguage = ESPAÑOL;
 function setupMainMenuUI()
 {
 
-    titleScreenSprite = new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(gameWidth/1000, gameHeight/750)),
-        new ImageObject("images/Animations/Title_Screen_Spritesheet.png", vec2(1000, 750)));
+    titleScreenSprites.push(new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(gameWidth/1000, gameHeight/750)),
+    new ImageObject("images/Animations/Title_Screen_Spritesheet_ES.png", vec2(1000, 750))));
+    titleScreenSprites.push(new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(gameWidth/1000, gameHeight/750)),
+    new ImageObject("images/Animations/Title_Screen_Spritesheet.png", vec2(1000, 750))));
 
     mainMenuFontSize = 10 * pixelSize;
 
@@ -165,7 +167,7 @@ function mainMenuUICustomDraw(deltaTime)
         animationFrameCurrent = 0;
     }
     animationTimer++
-    titleScreenSprite.drawScIn(inPos, inSize);
+    titleScreenSprites[currentLanguage].drawScIn(inPos, inSize);
 
     //renderer.strokeStyle = 'red';
     //renderer.lineWidth = 5;

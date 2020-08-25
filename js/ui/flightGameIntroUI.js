@@ -1,7 +1,7 @@
 const FLIGHTGAMEINTROUI = 6;
 var flightGameIntroUI = [];
 
-var flightInfoScreenSprite;
+var flightInfoScreenSprites = [];
 var flightAnimationFrameLength = 6;
 var flightAnimationFrameCount = 29;
 var flightAnimationFrameCurrent = 0;
@@ -16,8 +16,11 @@ var flightGameIntroStartDelay = 60;
 function setupFlightGameIntroUI() {
 
 
-  flightInfoScreenSprite = new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
-    new ImageObject("images/Animations/info_screen_flight_spritesheet.png", vec2(1000, 750)));
+  flightInfoScreenSprites.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
+  new ImageObject("images/Animations/info_screen_flight_spritesheet_ES.png", vec2(1000, 750))));
+
+  flightInfoScreenSprites.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
+  new ImageObject("images/Animations/info_screen_flight_spritesheet.png", vec2(1000, 750))));
 
   //bgmFlight.setAttribute('src', 'audio/Intro Music.mp3');
   //bgmFlight.loop = true;
@@ -56,7 +59,7 @@ function flightAnimateSprite(sprite, frameLength, framerameCount) {
 
 function flightGameIntroUICustomDraw(deltaTime) {
   flightGameIntroStartDelay--;
-  flightAnimateSprite(flightInfoScreenSprite, flightAnimationFrameLength, flightAnimationFrameCount);
+  flightAnimateSprite(flightInfoScreenSprites[currentLanguage], flightAnimationFrameLength, flightAnimationFrameCount);
 
 }
 

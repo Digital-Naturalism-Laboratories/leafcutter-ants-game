@@ -76,9 +76,7 @@ function setupColonyGameUI() {
   bgmColony.loop = true;
   bgmColony.volume = 0.6;
 
-  colonyInfoScreenSprite = new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
-    new ImageObject("images/Animations/info_screen_colony_spritesheet.png", vec2(1000, 750)));
-}
+  }
 
 function animateSprite(sprite, frameLength, framerameCount) {
 

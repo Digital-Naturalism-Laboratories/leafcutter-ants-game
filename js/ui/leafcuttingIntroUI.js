@@ -1,7 +1,7 @@
 const LEAFCUTTINGINTROUI = 7;
 var leafcuttingIntroUI = [];
 
-var cuttingInfoScreenSprite;
+var cuttingInfoScreenSprites = [];
 var cuttingAnimationFrameLength = 6;
 var cuttingAnimationFrameCount = 29;
 var cuttingAnimationFrameCurrent = 0;
@@ -16,8 +16,10 @@ var leafcuttingIntroStartDelay = 60;
 function setupLeafcuttingIntroUI() {
 
 
-  cuttingInfoScreenSprite = new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
-    new ImageObject("images/Animations/info_screen_cutting_spritesheet.png", vec2(1000, 750)));
+  cuttingInfoScreenSprites.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
+  new ImageObject("images/Animations/info_screen_cutting_spritesheet_ES.png", vec2(1000, 750))));
+  cuttingInfoScreenSprites.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
+  new ImageObject("images/Animations/info_screen_cutting_spritesheet.png", vec2(1000, 750))));
 
   //bgmCutting.setAttribute('src', 'audio/Intro Music.mp3');
   //bgmCutting.loop = true;
@@ -56,7 +58,7 @@ function leafcuttingAnimateSprite(sprite, frameLength, framerameCount) {
 
 function leafcuttingIntroUICustomDraw(deltaTime) {
   leafcuttingIntroStartDelay--;
-  leafcuttingAnimateSprite(cuttingInfoScreenSprite, cuttingAnimationFrameLength, cuttingAnimationFrameCount);
+  leafcuttingAnimateSprite(cuttingInfoScreenSprites[currentLanguage], cuttingAnimationFrameLength, cuttingAnimationFrameCount);
 
 }
 
