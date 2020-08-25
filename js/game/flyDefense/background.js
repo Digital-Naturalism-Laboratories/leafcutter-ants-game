@@ -513,6 +513,7 @@ function PheremoneGapManager()
 				}
 				defenseGame.NPCBigAnt1.currentSpriteSheet = bigAntIdleSpriteSheet;
 				defenseGame.NPCBigAnt2.currentSpriteSheet = bigAntIdleSpriteSheet;
+				defenseGame.NPCBigAntNegative1.currentSpriteSheet = bigAntIdleSpriteSheet;
 				defenseGame.flyManager.toggleSwarm();
 				defenseGame.background.flashAlertInterval.start();
 				if (defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.paused)

@@ -26,6 +26,7 @@ function NPCBigAnt(x,name)
 		this.currentBigAntWalkingImageIndex++;
 		if (!defenseGame.background.stuckOnPheremoneGap && !defenseGame.goalReached)
 		{
+			console.log('game is not stuck on gap and colony not reached');
 			if (this.currentBigAntWalkingImageIndex > 10)
 			{
 				this.currentBigAntWalkingImageIndex = 0;

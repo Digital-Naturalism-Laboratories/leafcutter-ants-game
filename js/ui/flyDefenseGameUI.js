@@ -324,6 +324,9 @@ function DefenseGameButton()
 			ui.stateIndex = DEFENSEGAMEUI;
 			// defenseGame.restartIntervals();
 			defenseGame.initialize();
+			
+		    defenseGame.audioManager.populateMasterArrayOfAudioTags();
+		    defenseGame.audioManager.populateArrayOfDefenseGameSounds();
 			defenseGame.audioManager.sfxManager.populateArrayOfEatingFungusSounds();
       defenseGame.audioManager.sfxManager.populateArrayOfFlyChasedSounds();
       defenseGame.audioManager.ambienceManager.startAmbience();

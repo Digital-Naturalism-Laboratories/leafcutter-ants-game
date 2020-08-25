@@ -165,7 +165,7 @@ function colonyGameUICustomDraw(deltaTime) {
   banner.draw();
 
   
-  //defenseGameButton.draw();
+  defenseGameButton.draw();
 
   //test circle
   //colorCircle(gameWidth - (50 * pixelSize), 100 * pixelSize, 30 * pixelSize)
