@@ -159,6 +159,8 @@ class Sprite
 
     drawScRot()
     {
+        if (this.imageObject === undefined) return //temp fix to avoid crashin issue
+        
         var img = this.imageObject.image;
         var pos = this.transform.position;
         var scale = this.transform.scale;

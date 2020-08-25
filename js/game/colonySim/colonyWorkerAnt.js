@@ -83,7 +83,7 @@ class ColonyWorkerAnt {
                 inPos.y = inSize.y * 2;
                 break;
             case MODES.CARRYING_LEAF:
-                this.gameMode = DEFENSEGAMEUI;
+                this.gameMode = LEAFCUTTINGINTROUI;
                 inPos.y = inSize.y * 0;
                 break;
         }
