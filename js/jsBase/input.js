@@ -47,6 +47,8 @@ function onTouchStart(ev)
     {
         defenseGame.parentAntObject.handleTouchstart();
         defenseGame.background.handleTouchStart();
+        defenseGame.NPCBigAnt1.handleTouchStart();
+        defenseGame.NPCBigAntNegative1.handleTouchStart();
     }
     
 }
@@ -89,6 +91,8 @@ function onMouseDown(ev)
     if (ui.stateIndex == DEFENSEGAMEUI)
     {
         defenseGame.parentAntObject.handleMouseDown();
+        defenseGame.NPCBigAnt1.handleMouseDown();
+        defenseGame.NPCBigAntNegative1.handleMouseDown();
         defenseGame.background.handleMouseDown();
         defenseGame.audioManager.handleInputFeedbackSounds();
     }

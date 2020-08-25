@@ -126,8 +126,7 @@ function Fly(name,status)
 			//		   2.check for jittering and correct if so
 			//         3.check for swat collision with flies
 			//		   4.check for fly/egg reaching target
-		if (!defenseGame.transitioningToUninfectedAnt)
-		{
+		
 			if (this.status === 'planting')
 				{
 					
@@ -196,6 +195,9 @@ function Fly(name,status)
 						if (!defenseGame.parentAntObject.hasBeenInfected)
 						{
 							defenseGame.parentAntObject.hasBeenInfected = true;
+							defenseGame.parentAntObject.controlStatus = 'inactive';
+							defenseGame.NPCBigAnt1.controlStatus = 'active';
+							defenseGame.flyManager.updateTargets();
 							if (defenseGame.background.stuckOnPheremoneGap)
 							{
 								defenseGame.parentAntObject.currentSpriteSheet = bigAntIdleInfectedSpriteSheet;
@@ -276,7 +278,7 @@ function Fly(name,status)
 
 
 			}
-		}
+		
 		
 }
 
@@ -351,6 +353,14 @@ function FlyManager()
 			setInterval(function() {_this.arrayOfFlies[i].cycleImages()},25);
 
 			defenseGame.arrayOfIntervals.push(flyAnimation);
+		}
+	}
+
+	this.updateTargets = function()
+	{
+		for (let i = 0; i < this.arrayOfFlies.length; i++)
+		{
+			this.arrayOfFlies[i].currentTarget = defenseGame.NPCBigAnt1.headTarget;
 		}
 	}
 }

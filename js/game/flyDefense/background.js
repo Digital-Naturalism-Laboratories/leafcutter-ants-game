@@ -307,6 +307,7 @@ function Background()
 			this.mouseDownCoordinates.y >= arrayOfPheremoneGaps[i].y && this.mouseDownCoordinates.y < arrayOfPheremoneGaps[i].y + arrayOfPheremoneGaps[i].height &&
 			arrayOfPheremoneGaps[i].isFilledIn === false)
 			{
+				console.log('inside pheremone gap click');
 				this.clickInsidePheremoneGap = true;
 				defenseGame.groundMinimManager.toggleEnRouteStatusAfterUserClick();	
 			}
@@ -383,12 +384,12 @@ function PheremoneGap(x)
 	{
 		if (!defenseGame.background.stuckOnPheremoneGap && defenseGame.timeLeft > 0 && !defenseGame.colonyReached && !defenseGame.transitioningToUninfectedAnt)
 		{
-			console.log('inside other pheremone gap update check');
+			
 			this.x -= (gameWidth*0.001 - (gameWidth*0.001 *defenseGame.background.slowDownRateFromInfections));
 		}
 		else if (defenseGame.transitioningToUninfectedAnt)
 		{
-			console.log('inside check if transitioningToUninfectedAnt for pheremone gap');
+			
 			this.x += (gameWidth*0.00125 - (gameWidth*0.00125 *defenseGame.background.slowDownRateFromInfections));
 		}
 	}
