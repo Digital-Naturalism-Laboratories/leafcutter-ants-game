@@ -275,14 +275,14 @@ class Leaf
             if(!areLeafcuttingAntsDisabled())
             {
                 if(leafcuttingScore >= 1000)
-                    centerLabel1.text = "AMAZING AMOUNT OF";
+                    centerLabel1.text = string_AMAZING_AMOUNT_OF[currentLanguage];
                 else if(leafcuttingScore >= 700)
-                    centerLabel1.text = "GOOD AMOUNT OF";
+                    centerLabel1.text = string_GOOD_AMOUNT_OF[currentLanguage];
                 else if(leafcuttingScore >= 250)
-                    centerLabel1.text = "OK AMOUNT OF";
+                    centerLabel1.text = string_OK_AMOUNT_OF[currentLanguage];
                 else
-                    centerLabel1.text = "BARELY ANY";
-                centerLabel2.text = "LEAVES COLLECTED";
+                    centerLabel1.text = string_BARELY_ANY[currentLanguage];
+                centerLabel2.text = string_LeavesCollected[currentLanguage];
                 centerLabel1.enabled = centerLabel2.enabled = true;
 
                 leafcuttingSFX[SFX_PLAYERWIN].volume = leafcuttingBGMMaxVolume;
