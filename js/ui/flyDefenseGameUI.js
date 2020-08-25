@@ -182,7 +182,7 @@ defenseGame.initialize = function()
 
 		  	renderer.fillStyle = 'white';
 			renderer.font = '75px SmallBoldPixel';
-		  	renderer.fillText('TIME LEFT: ' + timerNumberConvertedToString, renderer.canvas.width * 0.01,renderer.canvas.height * 0.25);
+		  	renderer.fillText(string_TIME_LEFT[currentLanguage] + timerNumberConvertedToString, renderer.canvas.width * 0.01,renderer.canvas.height * 0.25);
 
 			if (this.colonyReached)
 			{
@@ -190,7 +190,7 @@ defenseGame.initialize = function()
 				let fontSize = 150;
 				let stringedFontSize = fontSize.toString();
 				renderer.font = stringedFontSize + 'px SmallBoldPixel';
-				let colonyReachedText = 'COLONY REACHED!';
+				let colonyReachedText = string_COLONY_REACHED[currentLanguage];
 				let colonyReachedTextWidth = renderer.measureText(colonyReachedText).width;
 				renderer.fillText(colonyReachedText, renderer.canvas.width/2 - colonyReachedTextWidth/2,
 													 renderer.canvas.height/2 - fontSize/2);

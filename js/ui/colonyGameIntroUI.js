@@ -1,7 +1,8 @@
 const COLONYGAMEINTROUI = 5;
 var colonyGameIntroUI = [];
 
-var colonyInfoScreenSprite;
+//var colonyInfoScreenSprite;
+var colonyInfoScreenSprites = [];
 var colonyAnimationFrameLength = 6;
 var colonyAnimationFrameCount = 29;
 var colonyAnimationFrameCurrent = 0;
@@ -11,9 +12,11 @@ var colonyGameIntroStartDelay = 60;
 
 function setupColonyGameIntroUI() {
 
+  colonyInfoScreenSprites.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
+  new ImageObject("images/Animations/info_screen_colony_spritesheet_ES.png", vec2(1000, 750))));
 
-  colonyInfoScreenSprite = new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
-    new ImageObject("images/Animations/info_screen_colony_spritesheet.png", vec2(1000, 750)));
+  colonyInfoScreenSprites.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
+    new ImageObject("images/Animations/info_screen_colony_spritesheet.png", vec2(1000, 750))));
 
   bgmColony.setAttribute('src', 'audio/Intro Music.mp3');
   bgmColony.loop = true;
@@ -52,7 +55,7 @@ function colonyAnimateSprite(sprite, frameLength, framerameCount) {
 
 function colonyGameIntroUICustomDraw(deltaTime) {
   colonyGameIntroStartDelay--;
-  colonyAnimateSprite(colonyInfoScreenSprite, colonyAnimationFrameLength, colonyAnimationFrameCount);
+  colonyAnimateSprite(colonyInfoScreenSprites[currentLanguage], colonyAnimationFrameLength, colonyAnimationFrameCount);
 
 }
 

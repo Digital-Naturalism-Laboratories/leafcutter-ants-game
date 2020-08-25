@@ -5,7 +5,7 @@ var mainMenuUI = [];
 
 var mainMenuFontSize;
 
-var titleScreenSprite;
+var titleScreenSprites = [];
 var animationFrameLength = 5;
 var animationFrameCount = 29;
 var animationFrameCurrent = 0;
@@ -21,17 +21,26 @@ var gameModes = [
 ];
 
 var languages = [
-    "Español",
-    "English"
+
+    {
+        text_label: "Español" 
+    },
+
+    {
+        text_label: "English" 
+    }
+
 ]
 
-var currentLanguage = "Español";
+var currentLanguage = ESPAÑOL;
 
 function setupMainMenuUI()
 {
 
-    titleScreenSprite = new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(gameWidth/1000, gameHeight/750)),
-        new ImageObject("images/Animations/Title_Screen_Spritesheet.png", vec2(1000, 750)));
+    titleScreenSprites.push(new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(gameWidth/1000, gameHeight/750)),
+    new ImageObject("images/Animations/Title_Screen_Spritesheet_ES.png", vec2(1000, 750))));
+    titleScreenSprites.push(new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(gameWidth/1000, gameHeight/750)),
+    new ImageObject("images/Animations/Title_Screen_Spritesheet.png", vec2(1000, 750))));
 
     mainMenuFontSize = 10 * pixelSize;
 
@@ -88,7 +97,7 @@ function setupMainMenuUI()
     if (!isGameSelectEnabled) {
 
         languageBtn = new TextButton(tr(vec2(), btnSize),
-        new Label(tr(), "LANGUAGE: " + languages[0], 30 * pixelSize + "px SmallBoldPixel", "white", 0),
+        new Label(tr(), "LANGUAGE: " + languages[0].text_label, 30 * pixelSize + "px SmallBoldPixel", "white", 0),
         new Button(tr(), "#00000000", "#00000000", "#00000000"), 
         "");
         gameModeButtons.push(languageBtn);
@@ -158,7 +167,7 @@ function mainMenuUICustomDraw(deltaTime)
         animationFrameCurrent = 0;
     }
     animationTimer++
-    titleScreenSprite.drawScIn(inPos, inSize);
+    titleScreenSprites[currentLanguage].drawScIn(inPos, inSize);
 
     //renderer.strokeStyle = 'red';
     //renderer.lineWidth = 5;
@@ -179,20 +188,20 @@ function mainMenuUICustomEvents(deltaTime)
             var done = false;
             for(let i = 1; i < languages.length; i++)
             {
-                if(languageBtn.label.text == "LANGUAGE: " + languages[i])
+                if(languageBtn.label.text == "LANGUAGE: " + languages[i].text_label)
                 {
-                    languageBtn.label.text = "LANGUAGE: " + languages[i - 1];
+                    languageBtn.label.text = "LANGUAGE: " + languages[i - 1].text_label;
                     done = true;
                     break;
                 }
             }
-            if(!done) languageBtn.label.text = "LANGUAGE: " + languages[languages.length - 1];
+            if(!done) languageBtn.label.text = "LANGUAGE: " + languages[languages.length - 1].text_label;
             languageBtn.button.resetOutput();
 
             if(languageBtn.label.text == "LANGUAGE: Español"){
-                currentLanguage = "Español";
+                currentLanguage = ESPAÑOL;
             } else {
-                currentLanguage = "English";
+                currentLanguage = ENGLISH;
             }
             
         }

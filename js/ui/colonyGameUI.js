@@ -76,9 +76,7 @@ function setupColonyGameUI() {
   bgmColony.loop = true;
   bgmColony.volume = 0.6;
 
-  colonyInfoScreenSprite = new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
-    new ImageObject("images/Animations/info_screen_colony_spritesheet.png", vec2(1000, 750)));
-}
+  }
 
 function animateSprite(sprite, frameLength, framerameCount) {
 
@@ -167,7 +165,7 @@ function colonyGameUICustomDraw(deltaTime) {
   banner.draw();
 
   
-  defenseGameButton.draw();
+  //defenseGameButton.draw();
 
   //test circle
   //colorCircle(gameWidth - (50 * pixelSize), 100 * pixelSize, 30 * pixelSize)
@@ -200,6 +198,7 @@ function colonyGameUICustomEvents(deltaTime) {
     }
 
     //click to enable fullscreen
+    /*
     if (getDistBtwVec2(vec2(gameWidth - (50 * pixelSize), 50 * pixelSize), vec2(lastTouchPos.x, lastTouchPos.y)) < 50) {
       enableFullScreen(canvas);
 
@@ -226,6 +225,7 @@ function colonyGameUICustomEvents(deltaTime) {
       canvasStartX = (window.innerWidth / 2) - (gameWidth / 2);
       canvas.style.left = canvasStartX.toString() + "px";
     }
+    */
 
   }
 }
