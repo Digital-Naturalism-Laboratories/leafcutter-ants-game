@@ -56,7 +56,7 @@ class ColonyWorkerAnt {
         this.pixelCoord.x = this.sprite.transform.position.x;
         this.pixelCoord.y = this.sprite.transform.position.y;
 
-        if (this.x > gameWidth * 0.66) {
+        if (this.pixelCoord.x > gameWidth * 0.66) {
             this.mode = MODES.CARRYING_LEAF;
         } else {
             this.mode = MODES.NO_LEAF;
@@ -84,15 +84,17 @@ class ColonyWorkerAnt {
                 break;
             case MODES.CARRYING_LEAF:
                 this.gameMode = DEFENSEGAMEUI;
+                inPos.y = inSize.y * 0;
                 break;
         }
 
-        if (this.pixelCoord.x > gameWidth * 0.66){
-            inPos.y = inSize.y;
-            this.mode = MODES.CARRYING_LEAF; //for testing only
-        } else {
-            this.mode = MODES.NO_LEAF; //For testing only
-        }
+        //if (this.pixelCoord.x > gameWidth * 0.66){
+        //    inPos.y = inPos.y * 0;
+        //    this.mode = MODES.CARRYING_LEAF; //for testing only
+        //} else {
+        //    inPos.y = 0;
+        //    this.mode = MODES.NO_LEAF; //For testing only
+        //}
 
         this.sprite.drawScIn(inPos, inSize);
 
