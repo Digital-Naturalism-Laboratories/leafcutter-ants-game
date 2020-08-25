@@ -300,13 +300,18 @@ function NPCBigAnt(x,name)
 		// this.moveSmallAnt();
 		if (defenseGame.transitioningToUninfectedAnt)
 		{
-			this.bigAntX += renderer.canvas.width*0.004;
-			this.leafX += renderer.canvas.width*0.004;
+			this.bigAntX += renderer.canvas.width*0.002;
+			this.leafX += renderer.canvas.width*0.002;
 			for (let i = 0; i < this.arrayOfFungusSpores.length; i++)
 			{
-				this.arrayOfFungusSpores[i].x += renderer.canvas.width*0.004;
+				this.arrayOfFungusSpores[i].x += renderer.canvas.width*0.002;
 			}
-			this.smallAntX += renderer.canvas.width*0.004;
+			this.smallAntX += renderer.canvas.width*0.002;
+		}
+
+		if (this.name === '1' && this.bigAntX >= renderer.canvas.width/2 - this.bigAntWidth/2)
+		{
+			defenseGame.transitioningToUninfectedAnt = false;
 		}
 	}
 

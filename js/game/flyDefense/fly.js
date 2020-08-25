@@ -232,7 +232,7 @@ function Fly(name,status)
 						}
 
 						defenseGame.transitioningToUninfectedAnt = true;
-						defenseGame.background.transitionOveride = renderer.canvas.width*0.002;
+						defenseGame.background.transitionOveride = -1.1;
 					}
 					
 				}
