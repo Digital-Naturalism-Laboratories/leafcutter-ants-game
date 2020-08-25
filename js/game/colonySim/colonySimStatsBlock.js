@@ -34,7 +34,7 @@ function drawStatsBlock() {
     //renderer.fillText("Full Screen", gameWidth - 100, gameHeight * 0.84);
 
     //draw full screen button
-    renderer.drawImage(fullscreen_button, 0, 0, gameWidth, gameHeight);
+    //renderer.drawImage(fullscreen_button, 0, 0, gameWidth, gameHeight);
 
     //draw mute/unmute buttons
     if (defenseGame.audioManager.isMutingEverything){

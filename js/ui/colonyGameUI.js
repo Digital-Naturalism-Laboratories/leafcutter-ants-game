@@ -165,7 +165,7 @@ function colonyGameUICustomDraw(deltaTime) {
   banner.draw();
 
   
-  defenseGameButton.draw();
+  //defenseGameButton.draw();
 
   //test circle
   //colorCircle(gameWidth - (50 * pixelSize), 100 * pixelSize, 30 * pixelSize)
@@ -198,6 +198,7 @@ function colonyGameUICustomEvents(deltaTime) {
     }
 
     //click to enable fullscreen
+    /*
     if (getDistBtwVec2(vec2(gameWidth - (50 * pixelSize), 50 * pixelSize), vec2(lastTouchPos.x, lastTouchPos.y)) < 50) {
       enableFullScreen(canvas);
 
@@ -224,6 +225,7 @@ function colonyGameUICustomEvents(deltaTime) {
       canvasStartX = (window.innerWidth / 2) - (gameWidth / 2);
       canvas.style.left = canvasStartX.toString() + "px";
     }
+    */
 
   }
 }
