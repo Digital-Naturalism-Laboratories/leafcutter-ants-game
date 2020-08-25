@@ -112,25 +112,25 @@ function flightGameUICustomDraw(deltaTime) {
 
   renderer.fillStyle = "white";
   renderer.font = (30 * pixelSize) + "px SmallBoldPixel";
-  renderer.fillText("Mates: " + mateCount, 25 * pixelSize, 25 * pixelSize);
+  renderer.fillText(string_Mates[currentLanguage] + mateCount, 25 * pixelSize, 25 * pixelSize);
 
-  renderer.fillText("Genetic Diversity: ", 25 * pixelSize, 75  * pixelSize);
-  renderer.fillText("Energy: ", 140 * pixelSize, 50  * pixelSize);
+  renderer.fillText(string_GeneticDiversity[currentLanguage], 15 * pixelSize, 75  * pixelSize);
+  renderer.fillText(string_Energy[currentLanguage], 140 * pixelSize, 50  * pixelSize);
 
   //draw genetic diversity bar
   renderer.fillStyle = 'blue';
-  renderer.fillRect(225 * pixelSize, 58 * pixelSize, diversityBarLength * pixelSize, 20 * pixelSize);
+  renderer.fillRect(230 * pixelSize, 58 * pixelSize, diversityBarLength * pixelSize, 20 * pixelSize);
   renderer.beginPath();
   renderer.strokeStyle = 'white';
-  renderer.rect(225 * pixelSize, 58 * pixelSize, 100 * pixelSize, 20 * pixelSize);
+  renderer.rect(230 * pixelSize, 58 * pixelSize, 100 * pixelSize, 20 * pixelSize);
   renderer.stroke();
 
   //draw energy bar
   renderer.fillStyle = 'green';
-  renderer.fillRect(225 * pixelSize, 32 * pixelSize,  energyBarLength * pixelSize, 20 * pixelSize);
+  renderer.fillRect(230 * pixelSize, 32 * pixelSize,  energyBarLength * pixelSize, 20 * pixelSize);
   renderer.beginPath();
   renderer.strokeStyle = 'white';
-  renderer.rect(225 * pixelSize, 32 * pixelSize, 100 * pixelSize, 20 * pixelSize);
+  renderer.rect(230 * pixelSize, 32 * pixelSize, 100 * pixelSize, 20 * pixelSize);
   renderer.stroke();
 
   //colorRect(20 * pixelSize, 20 * pixelSize, 100 * pixelSize, 50 * pixelSize, 'white');

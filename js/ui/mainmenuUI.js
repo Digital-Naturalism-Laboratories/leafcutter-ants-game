@@ -21,11 +21,18 @@ var gameModes = [
 ];
 
 var languages = [
-    "Español",
-    "English"
+
+    {
+        text_label: "Español" 
+    },
+
+    {
+        text_label: "English" 
+    }
+
 ]
 
-var currentLanguage = "Español";
+var currentLanguage = ESPAÑOL;
 
 function setupMainMenuUI()
 {
@@ -88,7 +95,7 @@ function setupMainMenuUI()
     if (!isGameSelectEnabled) {
 
         languageBtn = new TextButton(tr(vec2(), btnSize),
-        new Label(tr(), "LANGUAGE: " + languages[0], 30 * pixelSize + "px SmallBoldPixel", "white", 0),
+        new Label(tr(), "LANGUAGE: " + languages[0].text_label, 30 * pixelSize + "px SmallBoldPixel", "white", 0),
         new Button(tr(), "#00000000", "#00000000", "#00000000"), 
         "");
         gameModeButtons.push(languageBtn);
@@ -179,20 +186,20 @@ function mainMenuUICustomEvents(deltaTime)
             var done = false;
             for(let i = 1; i < languages.length; i++)
             {
-                if(languageBtn.label.text == "LANGUAGE: " + languages[i])
+                if(languageBtn.label.text == "LANGUAGE: " + languages[i].text_label)
                 {
-                    languageBtn.label.text = "LANGUAGE: " + languages[i - 1];
+                    languageBtn.label.text = "LANGUAGE: " + languages[i - 1].text_label;
                     done = true;
                     break;
                 }
             }
-            if(!done) languageBtn.label.text = "LANGUAGE: " + languages[languages.length - 1];
+            if(!done) languageBtn.label.text = "LANGUAGE: " + languages[languages.length - 1].text_label;
             languageBtn.button.resetOutput();
 
             if(languageBtn.label.text == "LANGUAGE: Español"){
-                currentLanguage = "Español";
+                currentLanguage = ESPAÑOL;
             } else {
-                currentLanguage = "English";
+                currentLanguage = ENGLISH;
             }
             
         }

@@ -220,7 +220,7 @@ function Background()
 		y: renderer.canvas.height * 0.05,
 
 		tallyOfEatenFungusSpores: 0,
-		label: 'LEAF CONTAMINANTS CLEANED: ',
+		label: string_LEAF_CONTAMINANTS_CLEANED[currentLanguage],
 		labelWidth: renderer.measureText(this.label).width,
 		labelHeight: 30,
 // uiContext.fontSize.toString() + "px " + uiContext.fontFamily
@@ -242,7 +242,7 @@ function Background()
 		x: renderer.canvas.width * 0.01,
 		y: renderer.canvas.height * 0.125,
 
-		label: 'PARASITE INFECTIONS: ',
+		label: string_PARASITE_INFECTIONS[currentLanguage],
 		labelWidth: renderer.measureText(this.label).width,
 		labelHeight: 30,
 		draw: function()
@@ -348,7 +348,7 @@ function Background()
 	}
 }
 
-let pheremoneGapAlertMessage = 'CLICK TO REPAIR PATH --->';
+let pheremoneGapAlertMessage = string_CLICK_TO_REPAIR_PATH[currentLanguage];
 function PheremoneGap(x)
 {
 	this.x = x;
@@ -389,7 +389,7 @@ function PheremoneGap(x)
 			// renderer.fillRect(this.x  - this.alertMessage.width,this.y - this.fontSize*1.25, this.alertMessage.width*1.25,this.fontSize*2);
 
 			renderer.fillStyle = 'white';
-			renderer.font = '45px SmallBoldPixel';
+			renderer.font = '36px SmallBoldPixel';
 			this.alertMessage.width = renderer.measureText(pheremoneGapAlertMessage).width;
 			renderer.fillText(pheremoneGapAlertMessage, this.alertMessage.x - this.alertMessage.width,this.alertMessage.y + this.alertMessage.width*0.1);
 		}

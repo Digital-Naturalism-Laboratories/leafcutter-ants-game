@@ -92,7 +92,7 @@ function setupLeafcuttingUI()
     leafcuttingResetGame();
 
     gameplayTopLeftLabels = [];
-    scoreLabel = new Label(tr(), "LEAVES COLLECTED: " + leafcuttingScore.toString(),
+    scoreLabel = new Label(tr(), string_LeavesCollected_COLON[currentLanguage] + leafcuttingScore.toString(),
         (54*pixelSize).toString() + "px " + uiContext.fontFamily, "white", -1);
     gameplayTopLeftLabels.push(scoreLabel);
     timeLabel = new Label(tr(), "TIME: " + (leafcuttingTimeLeft/1000).toString(),
@@ -102,14 +102,14 @@ function setupLeafcuttingUI()
     leafcuttingUI.push(new FlexGroup(tr(vec2(20*pixelSize, 20*pixelSize), vec2(window.innerWidth, 80*pixelSize)),
         new SubState(tr(), gameplayTopLeftLabels),false, vec2(0, 10*pixelSize), vec2(1, 2), true));
 
-    centerLabel1 = new Label(tr(vec2(0, -40 * pixelSize), vec2(gameWidth, gameHeight)), "CLICK EDGE TO",
+    centerLabel1 = new Label(tr(vec2(0, -40 * pixelSize), vec2(gameWidth, gameHeight)), string_CLICK_EDGE_TO[currentLanguage],
         (96*pixelSize).toString() + "px " + uiContext.fontFamily, "white", 0);
     leafcuttingUI.push(centerLabel1);
-    centerLabel2 = new Label(tr(vec2(0, 40 * pixelSize), vec2(gameWidth, gameHeight)), "START CUTTING",
+    centerLabel2 = new Label(tr(vec2(0, 40 * pixelSize), vec2(gameWidth, gameHeight)), string_START_CUTTING[currentLanguage],
         (96*pixelSize).toString() + "px " + uiContext.fontFamily, "white", 0);
     leafcuttingUI.push(centerLabel2);
 
-    controlHintLabel = new Label(tr(vec2(350 * pixelSize, 280 * pixelSize), vec2(240 * pixelSize, 40 * pixelSize)), "CLICK WHEN GREEN",
+    controlHintLabel = new Label(tr(vec2(350 * pixelSize, 280 * pixelSize), vec2(240 * pixelSize, 40 * pixelSize)), string_CLICK_WHEN_GREEN[currentLanguage],
         (40*pixelSize).toString() + "px " + uiContext.fontFamily, "#ffffffdd", 0);
     leafcuttingUI.push(controlHintLabel);
     controlHintLabel.enabled = false;
@@ -156,19 +156,19 @@ function leafcuttingUICustomUpdate(deltaTime)
     ant.update(deltaTime);
     ant2.update(deltaTime);
     
-    scoreLabel.text = "LEAVES COLLECTED: " + leafcuttingScore.toString();
+    scoreLabel.text = string_LeavesCollected_COLON[currentLanguage] + leafcuttingScore.toString();
     if(leafcuttingTimeLeft > 0)
-        timeLabel.text = "TIME: " + (Math.floor(leafcuttingTimeLeft/1000)).toString();
+        timeLabel.text = string_Time[currentLanguage] + (Math.floor(leafcuttingTimeLeft/1000)).toString();
     else
-        timeLabel.text = "TIME OUT!";
+        timeLabel.text = string_TIME_OUT[currentLanguage];
 
     if((!ant.rotationMode && ant.pointIndex == -1 && !ant.disabled && !ant.forcedDestination)
     || (!ant2.rotationMode && ant2.pointIndex == -1 && !ant2.disabled && !ant2.forcedDestination))
     {
         if(clickEdgeDisplayStart)
         {
-            centerLabel1.text = "CLICK EDGE TO";
-            centerLabel2.text = "START CUTTING";
+            centerLabel1.text = string_CLICK_EDGE_TO[currentLanguage];
+            centerLabel2.text = string_START_CUTTING[currentLanguage];
             centerLabel1.enabled = centerLabel2.enabled = true;
             clickEdgeDisplayStart = false;
         }
@@ -312,14 +312,14 @@ function leafcuttingAudioHandling(deltaTime)
                 leafcuttingSFX[SFX_TIMEOUT].play();
 
                 if(leafcuttingScore >= 1000)
-                    centerLabel1.text = "AMAZING AMOUNT OF";
+                    centerLabel1.text = string_AMAZING_AMOUNT_OF[currentLanguage];
                 else if(leafcuttingScore >= 700)
-                    centerLabel1.text = "GOOD AMOUNT OF";
+                    centerLabel1.text = string_GOOD_AMOUNT_OF[currentLanguage];
                 else if(leafcuttingScore >= 250)
-                    centerLabel1.text = "OK AMOUNT OF";
+                    centerLabel1.text = string_OK_AMOUNT_OF[currentLanguage];
                 else
-                    centerLabel1.text = "BARELY ANY";
-                centerLabel2.text = "LEAVES COLLECTED";
+                    centerLabel1.text = string_BARELY_ANY[currentLanguage];
+                centerLabel2.text = string_LeavesCollected[currentLanguage];
                 centerLabel1.enabled = centerLabel2.enabled = true;
 
                 leafcuttingDisableBothAnts();

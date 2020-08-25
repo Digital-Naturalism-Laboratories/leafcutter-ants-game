@@ -1067,7 +1067,7 @@ function ParentAntObject()
 				renderer.fillRect(0,this.y, renderer.canvas.width,this.fontSize);
 
 				renderer.fillStyle = 'red';
-				renderer.font = '45px SmallBoldPixel';
+				renderer.font = '36px SmallBoldPixel';
 				renderer.fillText(infectionAlertString, renderer.canvas.width/2 - this.width/2,this.y + this.fontSize*0.75);
 			}
 		},
@@ -1088,7 +1088,7 @@ function ParentAntObject()
 	}
 	
 }
-let infectionAlertString = 'ALERT! PHORID FLY INFECTION!';
+let infectionAlertString = string_ALERT_PHORID_FLY_INFECTION[currentLanguage];
 
 function Target(name, x,y)
 {

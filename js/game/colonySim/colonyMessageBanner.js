@@ -13,23 +13,23 @@ class ColonyMessageBanner {
         this.messages = [];
 
         if (leafMaterial > 0){
-            this.messages.push("LEAF BONUS: " + leafMaterial + "mg")
+            this.messages.push(string_LEAF_BONUS[currentLanguage] + leafMaterial + "mg")
         } 
 
         if (badFungusFromLeaves > 0){
-            this.messages.push("CONTAMINATED FUGUS RETURNED: " + badFungusFromLeaves + "mg");
+            this.messages.push(string_CONTAMINATED_FUNGUS_RETURNED[currentLanguage] + badFungusFromLeaves + "mg");
         }
 
         if (timeToReturnWithLeaves > 0){
-            this.messages.push("TIME BONUS ON RETURN WITH LEAVES: " + timeToReturnWithLeaves);
+            this.messages.push(string_TIME_BONUS_FOR_RETURNING_WITH_LEAVES[currentLanguage] + timeToReturnWithLeaves);
         }
 
         if (infectedAntsReturning > 0){
-            this.messages.push("INFECTED ANTS RETURNED: " + infectedAntsReturning);
+            this.messages.push(string_PARASITE_INFECTIONS[currentLanguage] + infectedAntsReturning);
         }
 
         if (colony.geneticDiversity > 0){
-            this.messages.push ("GENETIC DIVERSITY FROM MATING: " + colony.geneticDiversity * 100 + "%");
+            this.messages.push (string_GENETIC_DIVERSITY_FROM_MATING[currentLanguage] + colony.geneticDiversity * 100 + "%");
         }
 
         if (this.messages.length > 0){

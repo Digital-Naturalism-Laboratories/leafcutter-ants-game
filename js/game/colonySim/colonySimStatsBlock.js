@@ -1,17 +1,17 @@
 function drawStatsBlock() {
     renderer.fillStyle = "white";
     renderer.textAlign = "left";
-    renderer.font = (36 * pixelSize).toString() + "px SmallBoldPixel";
-
-    renderer.fillText("LEAVES: " + Math.floor(colony.leaves) + "mg", 50 * pixelSize, gameHeight - (85 * pixelSize));
-    renderer.fillText("FUNGUS: " + Math.floor(colony.fungus) + "mg", 50 * pixelSize, gameHeight - (65 * pixelSize));
-    renderer.fillText("TOTAL EGGS LAID: " + colony.totalEggsLaid, 50 * pixelSize, gameHeight - (15 * pixelSize));
-
-    renderer.fillText("POPULATION:   " + colony.population, gameWidth - (250 * pixelSize), gameHeight - (85 * pixelSize));
     renderer.font = (30 * pixelSize).toString() + "px SmallBoldPixel";
-    renderer.fillText("WORKERS:         " + colony.workerCount, gameWidth - (250 * pixelSize), gameHeight - (60 * pixelSize));
-    renderer.fillText("BROOD:           " + colony.broodCount, gameWidth - (250 * pixelSize), gameHeight - (40 * pixelSize));
-    renderer.fillText("REPRODUCTIVES:   " + colony.reproductiveCount, gameWidth - (250 * pixelSize), gameHeight - (20 * pixelSize));
+
+    renderer.fillText(string_LEAVES[currentLanguage] + Math.floor(colony.leaves) + "mg", 50 * pixelSize, gameHeight - (85 * pixelSize));
+    renderer.fillText(string_FUNGUS[currentLanguage] + Math.floor(colony.fungus) + "mg", 50 * pixelSize, gameHeight - (65 * pixelSize));
+    renderer.fillText(string_TotalEggsLaid[currentLanguage] + colony.totalEggsLaid, 50 * pixelSize, gameHeight - (15 * pixelSize));
+
+    renderer.fillText(string_Population[currentLanguage] + colony.population, gameWidth - (250 * pixelSize), gameHeight - (85 * pixelSize));
+    renderer.font = (30 * pixelSize).toString() + "px SmallBoldPixel";
+    renderer.fillText(string_Workers[currentLanguage] + colony.workerCount, gameWidth - (250 * pixelSize), gameHeight - (60 * pixelSize));
+    renderer.fillText(string_Brood[currentLanguage] + colony.broodCount, gameWidth - (250 * pixelSize), gameHeight - (40 * pixelSize));
+    renderer.fillText(string_Reproductives[currentLanguage] + colony.reproductiveCount, gameWidth - (250 * pixelSize), gameHeight - (20 * pixelSize));
 
 
     renderer.fillStyle = "white";
