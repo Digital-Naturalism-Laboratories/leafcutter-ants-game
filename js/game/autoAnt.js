@@ -7,17 +7,13 @@ class AutoAnt
 
         this.antAnimationFrameIndex = 0;
         this.antAnimationFrameSize = vec2(150, 150);
-        this.bodySprite = new Sprite(tr(vec2(-40 * pixelSize, 540 * pixelSize),vec2(pixelSize/2.5,pixelSize/2.5)),
-            new ImageObject("images/Animations/TopDown_Soldier_Ant_Spritesheet.png"), vec2(4950, 150) );
+        this.bodySprite = new Sprite(tr(vec2(-40 * pixelSize, 540 * pixelSize),vec2(pixelSize/2.5,pixelSize/2.5)), topDownSoldierAntImageObject);
         this.bodySprite.transform.rotation = -Math.PI/4;
         this.cutPoint = vec2();
 
         this.cutLeaves = [];
         for(let i = 1; i <= 13; i++)
-        {
-            this.cutLeaves.push(new Sprite(tr(vec2(), vec2(pixelSize*2, pixelSize*2)),
-                new ImageObject("images/CutLeaves/" + i.toString() + ".png", vec2(gameWidth, gameHeight))));
-        }
+            this.cutLeaves.push(new Sprite(tr(vec2(), vec2(pixelSize*2, pixelSize*2)), cutLeafImageObjects[i]));
         this.cutLeafIndex = -1;
         this.leafCarryPoint = vec2();
 
@@ -26,14 +22,14 @@ class AutoAnt
 
         this.isCuttingJawLed = false;
         this.timedJawCutSpeedBonus = 0;
-        this.cutDuration = 100;
+        this.cutDuration = 115;
         this.cutTimer = 0;
         this.rotationMode = false;
         this.alternateRotation = true;
         this.rotationCounter = 0.0;
 
         this.cutPointLines = [];
-        this.cutPointDelay = 100.0;
+        this.cutPointDelay = 150.0;
         this.cutPointTimer = this.cutPointDelay;
 
         this.forcedDestination = true;
@@ -171,14 +167,24 @@ class AutoAnt
 
     drawLeafCuttingLines()
     {
-        var bgValueBorder = 100;
-        for(let i = 0; i < this.cutPointLines.length-1; i++)
+        if(isFirefox)
         {
-            var pixelData1 = renderer.getImageData(this.cutPointLines[i].x, this.cutPointLines[i].y, 1, 1).data;
-            var pixelData2 = renderer.getImageData(this.cutPointLines[i+1].x, this.cutPointLines[i+1].y, 1, 1).data;
-            if((pixelData1[0] >= bgValueBorder || pixelData1[1] >= bgValueBorder || pixelData1[2] >= bgValueBorder)
-            || (pixelData2[0] >= bgValueBorder || pixelData2[1] >= bgValueBorder || pixelData2[2] >= bgValueBorder))
+            for(let i = 0; i < this.cutPointLines.length-1; i++)
+            {
                 drawLine(renderer, this.cutPointLines[i], this.cutPointLines[i+1], "#000000");
+            }
+        }
+        else
+        {
+            var bgValueBorder = 100;
+            for(let i = 0; i < this.cutPointLines.length-1; i++)
+            {
+                var pixelData1 = renderer.getImageData(this.cutPointLines[i].x, this.cutPointLines[i].y, 1, 1).data;
+                var pixelData2 = renderer.getImageData(this.cutPointLines[i+1].x, this.cutPointLines[i+1].y, 1, 1).data;
+                if((pixelData1[0] >= bgValueBorder || pixelData1[1] >= bgValueBorder || pixelData1[2] >= bgValueBorder)
+                || (pixelData2[0] >= bgValueBorder || pixelData2[1] >= bgValueBorder || pixelData2[2] >= bgValueBorder))
+                    drawLine(renderer, this.cutPointLines[i], this.cutPointLines[i+1], "#000000");
+            }
         }
     }
 

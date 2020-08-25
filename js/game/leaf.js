@@ -52,7 +52,6 @@ class Leaf
         this.stemSprite.drawSc();
         this.drawBorderIndication(deltaTime);
         //this.drawPoints(false);
-        
     }
 
     updatePointsMechanism()
@@ -155,10 +154,10 @@ class Leaf
     getPoints(borderTestResolutionFactor)
     {
         var leftOffset = gameWidth * 0.1;
-        var rightOffset = gameWidth * 0.01;
+        var rightOffset = 0;
 
         var topOffset = gameHeight * 0.105;
-        var bottomOffset = gameHeight * 0.125;
+        var bottomOffset = gameHeight * 0.1;
 
         var borderPixelComparionDistance = borderTestResolutionFactor;
 
@@ -168,33 +167,34 @@ class Leaf
         this.points = [];
         this.borderPoints = [];
 
+        var pixels = spritesRenderer.getImageData(0, 0, gameWidth, gameHeight);
+
         for(let y = topOffset + borderPixelComparionDistance; y < gameHeight-borderPixelComparionDistance - bottomOffset; y+=borderTestResolutionFactor)
         {
             for(let x = leftOffset + borderPixelComparionDistance; x < gameWidth-borderPixelComparionDistance - rightOffset; x+=borderTestResolutionFactor)
             {
-                var thisPixel = spritesRenderer.getImageData(x, y, 1, 1).data;
-                var leftPixel = spritesRenderer.getImageData(x-borderPixelComparionDistance, y, 1, 1).data;
-                var rightPixel = spritesRenderer.getImageData(x+borderPixelComparionDistance, y, 1, 1).data;
-                var upPixel = spritesRenderer.getImageData(x, y-borderPixelComparionDistance, 1, 1).data;
-                var downPixel = spritesRenderer.getImageData(x, y+borderPixelComparionDistance, 1, 1).data;
-                if(!(thisPixel[0] < bgValueBorder && thisPixel[1] < bgValueBorder && thisPixel[2] < bgValueBorder)
-                && !(thisPixel[0] >= 254 && thisPixel[1] >= 254 && thisPixel[2] >= 254))
+                var thisIndex = (((Math.floor(y) * Math.floor(gameWidth)) + Math.floor(x)) * 4);
+                if(!(pixels.data[thisIndex] < bgValueBorder && pixels.data[thisIndex+1] < bgValueBorder && pixels.data[thisIndex+2] < bgValueBorder)
+                && !(pixels.data[thisIndex] >= 254 && pixels.data[thisIndex+1] >= 254 && pixels.data[thisIndex+2] >= 254))
                 {
-                    if(
-                        (leftPixel[0] < bgValueBorder && leftPixel[1] < bgValueBorder && leftPixel[2] < bgValueBorder)
-                        || (rightPixel[0] < bgValueBorder && rightPixel[1] < bgValueBorder && rightPixel[2] < bgValueBorder)
-                        || (upPixel[0] < bgValueBorder && upPixel[1] < bgValueBorder && upPixel[2] < bgValueBorder)
-                        || (downPixel[0] < bgValueBorder && downPixel[1] < bgValueBorder && downPixel[2] < bgValueBorder)
+                    var leftIndex = (((Math.floor(y) * Math.floor(gameWidth)) + (Math.floor(x)-Math.floor(borderPixelComparionDistance))) * 4);
+                    var rightIndex = (((Math.floor(y) * Math.floor(gameWidth)) + (Math.floor(x)+Math.floor(borderPixelComparionDistance))) * 4);
+                    var upIndex = ((((Math.floor(y)-Math.floor(borderPixelComparionDistance)) * Math.floor(gameWidth)) + Math.floor(x)) * 4);
+                    var downIndex = ((((Math.floor(y)+Math.floor(borderPixelComparionDistance)) * Math.floor(gameWidth)) + Math.floor(x)) * 4);
 
+                    if(
+                        (pixels.data[leftIndex] < bgValueBorder && pixels.data[leftIndex+1] < bgValueBorder && pixels.data[leftIndex+2] < bgValueBorder)
+                        || (pixels.data[rightIndex] < bgValueBorder && pixels.data[rightIndex+1] < bgValueBorder && pixels.data[rightIndex+2] < bgValueBorder)
+                        || (pixels.data[upIndex] < bgValueBorder && pixels.data[upIndex+1] < bgValueBorder && pixels.data[upIndex+2] < bgValueBorder)
+                        || (pixels.data[downIndex] < bgValueBorder && pixels.data[downIndex+1] < bgValueBorder && pixels.data[downIndex+2] < bgValueBorder)
                         && !
-                        ((leftPixel[0] >= 254 && leftPixel[1] >= 254 && leftPixel[2] >= 254)
-                        || (rightPixel[0] >= 254 && rightPixel[1] >= 254 && rightPixel[2] >= 254)
-                        || (upPixel[0] >= 254 && upPixel[1] >= 254 && upPixel[2] >= 254)
-                        || (downPixel[0] >= 254 && downPixel[1] >= 254 && downPixel[2] >= 254))
+                        ((pixels.data[leftIndex] >= 254 && pixels.data[leftIndex+1] >= 254 && pixels.data[leftIndex+2] >= 254)
+                        || (pixels.data[rightIndex] >= 254 && pixels.data[rightIndex+1] >= 254 && pixels.data[rightIndex+2] >= 254)
+                        || (pixels.data[upIndex] >= 254 && pixels.data[upIndex+1] >= 254 && pixels.data[upIndex+2] >= 254)
+                        || (pixels.data[downIndex] >= 254 && pixels.data[downIndex+1] >= 254 && pixels.data[downIndex+2] >= 254))
                     )
                     {
                         this.borderPoints.push(vec2(x,y));
-
                         this.onceUpdated = true;
                     }
 
@@ -373,11 +373,6 @@ class Leaf
             return true;
         else
             return false;
-
-        /*for(let n = 0; n < pointsToStem.length - 1; n++)
-        {
-            drawLine(renderer, pointsToStem[n], pointsToStem[n+1], "white");
-        }*/
     }
 
     drawUnattachedPointVoidArea()

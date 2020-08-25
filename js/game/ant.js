@@ -30,32 +30,23 @@ class Ant
 
         this.antAnimationFrameIndex = 0;
         this.antAnimationFrameSize = vec2(150, 150);
-        this.bodySprite = new Sprite(tr(vec2(-40 * pixelSize, 540 * pixelSize),vec2(pixelSize/2,pixelSize/2)),
-            new ImageObject("images/Animations/TopDown_Soldier_Ant_Spritesheet.png"), vec2(4950, 150) );
+        this.bodySprite = new Sprite(tr(vec2(-40 * pixelSize, 540 * pixelSize),vec2(pixelSize/2,pixelSize/2)), topDownSoldierAntImageObject);
         this.bodySprite.transform.rotation = -Math.PI/4;
         this.cutPoint = vec2();
 
         this.cutLeaves = [];
         for(let i = 1; i <= 13; i++)
-        {
-            this.cutLeaves.push(new Sprite(tr(vec2(), vec2(pixelSize*2, pixelSize*2)),
-                new ImageObject("images/CutLeaves/" + i.toString() + ".png", vec2(gameWidth, gameHeight))));
-        }
+            this.cutLeaves.push(new Sprite(tr(vec2(), vec2(pixelSize*2, pixelSize*2)), cutLeafImageObjects[i]));
         this.cutLeafIndex = -1;
         this.leafCarryPoint = vec2();
 
         this.headImageIndex = 0;
         this.headImageFrameSize = vec2(350, 250);
-        this.headSprite = new Sprite(tr(vec2(475 * pixelSize, 360 * pixelSize), vec2(pixelSize*1.2, pixelSize*1.2)),
-            new ImageObject("images/Animations/Ant_Head_Spritesheet.png", vec2(5600, 250)));
-        
+        this.headSprite = new Sprite(tr(vec2(475 * pixelSize, 360 * pixelSize), vec2(pixelSize*1.2, pixelSize*1.2)), antHeadImageObject);
         this.headLeadJawRotationOffset = 0;
-        this.headLeadJawSprite = new Sprite(tr(vec2(425 * pixelSize, 450 * pixelSize), vec2(pixelSize*1.2, pixelSize*1.2), Math.PI*1.5),
-            new ImageObject("images/LeadingJaw.png", vec2(41, 86)));
-        
+        this.headLeadJawSprite = new Sprite(tr(vec2(425 * pixelSize, 450 * pixelSize), vec2(pixelSize*1.2, pixelSize*1.2), Math.PI*1.5), leadingJawImageObject);
         this.headCutJawVibrationOffset = vec2();
-        this.headCutJawSprite = new Sprite(tr(vec2(505 * pixelSize, 450 * pixelSize), vec2(pixelSize*1.2, pixelSize*1.2)),
-            new ImageObject("images/CuttingJaw.png", vec2(39, 84)));
+        this.headCutJawSprite = new Sprite(tr(vec2(505 * pixelSize, 450 * pixelSize), vec2(pixelSize*1.2, pixelSize*1.2)), cuttingJawImageObject);
 
         this.animationTimer = 0;
         this.animationDelay = 60/2;
@@ -66,7 +57,7 @@ class Ant
         this.isCuttingJawLed = false;
         this.jawSpeedPenalty = 0;
         this.jawSpeedPenaltyTotalTurns = 3;
-        this.cutDuration = 75;
+        this.cutDuration = 85;
         this.cutTimer = 0;
         this.rotationMode = false;
         this.alternateRotation = true;
@@ -86,7 +77,7 @@ class Ant
         this.timedJawCutTimeBonusFactor = 2.5;
 
         this.cutPointLines = [];
-        this.cutPointDelay = 100.0;
+        this.cutPointDelay = 150.0;
         this.cutPointTimer = this.cutPointDelay;
 
         this.forcedDestination = true;
@@ -198,14 +189,24 @@ class Ant
 
     drawLeafCuttingLines()
     {
-        var bgValueBorder = 100;
-        for(let i = 0; i < this.cutPointLines.length-1; i++)
+        if(isFirefox)
         {
-            var pixelData1 = renderer.getImageData(this.cutPointLines[i].x, this.cutPointLines[i].y, 1, 1).data;
-            var pixelData2 = renderer.getImageData(this.cutPointLines[i+1].x, this.cutPointLines[i+1].y, 1, 1).data;
-            if((pixelData1[0] >= bgValueBorder || pixelData1[1] >= bgValueBorder || pixelData1[2] >= bgValueBorder)
-            || (pixelData2[0] >= bgValueBorder || pixelData2[1] >= bgValueBorder || pixelData2[2] >= bgValueBorder))
+            for(let i = 0; i < this.cutPointLines.length-1; i++)
+            {
                 drawLine(renderer, this.cutPointLines[i], this.cutPointLines[i+1], "#000000");
+            }
+        }
+        else
+        {
+            var bgValueBorder = 100;
+            for(let i = 0; i < this.cutPointLines.length-1; i++)
+            {
+                var pixelData1 = renderer.getImageData(this.cutPointLines[i].x, this.cutPointLines[i].y, 1, 1).data;
+                var pixelData2 = renderer.getImageData(this.cutPointLines[i+1].x, this.cutPointLines[i+1].y, 1, 1).data;
+                if((pixelData1[0] >= bgValueBorder || pixelData1[1] >= bgValueBorder || pixelData1[2] >= bgValueBorder)
+                || (pixelData2[0] >= bgValueBorder || pixelData2[1] >= bgValueBorder || pixelData2[2] >= bgValueBorder))
+                    drawLine(renderer, this.cutPointLines[i], this.cutPointLines[i+1], "#000000");
+            }
         }
     }
 

@@ -226,16 +226,16 @@ function inputSetup()
     //window.addEventListener("resize", onResize);
 
     window.addEventListener("touchstart", onTouchStart);
-    window.addEventListener("touchmove", onTouchMove);
+    //window.addEventListener("touchmove", onTouchMove);
     window.addEventListener("touchend", onTouchEnd);
 
     window.addEventListener("mousedown", onMouseDown);
-    window.addEventListener("mousemove", onMouseMove);
+    //window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseup", onMouseUp);
     
     //window.addEventListener("wheel", onMouseWheelScroll);
     window.addEventListener("keydown", onKeyDown);
-    window.addEventListener("keypress", onKeyPress);
+    //window.addEventListener("keypress", onKeyPress);
     window.addEventListener("keyup", onKeyUp);
 }
 

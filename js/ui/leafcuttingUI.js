@@ -67,6 +67,32 @@ var SFX_LEAFSUCCESS = 7;
 var clickEdgeDisplayStart = true;
 var clickGreenDisplayStart = 1500;
 
+var topDownSoldierAntImageObject;
+var cutLeafImageObjects = [];
+
+function loadLeafCuttingGameTextures()
+{
+    topDownSoldierAntImageObject = new ImageObject("images/Animations/TopDown_Soldier_Ant_Spritesheet.png", vec2(4950, 150));
+    cutLeafImageObjects = [
+        new ImageObject("images/CutLeaves/1.png", vec2(gameWidth, gameHeight)),
+        new ImageObject("images/CutLeaves/2.png", vec2(gameWidth, gameHeight)),
+        new ImageObject("images/CutLeaves/3.png", vec2(gameWidth, gameHeight)),
+        new ImageObject("images/CutLeaves/4.png", vec2(gameWidth, gameHeight)),
+        new ImageObject("images/CutLeaves/5.png", vec2(gameWidth, gameHeight)),
+        new ImageObject("images/CutLeaves/6.png", vec2(gameWidth, gameHeight)),
+        new ImageObject("images/CutLeaves/7.png", vec2(gameWidth, gameHeight)),
+        new ImageObject("images/CutLeaves/8.png", vec2(gameWidth, gameHeight)),
+        new ImageObject("images/CutLeaves/9.png", vec2(gameWidth, gameHeight)),
+        new ImageObject("images/CutLeaves/10.png", vec2(gameWidth, gameHeight)),
+        new ImageObject("images/CutLeaves/11.png", vec2(gameWidth, gameHeight)),
+        new ImageObject("images/CutLeaves/12.png", vec2(gameWidth, gameHeight)),
+        new ImageObject("images/CutLeaves/13.png", vec2(gameWidth, gameHeight))
+    ];
+    antHeadImageObject = new ImageObject("images/Animations/Ant_Head_Spritesheet.png", vec2(5600, 250));
+    leadingJawImageObject = new ImageObject("images/LeadingJaw.png", vec2(41, 86));
+    cuttingJawImageObject = new ImageObject("images/CuttingJaw.png", vec2(39, 84));
+}
+
 function leafcuttingResetGame()
 {
     leafcuttingScore = 0;
@@ -89,6 +115,7 @@ function leafcuttingResetGame()
 
 function setupLeafcuttingUI()
 {
+    loadLeafCuttingGameTextures();
     leafcuttingResetGame();
 
     gameplayTopLeftLabels = [];
@@ -181,6 +208,7 @@ function leafcuttingUICustomUpdate(deltaTime)
     if((ant.rotationMode && (clickGreenDisplayStart > 0 || ant.timedJawSpeedFactor <= ant.timedJawSpeedFactorMin * 1.5))
     || (ant2.rotationMode && (clickGreenDisplayStart > 0 || ant2.timedJawSpeedFactor <= ant2.timedJawSpeedFactorMin * 1.5)))
     {
+        controlHintLabel.text = string_CLICK_WHEN_GREEN[currentLanguage];
         controlHintLabel.enabled = true;
         clickGreenDisplayStart -= deltaTime;
     }

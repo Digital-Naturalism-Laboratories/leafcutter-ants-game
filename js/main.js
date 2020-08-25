@@ -3,11 +3,9 @@ var fullScreenActive = false;
 window.onload = function()
 {
     init();
-    
-    setInterval(frame, 1000 / 60);
-
     bgmIntro.setAttribute('src', 'audio/Intro Music.mp3');
     bgmIntro.loop = true;
+    frame();
 };
 
 function events(deltaTime)
@@ -69,4 +67,5 @@ function frame()
             draw(deltaTime);
         }
     }
+    setTimeout(frame, 15);
 }

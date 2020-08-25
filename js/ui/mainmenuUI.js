@@ -21,7 +21,6 @@ var gameModes = [
 ];
 
 var languages = [
-
     {
         text_label: "Español" 
     },
@@ -29,68 +28,21 @@ var languages = [
     {
         text_label: "English" 
     }
-
 ]
 
 var currentLanguage = ESPAÑOL;
 
 function setupMainMenuUI()
 {
-
     titleScreenSprites.push(new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(gameWidth/1000, gameHeight/750)),
     new ImageObject("images/Animations/Title_Screen_Spritesheet_ES.png", vec2(1000, 750))));
     titleScreenSprites.push(new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(gameWidth/1000, gameHeight/750)),
     new ImageObject("images/Animations/Title_Screen_Spritesheet.png", vec2(1000, 750))));
 
-    mainMenuFontSize = 10 * pixelSize;
-
-    //menuButtons = [];
-
-    // TextButton           constructor(transform, label, button, tooltip)
-    // Transform            function tr(pos, sc, rot, orig) { return new Transform(pos, sc, rot, orig); }
-    // Vec2                 constructor(x, y)
-    // Label                constructor(transform, text, font, textColor, align, tooltip)
-    // Button               constructor(transform, btnColor, selectColor, hoverColor, disabledColor)
-
-    /*leafcuttingBtn = new TextButton(tr(vec2(), btnSize),
-        new Label(tr(), "  LEAFCUTTING GAME", mainMenuFontSize.toString() + "px Pixelmania", "white", 0),
-        new Button(tr(), "#00000022", "#00000066", "#00000044"), 
-        "");
-    menuButtons.push(leafcuttingBtn);
-
-    colonyBtn = new TextButton(tr(vec2(), btnSize),
-        new Label(tr(), "  COLONY GAME", mainMenuFontSize.toString() + "px Pixelmania", "white", 0),
-        new Button(tr(), "#00000022", "#00000066", "#00000044"), 
-        "");
-    menuButtons.push(colonyBtn);
-
-    flightBtn = new TextButton(tr(vec2(), btnSize),
-        new Label(tr(), "  FLIGHT GAME", mainMenuFontSize.toString() + "px Pixelmania", "white", 0),
-        new Button(tr(), "#00000022", "#00000066", "#00000044"), 
-        "");
-    menuButtons.push(flightBtn);
-
-    defenseBtn = new TextButton(tr(vec2(), btnSize),
-        new Label(tr(), "  FLY DEFENSE GAME", mainMenuFontSize.toString() + "px Pixelmania", "white", 0),
-        new Button(tr(), "#00000022", "#00000066", "#00000044"), 
-        "");
-    menuButtons.push(defenseBtn);*/
-
-// FlexGroup constructor(transform, subState, isAxisVertical, gridSpace, gridSize, scaleFlex)
-//function tr(pos, sc, rot, orig) { return new Transform(pos, sc, rot, orig); }
-//SubState constructor(transform, uiObjects)
-    /*mainMenuUI.push(
-        new FlexGroup(tr(vec2(50 * pixelSize, 25 * pixelSize), vec2(gameWidth, gameHeight)),
-        new SubState(tr(), menuButtons),
-        false, 
-        vec2(50 * pixelSize, 20 * pixelSize), 
-        vec2(1, 4), 
-        true));*/
-
+    mainMenuFontSize = 40 * pixelSize;
     
     menuBigPlayButton = new Button(tr(vec2(gameWidth*0.2,gameHeight*0.67), vec2(gameWidth*0.6, gameHeight*0.2)), "#00000000", "#00000000", "#00000000");
     mainMenuUI.push(menuBigPlayButton);
-
     
     gameModeButtons = [];
 
@@ -105,25 +57,25 @@ function setupMainMenuUI()
     } else {
 
         emptyMenuBtn = new TextButton(tr(vec2(), btnSize),
-            new Label(tr(), "", mainMenuFontSize.toString() + "px Pixelmania", "white", 0),
+            new Label(tr(), "", mainMenuFontSize.toString() + "px SmallBoldPixel", "white", 0),
             new Button(tr(), "#00000000", "#00000000", "#00000000"), 
             "");
         gameModeButtons.push(emptyMenuBtn);
 
         prevMenuBtn = new TextButton(tr(vec2(), btnSize),
-            new Label(tr(), "PREV", mainMenuFontSize.toString() + "px Pixelmania", "white", 0),
+            new Label(tr(), "PREV", mainMenuFontSize.toString() + "px SmallBoldPixel", "white", 0),
             new Button(tr(), "#00000011", "#00000055", "#00000033"), 
             "");
         gameModeButtons.push(prevMenuBtn);
 
         playMenuBtn = new TextButton(tr(vec2(), btnSize),
-            new Label(tr(), gameModes[0], mainMenuFontSize.toString() + "px Pixelmania", "white", 0),
+            new Label(tr(), gameModes[0], mainMenuFontSize.toString() + "px SmallBoldPixel", "white", 0),
             new Button(tr(), "#00000000", "#00000044", "#00000022"), 
             "");
         gameModeButtons.push(playMenuBtn);
 
         nextMenuBtn = new TextButton(tr(vec2(), btnSize),
-            new Label(tr(), "NEXT", mainMenuFontSize.toString() + "px Pixelmania", "white", 0),
+            new Label(tr(), "NEXT", mainMenuFontSize.toString() + "px SmallBoldPixel", "white", 0),
             new Button(tr(), "#00000011", "#00000055", "#00000033"), 
             "");
         gameModeButtons.push(nextMenuBtn);
@@ -146,7 +98,6 @@ function setupMainMenuUI()
         vec2(5, 1), 
         true));
     }
-    
 }
 
 function mainMenuUICustomDraw(deltaTime)
@@ -207,29 +158,21 @@ function mainMenuUICustomEvents(deltaTime)
         }
     } else if(playMenuBtn.button.output == UIOUTPUT_SELECT || menuBigPlayButton.output == UIOUTPUT_SELECT) {
 
-        if(//leafcuttingBtn.button.output == UIOUTPUT_SELECT)
-        playMenuBtn.label.text == gameModes[0]) 
+        if(playMenuBtn.label.text == gameModes[0]) 
         {
             ui.stateIndex = COLONYGAMEINTROUI;
-            //leafcuttingBtn.button.resetOutput();
         }
-        else if(//flightBtn.button.output == UIOUTPUT_SELECT)
-        playMenuBtn.label.text == gameModes[1])
+        else if(playMenuBtn.label.text == gameModes[1])
         {
             ui.stateIndex = LEAFCUTTINGINTROUI;
-            //flightBtn.button.resetOutput();
         }
-        else if(//colonyBtn.button.output == UIOUTPUT_SELECT)
-        playMenuBtn.label.text == gameModes[2])
+        else if(playMenuBtn.label.text == gameModes[2])
         {
             ui.stateIndex = DEFENSEGAMEINTROUI;
-            //colonyBtn.button.resetOutput();
         }
-        else if(//defenseBtn.button.output == UIOUTPUT_SELECT)
-        playMenuBtn.label.text == gameModes[3])
+        else if(playMenuBtn.label.text == gameModes[3])
         {
             ui.stateIndex = FLIGHTGAMEINTROUI;
-            //defenseBtn.button.resetOutput();
             
         }
         playMenuBtn.button.resetOutput();
