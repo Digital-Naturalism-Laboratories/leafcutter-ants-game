@@ -14,8 +14,6 @@ var defenseCurrentScreen = DEFENSE_INFO_SCREEN;
 var defenseIntroStartDelay = 60;
 
 function setupDefenseGameIntroUI() {
-
-
   defenseInfoScreenSprites.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
   new ImageObject("images/Animations/info_screen_defense_spritesheet_ES.png", vec2(1000, 750))));
   defenseInfoScreenSprites.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
@@ -24,7 +22,6 @@ function setupDefenseGameIntroUI() {
   //bgmDefensegame.setAttribute('src', 'audio/Intro Music.mp3');
   //bgmDefensegame.loop = true;
   //bgmDefensegame.volume = 0.6;
-
 }
 
 function defenseGameAnimateSprite(sprite, frameLength, framerameCount) {
@@ -53,13 +50,11 @@ function defenseGameAnimateSprite(sprite, frameLength, framerameCount) {
 
   defenseAnimationTimer++
   animationSprite.drawScIn(inPos, inSize);
-
 }
 
 function defenseGameIntroUICustomDraw(deltaTime) {
   defenseIntroStartDelay--;
   defenseGameAnimateSprite(defenseInfoScreenSprites[currentLanguage], defenseAnimationFrameLength, defenseAnimationFrameCount);
-
 }
 
 function defenseGameIntroUICustomEvents(deltaTime) {
@@ -87,6 +82,5 @@ function defenseGameIntroUICustomEvents(deltaTime) {
       defenseGame.audioManager.sfxManager.flyBuzzingNormal.play();
       defenseGame.audioManager.sfxManager.groundMinimFootsteps.play();
     }
-
   }
 }

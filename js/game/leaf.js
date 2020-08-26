@@ -274,11 +274,11 @@ class Leaf
         {
             if(!areLeafcuttingAntsDisabled())
             {
-                if(leafcuttingScore >= 1000)
+                if(leafcuttingScore >= 2400)
                     centerLabel1.text = string_AMAZING_AMOUNT_OF[currentLanguage];
-                else if(leafcuttingScore >= 700)
+                else if(leafcuttingScore >= 1200)
                     centerLabel1.text = string_GOOD_AMOUNT_OF[currentLanguage];
-                else if(leafcuttingScore >= 250)
+                else if(leafcuttingScore >= 600)
                     centerLabel1.text = string_OK_AMOUNT_OF[currentLanguage];
                 else
                     centerLabel1.text = string_BARELY_ANY[currentLanguage];

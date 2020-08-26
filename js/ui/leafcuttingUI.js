@@ -253,6 +253,8 @@ function leafcuttingUICustomEvents(deltaTime)
 
     ant.event();
     ant2.event();
+    
+    bgmColony.volume = 0;
 }
 
 function areLeafcuttingAntsDisabled()
@@ -339,14 +341,15 @@ function leafcuttingAudioHandling(deltaTime)
                 leafcuttingSFX[SFX_TIMEOUT].volume = leafcuttingBGMMaxVolume;
                 leafcuttingSFX[SFX_TIMEOUT].play();
 
-                if(leafcuttingScore >= 1000)
+                if(leafcuttingScore >= 2400)
                     centerLabel1.text = string_AMAZING_AMOUNT_OF[currentLanguage];
-                else if(leafcuttingScore >= 700)
+                else if(leafcuttingScore >= 1200)
                     centerLabel1.text = string_GOOD_AMOUNT_OF[currentLanguage];
-                else if(leafcuttingScore >= 250)
+                else if(leafcuttingScore >= 600)
                     centerLabel1.text = string_OK_AMOUNT_OF[currentLanguage];
                 else
                     centerLabel1.text = string_BARELY_ANY[currentLanguage];
+                
                 centerLabel2.text = string_LeavesCollected[currentLanguage];
                 centerLabel1.enabled = centerLabel2.enabled = true;
 
@@ -354,6 +357,18 @@ function leafcuttingAudioHandling(deltaTime)
             }
             else if(!leafcuttingSFX[SFX_TIMEOUT].isPlaying && leafcuttingSFX[SFX_TIMEOUT].volume <= 0.4)
             {
+                //Resetting/Stopping all Leaf Cutting Game Audio
+                for(let i = 0; i < leafcuttingBGM.length; i++)
+                {
+                    leafcuttingBGM[i].currentTime = 0;
+                    leafcuttingBGM[i].pause();
+                }
+                for(let i = 0; i < leafcuttingSFX.length; i++)
+                {
+                    leafcuttingSFX[i].currentTime = 0;
+                    leafcuttingSFX[i].pause();
+                }
+
                 leafMaterial += leafcuttingScore / leafcuttingLosePenalty;
                 leafcuttingResetGame();
                 ui.stateIndex = DEFENSEGAMEINTROUI;

@@ -75,8 +75,7 @@ function setupColonyGameUI() {
   bgmColony.setAttribute('src', 'audio/Intro Music.mp3');
   bgmColony.loop = true;
   bgmColony.volume = 0.6;
-
-  }
+}
 
 function animateSprite(sprite, frameLength, framerameCount) {
 

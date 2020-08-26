@@ -167,24 +167,9 @@ class AutoAnt
 
     drawLeafCuttingLines()
     {
-        if(isFirefox)
+        for(let i = 0; i < this.cutPointLines.length-1; i++)
         {
-            for(let i = 0; i < this.cutPointLines.length-1; i++)
-            {
-                drawLine(renderer, this.cutPointLines[i], this.cutPointLines[i+1], "#000000");
-            }
-        }
-        else
-        {
-            var bgValueBorder = 100;
-            for(let i = 0; i < this.cutPointLines.length-1; i++)
-            {
-                var pixelData1 = renderer.getImageData(this.cutPointLines[i].x, this.cutPointLines[i].y, 1, 1).data;
-                var pixelData2 = renderer.getImageData(this.cutPointLines[i+1].x, this.cutPointLines[i+1].y, 1, 1).data;
-                if((pixelData1[0] >= bgValueBorder || pixelData1[1] >= bgValueBorder || pixelData1[2] >= bgValueBorder)
-                || (pixelData2[0] >= bgValueBorder || pixelData2[1] >= bgValueBorder || pixelData2[2] >= bgValueBorder))
-                    drawLine(renderer, this.cutPointLines[i], this.cutPointLines[i+1], "#000000");
-            }
+            drawLine(renderer, this.cutPointLines[i], this.cutPointLines[i+1], "#000000");
         }
     }
 

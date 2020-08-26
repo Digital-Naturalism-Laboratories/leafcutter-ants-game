@@ -21,7 +21,6 @@ function setupColonyGameIntroUI() {
   bgmColony.setAttribute('src', 'audio/Intro Music.mp3');
   bgmColony.loop = true;
   bgmColony.volume = 0.6;
-
 }
 
 function colonyAnimateSprite(sprite, frameLength, framerameCount) {
@@ -56,7 +55,6 @@ function colonyAnimateSprite(sprite, frameLength, framerameCount) {
 function colonyGameIntroUICustomDraw(deltaTime) {
   colonyGameIntroStartDelay--;
   colonyAnimateSprite(colonyInfoScreenSprites[currentLanguage], colonyAnimationFrameLength, colonyAnimationFrameCount);
-
 }
 
 function colonyGameIntroUICustomEvents(deltaTime) {
@@ -71,6 +69,5 @@ function colonyGameIntroUICustomEvents(deltaTime) {
 
     colonyGameIntroStartDelay = 60;
     ui.stateIndex = COLONYGAMEUI;
-
   }
 }

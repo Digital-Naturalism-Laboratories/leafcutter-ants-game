@@ -107,6 +107,9 @@ class Sprite
 
     draw()
     {
+        if (this.imageObject === undefined)
+            return;
+
         var img = this.imageObject.image;
         var pos = this.transform.position;
 
@@ -117,6 +120,9 @@ class Sprite
 
     drawSc()
     {
+        if (this.imageObject === undefined)
+            return;
+
         var img = this.imageObject.image;
         var pos = this.transform.position;
         var scale = this.transform.scale;
@@ -128,6 +134,9 @@ class Sprite
 
     drawScIn(inPos, inSize)
     {
+        if (this.imageObject === undefined)
+            return;
+
         var img = this.imageObject.image;
         var pos = this.transform.position;
         var scale = this.transform.scale;
@@ -140,6 +149,9 @@ class Sprite
 
     drawRot()
     {
+        if (this.imageObject === undefined)
+            return;
+
         var img = this.imageObject.image;
         var pos = this.transform.position;
         var ori = this.transform.origin;
@@ -159,7 +171,8 @@ class Sprite
 
     drawScRot()
     {
-        if (this.imageObject === undefined) return //temp fix to avoid crashin issue
+        if (this.imageObject === undefined)
+            return;
         
         var img = this.imageObject.image;
         var pos = this.transform.position;
@@ -181,6 +194,9 @@ class Sprite
 
     drawScRotIn(inPos, inSize)
     {
+        if (this.imageObject === undefined)
+            return;
+
         var img = this.imageObject.image;
         var pos = this.transform.position;
         var scale = this.transform.scale;
