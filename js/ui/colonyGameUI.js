@@ -22,6 +22,26 @@ var unmute_button = document.createElement('img');
 //SFX variables
 var bgmColony = document.createElement('audio');
 
+var colonyGameSFX = [
+  document.createElement('audio'),
+  document.createElement('audio'),
+  document.createElement('audio'),
+  document.createElement('audio')
+]
+
+var colonyGameSFXPaths = [
+  "audio/SFX/Digging Sound.wav",
+  "audio/SFX/Eating Fungus.wav",
+  "audio/SFX/Minigame Trigger.wav",
+  "audio/SFX/UI Menu Buttons.wav"
+]
+
+//SFX Indexes
+var SFX_DIGGING = 0;
+var SFX_EATING = 1;
+var SFX_TRIGGER = 2;
+var SFX_BUTTON = 3;
+
 var fungus_col = 23;
 var fungus_row = 7;
 
@@ -48,6 +68,8 @@ var colonyAnts = [];
 var eggCount = 0;
 var larvaeCount = 0;
 
+var previousTunneledTileCount = 0;
+
 //var introTimer = 5000;
 
 var banner;
@@ -56,6 +78,7 @@ function setupColonyGameUI() {
 
   createGrid();
   setDistFromFungusOnEachColonyNode();
+  previousTunneledTileCount = getTunneledTileCount();
 
   loadImages();
   fungus = new Fungus(fungus_col, fungus_row);
@@ -76,7 +99,12 @@ function setupColonyGameUI() {
   bgmColony.loop = true;
   bgmColony.volume = 0.6;
 
+  for (let i = 0; i < colonyGameSFX.length; i++) {
+    colonyGameSFX[i].setAttribute('src', colonyGameSFXPaths[i]);
+    colonyGameSFX[i].volume = 0.6;
   }
+
+}
 
 function animateSprite(sprite, frameLength, framerameCount) {
 
@@ -164,7 +192,7 @@ function colonyGameUICustomDraw(deltaTime) {
   drawStatsBlock();
   banner.draw();
 
-  
+
   //defenseGameButton.draw();
 
   //test circle
@@ -228,6 +256,14 @@ function colonyGameUICustomEvents(deltaTime) {
     */
 
   }
+
+  if (getTunneledTileCount() > previousTunneledTileCount) {
+    //if (!colonyGameSFX[SFX_DIGGING].isPlaying) {
+      //colonyGameSFX[SFX_DIGGING].pause();
+      colonyGameSFX[SFX_DIGGING].play();
+    //}
+  }
+  previousTunneledTileCount = getTunneledTileCount();
 }
 
 //#region Image Loading

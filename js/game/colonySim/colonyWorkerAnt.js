@@ -40,6 +40,10 @@ class ColonyWorkerAnt {
 
             if (getDistBtwVec2(this.sprite.transform.position, vec2(lastTouchPos.x, lastTouchPos.y)) < 20) {
                 ui.stateIndex = this.gameMode;
+
+                if (!colonyGameSFX[SFX_TRIGGER].isPlaying) {
+                    colonyGameSFX[SFX_TRIGGER].play();
+                }
             }
 
         }

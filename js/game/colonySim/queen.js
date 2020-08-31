@@ -30,6 +30,9 @@ class Queen {
 
             if (getDistBtwVec2(this.sprite.transform.position, vec2(lastTouchPos.x, lastTouchPos.y)) < 20) {
                 ui.stateIndex = FLIGHTGAMEINTROUI;
+                if (!colonyGameSFX[SFX_TRIGGER].isPlaying) {
+                    colonyGameSFX[SFX_TRIGGER].play();
+                }
             }
 
         }

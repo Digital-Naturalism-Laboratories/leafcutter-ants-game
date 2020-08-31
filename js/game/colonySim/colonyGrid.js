@@ -170,6 +170,21 @@ function drawColonyTiles() {
 
 }
 
+function getTunneledTileCount() {
+
+  var tunneledCount = 0;
+
+  for (var i = 0; i < colonyGridNodes.length; i++) {
+    for (var j = 0; j < colonyGridNodes[i].length; j++) {
+      if (colonyGridNodes[i][j].isTunneled) {
+        tunneledCount++;
+      }
+    }
+  }
+
+  return tunneledCount;
+}
+
 //#region Grid Utility Functions 
 
 function getDistance(nodeA, nodeB) {

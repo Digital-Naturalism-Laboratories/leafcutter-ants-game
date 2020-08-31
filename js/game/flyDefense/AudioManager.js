@@ -16,7 +16,7 @@ function AudioManager()
 		this.sfxManager.groundMinimFootstepsAccelerated,this.sfxManager.leafMinimFootsteps,
 		this.sfxManager.timeIsAlmostOutClockTickingLoop,
 
-		bgmColony,flyingGameSFX,flyingGameSFXPaths,leafcuttingBGM[0],leafcuttingBGM[1],leafcuttingSFX[0],leafcuttingSFX[1],
+		bgmColony,colonyGameSFX,flyingGameSFX,flyingGameSFXPaths,leafcuttingBGM[0],leafcuttingBGM[1],leafcuttingSFX[0],leafcuttingSFX[1],
 		leafcuttingSFX[2],leafcuttingSFX[3],leafcuttingSFX[4],leafcuttingSFX[5],leafcuttingSFX[6],leafcuttingSFX[7]);
 	}
 
