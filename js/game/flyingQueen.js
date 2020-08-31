@@ -61,7 +61,9 @@ class FlyingQueen {
             this.animationFrameLength = 2;
 
             this.movementState = this.movementStates.FLYING;
+
         } else {
+
             this.movementState = this.movementStates.FALLING;
             this.animationFrameLength = this.flyingAnimationFrameLength;
         }
@@ -101,6 +103,10 @@ class FlyingQueen {
                     this.y -= this.verticalSpeed;
                 }
 
+                if (!flyingGameSFX[SFX_WINGS].isPlaying) {
+                    flyingGameSFX[SFX_WINGS].play();
+                }
+
             } else {
 
                 if (this.x < this.defaultPos.x) {
@@ -118,7 +124,8 @@ class FlyingQueen {
                 if (this.y > this.defaultPos.y) {
                     this.y -= this.verticalSpeed;
                 }
-
+                
+                flyingGameSFX[SFX_WINGS].pause();
             }
 
             this.sprite.transform.position.x = this.x;
@@ -200,6 +207,10 @@ class FlyingQueen {
         for (var i = 0; i < rivalQueens.length; i++) {
             if (getDistBtwVec2(rivalQueens[i].sprite.transform.position, this.sprite.transform.position) < rivalQueens[i].collisionRadius + this.collisionRadius) {
                 this.isKnockedBack = true;
+
+                if (!flyingGameSFX[SFX_COLLISION].isPlaying) {
+                    flyingGameSFX[SFX_COLLISION].play();
+                }
             }
         }
 
