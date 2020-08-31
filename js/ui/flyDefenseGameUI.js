@@ -63,14 +63,24 @@ defenseGame.initialize = function()
 	this.parentAntObject = new ParentAntObject();
 	this.parentAntObject.initialize();
 
+	let bigAntWidth = renderer.canvas.width*0.5;
+	let firstBigAntX = renderer.canvas.width/2 - bigAntWidth/2;
+	
 	//non controlled ants, just there to show the player that ants work in lines
-	this.NPCBigAnt1 = new NPCBigAnt(-renderer.canvas.width*0.33,'1')
+	this.NPCBigAnt1 = new NPCBigAnt(firstBigAntX - bigAntWidth,'1' )
 	this.NPCBigAnt2 = new NPCBigAnt(renderer.canvas.width - renderer.canvas.width*0.33,'2');
 	this.NPCBigAnt1.initialize();
 	this.NPCBigAnt2.initialize();
-	this.NPCBigAntNegative1 = new NPCBigAnt( (renderer.canvas.width/2 - renderer.canvas.width*0.5/2) - renderer.canvas.width,'-1');
+	this.NPCBigAntNegative1 = new NPCBigAnt( firstBigAntX - (bigAntWidth*2),'-1' );
 	this.NPCBigAntNegative1.initialize();
+	this.NPCBigAntNegative2 = new NPCBigAnt( firstBigAntX - (bigAntWidth*3), '-2' );
+	this.NPCBigAntNegative2.initialize();
+	this.NPCBigAntNegative3 = new NPCBigAnt( firstBigAntX - (bigAntWidth*4), '-3' );
+	this.NPCBigAntNegative3.initialize();
 
+	this.bigAntManager = new BigAntManager();
+	this.bigAntManager.arrayOfBigAnts.push(this.parentAntObject,this.NPCBigAnt1,this.NPCBigAntNegative1,
+										   this.NPCBigAntNegative2,this.NPCBigAntNegative3);
 	//fly stuff
 	this.flyManager = new FlyManager();
 
@@ -134,9 +144,10 @@ defenseGame.initialize = function()
 
 	    this.audioManager.sfxManager.avoidAwkwardSilenceForLoopedAudioFiles();
 
-	    this.NPCBigAnt1.update();
+	    
 	    this.NPCBigAnt2.update();
-	    this.NPCBigAntNegative1.update();
+
+	    this.bigAntManager.updateBigAnts();
 	}
 
 	renderer.save();
@@ -153,10 +164,12 @@ defenseGame.initialize = function()
 			
 			
 
-			this.NPCBigAnt1.draw();
+			
 			this.NPCBigAnt2.draw();
-			this.NPCBigAntNegative1.draw();
-			defenseGame.parentAntObject.draw();
+			
+			this.bigAntManager.drawBigAnts();
+
+			
 			// defenseGame.plantedEggManager.draw();
 			defenseGame.background.fungusSporeFeedbackAnimationManager.draw();
 

@@ -798,6 +798,11 @@ function ParentAntObject()
 	this.touchInsideFungusTangle = false;
 	this.handleTouchstart = function()
 	{
+		if (this.controlStatus !== 'active')
+		{
+			return;
+		}
+
 		this.currentMovementTargetFromInput = vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY);
 		if (this.currentMovementTargetFromInput.x > this.fungusTangleX && 
 			this.currentMovementTargetFromInput.x < this.fungusTangleX + this.fungusTangleWidth &&
@@ -886,6 +891,11 @@ function ParentAntObject()
 	this.clickInsideFungusTangle = false;
 	this.handleMouseDown = function()
 	{
+		if (this.controlStatus !== 'active')
+		{
+			return;
+		}
+
 		this.currentMovementTargetFromInput = vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY);
 		if (this.currentMovementTargetFromInput.x > this.fungusTangleX && 
 			this.currentMovementTargetFromInput.x < this.fungusTangleX + this.fungusTangleWidth &&
@@ -1101,7 +1111,7 @@ function Target(name, x,y)
 	this.name = name;
 	this.x = x;
 	this.y = y;
-	this.canBeTargeted = true;
+	
 }
 
 function FungusSpore(x,y)
@@ -1116,4 +1126,45 @@ function FungusSpore(x,y)
 	{
 		renderer.drawImage(this.image, this.x,this.y, this.width,this.height);
 	}
+}
+
+function BigAntManager()
+{
+	this.arrayOfBigAnts = [];
+	this.currentIndex = 0;
+	this.currentActiveAnt = defenseGame.parentAntObject;
+
+	this.updateCurrentActiveAnt = function()
+	{
+		this.currentActiveAnt.controlStatus = 'inactive';
+		this.currentIndex++;
+		this.currentActiveAnt = this.arrayOfBigAnts[this.currentIndex];
+		this.currentActiveAnt.controlStatus = 'active';
+		console.log('this.currentActiveAnt.name: ' + this.currentActiveAnt.name);
+	}
+
+	this.changeToIdleSpriteSheets = function()
+	{
+		for (let i = 0; i < this.arrayOfBigAnts.length; i++)
+		{
+			this.arrayOfBigAnts[i].currentSpriteSheet = bigAntIdleSpriteSheet;
+		}
+	}
+
+	this.updateBigAnts = function()
+	{
+		for (let i = 0; i < this.arrayOfBigAnts.length; i++)
+		{
+			this.arrayOfBigAnts[i].update();
+		}
+	}
+
+	this.drawBigAnts = function()
+	{
+		for (let i = 0; i < this.arrayOfBigAnts.length; i++)
+		{
+			this.arrayOfBigAnts[i].draw();
+		}
+	}
+
 }

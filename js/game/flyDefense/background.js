@@ -136,13 +136,10 @@ function Background()
 				// this.pheremoneStrip4ImageXCoordinate-=renderer.canvas.width*0.001;
 				// this.pheremoneStrip5ImageXCoordinate-=renderer.canvas.width*0.001;
 				
-				if (defenseGame.parentAntObject.bigAntX + defenseGame.parentAntObject.bigAntWidth >= this.colonyMoundMidpoint)
+				if (defenseGame.bigAntManager.currentActiveAnt.bigAntX + defenseGame.bigAntManager.currentActiveAnt.bigAntWidth >= this.colonyMoundMidpoint)
 				{
 					defenseGame.colonyReached = true;
-					defenseGame.NPCBigAnt1.currentSpriteSheet = bigAntIdleSpriteSheet;
-					defenseGame.NPCBigAnt2.currentSpriteSheet = bigAntIdleSpriteSheet;
-					defenseGame.NPCBigAntNegative1.currentSpriteSheet = bigAntIdleSpriteSheet;
-					defenseGame.parentAntObject.currentSpriteSheet = bigAntIdleSpriteSheet;
+					defenseGame.bigAntManager.changeToIdleSpriteSheets();
 				}
 			}
 
@@ -307,7 +304,6 @@ function Background()
 			this.mouseDownCoordinates.y >= arrayOfPheremoneGaps[i].y && this.mouseDownCoordinates.y < arrayOfPheremoneGaps[i].y + arrayOfPheremoneGaps[i].height &&
 			arrayOfPheremoneGaps[i].isFilledIn === false)
 			{
-				console.log('inside pheremone gap click');
 				this.clickInsidePheremoneGap = true;
 				defenseGame.groundMinimManager.toggleEnRouteStatusAfterUserClick();	
 			}
@@ -498,9 +494,9 @@ function PheremoneGapManager()
 
 		for (let i = 0; i < this.arrayOfPheremoneGaps.length; i++)
 		{
-			
+			let currentActiveAnt = defenseGame.bigAntManager.currentActiveAnt;
 			if (!this.arrayOfPheremoneGaps[i].isFilledIn && 
-				this.arrayOfPheremoneGaps[i].x - (defenseGame.parentAntObject.bigAntX + defenseGame.parentAntObject.bigAntWidth) < 5 )
+				this.arrayOfPheremoneGaps[i].x - (currentActiveAnt.bigAntX + currentActiveAnt.bigAntWidth) < 5 )
 			{
 				
 				defenseGame.background.stuckOnPheremoneGap = true;

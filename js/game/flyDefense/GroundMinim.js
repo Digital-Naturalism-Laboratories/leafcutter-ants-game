@@ -274,10 +274,11 @@ function GroundMinimManager()
 				this.arrayOfGroundMinims[i].velocity = getRandomIntInclusive(1,4);
 			}
 			defenseGame.flyManager.currentStatus = 'normal';
-			defenseGame.flyManager.arrayOfFlies[0].status = 'planting';
+			defenseGame.flyManager.arrayOfFlies[0].status = 'swatted';
 			defenseGame.flyManager.arrayOfFlies[1].status = 'swatted';
 			defenseGame.flyManager.arrayOfFlies[2].status = 'swatted';
 			defenseGame.flyManager.arrayOfFlies[3].status = 'swatted';
+			defenseGame.flyManager.currentFlyIndex = -1;
 
 			defenseGame.background.flashAlertInterval.stop();
 
