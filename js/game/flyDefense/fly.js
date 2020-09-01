@@ -198,6 +198,7 @@ function Fly(name,status)
 					if (this.x + this.width > this.currentTarget.x * 0.96 && this.x < this.currentTarget.x * 1.04 && 
 						this.y > this.currentTarget.y * 0.96 && this.y < this.currentTarget.y * 1.04)//target reached
 					{
+
 							if (defenseGame.bigAntManager.currentActiveAnt.name < -1)
 							{
 								let bigAntWidth = renderer.canvas.width*0.5;
@@ -207,22 +208,18 @@ function Fly(name,status)
 								defenseGame.bigAntManager.arrayOfBigAnts.push(newAnt);
 							}
 
-							defenseGame.bigAntManager.currentActiveAnt.hasBeenInfected = true;
-							
-
+							defenseGame.bigAntManager.currentActiveAnt.hasBeenInfected = true;							
 							
 							if (defenseGame.background.stuckOnPheremoneGap)
 							{
 								defenseGame.bigAntManager.currentActiveAnt.currentSpriteSheet = bigAntIdleInfectedSpriteSheet;
 							}
+							console.log('defenseGame.bigAntManager.currentActiveAnt.name: ' + defenseGame.bigAntManager.currentActiveAnt.name);
 							window.parentAntSpriteSheetToggleInterval = 
-							setInterval(function() {defenseGame.bigAntManager.currentActiveAnt.toggleSpriteSheet()},200);
+							setInterval(function() {defenseGame.bigAntManager.arrayOfBigAnts[defenseGame.bigAntManager.currentIndex - 1].toggleSpriteSheet()},200);
 
 							defenseGame.arrayOfIntervals.push(window.parentAntSpriteSheetToggleInterval);
 						
-						
-						// this.status = 'leaving after planting';
-						// defenseGame.flyManager.toggleNextFlysStatusToPlant();
 						defenseGame.flyManager.updateStatusesAfterInfection();
 						
 						defenseGame.background.bigAntTallyOfInfections++;
@@ -235,17 +232,8 @@ function Fly(name,status)
 							setTimeout(defenseGame.bigAntManager.currentActiveAnt.infectionAlertMessage.toggleVisibility,2000);
 						}
 						
-						
-						
-						
-
 						defenseGame.transitioningToUninfectedAnt = true;
 						defenseGame.background.transitionOveride = -1.1;
-
-						for (let i = 0; i < defenseGame.flyManager.arrayOfFlies.length; i++)
-						{
-							console.log('defenseGame.flyManager.arrayOfFlies[i].status: ' + defenseGame.flyManager.arrayOfFlies[i].status);
-						}
 
 						defenseGame.bigAntManager.updateCurrentActiveAnt();
 						defenseGame.flyManager.updateTargets();

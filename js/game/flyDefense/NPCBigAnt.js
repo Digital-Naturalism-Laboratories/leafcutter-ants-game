@@ -917,6 +917,19 @@ function NPCBigAnt(x,name)
 
 				
 	}
+
+	this.cycleSmallAntImages = function()
+	{
+		if (this.shouldBeMovingLeftOrRight || this.shouldBeMovingUpOrDown)
+		{
+			this.currentSmallAntImageArrayIndex++;
+		}
+
+		if (this.currentSmallAntImageArrayIndex > 11)
+		{
+			this.currentSmallAntImageArrayIndex = 0;
+		}
+	}
 		
 
 	this.update = function()
@@ -1016,6 +1029,10 @@ function NPCBigAnt(x,name)
 		setInterval(function () {_this.cycleBigAntImages()},100);
 		
 		defenseGame.arrayOfIntervals.push(window.NPCBigAntAnimationInterval);
+
+		window.smallAntAnimationInterval = 
+		setInterval(function() {_this.cycleSmallAntImages()},25);
+		defenseGame.arrayOfIntervals.push(window.smallAntAnimationInterval);
 		// this.bigAntWalkingInterval.start();
 		this.initializeLineSegments();
 		this.initializeArrayOfFungusSpores();
@@ -1107,5 +1124,44 @@ this.tallyRaycastIntersectionsWithLeafPolygon = function(pointToRaycast, arrayOf
 			}
 			
 		}
+	}
+
+
+	this.hasBeenInfected = false;
+	this.toggleSpriteSheet = function()
+	{
+		if (!defenseGame.background.stuckOnPheremoneGap && !defenseGame.colonyReached)
+		{
+			if (this.currentSpriteSheet === bigAntWalkingSpriteSheet)
+			{
+				
+				this.currentSpriteSheet = bigAntWalkingInfectedSpriteSheet;
+			}
+			else
+			{
+				this.currentSpriteSheet = bigAntWalkingSpriteSheet;
+			}
+		}
+		else 
+		{
+			
+			if (this.currentSpriteSheet === bigAntWalkingSpriteSheet || this.currentSpriteSheet === bigAntWalkingInfectedSpriteSheet)
+			{
+				
+				this.currentSpriteSheet = bigAntIdleInfectedSpriteSheet;
+				return;
+			}
+
+			if (this.currentSpriteSheet === bigAntIdleInfectedSpriteSheet)
+			{
+				this.currentSpriteSheet = bigAntIdleSpriteSheet;
+			}
+			else
+			{
+				this.currentSpriteSheet = bigAntIdleInfectedSpriteSheet;
+			}
+		}
+		
+		
 	}
 }
