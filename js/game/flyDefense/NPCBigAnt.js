@@ -439,20 +439,20 @@ function NPCBigAnt(x,name)
 								this.smallAntMovingRight = false;
 							}
 
-							// if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
-							// 	this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
-							// {
-							// 	this.smallAntX = this.smallAntPreviousX;
-							// 	this.smallAntY = this.smallAntPreviousY;
-							// 	this.mouthColliderBoxX = this.smallAntPreviousMouthColliderX;
-							// 	this.mouthColliderBoxY = this.smallAntPreviousMouthColliderY;	
-							// 	this.smallAntMidPoint.x = this.smallAntPreviousX + this.smallAntWidth/2;
-							// 	this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;	
-							// 	console.log('turning off should be movingleftorright from leaf boundary detection inside move small ant function');
+							if (this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) === 0 || 
+								this.tallyRaycastIntersectionsWithLeafPolygon(this.smallAntMidPoint, this.leafPolygonWalkingBorderLineSegments) % 2 === 0)
+							{
+								this.smallAntX = this.smallAntPreviousX;
+								this.smallAntY = this.smallAntPreviousY;
+								this.mouthColliderBoxX = this.smallAntPreviousMouthColliderX;
+								this.mouthColliderBoxY = this.smallAntPreviousMouthColliderY;	
+								this.smallAntMidPoint.x = this.smallAntPreviousX + this.smallAntWidth/2;
+								this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;	
+								console.log('turning off should be movingleftorright from leaf boundary detection inside move small ant function');
 	
-							// 	this.shouldBeMovingLeftOrRight = false;
-							// 	this.shouldBeMovingUpOrDown = false;
-							// }//end of midpoint of small ant outside of leaf boundaries
+								this.shouldBeMovingLeftOrRight = false;
+								this.shouldBeMovingUpOrDown = false;
+							}//end of midpoint of small ant outside of leaf boundaries
 						}
 						
 				}//end of moving to the right

@@ -79,11 +79,11 @@ function AudioManager()
 			defenseGame.background.touchInsidePheremoneGap = false;
 			defenseGame.background.clickInsidePheremoneGap = false;
 		}
-		else if (defenseGame.parentAntObject.touchInsideFungusTangle || defenseGame.parentAntObject.clickInsideFungusTangle)
+		else if (defenseGame.bigAntManager.currentActiveAnt.touchInsideFungusTangle || defenseGame.bigAntManager.currentActiveAnt.clickInsideFungusTangle)
 		{
 			this.sfxManager.playLeafTouchedSound();
-			defenseGame.parentAntObject.touchInsideFungusTangle = false;
-			defenseGame.parentAntObject.clickInsideFungusTangle = false;
+			defenseGame.bigAntManager.currentActiveAnt.touchInsideFungusTangle = false;
+			defenseGame.bigAntManager.currentActiveAnt.clickInsideFungusTangle = false;
 		}
 		else
 		{

@@ -1039,6 +1039,7 @@ function ParentAntObject()
 				this.leafPolygonWalkingBorderLineSegments[i].x1 += renderer.canvas.width*0.002;
 				this.leafPolygonWalkingBorderLineSegments[i].x2 += renderer.canvas.width*0.002;
 			}
+			
 		}
 	}
 
