@@ -732,9 +732,6 @@ function NPCBigAnt(x,name)
 			return;
 		}
 
-		console.log('this.currentMovementTargetFromInput.x: ' + this.currentMovementTargetFromInput.x);
-		console.log('this.currentMovementTargetFromInput.y: ' + this.currentMovementTargetFromInput.y);
-
 		this.currentMovementTargetFromInput = vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY);
 		if (this.currentMovementTargetFromInput.x > this.fungusTangleX && 
 			this.currentMovementTargetFromInput.x < this.fungusTangleX + this.fungusTangleWidth &&
@@ -1084,6 +1081,7 @@ this.tallyRaycastIntersectionsWithLeafPolygon = function(pointToRaycast, arrayOf
 	// this.headTarget = new Target('head target', defenseGame.canvas.width * 0.435,defenseGame.canvas.height * 0.575);
 	// this.thoraxTarget = new Target('thorax target', defenseGame.canvas.width * 0.35,defenseGame.canvas.height * 0.6);
 	// this.abdomenTarget = new Target('abdomen target', defenseGame.canvas.width * 0.285,defenseGame.canvas.height * 0.6);
+	
 	this.infectionAlertMessage = 
 	{
 		name: 'infection alert message',
@@ -1114,13 +1112,22 @@ this.tallyRaycastIntersectionsWithLeafPolygon = function(pointToRaycast, arrayOf
 		toggleVisibility: function()
 		{
 			
-			if (defenseGame.parentAntObject.infectionAlertMessage.infectionMessageShouldBeVisible === false)
+			// if (defenseGame.bigAntManager.currentActiveAnt.infectionAlertMessage.infectionMessageShouldBeVisible === false)
+			// {
+			// 	defenseGame.bigAntManager.currentActiveAnt.infectionAlertMessage.infectionMessageShouldBeVisible = true;
+			// }
+			// else 
+			// {
+			// 	defenseGame.bigAntManager.currentActiveAnt.infectionAlertMessage.infectionMessageShouldBeVisible = false;
+			// }
+			var _this = this;
+			if (_this.infectionMessageShouldBeVisible === false)
 			{
-				defenseGame.parentAntObject.infectionAlertMessage.infectionMessageShouldBeVisible = true;
+				_this.infectionMessageShouldBeVisible = true;
 			}
 			else 
 			{
-				defenseGame.parentAntObject.infectionAlertMessage.infectionMessageShouldBeVisible = false;
+				_this.infectionMessageShouldBeVisible = false;
 			}
 			
 		}

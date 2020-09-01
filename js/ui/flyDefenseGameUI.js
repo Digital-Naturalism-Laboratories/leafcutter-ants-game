@@ -183,6 +183,14 @@ defenseGame.initialize = function()
 			
 			this.flyManager.drawFlies();
 
+			if (defenseGame.bigAntManager.currentIndex !== 0)
+			{
+				if (defenseGame.bigAntManager.arrayOfBigAnts[defenseGame.bigAntManager.currentIndex - 1].infectionAlertMessage.infectionMessageShouldBeVisible)
+				{
+					defenseGame.bigAntManager.arrayOfBigAnts[defenseGame.bigAntManager.currentIndex - 1].infectionAlertMessage.draw();
+				}
+			}
+			
 
 			this.background.fungusTallyDiv.draw();
 			this.background.infectionTallyDiv.draw();

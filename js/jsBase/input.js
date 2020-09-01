@@ -89,7 +89,7 @@ function onMouseDown(ev)
 
     if (ui.stateIndex == DEFENSEGAMEUI)
     {
-        console.log('input detected');
+        
         defenseGame.bigAntManager.currentActiveAnt.handleTouchstart();
         defenseGame.background.handleTouchStart();
         defenseGame.background.handleMouseDown();

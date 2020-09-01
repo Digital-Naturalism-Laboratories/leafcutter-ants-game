@@ -204,7 +204,7 @@ function ParentAntObject()
 		
 		this.drawFungusSpores();
 		this.drawSmallAnt();
-		this.infectionAlertMessage.draw();
+		//this.infectionAlertMessage.draw();
 
 		if (defenseGame.debugOn)
 		{
@@ -1039,7 +1039,7 @@ function ParentAntObject()
 				this.leafPolygonWalkingBorderLineSegments[i].x1 += renderer.canvas.width*0.002;
 				this.leafPolygonWalkingBorderLineSegments[i].x2 += renderer.canvas.width*0.002;
 			}
-			
+
 		}
 	}
 
