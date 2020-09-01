@@ -282,14 +282,17 @@ function GroundMinimManager()
 
 			defenseGame.background.flashAlertInterval.stop();
 
-			defenseGame.NPCBigAnt1.currentSpriteSheet = bigAntWalkingSpriteSheet;
-			defenseGame.NPCBigAnt2.currentSpriteSheet = bigAntWalkingSpriteSheet;
-			defenseGame.NPCBigAntNegative1.currentSpriteSheet = bigAntWalkingSpriteSheet;
-			if (!defenseGame.parentAntObject.hasBeenInfected)
+			for (let i = 0; i < defenseGame.bigAntManager.arrayOfBigAnts.length; i++)
 			{
-				defenseGame.parentAntObject.currentSpriteSheet = bigAntWalkingSpriteSheet;
+				if (defenseGame.bigAntManager.arrayOfBigAnts[i].hasBeenInfected)
+				{
+					defenseGame.bigAntManager.arrayOfBigAnts[i].currentSpriteSheet = bigAntWalkingInfectedSpriteSheet;
+				}
+				else if (!defenseGame.bigAntManager.arrayOfBigAnts[i].hasBeenInfected)
+				{
+					defenseGame.bigAntManager.arrayOfBigAnts[i].currentSpriteSheet = bigAntWalkingSpriteSheet;
+				}
 			}
-			
 		}
 	}
 }
