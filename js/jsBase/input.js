@@ -3,8 +3,32 @@ var userInteracted = false;
 
 function onResize(ev)
 {
-    renderer.canvas.width = window.innerWidth;
-    renderer.canvas.height = window.innerHeight;
+    gameWidth = window.innerWidth;
+    gameHeight = window.innerHeight;
+    
+    if(gameWidth/gameHeight > 1.25)
+    {
+        sizeFactor = gameHeight;
+        gameWidth = gameHeight + (gameHeight/4);
+    }
+    else
+    {
+        sizeFactor = gameWidth - (gameWidth/4);
+        gameHeight = gameWidth - (gameWidth/4);
+    }
+
+    pixelSize = sizeFactor / 500.0;
+
+    canvas.width = gameWidth;
+    canvas.height = gameHeight;
+    canvas.style.position = "absolute";
+    canvasStartY = (window.innerHeight/2) - (gameHeight/2);
+    canvas.style.top = canvasStartY.toString() + "px";
+    canvasStartX = (window.innerWidth/2) - (gameWidth/2);
+    canvas.style.left = canvasStartX.toString() + "px";
+
+    uiSettings();
+    mainMenuUIResize();
 }
 
 var isTouched = false;
@@ -222,7 +246,7 @@ function onKeyUp(ev)
 
 function inputSetup()
 {
-    //window.addEventListener("resize", onResize);
+    window.addEventListener("resize", onResize);
 
     window.addEventListener("touchstart", onTouchStart);
     //window.addEventListener("touchmove", onTouchMove);
