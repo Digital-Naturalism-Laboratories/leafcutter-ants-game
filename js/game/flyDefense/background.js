@@ -500,17 +500,26 @@ function PheremoneGapManager()
 			{
 				
 				defenseGame.background.stuckOnPheremoneGap = true;
-				if (defenseGame.parentAntObject.hasBeenInfected)
+				if (defenseGame.bigAntManager.currentActiveAnt.hasBeenInfected)
 				{
-					defenseGame.parentAntObject.currentSpriteSheet = bigAntIdleInfectedSpriteSheet;
+					defenseGame.bigAntManager.currentActiveAnt.currentSpriteSheet = bigAntIdleInfectedSpriteSheet;
 				}
 				else
 				{
-					defenseGame.parentAntObject.currentSpriteSheet = bigAntIdleSpriteSheet;
+					defenseGame.bigAntManager.currentActiveAnt.currentSpriteSheet = bigAntIdleSpriteSheet;
 				}
-				defenseGame.NPCBigAnt1.currentSpriteSheet = bigAntIdleSpriteSheet;
-				defenseGame.NPCBigAnt2.currentSpriteSheet = bigAntIdleSpriteSheet;
-				defenseGame.NPCBigAntNegative1.currentSpriteSheet = bigAntIdleSpriteSheet;
+				for (let i = 0; i < defenseGame.bigAntManager.arrayOfBigAnts.length; i++)
+				{
+					if (defenseGame.bigAntManager.arrayOfBigAnts[i] === defenseGame.bigAntManager.currentActiveAnt)
+					{
+						continue;
+					}
+					else
+					{
+						defenseGame.bigAntManager.arrayOfBigAnts[i].currentSpriteSheet = bigAntIdleSpriteSheet;
+					}
+				}
+				
 				defenseGame.flyManager.toggleSwarm();
 				defenseGame.background.flashAlertInterval.start();
 				if (defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.paused)

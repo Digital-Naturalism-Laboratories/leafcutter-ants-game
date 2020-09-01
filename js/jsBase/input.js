@@ -45,10 +45,9 @@ function onTouchStart(ev)
 
     if (ui.stateIndex == DEFENSEGAMEUI)
     {
-        defenseGame.parentAntObject.handleTouchstart();
+        console.log('input detected');
+        defenseGame.bigAntManager.currentActiveAnt.handleTouchstart();
         defenseGame.background.handleTouchStart();
-        defenseGame.NPCBigAnt1.handleTouchStart();
-        defenseGame.NPCBigAntNegative1.handleTouchStart();
     }
     
 }
@@ -90,9 +89,9 @@ function onMouseDown(ev)
 
     if (ui.stateIndex == DEFENSEGAMEUI)
     {
-        defenseGame.parentAntObject.handleMouseDown();
-        defenseGame.NPCBigAnt1.handleMouseDown();
-        defenseGame.NPCBigAntNegative1.handleMouseDown();
+        console.log('input detected');
+        defenseGame.bigAntManager.currentActiveAnt.handleTouchstart();
+        defenseGame.background.handleTouchStart();
         defenseGame.background.handleMouseDown();
         defenseGame.audioManager.handleInputFeedbackSounds();
     }

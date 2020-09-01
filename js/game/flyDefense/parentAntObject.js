@@ -226,34 +226,30 @@ function ParentAntObject()
 			renderer.lineWidth = 5;
 			renderer.strokeRect(this.fungusTangleX,this.fungusTangleY, this.fungusTangleWidth,this.fungusTangleHeight);
 
-			renderer.moveTo(this.leafPolygonFungusBorderPoints[0].x,this.leafPolygonFungusBorderPoints[0].y);
-			for (let i = 1; i < this.leafPolygonFungusBorderPoints.length; i++)
-			{
-				
-				
-				renderer.fillStyle = 'black';
-				renderer.fillRect(this.leafPolygonFungusBorderPoints[i].x,this.leafPolygonFungusBorderPoints[i].y, 5,5);
-				renderer.font = '20px Helvetica';
-				renderer.fillText(this.leafPolygonFungusBorderPoints[i].name, this.leafPolygonFungusBorderPoints[i].x,this.leafPolygonFungusBorderPoints[i].y);
-
-				renderer.lineTo(this.leafPolygonFungusBorderPoints[i].x,this.leafPolygonFungusBorderPoints[i].y);
-			}
-			renderer.strokeStyle = 'white';
-			renderer.stroke();
-
-			// renderer.moveTo(this.leafPolygonWalkingBorderPoints[0].x,this.leafPolygonWalkingBorderPoints[0].y);
-			// for (let i = 1; i < this.leafPolygonWalkingBorderPoints.length; i++)
+			// renderer.moveTo(this.leafPolygonFungusBorderPoints[0].x,this.leafPolygonFungusBorderPoints[0].y);
+			// for (let i = 1; i < this.leafPolygonFungusBorderPoints.length; i++)
 			// {
 				
-			// 	renderer.fillStyle = 'lawngreen';
-			// 	renderer.fillRect(this.leafPolygonWalkingBorderPoints[i].x,this.leafPolygonWalkingBorderPoints[i].y, 5,5);
+				
+			// 	renderer.fillStyle = 'black';
+			// 	renderer.fillRect(this.leafPolygonFungusBorderPoints[i].x,this.leafPolygonFungusBorderPoints[i].y, 5,5);
 			// 	renderer.font = '20px Helvetica';
-			// 	renderer.fillText(this.leafPolygonWalkingBorderPoints[i].name, this.leafPolygonWalkingBorderPoints[i].x,this.leafPolygonWalkingBorderPoints[i].y);
+			// 	renderer.fillText(this.leafPolygonFungusBorderPoints[i].name, this.leafPolygonFungusBorderPoints[i].x,this.leafPolygonFungusBorderPoints[i].y);
 
-			// 	renderer.lineTo(this.leafPolygonWalkingBorderPoints[i].x,this.leafPolygonWalkingBorderPoints[i].y);
+			// 	renderer.lineTo(this.leafPolygonFungusBorderPoints[i].x,this.leafPolygonFungusBorderPoints[i].y);
 			// }
-			// renderer.strokeStyle = 'green';
+			// renderer.strokeStyle = 'white';
 			// renderer.stroke();
+
+			
+			for (let i = 0; i < this.leafPolygonWalkingBorderLineSegments.length; i++)
+			{
+				renderer.strokeStyle = 'brown';
+				renderer.moveTo(this.leafPolygonWalkingBorderLineSegments[i].x1,this.leafPolygonWalkingBorderLineSegments[i].y1);
+				renderer.lineTo(this.leafPolygonWalkingBorderLineSegments[i].x2,this.leafPolygonWalkingBorderLineSegments[i].y2);
+				renderer.stroke();
+			}
+			renderer.fillText('WALKING POLYGON FOR PARENT ANT', this.bigAntX,this.bigAntY + this.bigAntHeight/2);
 		}
 	}
 
@@ -989,8 +985,6 @@ function ParentAntObject()
 			this.moveSmallAnt();
 			this.detectFungusSporeCollisions();
 		
-		
-
 		if (defenseGame.transitioningToUninfectedAnt)
 		{
 			this.bigAntX += renderer.canvas.width*0.002;
@@ -1040,6 +1034,11 @@ function ParentAntObject()
 				this.smallAntY += renderer.canvas.width*0.002;
 			}
 			
+			for (let i = 0; i < this.leafPolygonWalkingBorderLineSegments.length; i++)
+			{
+				this.leafPolygonWalkingBorderLineSegments[i].x1 += renderer.canvas.width*0.002;
+				this.leafPolygonWalkingBorderLineSegments[i].x2 += renderer.canvas.width*0.002;
+			}
 		}
 	}
 

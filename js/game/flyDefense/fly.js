@@ -198,7 +198,15 @@ function Fly(name,status)
 					if (this.x + this.width > this.currentTarget.x * 0.96 && this.x < this.currentTarget.x * 1.04 && 
 						this.y > this.currentTarget.y * 0.96 && this.y < this.currentTarget.y * 1.04)//target reached
 					{
-						
+							if (defenseGame.bigAntManager.currentActiveAnt.name < -1)
+							{
+								let bigAntWidth = renderer.canvas.width*0.5;
+								let firstBigAntX = renderer.canvas.width/2 - bigAntWidth/2;
+								let newAnt = new NPCBigAnt( firstBigAntX - (bigAntWidth*2), '-3' );
+								newAnt.initialize();
+								defenseGame.bigAntManager.arrayOfBigAnts.push(newAnt);
+							}
+
 							defenseGame.bigAntManager.currentActiveAnt.hasBeenInfected = true;
 							
 
@@ -208,7 +216,7 @@ function Fly(name,status)
 								defenseGame.bigAntManager.currentActiveAnt.currentSpriteSheet = bigAntIdleInfectedSpriteSheet;
 							}
 							window.parentAntSpriteSheetToggleInterval = 
-							setInterval(function() {defenseGame.parentAntObject.toggleSpriteSheet()},200);
+							setInterval(function() {defenseGame.bigAntManager.currentActiveAnt.toggleSpriteSheet()},200);
 
 							defenseGame.arrayOfIntervals.push(window.parentAntSpriteSheetToggleInterval);
 						
