@@ -74,19 +74,19 @@ function loadLeafCuttingGameTextures()
 {
     topDownSoldierAntImageObject = new ImageObject("images/Animations/TopDown_Soldier_Ant_Spritesheet.png", vec2(4950, 150));
     cutLeafImageObjects = [
-        new ImageObject("images/CutLeaves/1.png", vec2(gameWidth, gameHeight)),
-        new ImageObject("images/CutLeaves/2.png", vec2(gameWidth, gameHeight)),
-        new ImageObject("images/CutLeaves/3.png", vec2(gameWidth, gameHeight)),
-        new ImageObject("images/CutLeaves/4.png", vec2(gameWidth, gameHeight)),
-        new ImageObject("images/CutLeaves/5.png", vec2(gameWidth, gameHeight)),
-        new ImageObject("images/CutLeaves/6.png", vec2(gameWidth, gameHeight)),
-        new ImageObject("images/CutLeaves/7.png", vec2(gameWidth, gameHeight)),
-        new ImageObject("images/CutLeaves/8.png", vec2(gameWidth, gameHeight)),
-        new ImageObject("images/CutLeaves/9.png", vec2(gameWidth, gameHeight)),
-        new ImageObject("images/CutLeaves/10.png", vec2(gameWidth, gameHeight)),
-        new ImageObject("images/CutLeaves/11.png", vec2(gameWidth, gameHeight)),
-        new ImageObject("images/CutLeaves/12.png", vec2(gameWidth, gameHeight)),
-        new ImageObject("images/CutLeaves/13.png", vec2(gameWidth, gameHeight))
+        new ImageObject("images/CutLeaves/1.png", vec2(500, 500)),
+        new ImageObject("images/CutLeaves/2.png", vec2(500, 500)),
+        new ImageObject("images/CutLeaves/3.png", vec2(500, 500)),
+        new ImageObject("images/CutLeaves/4.png", vec2(500, 500)),
+        new ImageObject("images/CutLeaves/5.png", vec2(500, 500)),
+        new ImageObject("images/CutLeaves/6.png", vec2(500, 500)),
+        new ImageObject("images/CutLeaves/7.png", vec2(500, 500)),
+        new ImageObject("images/CutLeaves/8.png", vec2(500, 500)),
+        new ImageObject("images/CutLeaves/9.png", vec2(500, 500)),
+        new ImageObject("images/CutLeaves/10.png", vec2(500, 500)),
+        new ImageObject("images/CutLeaves/11.png", vec2(500, 500)),
+        new ImageObject("images/CutLeaves/12.png", vec2(500, 500)),
+        new ImageObject("images/CutLeaves/13.png", vec2(500, 500))
     ];
     antHeadImageObject = new ImageObject("images/Animations/Ant_Head_Spritesheet.png", vec2(5600, 250));
     leadingJawImageObject = new ImageObject("images/LeadingJaw.png", vec2(41, 86));
@@ -127,7 +127,7 @@ function setupLeafcuttingUI()
     gameplayTopLeftLabels.push(timeLabel);
 
     leafcuttingUI.push(new FlexGroup(tr(vec2(20*pixelSize, 20*pixelSize), vec2(window.innerWidth, 80*pixelSize)),
-        new SubState(tr(), gameplayTopLeftLabels),false, vec2(0, 10*pixelSize), vec2(1, 2), true));
+        new SubState(tr(), gameplayTopLeftLabels), false, vec2(0, 10*pixelSize), vec2(1, 2), true));
 
     centerLabel1 = new Label(tr(vec2(0, -40 * pixelSize), vec2(gameWidth, gameHeight)), string_CLICK_EDGE_TO[currentLanguage],
         (96*pixelSize).toString() + "px " + uiContext.fontFamily, "white", 0);
@@ -152,6 +152,24 @@ function setupLeafcuttingUI()
         leafcuttingSFX[i].setAttribute('src', leafcuttingSFXPaths[i]);
         leafcuttingSFX[i].volume = 1;
     }
+}
+
+function leafcuttingUIResize()
+{
+    scoreLabel.font = timeLabel.font = (54*pixelSize).toString() + "px " + uiContext.fontFamily;
+
+    leafcuttingUI[0].transform.position = vec2(20*pixelSize, 20*pixelSize);
+    leafcuttingUI[0].transform.scale = vec2(window.innerWidth, 80*pixelSize);
+    leafcuttingUI[0].gridSpace = vec2(0, 10*pixelSize);
+
+    centerLabel1.transform.position = vec2(0, -40 * pixelSize);
+    centerLabel2.transform.position = vec2(0, 40 * pixelSize);
+    centerLabel1.transform.scale = centerLabel2.transform.scale = vec2(gameWidth, gameHeight);
+    centerLabel1.font = centerLabel2.font = (96*pixelSize).toString() + "px " + uiContext.fontFamily;
+
+    controlHintLabel.transform.position = vec2(350 * pixelSize, 280 * pixelSize);
+    controlHintLabel.transform.scale = vec2(240 * pixelSize, 40 * pixelSize);
+    controlHintLabel.font = (40*pixelSize).toString() + "px " + uiContext.fontFamily;
 }
 
 function leafcuttingUICustomDraw(deltaTime)

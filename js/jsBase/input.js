@@ -1,8 +1,14 @@
 var gamePaused = false;
 var userInteracted = false;
 
+var prevGameWidth;
+var prevGameHeight;
+
 function onResize(ev)
 {
+    prevGameWidth = gameWidth;
+    prevGameHeight = gameHeight;
+    
     gameWidth = window.innerWidth;
     gameHeight = window.innerHeight;
     
@@ -29,6 +35,7 @@ function onResize(ev)
 
     uiSettings();
     mainMenuUIResize();
+    leafcuttingUIResize();
 }
 
 var isTouched = false;

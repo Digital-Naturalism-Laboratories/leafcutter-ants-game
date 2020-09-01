@@ -112,9 +112,45 @@ class Ant
         }
     }
 
+    resize()
+    {
+        //bodySprite
+        //vec2(-40 * pixelSize, 540 * pixelSize),vec2(pixelSize/2, pixelSize/2)
+
+        //cutLeaves[12]
+        //vec2(), vec2(pixelSize*2, pixelSize*2)
+
+        //headSprite
+        //vec2(475 * pixelSize, 360 * pixelSize), vec2(pixelSize*1.2, pixelSize*1.2)
+
+        //headLeadJawSprite
+        //vec2(425 * pixelSize, 450 * pixelSize), vec2(pixelSize*1.2, pixelSize*1.2)
+
+        //headCutJawSprite
+        //vec2(505 * pixelSize, 450 * pixelSize), vec2(pixelSize*1.2, pixelSize*1.2)
+
+        //leadingJawControlPos
+        //vec2(400 * pixelSize, 440 * pixelSize)
+
+        //cuttingJawControlPos
+        //vec2(530 * pixelSize, 440 * pixelSize)
+
+        //destinationPoint
+        //vec2(60 * pixelSize, 360 * pixelSize);
+        //(destinationPoints / prev game size) * current game size
+
+        //timedJawMinRadius
+        //40 * pixelSize;
+        
+        //timedJawMaxRadius
+        //80 * pixelSize;
+
+        //timedJawRadius
+        //timedJawMaxRadius;
+    }
+
     update(deltaTime)
     {
-
         if(!this.disabled)
         {
             if(!this.rotationMode && (this.pointIndex > -1 || this.forcedDestination)
