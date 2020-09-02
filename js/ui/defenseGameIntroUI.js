@@ -52,6 +52,15 @@ function defenseGameAnimateSprite(sprite, frameLength, framerameCount) {
   animationSprite.drawScIn(inPos, inSize);
 }
 
+function defenseGameIntroUIResize()
+{
+  for(let i = 0; i < defenseInfoScreenSprites.length; i++)
+  {
+    defenseInfoScreenSprites[i].transform.position = vec2(gameWidth/2, gameHeight/2);
+    defenseInfoScreenSprites[i].transform.scale = vec2(gameWidth/1000, gameHeight/750);
+  }
+}
+
 function defenseGameIntroUICustomDraw(deltaTime) {
   defenseIntroStartDelay--;
   defenseGameAnimateSprite(defenseInfoScreenSprites[currentLanguage], defenseAnimationFrameLength, defenseAnimationFrameCount);

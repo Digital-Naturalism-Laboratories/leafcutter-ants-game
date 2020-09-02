@@ -52,6 +52,15 @@ function colonyAnimateSprite(sprite, frameLength, framerameCount) {
 
 }
 
+function colonyGameIntroUIResize()
+{
+  for(let i = 0; i < colonyInfoScreenSprites.length; i++)
+  {
+    colonyInfoScreenSprites[i].transform.position = vec2(gameWidth/2, gameHeight/2);
+    colonyInfoScreenSprites[i].transform.scale = vec2(gameWidth/1000, gameHeight/750);
+  }
+}
+
 function colonyGameIntroUICustomDraw(deltaTime) {
   colonyGameIntroStartDelay--;
   colonyAnimateSprite(colonyInfoScreenSprites[currentLanguage], colonyAnimationFrameLength, colonyAnimationFrameCount);

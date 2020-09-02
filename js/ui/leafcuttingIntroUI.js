@@ -13,9 +13,8 @@ var cuttingCurrentScreen = CUTTING_INFO_SCREEN;
 
 var leafcuttingIntroStartDelay = 60;
 
-function setupLeafcuttingIntroUI() {
-
-
+function setupLeafcuttingIntroUI()
+{
   cuttingInfoScreenSprites.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
   new ImageObject("images/Animations/info_screen_cutting_spritesheet_ES.png", vec2(1000, 750))));
   cuttingInfoScreenSprites.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
@@ -26,8 +25,8 @@ function setupLeafcuttingIntroUI() {
   //bgmCutting.volume = 0.6;
 }
 
-function leafcuttingAnimateSprite(sprite, frameLength, framerameCount) {
-
+function leafcuttingAnimateSprite(sprite, frameLength, framerameCount)
+{
   var animationSprite = sprite;
   var animationFrameLength = frameLength;
   var animationFrameCount = framerameCount;
@@ -41,12 +40,14 @@ function leafcuttingAnimateSprite(sprite, frameLength, framerameCount) {
     y: (cuttingCurrentScreen * inSize.y)
   }
 
-  if (cuttingAnimationTimer > animationFrameLength - 1) {
+  if (cuttingAnimationTimer > animationFrameLength - 1)
+  {
     cuttingAnimationFrameCurrent++
     cuttingAnimationTimer = 0;
   }
 
-  if (cuttingAnimationFrameCurrent >= animationFrameCount) {
+  if (cuttingAnimationFrameCurrent >= animationFrameCount)
+  {
     cuttingAnimationFrameCurrent = 0;
   }
 
@@ -55,31 +56,43 @@ function leafcuttingAnimateSprite(sprite, frameLength, framerameCount) {
 
 }
 
-function leafcuttingIntroUICustomDraw(deltaTime) {
-  leafcuttingIntroStartDelay--;
-  leafcuttingAnimateSprite(cuttingInfoScreenSprites[currentLanguage], cuttingAnimationFrameLength, cuttingAnimationFrameCount);
-
+function leafcuttingIntroUIResize()
+{
+  for(let i = 0; i < cuttingInfoScreenSprites.length; i++)
+  {
+    cuttingInfoScreenSprites[i].transform.position = vec2(gameWidth/2, gameHeight/2);
+    cuttingInfoScreenSprites[i].transform.scale = vec2(gameWidth/1000, gameHeight/750);
+  }
 }
 
-function leafcuttingIntroUICustomEvents(deltaTime) {
+function leafcuttingIntroUICustomDraw(deltaTime)
+{
+  leafcuttingIntroStartDelay--;
+  leafcuttingAnimateSprite(cuttingInfoScreenSprites[currentLanguage], cuttingAnimationFrameLength, cuttingAnimationFrameCount);
+}
+
+function leafcuttingIntroUICustomEvents(deltaTime)
+{
   //if (userInteracted && !bgmCutting.isPlaying)
   //  bgmCutting.play();
   //}
-
-  if (isTouched && leafcuttingIntroStartDelay <= 0) {
+  if (isTouched && leafcuttingIntroStartDelay <= 0)
+  {
     lastTouchPos = {
       x: touchPos[0].x - canvas.getBoundingClientRect().left,
       y: touchPos[0].y - canvas.getBoundingClientRect().top
     }
 
-    if (cuttingCurrentScreen === CUTTING_INFO_SCREEN) {
+    if (cuttingCurrentScreen === CUTTING_INFO_SCREEN)
+    {
       leafcuttingIntroStartDelay = 60;
       cuttingCurrentScreen = CUTTING_INSTRUCTIONS_SCREEN;
-    } else {
+    }
+    else
+    {
       leafcuttingIntroStartDelay = 60;
       cuttingCurrentScreen = CUTTING_INFO_SCREEN
       ui.stateIndex = LEAFCUTTINGUI;
     }
-
   }
 }

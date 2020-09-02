@@ -36,6 +36,10 @@ function onResize(ev)
     uiSettings();
     mainMenuUIResize();
     leafcuttingUIResize();
+    leafcuttingIntroUIResize();
+    defenseGameIntroUIResize();
+    flightGameIntroUIResize();
+    colonyGameIntroUIResize();
 }
 
 function resizeVec2(v)
