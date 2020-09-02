@@ -170,6 +170,18 @@ function leafcuttingUIResize()
     controlHintLabel.transform.position = vec2(350 * pixelSize, 280 * pixelSize);
     controlHintLabel.transform.scale = vec2(240 * pixelSize, 40 * pixelSize);
     controlHintLabel.font = (40*pixelSize).toString() + "px " + uiContext.fontFamily;
+
+    leaf.resize();
+
+    if(typeof autoAnts != "undefined")
+        for(let i = 0; i < autoAnts.length; i++)
+            autoAnts[i].resize();
+    if(typeof autoAnts2 != "undefined")
+        for(let i = 0; i < autoAnts2.length; i++)
+            autoAnts2[i].resize();
+
+    ant.resize();
+    ant2.resize();
 }
 
 function leafcuttingUICustomDraw(deltaTime)

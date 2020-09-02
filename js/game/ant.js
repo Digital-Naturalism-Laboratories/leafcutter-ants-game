@@ -114,39 +114,46 @@ class Ant
 
     resize()
     {
-        //bodySprite
-        //vec2(-40 * pixelSize, 540 * pixelSize),vec2(pixelSize/2, pixelSize/2)
+        this.bodySprite.transform.position = resizeVec2(this.bodySprite.transform.position);
+        this.bodySprite.transform.scale = vec2(pixelSize/2, pixelSize/2);
 
-        //cutLeaves[12]
-        //vec2(), vec2(pixelSize*2, pixelSize*2)
+        for(let i = 0; i < 12; i++)
+        {
+            this.cutLeaves[i].transform.scale = vec2(pixelSize*2, pixelSize*2);
+        }
 
-        //headSprite
-        //vec2(475 * pixelSize, 360 * pixelSize), vec2(pixelSize*1.2, pixelSize*1.2)
+        this.headSprite.transform.position = vec2(475 * pixelSize, 360 * pixelSize);
+        this.headSprite.transform.scale = vec2(pixelSize*1.2, pixelSize*1.2);
 
-        //headLeadJawSprite
-        //vec2(425 * pixelSize, 450 * pixelSize), vec2(pixelSize*1.2, pixelSize*1.2)
+        this.headLeadJawSprite.transform.position = vec2(425 * pixelSize, 450 * pixelSize);
+        this.headLeadJawSprite.transform.scale = vec2(pixelSize*1.2, pixelSize*1.2)
 
-        //headCutJawSprite
-        //vec2(505 * pixelSize, 450 * pixelSize), vec2(pixelSize*1.2, pixelSize*1.2)
+        this.headCutJawSprite.transform.position = vec2(505 * pixelSize, 450 * pixelSize);
+        this.headCutJawSprite.transform.scale = vec2(pixelSize*1.2, pixelSize*1.2);
 
-        //leadingJawControlPos
-        //vec2(400 * pixelSize, 440 * pixelSize)
+        this.leadingJawControlPos = vec2(400 * pixelSize, 440 * pixelSize);
+        this.cuttingJawControlPos = vec2(530 * pixelSize, 440 * pixelSize);
 
-        //cuttingJawControlPos
-        //vec2(530 * pixelSize, 440 * pixelSize)
+        if(typeof this.cutPointLines != "undefined")
+        {
+            for(let i = 0; i < this.cutPointLines.length; i++)
+            {
+                this.cutPointLines[i] = resizeVec2(this.cutPointLines[i]);
+            }
+        }
 
-        //destinationPoint
-        //vec2(60 * pixelSize, 360 * pixelSize);
-        //(destinationPoints / prev game size) * current game size
+        this.destinationPoint = vec2(60 * pixelSize, 360 * pixelSize);
+        if(typeof this.destinationPoints != "undefined")
+        {
+            for(let i = 0; i < this.destinationPoints.length; i++)
+            {
+                this.destinationPoints[i] = resizeVec2(this.destinationPoints[i]);
+            }
+        }
 
-        //timedJawMinRadius
-        //40 * pixelSize;
-        
-        //timedJawMaxRadius
-        //80 * pixelSize;
-
-        //timedJawRadius
-        //timedJawMaxRadius;
+        this.timedJawMinRadius = 40 * pixelSize;
+        this.timedJawMaxRadius = 80 * pixelSize;
+        this.timedJawRadius = this.timedJawMaxRadius;
     }
 
     update(deltaTime)

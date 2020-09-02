@@ -38,6 +38,17 @@ function onResize(ev)
     leafcuttingUIResize();
 }
 
+function resizeVec2(v)
+{
+    v.x /= prevGameWidth;
+    v.y /= prevGameHeight;
+
+    v.x *= gameWidth;
+    v.y *= gameHeight;
+
+    return v;
+}
+
 var isTouched = false;
 var isTouchMoved = false;
 var touchPos = [vec2(0, 0), vec2(0, 0), vec2(0, 0), vec2(0, 0), vec2(0, 0)];
