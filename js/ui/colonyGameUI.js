@@ -26,21 +26,18 @@ var colonyGameSFX = [
   document.createElement('audio'),
   document.createElement('audio'),
   document.createElement('audio'),
-  document.createElement('audio')
 ]
 
 var colonyGameSFXPaths = [
   "audio/SFX/Digging Sound.wav",
   "audio/SFX/Eating Fungus.wav",
   "audio/SFX/Minigame Trigger.wav",
-  "audio/SFX/UI Menu Buttons.wav"
 ]
 
 //SFX Indexes
 var SFX_DIGGING = 0;
 var SFX_EATING = 1;
 var SFX_TRIGGER = 2;
-var SFX_BUTTON = 3;
 
 var fungus_col = 23;
 var fungus_row = 7;
