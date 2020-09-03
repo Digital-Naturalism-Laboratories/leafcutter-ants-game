@@ -76,11 +76,11 @@ function frame()
         drawRect(renderer, vec2(gameWidth/4, (gameHeight/2) - (15*pixelSize)), vec2(gameWidth/2, 30*pixelSize), false, "white");
         drawRect(renderer, vec2(gameWidth/4, (gameHeight/2) - (15*pixelSize)), vec2((gameWidth/2)*((totalImagesToLoad - imagesLoadingLeft)/totalImagesToLoad), 30*pixelSize), true, "white");
         loadingAntSprite.transform.position = vec2((gameWidth/2),(gameHeight/2)-(24*pixelSize));
-        loadingAntSprite.drawScIn(vec2(), vec2(32*loadingAntFrame, 19));
+        loadingAntSprite.drawScIn(vec2(32*loadingAntFrame, 0), vec2(32, 19));
         loadingAntSprite.transform.position.x -= (50*pixelSize);
-        loadingAntSprite.drawScIn(vec2(), vec2(32*loadingAntFrame, 19));
+        loadingAntSprite.drawScIn(vec2(32*loadingAntFrame, 0), vec2(32, 19));
         loadingAntSprite.transform.position.x += (100*pixelSize);
-        loadingAntSprite.drawScIn(vec2(), vec2(32*loadingAntFrame, 19));
+        loadingAntSprite.drawScIn(vec2(32*loadingAntFrame, 0), vec2(32, 19));
         if(loadingAntDelay <= 0)
         {
             loadingAntFrame++
