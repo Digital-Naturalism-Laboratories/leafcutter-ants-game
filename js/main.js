@@ -5,6 +5,7 @@ window.onload = function()
     init();
     bgmIntro.setAttribute('src', 'audio/Intro Music.mp3');
     bgmIntro.loop = true;
+
     frame();
 };
 
@@ -66,6 +67,13 @@ function frame()
             update(deltaTime);
             draw(deltaTime);
         }
+    }
+    else
+    {
+        loadingAntSprite.drawScIn(vec2(), vec2(32, 19));
+        drawRect(renderer, vec2(0,0), vec2(gameWidth, gameHeight), true, bgHEX);
+        drawRect(renderer, vec2(gameWidth/4, (gameHeight/2) - (15*pixelSize)), vec2(gameWidth/2, 30*pixelSize), false, "white");
+        drawRect(renderer, vec2(gameWidth/4, (gameHeight/2) - (15*pixelSize)), vec2((gameWidth/2)*((totalImagesToLoad - imagesLoadingLeft)/totalImagesToLoad), 30*pixelSize), true, "white");
     }
     setTimeout(frame, 15);
 }

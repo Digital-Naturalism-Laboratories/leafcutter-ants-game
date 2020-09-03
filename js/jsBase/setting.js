@@ -40,6 +40,8 @@ function init()
     bgHEX = "#d99400";
 
     isFirefox = (navigator.userAgent.indexOf("Firefox") != -1 || typeof InstallTrigger !== 'undefined');
+
+    loadingAntSprite = new Sprite(tr(vec2((gameWidth/2),(gameHeight/2)), vec2(pixelSize*2, pixelSize*2)), new ImageObject("images/loadingAntAnimation.png", vec2(192, 19)));
     
     //Custom Initialization START
     uiInit();

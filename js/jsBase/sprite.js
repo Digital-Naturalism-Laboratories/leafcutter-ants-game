@@ -1,4 +1,5 @@
 
+totalImagesToLoad = 0;
 imagesLoadingLeft = 0;
 class ImageObject
 {
@@ -8,6 +9,9 @@ class ImageObject
         else this.image = img;
 
         imagesLoadingLeft++;
+
+        if(imagesLoadingLeft > totalImagesToLoad)
+            totalImagesToLoad = imagesLoadingLeft;
         
         if(typeof img == "undefined")
         {
