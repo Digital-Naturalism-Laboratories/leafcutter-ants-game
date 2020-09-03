@@ -1,7 +1,6 @@
 const COLONYGAMEUI = 2;
 var colonyGameUI = [];
 
-//var isAtInfoScreen = false;
 var colonyInfoScreenSprite;
 var colonyAnimationFrameLength = 6;
 var colonyAnimationFrameCount = 29;
@@ -21,7 +20,6 @@ var unmute_button = document.createElement('img');
 
 //SFX variables
 var bgmColony = document.createElement('audio');
-
 var colonyGameSFX = [
   document.createElement('audio'),
   document.createElement('audio'),
@@ -66,8 +64,6 @@ var eggCount = 0;
 var larvaeCount = 0;
 
 var previousTunneledTileCount = 0;
-
-//var introTimer = 5000;
 
 var banner;
 var muteButtonClickDelayTimer = 0;
@@ -124,15 +120,9 @@ function animateSprite(sprite, frameLength, framerameCount) {
   }
   if (colonyAnimationFrameCurrent >= animationFrameCount) {
     colonyAnimationFrameCurrent = 0;
-    //isAtInfoScreen = false;
   }
   colonyAnimationTimer++
   animationSprite.drawScIn(inPos, inSize);
-
-  //if (isTouched) {
-  //  isAtInfoScreen = false;
-  //}
-
 }
 
 function resetColonySimGame() {
@@ -154,13 +144,6 @@ function resetColonySimGame() {
 
 function colonyGameUICustomDraw(deltaTime) {
 
-  //if (isAtInfoScreen) {
-  //console.log(isAtInfoScreen);
-  //animateSprite(colonyInfoScreenSprite, colonyAnimationFrameLength, colonyAnimationFrameCount);
-  //} else {
-
-  //console.log(leafMaterial);
-
   fungus.update();
   colony.update();
   for (i = 0; i < colonyAnts.length; i++) {
@@ -170,32 +153,19 @@ function colonyGameUICustomDraw(deltaTime) {
 
   totalMilliseconds += deltaTime;
   totalCycles = Math.floor(totalMilliseconds / cycleLength);
-  //console.log("Total Cycles: " + totalCycles);
-  //console.log("Ant Age" + colonyAnts[0].age);
-
-  //colony.population = (Math.floor(totalCycles + (1 * geneticDiversity)) - colony.deadCount);
 
   renderer.drawImage(groundBG, 0, -(groundBG.height * 0.35 * pixelSize), gameWidth, gameHeight * 0.95);
   renderer.drawImage(grassLayer, 0, -(groundBG.height * 0.20 * pixelSize), gameWidth, gameHeight * 0.35);
   renderer.drawImage(top_mound, (GRID_NODE_SIZE * 18.4) * pixelSize, 5 * pixelSize, (top_mound.width / 2) * pixelSize, (top_mound.height / 2) * pixelSize);
 
   drawColonyTiles();
-  //renderer.drawImage(fungusNest, gameWidth * 0.75, gameHeight * 0.4, gameWidth / 10, gameHeight / 10);
-
-  renderer.fillStyle = 'black';
-  //renderer.fillRect(0, gameHeight - (120 * pixelSize), gameWidth, 120 * pixelSize);
 
   fungus.draw();
 
   drawStatsBlock();
   banner.draw();
 
-
   //defenseGameButton.draw();
-
-  //test circle
-  //colorCircle(gameWidth - (50 * pixelSize), 100 * pixelSize, 30 * pixelSize)
-  //}
 
 }
 
@@ -264,10 +234,7 @@ function colonyGameUICustomEvents(deltaTime) {
   }
 
   if (getTunneledTileCount() > previousTunneledTileCount) {
-    //if (!colonyGameSFX[SFX_DIGGING].isPlaying) {
-    //colonyGameSFX[SFX_DIGGING].pause();
     colonyGameSFX[SFX_DIGGING].play();
-    //}
   }
   previousTunneledTileCount = getTunneledTileCount();
 }
