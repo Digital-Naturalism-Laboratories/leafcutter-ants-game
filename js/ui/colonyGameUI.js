@@ -70,6 +70,7 @@ var previousTunneledTileCount = 0;
 //var introTimer = 5000;
 
 var banner;
+var muteButtonClickDelayTimer = 0;
 
 function setupColonyGameUI() {
 
@@ -218,8 +219,16 @@ function colonyGameUICustomEvents(deltaTime) {
     }
 
     //click to mute/unmute
-    if (getDistBtwVec2(vec2(gameWidth - (50 * pixelSize), 100 * pixelSize), vec2(lastTouchPos.x, lastTouchPos.y)) < 50) {
+    if (getDistBtwVec2(vec2(gameWidth - (50 * pixelSize), 100 * pixelSize), vec2(lastTouchPos.x, lastTouchPos.y)) < 50 &&
+      muteButtonClickDelayTimer <= 0) {
+
       defenseGame.audioManager.toggleMuteForAllAudioTags();
+      muteButtonClickDelayTimer = 5;
+
+    }
+
+    if (muteButtonClickDelayTimer > 0) {
+      muteButtonClickDelayTimer--;
     }
 
     //click to enable fullscreen
@@ -256,8 +265,8 @@ function colonyGameUICustomEvents(deltaTime) {
 
   if (getTunneledTileCount() > previousTunneledTileCount) {
     //if (!colonyGameSFX[SFX_DIGGING].isPlaying) {
-      //colonyGameSFX[SFX_DIGGING].pause();
-      colonyGameSFX[SFX_DIGGING].play();
+    //colonyGameSFX[SFX_DIGGING].pause();
+    colonyGameSFX[SFX_DIGGING].play();
     //}
   }
   previousTunneledTileCount = getTunneledTileCount();
