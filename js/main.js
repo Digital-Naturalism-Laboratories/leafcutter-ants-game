@@ -84,6 +84,8 @@ function frame()
         if(loadingAntDelay <= 0)
         {
             loadingAntFrame++
+            if(loadingAntFrame > 5) loadingAntFrame = 0;
+
             loadingAntDelay = 200;
         }
         else
