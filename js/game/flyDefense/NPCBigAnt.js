@@ -936,18 +936,18 @@ function NPCBigAnt(x,name)
 
 		if (defenseGame.transitioningToUninfectedAnt)
 		{
-			this.bigAntX += renderer.canvas.width*0.002;
+			this.bigAntX += renderer.canvas.width*0.004;
 			
-			this.smallAntMidPoint.x += renderer.canvas.width*0.002;
-			this.leafX += renderer.canvas.width*0.002;
-			this.headTarget.x += renderer.canvas.width*0.002;
-						this.fungusTangleX += renderer.canvas.width*0.002;
+			this.smallAntMidPoint.x += renderer.canvas.width*0.004;
+			this.leafX += renderer.canvas.width*0.004;
+			this.headTarget.x += renderer.canvas.width*0.004;
+						this.fungusTangleX += renderer.canvas.width*0.004;
 
 			for (let i = 0; i < this.arrayOfFungusSpores.length; i++)
 			{
-				this.arrayOfFungusSpores[i].x += renderer.canvas.width*0.002;
+				this.arrayOfFungusSpores[i].x += renderer.canvas.width*0.004;
 			}
-			this.smallAntX += renderer.canvas.width*0.002;
+			this.smallAntX += renderer.canvas.width*0.004;
 			// if (this.name == 1)
 			// {
 			// 	console.log('this.name: ' + this.name);
@@ -956,8 +956,8 @@ function NPCBigAnt(x,name)
 			
 			for (let i = 0; i < this.leafPolygonWalkingBorderLineSegments.length; i++)
 			{
-				this.leafPolygonWalkingBorderLineSegments[i].x1 += renderer.canvas.width*0.002;
-				this.leafPolygonWalkingBorderLineSegments[i].x2 += renderer.canvas.width*0.002;
+				this.leafPolygonWalkingBorderLineSegments[i].x1 += renderer.canvas.width*0.004;
+				this.leafPolygonWalkingBorderLineSegments[i].x2 += renderer.canvas.width*0.004;
 			}
 		}
 

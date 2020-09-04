@@ -81,6 +81,10 @@ defenseGame.initialize = function()
 	this.bigAntManager = new BigAntManager();
 	this.bigAntManager.arrayOfBigAnts.push(this.parentAntObject,this.NPCBigAnt1,this.NPCBigAntNegative1,
 										   this.NPCBigAntNegative2,this.NPCBigAntNegative3);
+	
+	this.backgroundSoldier = new BackgroundSoldier();
+	this.backgroundSoldier.initialize();
+
 	//fly stuff
 	this.flyManager = new FlyManager();
 
@@ -122,7 +126,8 @@ defenseGame.initialize = function()
 		defenseGame.background.pheremoneGapManager.updatePheremoneGaps();
 
 		this.flyManager.updateFlies();
-		this.parentAntObject.update();
+		//this.parentAntObject.update();
+		this.backgroundSoldier.update();
 
 		if (defenseGame.background.stuckOnPheremoneGap === false)
 		{
@@ -163,13 +168,13 @@ defenseGame.initialize = function()
 			
 			
 			
-
+			this.backgroundSoldier.draw();
 			
 			this.NPCBigAnt2.draw();
 			
 			this.bigAntManager.drawBigAnts();
 
-			
+						
 			// defenseGame.plantedEggManager.draw();
 			defenseGame.background.fungusSporeFeedbackAnimationManager.draw();
 

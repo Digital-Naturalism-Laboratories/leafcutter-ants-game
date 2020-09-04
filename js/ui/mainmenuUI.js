@@ -149,14 +149,55 @@ function mainMenuUICustomUpdate(deltaTime)
 
 function mainMenuUICustomEvents(deltaTime)
 {
+
     if(menuBigPlayButton.output == UIOUTPUT_SELECT)
     {
         ui.stateIndex = COLONYGAMEINTROUI;
+        //ui.stateIndex = DEFENSEGAMEINTROUI;
         menuBigPlayButton.resetOutput();
     }
-    else if(languageBtn.button.output == UIOUTPUT_SELECT)
-    {
-        if(currentLanguage == ENGLISH)
+    // else if(languageBtn.button.output == UIOUTPUT_SELECT)
+    // {
+    //     if(currentLanguage == ENGLISH)
+
+    if (!isGameSelectEnabled) {
+        if(menuBigPlayButton.output == UIOUTPUT_SELECT) {
+            //ui.stateIndex = COLONYGAMEINTROUI;
+            ui.stateIndex = DEFENSEGAMEINTROUI;
+        } else if(languageBtn.button.output == UIOUTPUT_SELECT)
+        {
+            var done = false;
+            for(let i = 1; i < languages.length; i++)
+            {
+                if(languageBtn.label.text == "LANGUAGE: " + languages[i].text_label)
+                {
+                    languageBtn.label.text = "LANGUAGE: " + languages[i - 1].text_label;
+                    done = true;
+                    break;
+                }
+            }
+            if(!done) languageBtn.label.text = "LANGUAGE: " + languages[languages.length - 1].text_label;
+            languageBtn.button.resetOutput();
+
+            if(languageBtn.label.text == "LANGUAGE: Español"){
+                currentLanguage = ESPAÑOL;
+            } else {
+                currentLanguage = ENGLISH;
+            }
+            
+        }
+    } else if(playMenuBtn.button.output == UIOUTPUT_SELECT || menuBigPlayButton.output == UIOUTPUT_SELECT) {
+
+        if(playMenuBtn.label.text == gameModes[0]) 
+        {
+            ui.stateIndex = COLONYGAMEINTROUI;
+        }
+        else if(playMenuBtn.label.text == gameModes[1])
+        {
+            ui.stateIndex = LEAFCUTTINGINTROUI;
+        }
+        else if(playMenuBtn.label.text == gameModes[2])
+
         {
             currentLanguage = ESPAÑOL;
             languageBtn.label.text = "LANGUAGE: " + languages[0].text_label;

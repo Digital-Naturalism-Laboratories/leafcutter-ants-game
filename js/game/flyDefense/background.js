@@ -198,17 +198,17 @@ function Background()
 		}
 		else if (defenseGame.transitioningToUninfectedAnt)
 		{
-				this.forageLayerImage1XCoordinate+=gameWidth*0.00033 - (gameWidth*0.00033 * this.slowDownRateFromInfections); 
-				this.forageLayerImage2XCoordinate+=gameWidth*0.00033 - (gameWidth*0.00033 * this.slowDownRateFromInfections);
-				this.grassLayerImage1XCoordinate+=gameWidth*0.0009 - (gameWidth*0.0009 * this.slowDownRateFromInfections);
-				this.grassLayerImage2XCoordinate+=gameWidth*0.0009 - (gameWidth*0.0009 * this.slowDownRateFromInfections);
-				this.leavesLayerImage1XCoordinate+=gameWidth*0.00075 - (gameWidth*0.00075 * this.slowDownRateFromInfections);
-				this.leavesLayerImage2XCoordinate+=gameWidth*0.00075 - (gameWidth*0.00075 * this.slowDownRateFromInfections);
-				this.groundImage1xCoordinate+=gameWidth*0.00125 - (gameWidth*0.00125 * this.slowDownRateFromInfections);
-				this.groundImage2xCoordinate+=gameWidth*0.00125 - (gameWidth*0.00125 * this.slowDownRateFromInfections);
-				this.pheremoneStrip1ImageXCoordinate+=gameWidth*0.00125 - (gameWidth*0.00125 * this.slowDownRateFromInfections);
-				this.pheremoneStrip2ImageXCoordinate+=gameWidth*0.00125 - (gameWidth*0.00125 * this.slowDownRateFromInfections);
-				this.colonyMoundXCoordinate+=gameWidth*0.00125 - (gameWidth*0.00125 * this.slowDownRateFromInfections);
+				this.forageLayerImage1XCoordinate+=gameWidth*0.0006 - (gameWidth*0.0006 * this.slowDownRateFromInfections); 
+				this.forageLayerImage2XCoordinate+=gameWidth*0.0006 - (gameWidth*0.0006 * this.slowDownRateFromInfections);
+				this.grassLayerImage1XCoordinate+=gameWidth*0.0018 - (gameWidth*0.0018 * this.slowDownRateFromInfections);
+				this.grassLayerImage2XCoordinate+=gameWidth*0.0018 - (gameWidth*0.0018 * this.slowDownRateFromInfections);
+				this.leavesLayerImage1XCoordinate+=gameWidth*0.0015 - (gameWidth*0.0015 * this.slowDownRateFromInfections);
+				this.leavesLayerImage2XCoordinate+=gameWidth*0.0015 - (gameWidth*0.0015 * this.slowDownRateFromInfections);
+				this.groundImage1xCoordinate+=gameWidth*0.0025 - (gameWidth*0.0025 * this.slowDownRateFromInfections);
+				this.groundImage2xCoordinate+=gameWidth*0.0025 - (gameWidth*0.0025 * this.slowDownRateFromInfections);
+				this.pheremoneStrip1ImageXCoordinate+=gameWidth*0.0025 - (gameWidth*0.0025 * this.slowDownRateFromInfections);
+				this.pheremoneStrip2ImageXCoordinate+=gameWidth*0.0025 - (gameWidth*0.0025 * this.slowDownRateFromInfections);
+				this.colonyMoundXCoordinate+=gameWidth*0.0025 - (gameWidth*0.0025 * this.slowDownRateFromInfections);
 				this.colonyMoundMidpoint = this.colonyMoundXCoordinate + this.colonyMoundWidth/2;
 
 		}
@@ -386,7 +386,7 @@ function PheremoneGap(x)
 		else if (defenseGame.transitioningToUninfectedAnt)
 		{
 			
-			this.x += (gameWidth*0.00125 - (gameWidth*0.00125 *defenseGame.background.slowDownRateFromInfections));
+			this.x += (gameWidth*0.0025 - (gameWidth*0.0025 *defenseGame.background.slowDownRateFromInfections));
 		}
 	}
 

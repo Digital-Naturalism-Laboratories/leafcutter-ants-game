@@ -987,57 +987,57 @@ function ParentAntObject()
 		
 		if (defenseGame.transitioningToUninfectedAnt)
 		{
-			this.bigAntX += renderer.canvas.width*0.002;
-			this.leafX += renderer.canvas.width*0.002;
-			this.headTarget.x += renderer.canvas.width*0.002;
-			this.fungusTangleX += renderer.canvas.width*0.002;
+			this.bigAntX += renderer.canvas.width*0.004;
+			this.leafX += renderer.canvas.width*0.004;
+			this.headTarget.x += renderer.canvas.width*0.004;
+			this.fungusTangleX += renderer.canvas.width*0.004;
 			
 			for (let i = 0; i < this.arrayOfFungusSpores.length; i++)
 			{
-				this.arrayOfFungusSpores[i].x += renderer.canvas.width*0.002;
+				this.arrayOfFungusSpores[i].x += renderer.canvas.width*0.004;
 			}
 
 			if (this.currentSmallAntDirection === 'down')
 			{
-				this.smallAntX -= renderer.canvas.width*0.002;
+				this.smallAntX -= renderer.canvas.width*0.004;
 			}
 			else if (this.currentSmallAntDirection === 'up')
 			{
-				this.smallAntX += renderer.canvas.width*0.002;
+				this.smallAntX += renderer.canvas.width*0.004;
 			}
 			else if (this.currentSmallAntDirection === 'right')
 			{
-				this.smallAntY -= renderer.canvas.width*0.002;
+				this.smallAntY -= renderer.canvas.width*0.004;
 			}
 			else if (this.currentSmallAntDirection === 'left')
 			{
-				this.smallAntY += renderer.canvas.width*0.002;
+				this.smallAntY += renderer.canvas.width*0.004;
 			}
 			else if (this.currentSmallAntDirection === 'upRight')
 			{
-				this.smallAntX += renderer.canvas.width*0.002;
-				this.smallAntY -= renderer.canvas.width*0.002;
+				this.smallAntX += renderer.canvas.width*0.004;
+				this.smallAntY -= renderer.canvas.width*0.004;
 			}
 			else if (this.currentSmallAntDirection === 'upLeft')
 			{
-				this.smallAntX += renderer.canvas.width*0.002;
-				this.smallAntY += renderer.canvas.width*0.002;
+				this.smallAntX += renderer.canvas.width*0.004;
+				this.smallAntY += renderer.canvas.width*0.004;
 			}
 			else if (this.currentSmallAntDirection === 'downRight')
 			{
-				this.smallAntX -= renderer.canvas.width*0.002;
-				this.smallAntY -= renderer.canvas.width*0.002;
+				this.smallAntX -= renderer.canvas.width*0.004;
+				this.smallAntY -= renderer.canvas.width*0.004;
 			}
 			else if (this.currentSmallAntDirection === 'downLeft')
 			{
-				this.smallAntX -= renderer.canvas.width*0.002;
-				this.smallAntY += renderer.canvas.width*0.002;
+				this.smallAntX -= renderer.canvas.width*0.004;
+				this.smallAntY += renderer.canvas.width*0.004;
 			}
 			
 			for (let i = 0; i < this.leafPolygonWalkingBorderLineSegments.length; i++)
 			{
-				this.leafPolygonWalkingBorderLineSegments[i].x1 += renderer.canvas.width*0.002;
-				this.leafPolygonWalkingBorderLineSegments[i].x2 += renderer.canvas.width*0.002;
+				this.leafPolygonWalkingBorderLineSegments[i].x1 += renderer.canvas.width*0.004;
+				this.leafPolygonWalkingBorderLineSegments[i].x2 += renderer.canvas.width*0.004;
 			}
 
 		}
