@@ -9,13 +9,13 @@ class Leaf
         distanceBetween2AdjacentPoints = pixelSize*26;
 
         this.leafSprite = new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(pixelSize*2, pixelSize*2)),
-            new ImageObject("images/UncutLeaf.png", vec2(gameWidth, gameHeight)));
+            new ImageObject("images/UncutLeaf.png", vec2(500, 500)));
         this.stemSprite = new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(pixelSize*2, pixelSize*2)),
-            new ImageObject("images/leafToCutStem.png", vec2(gameWidth, gameHeight)));
+            new ImageObject("images/leafToCutStem.png", vec2(500, 500)));
         this.bgSprite = new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(pixelSize*2, pixelSize*2)),
-            new ImageObject("images/leafCuttingBG.png", vec2(gameWidth, gameHeight)));
+            new ImageObject("images/leafCuttingBG.png", vec2(500, 500)));
         this.bgBlackSprite = new Sprite(tr(vec2(gameWidth/2, gameHeight/2), vec2(pixelSize*2, pixelSize*2)),
-            new ImageObject("images/leafCuttingBGBlack.png", vec2(gameWidth, gameHeight)));
+            new ImageObject("images/leafCuttingBGBlack.png", vec2(500, 500)));
         this.points = [];
         this.isAttachedToStem = [];
         this.noScoreForUnattachedPointsRemoval = false;
@@ -36,6 +36,63 @@ class Leaf
         this.indicationTimer = 0;
         this.currentBorderIndicationIndex = -1;
         this.pointsUpdated = 2;
+    }
+
+    resize()
+    {
+        distanceBetween2AdjacentPoints = pixelSize*26;
+
+        this.leafSprite.transform.position = vec2(gameWidth/2, gameHeight/2);
+        this.leafSprite.transform.scale = vec2(pixelSize*2, pixelSize*2);
+
+        this.stemSprite.transform.position = vec2(gameWidth/2, gameHeight/2);
+        this.stemSprite.transform.scale = vec2(pixelSize*2, pixelSize*2);
+
+        this.bgSprite.transform.position = vec2(gameWidth/2, gameHeight/2);
+        this.bgSprite.transform.scale = vec2(pixelSize*2, pixelSize*2);
+
+        this.bgBlackSprite.transform.position = vec2(gameWidth/2, gameHeight/2);
+        this.bgBlackSprite.transform.scale = vec2(pixelSize*2, pixelSize*2);
+
+        if(typeof this.points != "undefined")
+        {
+            for(let i = 0; i < this.points.length; i++)
+            {
+                this.points[i] = resizeVec2(this.points[i]);
+            }
+        }
+
+        if(typeof this.borderPoints != "undefined")
+        {
+            for(let i = 0; i < this.borderPoints.length; i++)
+            {
+                this.borderPoints[i] = resizeVec2(this.borderPoints[i]);
+            }
+        }
+
+        if(typeof this.points != "undefined")
+        {
+            for(let i = 0; i < this.points.length; i++)
+            {
+                this.points[i] = resizeVec2(this.points[i]);
+            }
+        }
+
+        if(typeof this.voidAreas != "undefined")
+        {
+            for(let i = 0; i < this.voidAreas.length; i++)
+            {
+                for(let n = 0; n < this.voidAreas[i].length; n++)
+                {
+                    this.voidAreas[i][n] = resizeVec2(this.voidAreas[i][n]);
+                }
+            }
+        }
+
+        this.stemPoint = vec2(70 * pixelSize, 380 * pixelSize);
+
+        this.leafCanvas.width = gameWidth;
+        this.leafCanvas.height = gameHeight;
     }
 
     update(deltaTime)
@@ -274,11 +331,11 @@ class Leaf
         {
             if(!areLeafcuttingAntsDisabled())
             {
-                if(leafcuttingScore >= 1000)
+                if(leafcuttingScore >= 2400)
                     centerLabel1.text = string_AMAZING_AMOUNT_OF[currentLanguage];
-                else if(leafcuttingScore >= 700)
+                else if(leafcuttingScore >= 1200)
                     centerLabel1.text = string_GOOD_AMOUNT_OF[currentLanguage];
-                else if(leafcuttingScore >= 250)
+                else if(leafcuttingScore >= 600)
                     centerLabel1.text = string_OK_AMOUNT_OF[currentLanguage];
                 else
                     centerLabel1.text = string_BARELY_ANY[currentLanguage];

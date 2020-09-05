@@ -30,24 +30,25 @@ class ColonyWorkerAnt {
     }
 
     event() {
-
         if (isTouched) {
-
             var lastTouchPos = {
                 x: touchPos[0].x - canvas.getBoundingClientRect().left,
                 y: touchPos[0].y - canvas.getBoundingClientRect().top
             }
 
             if (getDistBtwVec2(this.sprite.transform.position, vec2(lastTouchPos.x, lastTouchPos.y)) < 20) {
+                if(this.gameMode != COLONYGAMEUI)
+                {
+                    bgmColony.pause();
+                    bgmColony.currentTime = 0;
+                }
                 ui.stateIndex = this.gameMode;
 
                 if (!colonyGameSFX[SFX_TRIGGER].isPlaying) {
                     colonyGameSFX[SFX_TRIGGER].play();
                 }
             }
-
         }
-
     }
 
     update() {
@@ -87,7 +88,7 @@ class ColonyWorkerAnt {
                 inPos.y = inSize.y * 2;
                 break;
             case MODES.CARRYING_LEAF:
-                this.gameMode = DEFENSEGAMEUI;
+                this.gameMode = LEAFCUTTINGINTROUI;
                 inPos.y = inSize.y * 0;
                 break;
         }

@@ -85,6 +85,35 @@ class AutoAnt
         }
     }
 
+    resize()
+    {
+        this.bodySprite.transform.position = resizeVec2(this.bodySprite.transform.position);
+        this.bodySprite.transform.scale = vec2(pixelSize/2, pixelSize/2);
+
+        for(let i = 0; i < 12; i++)
+        {
+            this.cutLeaves[i].transform.scale = vec2(pixelSize*2, pixelSize*2);
+        }
+
+        if(typeof this.cutPointLines != "undefined")
+        {
+            for(let i = 0; i < this.cutPointLines.length; i++)
+            {
+                this.cutPointLines[i] = resizeVec2(this.cutPointLines[i]);
+            }
+        }
+
+        this.destinationPoint = vec2(60 * pixelSize, 360 * pixelSize);
+        for(let i = 0; i < this.destinationPoints.length; i++)
+        {
+            this.destinationPoints[i] = resizeVec2(this.destinationPoints[i]);
+        }
+
+        this.timedJawMinRadius = 40 * pixelSize;
+        this.timedJawMaxRadius = 80 * pixelSize;
+        this.timedJawRadius = this.timedJawMaxRadius;
+    }
+
     update(deltaTime)
     {
         if(!this.disabled)
@@ -167,24 +196,9 @@ class AutoAnt
 
     drawLeafCuttingLines()
     {
-        if(isFirefox)
+        for(let i = 0; i < this.cutPointLines.length-1; i++)
         {
-            for(let i = 0; i < this.cutPointLines.length-1; i++)
-            {
-                drawLine(renderer, this.cutPointLines[i], this.cutPointLines[i+1], "#000000");
-            }
-        }
-        else
-        {
-            var bgValueBorder = 100;
-            for(let i = 0; i < this.cutPointLines.length-1; i++)
-            {
-                var pixelData1 = renderer.getImageData(this.cutPointLines[i].x, this.cutPointLines[i].y, 1, 1).data;
-                var pixelData2 = renderer.getImageData(this.cutPointLines[i+1].x, this.cutPointLines[i+1].y, 1, 1).data;
-                if((pixelData1[0] >= bgValueBorder || pixelData1[1] >= bgValueBorder || pixelData1[2] >= bgValueBorder)
-                || (pixelData2[0] >= bgValueBorder || pixelData2[1] >= bgValueBorder || pixelData2[2] >= bgValueBorder))
-                    drawLine(renderer, this.cutPointLines[i], this.cutPointLines[i+1], "#000000");
-            }
+            drawLine(renderer, this.cutPointLines[i], this.cutPointLines[i+1], "#000000");
         }
     }
 

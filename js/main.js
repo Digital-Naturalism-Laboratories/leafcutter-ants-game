@@ -5,6 +5,7 @@ window.onload = function()
     init();
     bgmIntro.setAttribute('src', 'audio/Intro Music.mp3');
     bgmIntro.loop = true;
+
     frame();
 };
 
@@ -57,14 +58,39 @@ function draw(deltaTime)
 
 function frame()
 {
+    var deltaTime = getDeltaTime();
+
     if (ImageObject.areAllLoaded())
     {
         if (!gamePaused)
         {
-            var deltaTime = getDeltaTime();
             events(deltaTime);
             update(deltaTime);
             draw(deltaTime);
+        }
+    }
+    else
+    {
+        renderer.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        drawRect(renderer, vec2(0, 0), vec2(gameWidth, gameHeight), true, bgHEX);
+        drawRect(renderer, vec2(gameWidth/4, (gameHeight/2) - (15*pixelSize)), vec2(gameWidth/2, 30*pixelSize), false, "white");
+        drawRect(renderer, vec2(gameWidth/4, (gameHeight/2) - (15*pixelSize)), vec2((gameWidth/2)*((totalImagesToLoad - imagesLoadingLeft)/totalImagesToLoad), 30*pixelSize), true, "white");
+        loadingAntSprite.transform.position = vec2((gameWidth/2),(gameHeight/2)-(24*pixelSize));
+        loadingAntSprite.drawScIn(vec2(32*loadingAntFrame, 0), vec2(32, 19));
+        loadingAntSprite.transform.position.x -= (50*pixelSize);
+        loadingAntSprite.drawScIn(vec2(32*loadingAntFrame, 0), vec2(32, 19));
+        loadingAntSprite.transform.position.x += (100*pixelSize);
+        loadingAntSprite.drawScIn(vec2(32*loadingAntFrame, 0), vec2(32, 19));
+        if(loadingAntDelay <= 0)
+        {
+            loadingAntFrame++
+            if(loadingAntFrame > 5) loadingAntFrame = 0;
+
+            loadingAntDelay = 200;
+        }
+        else
+        {
+            loadingAntDelay -= deltaTime;
         }
     }
     setTimeout(frame, 15);

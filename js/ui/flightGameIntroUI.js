@@ -57,6 +57,15 @@ function flightAnimateSprite(sprite, frameLength, framerameCount) {
 
 }
 
+function flightGameIntroUIResize()
+{
+  for(let i = 0; i < flightInfoScreenSprites.length; i++)
+  {
+    flightInfoScreenSprites[i].transform.position = vec2(gameWidth/2, gameHeight/2);
+    flightInfoScreenSprites[i].transform.scale = vec2(gameWidth/1000, gameHeight/750);
+  }
+}
+
 function flightGameIntroUICustomDraw(deltaTime) {
   flightGameIntroStartDelay--;
   flightAnimateSprite(flightInfoScreenSprites[currentLanguage], flightAnimationFrameLength, flightAnimationFrameCount);

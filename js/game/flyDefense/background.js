@@ -3,14 +3,29 @@ function Background()
 	
 	this.groundLayerImage1 = undefined;
 	this.groundLayerImage2 = undefined;
+
+	this.groundLayerImage3 = undefined;
+
 	this.grassLayerImage1 = undefined;
 	this.grassLayerImage2 = undefined;
+
+	this.grassLayerImage3 = undefined;
+
 	this.leavesLayerImage1 = undefined;
 	this.leavesLayerImage2 = undefined;
+
+	this.leavesLayerImage3 = undefined;
+
 	this.forageLayerImage1 = undefined;
 	this.forageLayerImage2 = undefined;
+
+	this.forageLayerImage3 = undefined;
+
 	this.pheremoneStrip1Image = undefined;
 	this.pheremoneStrip2Image = undefined;
+
+	this.pheremoneStrip3Image = undefined;
+
 	this.currentIncomingPheremoneStripImage = undefined;
 	this.pheremoneGapFillImage = undefined;
 	this.colonyMoundImage = undefined;
@@ -60,16 +75,30 @@ function Background()
 		
 		this.groundLayerImage1 = groundLayerImage1;
 		this.groundLayerImage2 = groundLayerImage2;
+
+		this.groundLayerImage3 = groundLayerImage2;
+
 		this.grassLayerImage1 = grassLayerImage1;
 		this.grassLayerImage2 = grassLayerImage2;
+
+		this.grassLayerImage3 = grassLayerImage2;
+
 		this.leavesLayerImage1 = grassLayerImage2;
 		this.leavesLayerImage2 = grassLayerImage1;
+
+		this.leavesLayerImage3 = grassLayerImage1;
+
 		this.forageLayerImage1 = forageLayerImage1;
 		this.forageLayerImage2 = forageLayerImage2;
+
+		this.forageLayerImage3 = forageLayerImage2;
 			
 
 		this.pheremoneStrip1Image = pheremoneStripImage1;
 		this.pheremoneStrip2Image = pheremoneStripImage2;
+
+		this.pheremoneStrip3Image = pheremoneStripImage2;
+
 		this.currentIncomingPheremoneStripImage = this.pheremoneStrip2Image;
 		this.pheremoneGapFillImage = pheremoneGapFillImage;
 
@@ -77,12 +106,23 @@ function Background()
 
 		this.groundImage1xCoordinate = 0;
 		this.groundImage2xCoordinate = renderer.canvas.width;
+
+		this.groundImage3xCoordinate = -renderer.canvas.width;
+
 		this.grassLayerImage1XCoordinate = 0;
 		this.grassLayerImage2XCoordinate = renderer.canvas.width;
+
+		this.grassLayerImage3XCoordinate = -renderer.canvas.width;
+
 		this.leavesLayerImage1XCoordinate = 0;
 		this.leavesLayerImage2XCoordinate = renderer.canvas.width;
+
+		this.leavesLayerImage3XCoordinate = -renderer.canvas.width;
+
 		this.forageLayerImage1XCoordinate = 0;
 		this.forageLayerImage2XCoordinate = renderer.canvas.width;
+
+		this.forageLayerImage3XCoordinate = -renderer.canvas.width;
 
 		this.pheremoneStrip1ImageXCoordinate = 0;
 
@@ -91,6 +131,7 @@ function Background()
 		this.pheremoneStripHeight = renderer.canvas.height*0.075;
 
 		this.pheremoneStrip2ImageXCoordinate = renderer.canvas.width*1.01 + this.pheremoneGapWidth;
+
 
 		//this.colonyMoundXCoordinate = (renderer.canvas.width + this.pheremoneGapWidth)*4;
 
@@ -122,12 +163,24 @@ function Background()
 				
 				this.forageLayerImage1XCoordinate-=gameWidth*0.00025 - (gameWidth*0.00025 * this.slowDownRateFromInfections);
 				this.forageLayerImage2XCoordinate-=gameWidth*0.00025 - (gameWidth*0.00025 * this.slowDownRateFromInfections);
+				
+								this.forageLayerImage3XCoordinate-=gameWidth*0.00025 - (gameWidth*0.00025 * this.slowDownRateFromInfections);
+
 				this.grassLayerImage1XCoordinate-=gameWidth*0.00075 - (gameWidth*0.00075 * this.slowDownRateFromInfections);
 				this.grassLayerImage2XCoordinate-=gameWidth*0.00075 - (gameWidth*0.00075 * this.slowDownRateFromInfections);
+				
+								this.grassLayerImage3XCoordinate-=gameWidth*0.00075 - (gameWidth*0.00075 * this.slowDownRateFromInfections);
+
 				this.leavesLayerImage1XCoordinate-=gameWidth*0.0005 - (gameWidth*0.0005 * this.slowDownRateFromInfections);
 				this.leavesLayerImage2XCoordinate-=gameWidth*0.0005 - (gameWidth*0.0005 * this.slowDownRateFromInfections);
+				
+								this.leavesLayerImage3XCoordinate-=gameWidth*0.0005 - (gameWidth*0.0005 * this.slowDownRateFromInfections);
+
 				this.groundImage1xCoordinate-=gameWidth*0.001 - (gameWidth*0.001 * this.slowDownRateFromInfections);
 				this.groundImage2xCoordinate-=gameWidth*0.001 - (gameWidth*0.001 * this.slowDownRateFromInfections);
+				
+								this.groundImage3xCoordinate-=gameWidth*0.001 - (gameWidth*0.001 * this.slowDownRateFromInfections);
+
 				this.pheremoneStrip1ImageXCoordinate-=gameWidth*0.001 - (gameWidth*0.001 * this.slowDownRateFromInfections);
 				this.pheremoneStrip2ImageXCoordinate-=gameWidth*0.001 - (gameWidth*0.001 * this.slowDownRateFromInfections);
 				this.colonyMoundXCoordinate-=gameWidth*0.001 - (gameWidth*0.001 * this.slowDownRateFromInfections);
@@ -136,13 +189,10 @@ function Background()
 				// this.pheremoneStrip4ImageXCoordinate-=renderer.canvas.width*0.001;
 				// this.pheremoneStrip5ImageXCoordinate-=renderer.canvas.width*0.001;
 				
-				if (defenseGame.parentAntObject.bigAntX + defenseGame.parentAntObject.bigAntWidth >= this.colonyMoundMidpoint)
+				if (defenseGame.bigAntManager.currentActiveAnt.bigAntX + defenseGame.bigAntManager.currentActiveAnt.bigAntWidth >= this.colonyMoundMidpoint)
 				{
 					defenseGame.colonyReached = true;
-					defenseGame.NPCBigAnt1.currentSpriteSheet = bigAntIdleSpriteSheet;
-					defenseGame.NPCBigAnt2.currentSpriteSheet = bigAntIdleSpriteSheet;
-					defenseGame.NPCBigAntNegative1.currentSpriteSheet = bigAntIdleSpriteSheet;
-					defenseGame.parentAntObject.currentSpriteSheet = bigAntIdleSpriteSheet;
+					defenseGame.bigAntManager.changeToIdleSpriteSheets();
 				}
 			}
 
@@ -201,17 +251,29 @@ function Background()
 		}
 		else if (defenseGame.transitioningToUninfectedAnt)
 		{
-				this.forageLayerImage1XCoordinate+=gameWidth*0.00033 - (gameWidth*0.00033 * this.slowDownRateFromInfections); 
-				this.forageLayerImage2XCoordinate+=gameWidth*0.00033 - (gameWidth*0.00033 * this.slowDownRateFromInfections);
-				this.grassLayerImage1XCoordinate+=gameWidth*0.0009 - (gameWidth*0.0009 * this.slowDownRateFromInfections);
-				this.grassLayerImage2XCoordinate+=gameWidth*0.0009 - (gameWidth*0.0009 * this.slowDownRateFromInfections);
-				this.leavesLayerImage1XCoordinate+=gameWidth*0.00075 - (gameWidth*0.00075 * this.slowDownRateFromInfections);
-				this.leavesLayerImage2XCoordinate+=gameWidth*0.00075 - (gameWidth*0.00075 * this.slowDownRateFromInfections);
-				this.groundImage1xCoordinate+=gameWidth*0.00125 - (gameWidth*0.00125 * this.slowDownRateFromInfections);
-				this.groundImage2xCoordinate+=gameWidth*0.00125 - (gameWidth*0.00125 * this.slowDownRateFromInfections);
-				this.pheremoneStrip1ImageXCoordinate+=gameWidth*0.00125 - (gameWidth*0.00125 * this.slowDownRateFromInfections);
-				this.pheremoneStrip2ImageXCoordinate+=gameWidth*0.00125 - (gameWidth*0.00125 * this.slowDownRateFromInfections);
-				this.colonyMoundXCoordinate+=gameWidth*0.00125 - (gameWidth*0.00125 * this.slowDownRateFromInfections);
+				this.forageLayerImage1XCoordinate+=gameWidth*0.0006 - (gameWidth*0.0006 * this.slowDownRateFromInfections); 
+				this.forageLayerImage2XCoordinate+=gameWidth*0.0006 - (gameWidth*0.0006 * this.slowDownRateFromInfections);
+				
+								this.forageLayerImage3XCoordinate+=gameWidth*0.0006 - (gameWidth*0.0006 * this.slowDownRateFromInfections);
+
+				this.grassLayerImage1XCoordinate+=gameWidth*0.0018 - (gameWidth*0.0018 * this.slowDownRateFromInfections);
+				this.grassLayerImage2XCoordinate+=gameWidth*0.0018 - (gameWidth*0.0018 * this.slowDownRateFromInfections);
+				
+								this.grassLayerImage3XCoordinate+=gameWidth*0.0018 - (gameWidth*0.0018 * this.slowDownRateFromInfections);
+
+				this.leavesLayerImage1XCoordinate+=gameWidth*0.0015 - (gameWidth*0.0015 * this.slowDownRateFromInfections);
+				this.leavesLayerImage2XCoordinate+=gameWidth*0.0015 - (gameWidth*0.0015 * this.slowDownRateFromInfections);
+				
+								this.leavesLayerImage3XCoordinate+=gameWidth*0.0015 - (gameWidth*0.0015 * this.slowDownRateFromInfections);
+
+				this.groundImage1xCoordinate+=gameWidth*0.0025 - (gameWidth*0.0025 * this.slowDownRateFromInfections);
+				this.groundImage2xCoordinate+=gameWidth*0.0025 - (gameWidth*0.0025 * this.slowDownRateFromInfections);
+				
+								this.groundImage3xCoordinate+=gameWidth*0.0025 - (gameWidth*0.0025 * this.slowDownRateFromInfections);
+
+				this.pheremoneStrip1ImageXCoordinate+=gameWidth*0.0025 - (gameWidth*0.0025 * this.slowDownRateFromInfections);
+				this.pheremoneStrip2ImageXCoordinate+=gameWidth*0.0025 - (gameWidth*0.0025 * this.slowDownRateFromInfections);
+				this.colonyMoundXCoordinate+=gameWidth*0.0025 - (gameWidth*0.0025 * this.slowDownRateFromInfections);
 				this.colonyMoundMidpoint = this.colonyMoundXCoordinate + this.colonyMoundWidth/2;
 
 		}
@@ -307,7 +369,6 @@ function Background()
 			this.mouseDownCoordinates.y >= arrayOfPheremoneGaps[i].y && this.mouseDownCoordinates.y < arrayOfPheremoneGaps[i].y + arrayOfPheremoneGaps[i].height &&
 			arrayOfPheremoneGaps[i].isFilledIn === false)
 			{
-				console.log('inside pheremone gap click');
 				this.clickInsidePheremoneGap = true;
 				defenseGame.groundMinimManager.toggleEnRouteStatusAfterUserClick();	
 			}
@@ -319,12 +380,24 @@ function Background()
 
 		renderer.drawImage(this.forageLayerImage1, this.forageLayerImage1XCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
 		renderer.drawImage(this.forageLayerImage2, this.forageLayerImage2XCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
+		
+				renderer.drawImage(this.forageLayerImage3, this.forageLayerImage3XCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
+
 		renderer.drawImage(this.leavesLayerImage1, this.leavesLayerImage1XCoordinate,-renderer.canvas.height*0.1, renderer.canvas.width*1.01,renderer.canvas.height*1.25);
 		renderer.drawImage(this.leavesLayerImage2, this.leavesLayerImage2XCoordinate,-renderer.canvas.height*0.1, renderer.canvas.width*1.01,renderer.canvas.height*1.25);
+		
+				renderer.drawImage(this.leavesLayerImage3, this.leavesLayerImage3XCoordinate,-renderer.canvas.height*0.1, renderer.canvas.width*1.01,renderer.canvas.height*1.25);
+
 		renderer.drawImage(this.grassLayerImage1, this.grassLayerImage1XCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
 		renderer.drawImage(this.grassLayerImage2, this.grassLayerImage2XCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
+		
+				renderer.drawImage(this.grassLayerImage3, this.grassLayerImage3XCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
+
 		renderer.drawImage(this.groundLayerImage1, this.groundImage1xCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
 		renderer.drawImage(this.groundLayerImage2, this.groundImage2xCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
+
+
+				renderer.drawImage(this.groundLayerImage3, this.groundImage3xCoordinate,0, renderer.canvas.width*1.01,renderer.canvas.height);
 
 		renderer.drawImage(this.pheremoneStrip1Image, this.pheremoneStrip1ImageXCoordinate,this.pheremoneStripY, 
 						   renderer.canvas.width*1.01,this.pheremoneStripHeight);
@@ -390,7 +463,7 @@ function PheremoneGap(x)
 		else if (defenseGame.transitioningToUninfectedAnt)
 		{
 			
-			this.x += (gameWidth*0.00125 - (gameWidth*0.00125 *defenseGame.background.slowDownRateFromInfections));
+			this.x += (gameWidth*0.0025 - (gameWidth*0.0025 *defenseGame.background.slowDownRateFromInfections));
 		}
 	}
 
@@ -409,7 +482,7 @@ function PheremoneGap(x)
 			renderer.fillStyle = 'white';
 			renderer.font = '36px SmallBoldPixel';
 			this.alertMessage.width = renderer.measureText(pheremoneGapAlertMessage).width;
-			renderer.fillText(pheremoneGapAlertMessage, this.alertMessage.x - this.alertMessage.width,this.alertMessage.y + this.alertMessage.width*0.1);
+			renderer.fillText(pheremoneGapAlertMessage, this.alertMessage.x - this.alertMessage.width,this.alertMessage.y + renderer.canvas.height*0.05);
 		}
 	}
 
@@ -498,23 +571,33 @@ function PheremoneGapManager()
 
 		for (let i = 0; i < this.arrayOfPheremoneGaps.length; i++)
 		{
-			
+			let currentActiveAnt = defenseGame.bigAntManager.currentActiveAnt;
 			if (!this.arrayOfPheremoneGaps[i].isFilledIn && 
-				this.arrayOfPheremoneGaps[i].x - (defenseGame.parentAntObject.bigAntX + defenseGame.parentAntObject.bigAntWidth) < 5 )
+				this.arrayOfPheremoneGaps[i].x - (currentActiveAnt.bigAntX + currentActiveAnt.bigAntWidth) < 5 )
 			{
 				
 				defenseGame.background.stuckOnPheremoneGap = true;
-				if (defenseGame.parentAntObject.hasBeenInfected)
+				if (defenseGame.bigAntManager.currentActiveAnt.hasBeenInfected)
 				{
-					defenseGame.parentAntObject.currentSpriteSheet = bigAntIdleInfectedSpriteSheet;
+					defenseGame.bigAntManager.currentActiveAnt.currentSpriteSheet = bigAntIdleInfectedSpriteSheet;
 				}
 				else
 				{
-					defenseGame.parentAntObject.currentSpriteSheet = bigAntIdleSpriteSheet;
+					defenseGame.bigAntManager.currentActiveAnt.currentSpriteSheet = bigAntIdleSpriteSheet;
 				}
-				defenseGame.NPCBigAnt1.currentSpriteSheet = bigAntIdleSpriteSheet;
-				defenseGame.NPCBigAnt2.currentSpriteSheet = bigAntIdleSpriteSheet;
-				defenseGame.NPCBigAntNegative1.currentSpriteSheet = bigAntIdleSpriteSheet;
+				for (let i = 0; i < defenseGame.bigAntManager.arrayOfBigAnts.length; i++)
+				{
+					if (defenseGame.bigAntManager.arrayOfBigAnts[i] === defenseGame.bigAntManager.currentActiveAnt)
+					{
+						continue;
+					}
+					else
+					{
+						defenseGame.bigAntManager.arrayOfBigAnts[i].currentSpriteSheet = bigAntIdleSpriteSheet;
+					}
+					defenseGame.NPCBigAnt2.currentSpriteSheet = bigAntIdleSpriteSheet;
+				}
+				
 				defenseGame.flyManager.toggleSwarm();
 				defenseGame.background.flashAlertInterval.start();
 				if (defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.paused)
@@ -644,14 +727,14 @@ function defenseGameFullScreenButton()
 
 	this.toggle = function()
 	{
-		console.log('fullScreenActive: ' + fullScreenActive);
+		
 		if (fullScreenActive === false)
 		{
 			enableFullScreen(canvas);
 		}
 		else if (fullScreenActive === true)
 		{
-			console.log('inside fullScreenActive is true check');
+			
 			disableFullscreen(canvas);
 		}
 	}

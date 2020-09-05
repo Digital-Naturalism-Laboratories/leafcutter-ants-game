@@ -1,4 +1,5 @@
 
+totalImagesToLoad = 0;
 imagesLoadingLeft = 0;
 class ImageObject
 {
@@ -8,6 +9,9 @@ class ImageObject
         else this.image = img;
 
         imagesLoadingLeft++;
+
+        if(imagesLoadingLeft > totalImagesToLoad)
+            totalImagesToLoad = imagesLoadingLeft;
         
         if(typeof img == "undefined")
         {
@@ -107,6 +111,9 @@ class Sprite
 
     draw()
     {
+        if (this.imageObject === undefined)
+            return;
+
         var img = this.imageObject.image;
         var pos = this.transform.position;
 
@@ -117,6 +124,9 @@ class Sprite
 
     drawSc()
     {
+        if (this.imageObject === undefined)
+            return;
+
         var img = this.imageObject.image;
         var pos = this.transform.position;
         var scale = this.transform.scale;
@@ -128,6 +138,9 @@ class Sprite
 
     drawScIn(inPos, inSize)
     {
+        if (this.imageObject === undefined)
+            return;
+
         var img = this.imageObject.image;
         var pos = this.transform.position;
         var scale = this.transform.scale;
@@ -140,6 +153,9 @@ class Sprite
 
     drawRot()
     {
+        if (this.imageObject === undefined)
+            return;
+
         var img = this.imageObject.image;
         var pos = this.transform.position;
         var ori = this.transform.origin;
@@ -159,6 +175,9 @@ class Sprite
 
     drawScRot()
     {
+        if (this.imageObject === undefined)
+            return;
+        
         var img = this.imageObject.image;
         var pos = this.transform.position;
         var scale = this.transform.scale;
@@ -179,6 +198,9 @@ class Sprite
 
     drawScRotIn(inPos, inSize)
     {
+        if (this.imageObject === undefined)
+            return;
+
         var img = this.imageObject.image;
         var pos = this.transform.position;
         var scale = this.transform.scale;

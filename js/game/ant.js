@@ -66,11 +66,11 @@ class Ant
         this.timedJawMinRadius = 40 * pixelSize;
         this.timedJawMaxRadius = 80 * pixelSize;
         this.timedJawRadius = this.timedJawMaxRadius;
-        this.timedJawSpeedFactorDefault = 0.075;
-        this.timedJawSpeedFactorMax = 0.1;
+        this.timedJawSpeedFactorDefault = 0.08;
+        this.timedJawSpeedFactorMax = 0.15;
         this.timedJawSpeedFactorMin = 0.05;
         this.timedJawSpeedFactor = this.timedJawSpeedFactorDefault;
-        this.timedJawSpeedFactorStep = 0.005;
+        this.timedJawSpeedFactorStep = 0.01;
         this.timedJawCutSpeedBonus = 0;
         this.timedJawCutSpeedBonusFactor = 0.03;
         this.timedJawCutTimeBonus = 0;
@@ -112,9 +112,52 @@ class Ant
         }
     }
 
+    resize()
+    {
+        this.bodySprite.transform.position = resizeVec2(this.bodySprite.transform.position);
+        this.bodySprite.transform.scale = vec2(pixelSize/2, pixelSize/2);
+
+        for(let i = 0; i < 12; i++)
+        {
+            this.cutLeaves[i].transform.scale = vec2(pixelSize*2, pixelSize*2);
+        }
+
+        this.headSprite.transform.position = vec2(475 * pixelSize, 360 * pixelSize);
+        this.headSprite.transform.scale = vec2(pixelSize*1.2, pixelSize*1.2);
+
+        this.headLeadJawSprite.transform.position = vec2(425 * pixelSize, 450 * pixelSize);
+        this.headLeadJawSprite.transform.scale = vec2(pixelSize*1.2, pixelSize*1.2)
+
+        this.headCutJawSprite.transform.position = vec2(505 * pixelSize, 450 * pixelSize);
+        this.headCutJawSprite.transform.scale = vec2(pixelSize*1.2, pixelSize*1.2);
+
+        this.leadingJawControlPos = vec2(400 * pixelSize, 440 * pixelSize);
+        this.cuttingJawControlPos = vec2(530 * pixelSize, 440 * pixelSize);
+
+        if(typeof this.cutPointLines != "undefined")
+        {
+            for(let i = 0; i < this.cutPointLines.length; i++)
+            {
+                this.cutPointLines[i] = resizeVec2(this.cutPointLines[i]);
+            }
+        }
+
+        this.destinationPoint = vec2(60 * pixelSize, 360 * pixelSize);
+        if(typeof this.destinationPoints != "undefined")
+        {
+            for(let i = 0; i < this.destinationPoints.length; i++)
+            {
+                this.destinationPoints[i] = resizeVec2(this.destinationPoints[i]);
+            }
+        }
+
+        this.timedJawMinRadius = 40 * pixelSize;
+        this.timedJawMaxRadius = 80 * pixelSize;
+        this.timedJawRadius = this.timedJawMaxRadius;
+    }
+
     update(deltaTime)
     {
-
         if(!this.disabled)
         {
             if(!this.rotationMode && (this.pointIndex > -1 || this.forcedDestination)
@@ -189,24 +232,9 @@ class Ant
 
     drawLeafCuttingLines()
     {
-        if(isFirefox)
+        for(let i = 0; i < this.cutPointLines.length-1; i++)
         {
-            for(let i = 0; i < this.cutPointLines.length-1; i++)
-            {
-                drawLine(renderer, this.cutPointLines[i], this.cutPointLines[i+1], "#000000");
-            }
-        }
-        else
-        {
-            var bgValueBorder = 100;
-            for(let i = 0; i < this.cutPointLines.length-1; i++)
-            {
-                var pixelData1 = renderer.getImageData(this.cutPointLines[i].x, this.cutPointLines[i].y, 1, 1).data;
-                var pixelData2 = renderer.getImageData(this.cutPointLines[i+1].x, this.cutPointLines[i+1].y, 1, 1).data;
-                if((pixelData1[0] >= bgValueBorder || pixelData1[1] >= bgValueBorder || pixelData1[2] >= bgValueBorder)
-                || (pixelData2[0] >= bgValueBorder || pixelData2[1] >= bgValueBorder || pixelData2[2] >= bgValueBorder))
-                    drawLine(renderer, this.cutPointLines[i], this.cutPointLines[i+1], "#000000");
-            }
+            drawLine(renderer, this.cutPointLines[i], this.cutPointLines[i+1], "#000000");
         }
     }
 
@@ -272,9 +300,12 @@ class Ant
             this.headLeadJawSprite.transform.position = tempPos;
             renderer.globalAlpha = 1;
             
-            var redColor = Math.floor(((this.timedJawRadius - this.timedJawMinRadius)*4.0)/200.0) * 200;
-            var greenColor = Math.floor(((this.timedJawMaxRadius - this.timedJawRadius)*4.0)/200.0) * 200;
-            if(redColor <= 0 && greenColor <= 0) { redColor = greenColor = 127 }
+            var redColor = Math.floor((this.timedJawRadius - this.timedJawMinRadius)*4.0);
+            var greenColor = Math.floor((this.timedJawMaxRadius - this.timedJawRadius)*4.0);
+            //if(redColor > 100 && (greenColor > 100 || greenColor < 0)) { greenColor = 0; }
+            //if(redColor <= 0 && greenColor <= 0) { redColor = greenColor = 127 }
+            if(redColor > 150) { redColor = 255; greenColor = 0; }
+            else if(greenColor > 80) { greenColor = 255; redColor = 0; }
             drawCircle(renderer, this.isCuttingJawLed ? this.cuttingJawControlPos : this.leadingJawControlPos,
                 this.timedJawMinRadius, true, "#ffffff44", pixelSize);
             drawCircle(renderer, this.isCuttingJawLed ? this.cuttingJawControlPos : this.leadingJawControlPos,

@@ -204,7 +204,7 @@ function ParentAntObject()
 		
 		this.drawFungusSpores();
 		this.drawSmallAnt();
-		this.infectionAlertMessage.draw();
+		//this.infectionAlertMessage.draw();
 
 		if (defenseGame.debugOn)
 		{
@@ -226,34 +226,30 @@ function ParentAntObject()
 			renderer.lineWidth = 5;
 			renderer.strokeRect(this.fungusTangleX,this.fungusTangleY, this.fungusTangleWidth,this.fungusTangleHeight);
 
-			renderer.moveTo(this.leafPolygonFungusBorderPoints[0].x,this.leafPolygonFungusBorderPoints[0].y);
-			for (let i = 1; i < this.leafPolygonFungusBorderPoints.length; i++)
-			{
-				
-				
-				renderer.fillStyle = 'black';
-				renderer.fillRect(this.leafPolygonFungusBorderPoints[i].x,this.leafPolygonFungusBorderPoints[i].y, 5,5);
-				renderer.font = '20px Helvetica';
-				renderer.fillText(this.leafPolygonFungusBorderPoints[i].name, this.leafPolygonFungusBorderPoints[i].x,this.leafPolygonFungusBorderPoints[i].y);
-
-				renderer.lineTo(this.leafPolygonFungusBorderPoints[i].x,this.leafPolygonFungusBorderPoints[i].y);
-			}
-			renderer.strokeStyle = 'white';
-			renderer.stroke();
-
-			// renderer.moveTo(this.leafPolygonWalkingBorderPoints[0].x,this.leafPolygonWalkingBorderPoints[0].y);
-			// for (let i = 1; i < this.leafPolygonWalkingBorderPoints.length; i++)
+			// renderer.moveTo(this.leafPolygonFungusBorderPoints[0].x,this.leafPolygonFungusBorderPoints[0].y);
+			// for (let i = 1; i < this.leafPolygonFungusBorderPoints.length; i++)
 			// {
 				
-			// 	renderer.fillStyle = 'lawngreen';
-			// 	renderer.fillRect(this.leafPolygonWalkingBorderPoints[i].x,this.leafPolygonWalkingBorderPoints[i].y, 5,5);
+				
+			// 	renderer.fillStyle = 'black';
+			// 	renderer.fillRect(this.leafPolygonFungusBorderPoints[i].x,this.leafPolygonFungusBorderPoints[i].y, 5,5);
 			// 	renderer.font = '20px Helvetica';
-			// 	renderer.fillText(this.leafPolygonWalkingBorderPoints[i].name, this.leafPolygonWalkingBorderPoints[i].x,this.leafPolygonWalkingBorderPoints[i].y);
+			// 	renderer.fillText(this.leafPolygonFungusBorderPoints[i].name, this.leafPolygonFungusBorderPoints[i].x,this.leafPolygonFungusBorderPoints[i].y);
 
-			// 	renderer.lineTo(this.leafPolygonWalkingBorderPoints[i].x,this.leafPolygonWalkingBorderPoints[i].y);
+			// 	renderer.lineTo(this.leafPolygonFungusBorderPoints[i].x,this.leafPolygonFungusBorderPoints[i].y);
 			// }
-			// renderer.strokeStyle = 'green';
+			// renderer.strokeStyle = 'white';
 			// renderer.stroke();
+
+			
+			for (let i = 0; i < this.leafPolygonWalkingBorderLineSegments.length; i++)
+			{
+				renderer.strokeStyle = 'brown';
+				renderer.moveTo(this.leafPolygonWalkingBorderLineSegments[i].x1,this.leafPolygonWalkingBorderLineSegments[i].y1);
+				renderer.lineTo(this.leafPolygonWalkingBorderLineSegments[i].x2,this.leafPolygonWalkingBorderLineSegments[i].y2);
+				renderer.stroke();
+			}
+			renderer.fillText('WALKING POLYGON FOR PARENT ANT', this.bigAntX,this.bigAntY + this.bigAntHeight/2);
 		}
 	}
 
@@ -798,6 +794,11 @@ function ParentAntObject()
 	this.touchInsideFungusTangle = false;
 	this.handleTouchstart = function()
 	{
+		if (this.controlStatus !== 'active')
+		{
+			return;
+		}
+
 		this.currentMovementTargetFromInput = vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY);
 		if (this.currentMovementTargetFromInput.x > this.fungusTangleX && 
 			this.currentMovementTargetFromInput.x < this.fungusTangleX + this.fungusTangleWidth &&
@@ -886,6 +887,11 @@ function ParentAntObject()
 	this.clickInsideFungusTangle = false;
 	this.handleMouseDown = function()
 	{
+		if (this.controlStatus !== 'active')
+		{
+			return;
+		}
+
 		this.currentMovementTargetFromInput = vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY);
 		if (this.currentMovementTargetFromInput.x > this.fungusTangleX && 
 			this.currentMovementTargetFromInput.x < this.fungusTangleX + this.fungusTangleWidth &&
@@ -979,57 +985,61 @@ function ParentAntObject()
 			this.moveSmallAnt();
 			this.detectFungusSporeCollisions();
 		
-		
-
 		if (defenseGame.transitioningToUninfectedAnt)
 		{
-			this.bigAntX += renderer.canvas.width*0.002;
-			this.leafX += renderer.canvas.width*0.002;
-			this.headTarget.x += renderer.canvas.width*0.002;
-			this.fungusTangleX += renderer.canvas.width*0.002;
+			this.bigAntX += renderer.canvas.width*0.004;
+			this.leafX += renderer.canvas.width*0.004;
+			this.headTarget.x += renderer.canvas.width*0.004;
+			this.fungusTangleX += renderer.canvas.width*0.004;
 			
 			for (let i = 0; i < this.arrayOfFungusSpores.length; i++)
 			{
-				this.arrayOfFungusSpores[i].x += renderer.canvas.width*0.002;
+				this.arrayOfFungusSpores[i].x += renderer.canvas.width*0.004;
 			}
 
 			if (this.currentSmallAntDirection === 'down')
 			{
-				this.smallAntX -= renderer.canvas.width*0.002;
+				this.smallAntX -= renderer.canvas.width*0.004;
 			}
 			else if (this.currentSmallAntDirection === 'up')
 			{
-				this.smallAntX += renderer.canvas.width*0.002;
+				this.smallAntX += renderer.canvas.width*0.004;
 			}
 			else if (this.currentSmallAntDirection === 'right')
 			{
-				this.smallAntY -= renderer.canvas.width*0.002;
+				this.smallAntY -= renderer.canvas.width*0.004;
 			}
 			else if (this.currentSmallAntDirection === 'left')
 			{
-				this.smallAntY += renderer.canvas.width*0.002;
+				this.smallAntY += renderer.canvas.width*0.004;
 			}
 			else if (this.currentSmallAntDirection === 'upRight')
 			{
-				this.smallAntX += renderer.canvas.width*0.002;
-				this.smallAntY -= renderer.canvas.width*0.002;
+				this.smallAntX += renderer.canvas.width*0.004;
+				this.smallAntY -= renderer.canvas.width*0.004;
 			}
 			else if (this.currentSmallAntDirection === 'upLeft')
 			{
-				this.smallAntX += renderer.canvas.width*0.002;
-				this.smallAntY += renderer.canvas.width*0.002;
+				this.smallAntX += renderer.canvas.width*0.004;
+				this.smallAntY += renderer.canvas.width*0.004;
 			}
 			else if (this.currentSmallAntDirection === 'downRight')
 			{
-				this.smallAntX -= renderer.canvas.width*0.002;
-				this.smallAntY -= renderer.canvas.width*0.002;
+				this.smallAntX -= renderer.canvas.width*0.004;
+				this.smallAntY -= renderer.canvas.width*0.004;
 			}
 			else if (this.currentSmallAntDirection === 'downLeft')
 			{
-				this.smallAntX -= renderer.canvas.width*0.002;
-				this.smallAntY += renderer.canvas.width*0.002;
+				this.smallAntX -= renderer.canvas.width*0.004;
+				this.smallAntY += renderer.canvas.width*0.004;
 			}
 			
+			for (let i = 0; i < this.leafPolygonWalkingBorderLineSegments.length; i++)
+			{
+				this.leafPolygonWalkingBorderLineSegments[i].x1 += renderer.canvas.width*0.004;
+				this.leafPolygonWalkingBorderLineSegments[i].x2 += renderer.canvas.width*0.004;
+			}
+
 		}
 	}
 
@@ -1037,7 +1047,7 @@ function ParentAntObject()
 	{
 		this.initializeLineSegments();
 		this.initializeArrayOfFungusSpores();
-		this.infectionAlertMessage.initialize();
+		
 		
 		var _this = this;
 		window.parentAntAnimationInterval = 
@@ -1050,58 +1060,61 @@ function ParentAntObject()
 	}
 
 	this.headTarget = new Target('head target', this.bigAntX + this.bigAntWidth*0.65 + this.bigAntWidth*0.1,this.bigAntY + this.bigAntHeight*0.3 + this.bigAntHeight*0.1);
+	
+}
 
-	this.infectionAlertMessage = 
-	{
-		name: 'infection alert message',
-		x: renderer.canvas.width * 0.615,
-		y: renderer.canvas.height * 0.665,
-		width: undefined,
-		infectionMessageShouldBeVisible: false,
-		fontSize: 45, 
+let infectionAlertString = string_ALERT_PHORID_FLY_INFECTION[currentLanguage];
 
-		initialize: function()
+function InfectionAlertMessage()
+{
+	this.name = 'infection alert message';
+	this.x = renderer.canvas.width * 0.615;
+	this.y = renderer.canvas.height * 0.665;
+	this.width = undefined;
+	this.shouldBeVisible = false;
+	this.fontSize = 45; 
+
+	this.initialize = function()
 		{
 			this.width = renderer.measureText(infectionAlertString).width;
-		},
+		}
 
-		draw: function() 
+	this.draw = function() 
 		{
-			if (this.infectionMessageShouldBeVisible)
+			if (this.shouldBeVisible)
 			{
+			
 				renderer.fillStyle = 'DarkGoldenRod';
 				renderer.fillRect(0,this.y, renderer.canvas.width,this.fontSize);
 
 				renderer.fillStyle = 'red';
 				renderer.font = '36px SmallBoldPixel';
-				renderer.fillText(infectionAlertString, renderer.canvas.width/2 - this.width/2,this.y + this.fontSize*0.75);
+				renderer.fillText(infectionAlertString, renderer.canvas.width/2 - this.width*0.75,this.y + this.fontSize*0.75);
 			}
-		},
+		}
 
-		toggleVisibility: function()
+	this.toggleVisibility = function()
 		{
 			
-			if (defenseGame.parentAntObject.infectionAlertMessage.infectionMessageShouldBeVisible === false)
+			if (this.shouldBeVisible === false)
 			{
-				defenseGame.parentAntObject.infectionAlertMessage.infectionMessageShouldBeVisible = true;
+				this.shouldBeVisible = true;
 			}
 			else 
 			{
-				defenseGame.parentAntObject.infectionAlertMessage.infectionMessageShouldBeVisible = false;
+				this.shouldBeVisible = false;
 			}
 			
 		}
-	}
-	
+
 }
-let infectionAlertString = string_ALERT_PHORID_FLY_INFECTION[currentLanguage];
 
 function Target(name, x,y)
 {
 	this.name = name;
 	this.x = x;
 	this.y = y;
-	this.canBeTargeted = true;
+	
 }
 
 function FungusSpore(x,y)
@@ -1116,4 +1129,45 @@ function FungusSpore(x,y)
 	{
 		renderer.drawImage(this.image, this.x,this.y, this.width,this.height);
 	}
+}
+
+function BigAntManager()
+{
+	this.arrayOfBigAnts = [];
+	this.currentIndex = 0;
+	this.currentActiveAnt = defenseGame.parentAntObject;
+
+	this.updateCurrentActiveAnt = function()
+	{
+		this.currentActiveAnt.controlStatus = 'inactive';
+		this.currentIndex++;
+		this.currentActiveAnt = this.arrayOfBigAnts[this.currentIndex];
+		this.currentActiveAnt.controlStatus = 'active';
+		
+	}
+
+	this.changeToIdleSpriteSheets = function()
+	{
+		for (let i = 0; i < this.arrayOfBigAnts.length; i++)
+		{
+			this.arrayOfBigAnts[i].currentSpriteSheet = bigAntIdleSpriteSheet;
+		}
+	}
+
+	this.updateBigAnts = function()
+	{
+		for (let i = 0; i < this.arrayOfBigAnts.length; i++)
+		{
+			this.arrayOfBigAnts[i].update();
+		}
+	}
+
+	this.drawBigAnts = function()
+	{
+		for (let i = 0; i < this.arrayOfBigAnts.length; i++)
+		{
+			this.arrayOfBigAnts[i].draw();
+		}
+	}
+
 }

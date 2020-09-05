@@ -35,6 +35,9 @@ let bigAntWalkingInfectedSpriteSheet = document.createElement('img');
 let bigAntIdleSpriteSheet = document.createElement('img');
 let bigAntIdleInfectedSpriteSheet = document.createElement('img');
 
+let bigAntWalkingSpriteSheetFlipped = document.createElement('img');
+
+
 //let eggImage = document.createElement('img');
 
 let leafImage = document.createElement('img');
@@ -88,6 +91,8 @@ function loadDefenseGameImages()
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntWalkingInfectedSpriteSheet, theFile: 'images/flyDefense/BigAntInfectedWalking/bigAntInfectedWalkingSpriteSheet.png'});
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntIdleSpriteSheet, theFile: 'images/flyDefense/BigAntIdle/bigAntIdleSpriteSheet.png'});
 	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntIdleInfectedSpriteSheet, theFile: 'images/flyDefense/BigAntIdle/bigAntIdleInfectedSpriteSheet.png'});
+
+	arrayOfDefenseGameImagesToLoad.push({imageObjectBinding: bigAntWalkingSpriteSheetFlipped, theFile: 'images/flyDefense/BigAntWalking/bigAntWalkingSpriteSheetFlipped.png'});
 
 
 	numberOfDefenseGameImagesToLoad = arrayOfDefenseGameImagesToLoad.length;
