@@ -30,23 +30,28 @@ class ColonyGridNode {
         return this.isWalkable;
     }
 
+    resize = function () {
+        this.pixelCoord = resizeVec2(this.pixelCoord);
+
+    }
+
     draw = function () {
 
         if (this.isWalkable && this.distanceFromFungus < colony.population || colonyGridTileMap[this.gridCoord.row][this.gridCoord.col] >= 90) {
             this.isTunneled = true;
         }
-        
-        if (this.isTunneled){
+
+        if (this.isTunneled) {
             renderer.drawImage(colonyTiles[colonyGridTileMap[this.gridCoord.row][this.gridCoord.col]], this.pixelCoord.x - (GRID_NODE_SIZE * pixelSize / 2), this.pixelCoord.y - (GRID_NODE_SIZE * pixelSize / 2), GRID_NODE_SIZE * pixelSize, GRID_NODE_SIZE * pixelSize);
         }
-        
+
         renderer.font = (14 * pixelSize).toString() + "px SmallBoldPixel";
         renderer.fillStyle = "white";
         renderer.textAlign = "center";
 
         //write distance to fungus value on each tile for troublshooting
         //if (this.distanceFromFungus != null) {
-            //renderer.fillText(Math.floor(this.distanceFromFungus), this.pixelCoord.x, this.pixelCoord.y);
+        //renderer.fillText(Math.floor(this.distanceFromFungus), this.pixelCoord.x, this.pixelCoord.y);
         //}
 
     }

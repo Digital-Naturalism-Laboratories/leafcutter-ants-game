@@ -79,28 +79,28 @@ class FlyingQueen {
             if (this.isKnockedBack) {
 
                 this.knockbackTimerCurrent++;
-                this.x += this.horizontalSpeed * -6 ;
-                this.y += this.verticalSpeed * -4;
-                if (this.knockbackTimerCurrent >= this.knockbackTimer){
+                this.x += this.horizontalSpeed * pixelSize * -6;
+                this.y += this.verticalSpeed * pixelSize * -4;
+                if (this.knockbackTimerCurrent >= this.knockbackTimer) {
                     this.isKnockedBack = false;
                     this.knockbackTimerCurrent = 0;
                 }
 
             } else if (isTouched) {
                 if (this.x < lastTouchPos.x) {
-                    this.x += this.horizontalSpeed;
+                    this.x += this.horizontalSpeed * pixelSize;
                 }
 
                 if (this.x > lastTouchPos.x) {
-                    this.x -= this.horizontalSpeed;
+                    this.x -= this.horizontalSpeed * pixelSize;
                 }
 
                 if (this.y < lastTouchPos.y) {
-                    this.y += this.verticalSpeed = 3;;
+                    this.y += this.verticalSpeed * pixelSize;
                 }
 
                 if (this.y > lastTouchPos.y) {
-                    this.y -= this.verticalSpeed;
+                    this.y -= this.verticalSpeed * pixelSize;
                 }
 
                 if (!flyingGameSFX[SFX_WINGS].isPlaying) {
@@ -110,21 +110,21 @@ class FlyingQueen {
             } else {
 
                 if (this.x < this.defaultPos.x) {
-                    this.x += this.horizontalSpeed;
+                    this.x += this.horizontalSpeed * pixelSize;
                 }
 
                 if (this.x > this.defaultPos.x) {
-                    this.x -= this.horizontalSpeed;
+                    this.x -= this.horizontalSpeed * pixelSize;
                 }
 
                 if (this.y < this.defaultPos.y) {
-                    this.y += this.verticalSpeed;
+                    this.y += this.verticalSpeed * pixelSize;
                 }
 
                 if (this.y > this.defaultPos.y) {
-                    this.y -= this.verticalSpeed;
+                    this.y -= this.verticalSpeed * pixelSize;
                 }
-                
+
                 flyingGameSFX[SFX_WINGS].pause();
             }
 
@@ -145,7 +145,7 @@ class FlyingQueen {
                     }
 
                     if (this.sprite.transform.position.y > 0) {
-                        this.sprite.transform.position.y -= this.verticalSpeed;
+                        this.sprite.transform.position.y -= this.verticalSpeed * pixelSize;
                     }
                     break;
                 case 'falling':
@@ -155,7 +155,7 @@ class FlyingQueen {
                     }
 
                     if (this.sprite.transform.position.y < gameHeight) {
-                        this.sprite.transform.position.y += this.verticalSpeed;
+                        this.sprite.transform.position.y += this.verticalSpeed * pixelSize;
                     }
                     break;
             }
@@ -164,8 +164,8 @@ class FlyingQueen {
                 this.horizontalSpeed = -this.horizontalSpeed;
             }
 
-            this.sprite.transform.position.x += this.horizontalSpeed;
-            this.matingSprite.transform.position.x += this.horizontalSpeed;
+            this.sprite.transform.position.x += this.horizontalSpeed * pixelSize;
+            this.matingSprite.transform.position.x += this.horizontalSpeed * pixelSize;
         }
 
     }
@@ -212,6 +212,27 @@ class FlyingQueen {
                     flyingGameSFX[SFX_COLLISION].play();
                 }
             }
+        }
+
+    }
+
+    resize() {
+
+        this.sprite.transform.position = resizeVec2(this.sprite.transform.position);
+        this.sprite.transform.scale = vec2(pixelSize / 3, pixelSize / 3);
+
+        this.matingSprite.transform.position = resizeVec2(this.sprite.transform.position);
+        this.matingSprite.transform.scale = vec2(pixelSize / 3, pixelSize / 3);
+
+        this.x /= prevGameWidth;
+        this.y /= prevGameHeight;
+
+        this.x *= gameWidth;
+        this.y *= gameHeight;
+
+        this.defaultPos = {
+            x: gameWidth / 2,
+            y: gameHeight / 2
         }
 
     }

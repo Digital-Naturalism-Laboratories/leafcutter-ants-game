@@ -38,7 +38,7 @@ class FlyingMale {
                 }
 
                 if (this.sprite.transform.position.y > 0) {
-                    this.sprite.transform.position.y -= this.verticalSpeed;
+                    this.sprite.transform.position.y -= this.verticalSpeed * pixelSize;
                 }
                 break;
             case 'falling':
@@ -50,7 +50,7 @@ class FlyingMale {
                 }
 
                 if (this.sprite.transform.position.y < gameHeight || this.hasMated) {
-                    this.sprite.transform.position.y += this.verticalSpeed;
+                    this.sprite.transform.position.y += this.verticalSpeed * pixelSize;
                 }
                 break;
         }
@@ -69,7 +69,7 @@ class FlyingMale {
             }
         }
 
-        this.sprite.transform.position.x += this.horizontalSpeed;
+        this.sprite.transform.position.x += this.horizontalSpeed * pixelSize;
 
         if (getDistBtwVec2(flyingQueen.sprite.transform.position, this.sprite.transform.position) < flyingQueen.collisionRadius + this.collisionRadius) {
             if (!flyingQueen.isMating && !this.hasMated) {
@@ -96,6 +96,19 @@ class FlyingMale {
         this.direction = 1;
         this.sprite.transform.position.x = flyingQueen.x;
         this.sprite.transform.position.y = flyingQueen.y;
+    }
+
+    resize() {
+
+        this.sprite.transform.position = resizeVec2(this.sprite.transform.position);
+        this.sprite.transform.scale = vec2(pixelSize / 3, pixelSize / 3);
+
+        this.x /= prevGameWidth;
+        this.y /= prevGameHeight;
+
+        this.x *= gameWidth;
+        this.y *= gameHeight;
+
     }
 
     draw() {

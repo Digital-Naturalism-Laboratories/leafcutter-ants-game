@@ -56,7 +56,7 @@ class ColonyWorkerAnt {
             this.sprite.transform.position.x = gameWidth - 10;
         }
 
-        this.sprite.transform.position.x += this.horizontalSpeed;
+        this.sprite.transform.position.x += this.horizontalSpeed * pixelSize;
 
         this.pixelCoord.x = this.sprite.transform.position.x;
         this.pixelCoord.y = this.sprite.transform.position.y;
@@ -66,6 +66,15 @@ class ColonyWorkerAnt {
         } else {
             this.mode = MODES.NO_LEAF;
         }
+
+    }
+
+    resize()
+    {
+ 
+        this.pixelCoord = resizeVec2(this.pixelCoord);
+        this.sprite.transform.position = resizeVec2(this.sprite.transform.position);
+        this.sprite.transform.scale = vec2(pixelSize * 0.4, pixelSize * 0.4);
 
     }
 

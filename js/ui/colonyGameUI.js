@@ -10,7 +10,6 @@ var colonyAnimationTimer = 0
 //Image variables
 var groundBG = document.createElement('img');
 var grassLayer = document.createElement('img');
-var fungusNest = document.createElement('img');
 var worker_right = document.createElement('img');
 var worker_with_minims = document.createElement('img');
 var top_mound = document.createElement('img');
@@ -100,6 +99,31 @@ function setupColonyGameUI() {
 
 }
 
+function colonyGameUIResize() {
+  queen.resize();
+  fungus.resize();
+
+  if (workers != "undefined") {
+    for (var i = 0; i < workers.length; i++) {
+      workers[i].resize();
+    }
+  }
+
+  if (colonyAnts != "undefined") {
+    for (var i = 0; i < colonyAnts.length; i++) {
+      colonyAnts[i].resize();
+    }
+  }
+
+  if (colonyGridNodes != "undefined") {
+    for (var i = 0; i < colonyGridNodes.length; i++) {
+        for (var j = 0; j < colonyGridNodes[i].length; j++){
+          colonyGridNodes[i][j].resize();
+        }
+    }
+  }
+}
+
 function animateSprite(sprite, frameLength, framerameCount) {
 
   var animationSprite = sprite;
@@ -156,7 +180,7 @@ function colonyGameUICustomDraw(deltaTime) {
 
   renderer.drawImage(groundBG, 0, -(groundBG.height * 0.35 * pixelSize), gameWidth, gameHeight * 0.95);
   renderer.drawImage(grassLayer, 0, -(groundBG.height * 0.20 * pixelSize), gameWidth, gameHeight * 0.35);
-  renderer.drawImage(top_mound, (GRID_NODE_SIZE * 18.4) * pixelSize, 5 * pixelSize, (top_mound.width / 2) * pixelSize, (top_mound.height / 2) * pixelSize);
+  renderer.drawImage(top_mound, gameWidth * 0.59, 5 * pixelSize, (top_mound.width / 2) * pixelSize, (top_mound.height / 2) * pixelSize);
 
   drawColonyTiles();
 
@@ -259,10 +283,6 @@ function loadImages() {
     {
       varName: grassLayer,
       fileName: "Backgrounds/grassLayer2.png"
-    },
-    {
-      varName: fungusNest,
-      fileName: "Fungus_Nest.png"
     },
     {
       varName: worker_right,

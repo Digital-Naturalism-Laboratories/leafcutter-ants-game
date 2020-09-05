@@ -27,6 +27,7 @@ function init()
     }
 
     pixelSize = sizeFactor / 500.0;
+    prevPixelSize = pixelSize;
 
     canvas.width = gameWidth;
     canvas.height = gameHeight;

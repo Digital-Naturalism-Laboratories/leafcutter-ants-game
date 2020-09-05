@@ -76,6 +76,16 @@ function setupFlightGameUI() {
 
 }
 
+function flightGameUIResize() {
+  flyingQueen.resize();
+  for (i = 0; i < flyingMaleCount; i++) {
+    flyingMales[i].resize();
+  }
+  for (i = 0; i < rivalQueenCount; i++) {
+    rivalQueens[i].resize();
+  }
+}
+
 function drawParallaxBackgrounds(deltaTime) {
 
   totalMilliseconds += deltaTime;

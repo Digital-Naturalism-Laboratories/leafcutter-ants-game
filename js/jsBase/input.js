@@ -3,11 +3,13 @@ var userInteracted = false;
 
 var prevGameWidth;
 var prevGameHeight;
+var prevPixelSize;
 
 function onResize(ev)
 {
     prevGameWidth = gameWidth;
     prevGameHeight = gameHeight;
+    prevPixelSize = pixelSize;
     
     gameWidth = window.innerWidth;
     gameHeight = window.innerHeight;
@@ -39,7 +41,9 @@ function onResize(ev)
     leafcuttingIntroUIResize();
     defenseGameIntroUIResize();
     flightGameIntroUIResize();
+    flightGameUIResize();
     colonyGameIntroUIResize();
+    colonyGameUIResize();
 }
 
 function resizeVec2(v)

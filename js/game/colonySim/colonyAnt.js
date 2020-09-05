@@ -32,10 +32,17 @@ class ColonyAnt {
 
         this.pixelCoord = pixelCoordAtCenterOfTileCoord(col, row);
 
+        this.prevPixelCoord = {
+            x: (this.pixelCoord.x / pixelSize) * prevPixelSize,
+            y: (this.pixelCoord.y / pixelSize) * prevPixelSize
+        }
+
+        this.lastValidPosition = this.pixelCoord;
+
         this.sprite = new Sprite(tr(vec2(this.pixelCoord.x, this.pixelCoord.y), vec2(pixelSize * 0.15, pixelSize * 0.15)), new ImageObject("images/Animations/Soldier_Topdown_Walk_Spritesheet.png", vec2(0, 0)));
 
-        this.speedX = (Math.random() - 0.5) * 3;
-        this.speedY = (Math.random() - 0.5) * 3;
+        this.speedX = (Math.random() - 0.5) * 2;
+        this.speedY = (Math.random() - 0.5) * 2;
         this.directionInRadians;
         this.currentFacing;
 
@@ -54,10 +61,15 @@ class ColonyAnt {
 
     update() {
 
+        this.prevPixelCoord = {
+            x: (this.pixelCoord.x / pixelSize) * prevPixelSize,
+            y: (this.pixelCoord.y / pixelSize) * prevPixelSize
+        }
+
         this.bounceOffWallTileAtPixelCoord(this.pixelCoord.x, this.pixelCoord.y);
 
-        this.pixelCoord.x += this.speedX;
-        this.pixelCoord.y += this.speedY;
+        this.pixelCoord.x += this.speedX * pixelSize;
+        this.pixelCoord.y += this.speedY * pixelSize;
 
         this.sprite.transform.position.x = this.pixelCoord.x;
         this.sprite.transform.position.y = this.pixelCoord.y;
@@ -67,30 +79,30 @@ class ColonyAnt {
 
         this.age = totalCycles - this.cycleBorn;
 
-        if (this.state != colonyAntStates.DEAD && this.state === colonyAntStates.BROOD){
+        if (this.state != colonyAntStates.DEAD && this.state === colonyAntStates.BROOD) {
 
             if (this.age >= this.pubertyAge && colony.colonyPubertyThresholdReached) {
                 this.state = colonyAntStates.MALE_REPRODUCTIVE;
-            } else if (this.age >= this.pubertyAge){
+            } else if (this.age >= this.pubertyAge) {
                 this.state = colonyAntStates.WORKER;
-            } 
-            
+            }
+
         }
 
-        if (this.age >= this.deathAge){
+        if (this.age >= this.deathAge) {
             this.killAnt();
         }
 
         this.updateEnergyLevel();
 
-        if (Math.abs(this.speedX) > Math.abs(this.speedY)){ //moving right or left
-            if (this.speedX >= 0){
+        if (Math.abs(this.speedX) > Math.abs(this.speedY)) { //moving right or left
+            if (this.speedX >= 0) {
                 this.currentFacing = FACING_RIGHT;
             } else {
                 this.currentFacing = FACING_LEFT;
             }
-        } else {//moving up or down
-            if (this.speedY >= 0){
+        } else { //moving up or down
+            if (this.speedY >= 0) {
                 this.currentFacing = FACING_DOWN;
             } else {
                 this.currentFacing = FACING_UP;
@@ -99,34 +111,42 @@ class ColonyAnt {
 
     }
 
-    killAnt(){
+    killAnt() {
         this.isAlive = false;
         this.state = colonyAntStates.DEAD;
     }
 
-    infectOtherAnts(){
+    infectOtherAnts() {
 
     }
 
-    updateEnergyLevel(){
-        if (colony.leaves <= 0){
+    updateEnergyLevel() {
+        if (colony.leaves <= 0) {
             this.energy -= (1 / 30);
         }
 
-        if (this.engery <= 0){
+        if (this.engery <= 0) {
             this.killAnt();
         }
     }
 
-    updateInfectionLevel(){
-        if (this.isInfected){
+    updateInfectionLevel() {
+        if (this.isInfected) {
             this.infectionTimer -= (1 / 30);
         }
 
-        if (this.infectionTimer <= 0){
+        if (this.infectionTimer <= 0) {
             this.killAnt();
             this.infectOtherAnts();
         }
+    }
+
+    resize() {
+
+        this.pixelCoord = resizeVec2(this.pixelCoord);
+        this.sprite.transform.position = resizeVec2(this.sprite.transform.position);
+        this.sprite.transform.scale = vec2(pixelSize * 0.15, pixelSize * 0.15);
+
     }
 
     draw() {
@@ -143,7 +163,7 @@ class ColonyAnt {
             y: (inSize.y * this.currentFacing)
         }
 
-        if (this.state != colonyAntStates.DEAD){
+        if (this.state != colonyAntStates.DEAD) {
             this.sprite.drawScIn(inPos, inSize);
         }
 
@@ -157,7 +177,7 @@ class ColonyAnt {
         }
 
         this.animationTimer++;
-        
+
     }
 
     bounceOffWallTileAtPixelCoord(pixelX, pixelY) {
@@ -170,23 +190,23 @@ class ColonyAnt {
         if (colonyGridTileMap[this.gridCoord.row][this.gridCoord.col] == COLONY_WALL ||
             colonyGridNodes[this.gridCoord.row][this.gridCoord.col].isTunneled === false) {
 
-            var prevX = this.pixelCoord.x - this.speedX;
-            var prevY = this.pixelCoord.y - this.speedY
-            var prevTileCol = colAtXCoord(prevX / pixelSize);
-            var prevTileRow = rowAtYCoord(prevY / pixelSize);
+            var prevX = this.prevPixelCoord.x - this.speedX;
+            var prevY = this.prevPixelCoord.y - this.speedY;
+            var prevTileCol = colAtXCoord(prevX / prevPixelSize);
+            var prevTileRow = rowAtYCoord(prevY / prevPixelSize);
 
             var bothTestsFailed = true;
 
             if (prevTileCol != this.gridCoord.col) {
-  
+
                 if (colonyGridTileMap[this.gridCoord.row][prevTileCol] != COLONY_WALL) {
                     this.speedX *= -1;
                     bothTestsFailed = false;
                 }
             }
 
-            if (prevTileRow != this.gridCoord.col) {
- 
+            if (prevTileRow != this.gridCoord.row) {
+
                 if (colonyGridTileMap[prevTileRow][this.gridCoord.col] != COLONY_WALL) {
                     this.speedY *= -1;
                     bothTestsFailed = false;
@@ -198,6 +218,17 @@ class ColonyAnt {
                 this.speedY *= -1;
             }
 
+            if (colonyGridTileMap[prevTileRow][prevTileCol] == COLONY_WALL ||
+                colonyGridNodes[prevTileRow][prevTileCol].isTunneled === false) {
+
+                //this.pixelCoord = this.lastValidPosition;
+                this.pixelCoord = pixelCoordAtCenterOfTileCoord(fungus_col, fungus_row);
+                //console.log("stuck");
+
+            }
+
+        } else {
+            this.lastValidPosition = this.pixelCoord;
         }
     }
 

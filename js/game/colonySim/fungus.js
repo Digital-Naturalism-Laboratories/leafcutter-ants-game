@@ -7,17 +7,27 @@ class Fungus {
         }
 
         this.pixelCoord = pixelCoordAtCenterOfTileCoord(col, row);
-        this.width = (fungusNest.width * 0.38) * pixelSize;
-        this.height = (fungusNest.height * 0.38) * pixelSize;
+
+        this.sprite = new Sprite(tr(vec2(this.pixelCoord.x, this.pixelCoord.y - 15), vec2(pixelSize * 0.3, pixelSize * 0.3)), new ImageObject("images/Fungus_Nest.png", vec2(0, 0)));
+       
     }
 
     update = function () {
         
     }
 
+    resize()
+    {
+ 
+        this.pixelCoord = resizeVec2(this.pixelCoord);
+        this.sprite.transform.position = resizeVec2(this.sprite.transform.position);
+        this.sprite.transform.scale = vec2(pixelSize * 0.3, pixelSize * 0.3);
+
+    }
+
     draw = function () {
 
-        renderer.drawImage(fungusNest, this.pixelCoord.x - (this.width / 2), this.pixelCoord.y - 35 * pixelSize, this.width, this.height);
+        this.sprite.drawSc();
         
     }
 

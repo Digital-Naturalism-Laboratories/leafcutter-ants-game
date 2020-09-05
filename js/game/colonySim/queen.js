@@ -46,6 +46,15 @@ class Queen {
 
     }
 
+    resize()
+    {
+ 
+        this.pixelCoord = resizeVec2(this.pixelCoord);
+        this.sprite.transform.position = resizeVec2(this.sprite.transform.position);
+        this.sprite.transform.scale = vec2(pixelSize * 0.3, pixelSize * 0.3);
+
+    }
+
     draw() {
 
         var inSize = {
