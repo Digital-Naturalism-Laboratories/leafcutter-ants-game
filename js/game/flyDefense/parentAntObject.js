@@ -1047,7 +1047,7 @@ function ParentAntObject()
 	{
 		this.initializeLineSegments();
 		this.initializeArrayOfFungusSpores();
-		this.infectionAlertMessage.initialize();
+		
 		
 		var _this = this;
 		window.parentAntAnimationInterval = 
@@ -1060,51 +1060,54 @@ function ParentAntObject()
 	}
 
 	this.headTarget = new Target('head target', this.bigAntX + this.bigAntWidth*0.65 + this.bigAntWidth*0.1,this.bigAntY + this.bigAntHeight*0.3 + this.bigAntHeight*0.1);
+	
+}
 
-	this.infectionAlertMessage = 
-	{
-		name: 'infection alert message',
-		x: renderer.canvas.width * 0.615,
-		y: renderer.canvas.height * 0.665,
-		width: undefined,
-		infectionMessageShouldBeVisible: false,
-		fontSize: 45, 
+let infectionAlertString = string_ALERT_PHORID_FLY_INFECTION[currentLanguage];
 
-		initialize: function()
+function InfectionAlertMessage()
+{
+	this.name = 'infection alert message';
+	this.x = renderer.canvas.width * 0.615;
+	this.y = renderer.canvas.height * 0.665;
+	this.width = undefined;
+	this.shouldBeVisible = false;
+	this.fontSize = 45; 
+
+	this.initialize = function()
 		{
 			this.width = renderer.measureText(infectionAlertString).width;
-		},
+		}
 
-		draw: function() 
+	this.draw = function() 
 		{
-			if (this.infectionMessageShouldBeVisible)
+			if (this.shouldBeVisible)
 			{
+			
 				renderer.fillStyle = 'DarkGoldenRod';
 				renderer.fillRect(0,this.y, renderer.canvas.width,this.fontSize);
 
 				renderer.fillStyle = 'red';
 				renderer.font = '36px SmallBoldPixel';
-				renderer.fillText(infectionAlertString, renderer.canvas.width/2 - this.width/2,this.y + this.fontSize*0.75);
+				renderer.fillText(infectionAlertString, renderer.canvas.width/2 - this.width*0.75,this.y + this.fontSize*0.75);
 			}
-		},
+		}
 
-		toggleVisibility: function()
+	this.toggleVisibility = function()
 		{
 			
-			if (defenseGame.parentAntObject.infectionAlertMessage.infectionMessageShouldBeVisible === false)
+			if (this.shouldBeVisible === false)
 			{
-				defenseGame.parentAntObject.infectionAlertMessage.infectionMessageShouldBeVisible = true;
+				this.shouldBeVisible = true;
 			}
 			else 
 			{
-				defenseGame.parentAntObject.infectionAlertMessage.infectionMessageShouldBeVisible = false;
+				this.shouldBeVisible = false;
 			}
 			
 		}
-	}
-	
+
 }
-let infectionAlertString = string_ALERT_PHORID_FLY_INFECTION[currentLanguage];
 
 function Target(name, x,y)
 {
@@ -1140,7 +1143,7 @@ function BigAntManager()
 		this.currentIndex++;
 		this.currentActiveAnt = this.arrayOfBigAnts[this.currentIndex];
 		this.currentActiveAnt.controlStatus = 'active';
-		console.log('this.currentActiveAnt.name: ' + this.currentActiveAnt.name);
+		
 	}
 
 	this.changeToIdleSpriteSheets = function()

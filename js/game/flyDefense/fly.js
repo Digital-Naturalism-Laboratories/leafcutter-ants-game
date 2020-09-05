@@ -184,7 +184,7 @@ function Fly(name,status)
 						{
 							if (this.name === 'testFly4' && defenseGame.bigAntManager.currentActiveAnt.name === 1)
 							{
-								console.log('anything');
+								
 							}
 						    defenseGame.audioManager.sfxManager.playFlyChasedSound();
 						    this.status = 'swatted';
@@ -214,7 +214,7 @@ function Fly(name,status)
 							{
 								defenseGame.bigAntManager.currentActiveAnt.currentSpriteSheet = bigAntIdleInfectedSpriteSheet;
 							}
-							console.log('defenseGame.bigAntManager.currentActiveAnt.name: ' + defenseGame.bigAntManager.currentActiveAnt.name);
+							
 							window.parentAntSpriteSheetToggleInterval = 
 							setInterval(function() {defenseGame.bigAntManager.arrayOfBigAnts[defenseGame.bigAntManager.currentIndex - 1].toggleSpriteSheet()},200);
 
@@ -226,10 +226,15 @@ function Fly(name,status)
 						defenseGame.background.calculateSlowDownRateFromInfections();
 						defenseGame.eggHasBeenPlanted = true;
 						defenseGame.audioManager.sfxManager.antInfectionSound.play();
-						if (!defenseGame.bigAntManager.currentActiveAnt.infectionAlertMessage.infectionMessageShouldBeVisible)
+						if (!defenseGame.infectionAlertMessage.shouldBeVisible)
 						{
-							defenseGame.bigAntManager.currentActiveAnt.infectionAlertMessage.toggleVisibility();
-							setTimeout(defenseGame.bigAntManager.currentActiveAnt.infectionAlertMessage.toggleVisibility,2000);
+							defenseGame.infectionAlertMessage.toggleVisibility();
+							setTimeout(
+								function() 
+								{
+									defenseGame.infectionAlertMessage.toggleVisibility();
+									//console.log('defenseGame.bigAntManager.currentActiveAnt: ' + defenseGame.bigAntManager.currentActiveAnt);
+								},2000);
 						}
 						
 						defenseGame.transitioningToUninfectedAnt = true;

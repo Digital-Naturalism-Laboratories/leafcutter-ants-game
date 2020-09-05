@@ -34,7 +34,7 @@ function BackgroundSoldier()
 		{
 			this.x = getRandomIntInclusive(renderer.canvas.width + this.width, renderer.canvas.width*2);
 		}
-		console.log('this.x: ' + this.x);
+		
 	}
 
 	this.update = function()

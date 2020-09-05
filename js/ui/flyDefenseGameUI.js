@@ -115,6 +115,9 @@ defenseGame.initialize = function()
 
 	this.transitioningToUninfectedAnt = false;
 
+	this.infectionAlertMessage = new InfectionAlertMessage();
+	this.infectionAlertMessage.initialize();
+
 	this.events = function()
 	{
 		// console.log('inside custom events');
@@ -188,13 +191,8 @@ defenseGame.initialize = function()
 			
 			this.flyManager.drawFlies();
 
-			if (defenseGame.bigAntManager.currentIndex !== 0)
-			{
-				if (defenseGame.bigAntManager.arrayOfBigAnts[defenseGame.bigAntManager.currentIndex - 1].infectionAlertMessage.infectionMessageShouldBeVisible)
-				{
-					defenseGame.bigAntManager.arrayOfBigAnts[defenseGame.bigAntManager.currentIndex - 1].infectionAlertMessage.draw();
-				}
-			}
+			console.log('defenseGame.infectionAlertMessage.shouldBeVisible:  ' + defenseGame.infectionAlertMessage.shouldBeVisible);
+			
 			
 
 			this.background.fungusTallyDiv.draw();
@@ -232,7 +230,11 @@ defenseGame.initialize = function()
 			this.muteButton.draw();
 			this.background.exitButton.draw();
 			//this.fullScreenButton.draw();
-		
+			if (defenseGame.infectionAlertMessage.shouldBeVisible)
+			{
+
+				defenseGame.infectionAlertMessage.draw();
+			}
 	}//end of draw
 
 	this.passStats = function()

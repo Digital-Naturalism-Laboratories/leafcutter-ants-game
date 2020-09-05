@@ -405,7 +405,7 @@ function PheremoneGap(x)
 			renderer.fillStyle = 'white';
 			renderer.font = '36px SmallBoldPixel';
 			this.alertMessage.width = renderer.measureText(pheremoneGapAlertMessage).width;
-			renderer.fillText(pheremoneGapAlertMessage, this.alertMessage.x - this.alertMessage.width,this.alertMessage.y + this.alertMessage.width*0.1);
+			renderer.fillText(pheremoneGapAlertMessage, this.alertMessage.x - this.alertMessage.width,this.alertMessage.y + renderer.canvas.height*0.05);
 		}
 	}
 
@@ -650,14 +650,14 @@ function defenseGameFullScreenButton()
 
 	this.toggle = function()
 	{
-		console.log('fullScreenActive: ' + fullScreenActive);
+		
 		if (fullScreenActive === false)
 		{
 			enableFullScreen(canvas);
 		}
 		else if (fullScreenActive === true)
 		{
-			console.log('inside fullScreenActive is true check');
+			
 			disableFullscreen(canvas);
 		}
 	}

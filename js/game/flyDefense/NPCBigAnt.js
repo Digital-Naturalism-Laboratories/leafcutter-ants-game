@@ -448,7 +448,7 @@ function NPCBigAnt(x,name)
 								this.mouthColliderBoxY = this.smallAntPreviousMouthColliderY;	
 								this.smallAntMidPoint.x = this.smallAntPreviousX + this.smallAntWidth/2;
 								this.smallAntMidPoint.y = this.smallAntPreviousY + this.smallAntHeight/2;	
-								console.log('turning off should be movingleftorright from leaf boundary detection inside move small ant function');
+								
 	
 								this.shouldBeMovingLeftOrRight = false;
 								this.shouldBeMovingUpOrDown = false;
@@ -485,7 +485,6 @@ function NPCBigAnt(x,name)
 							this.currentMovementTargetFromInput.x = undefined;
 							this.currentMovementTargetFromInput.y = undefined;
 
-							console.log('turning off should be movingleftorright from leaf boundary detection inside move small ant function, moving left');
 
 							this.shouldBeMovingLeftOrRight = false;
 							this.shouldBeMovingUpOrDown = false;
@@ -521,7 +520,6 @@ function NPCBigAnt(x,name)
 								this.currentMovementTargetFromInput.x = undefined;
 								this.currentMovementTargetFromInput.y = undefined;
 
-								console.log('turning off should be movingleftorright from leaf boundary detection inside move small ant function, moving down');
 
 								this.shouldBeMovingUpOrDown = false;
 								this.shouldBeMovingLeftOrRight = false;
@@ -556,7 +554,6 @@ function NPCBigAnt(x,name)
 								this.currentMovementTargetFromInput.x = undefined;
 								this.currentMovementTargetFromInput.y = undefined;
 
-								console.log('turning off should be movingleftorright from leaf boundary detection inside move small ant function, moving up');
 
 								this.shouldBeMovingUpOrDown = false;
 								this.shouldBeMovingLeftOrRight = false;
@@ -826,8 +823,7 @@ function NPCBigAnt(x,name)
 		}
 
 		this.currentMovementTargetFromInput = vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY);
-		console.log('this.currentMovementTargetFromInput.x: ' + this.currentMovementTargetFromInput.x);
-		console.log('this.currentMovementTargetFromInput.y: ' + this.currentMovementTargetFromInput.y);
+		
 
 		if (this.currentMovementTargetFromInput.x > this.fungusTangleX && 
 			this.currentMovementTargetFromInput.x < this.fungusTangleX + this.fungusTangleWidth &&
@@ -1033,6 +1029,7 @@ function NPCBigAnt(x,name)
 		// this.bigAntWalkingInterval.start();
 		this.initializeLineSegments();
 		this.initializeArrayOfFungusSpores();
+		
 	}
 
 this.tallyRaycastIntersectionsWithLeafPolygon = function(pointToRaycast, arrayOfLines)
@@ -1081,58 +1078,6 @@ this.tallyRaycastIntersectionsWithLeafPolygon = function(pointToRaycast, arrayOf
 	// this.headTarget = new Target('head target', defenseGame.canvas.width * 0.435,defenseGame.canvas.height * 0.575);
 	// this.thoraxTarget = new Target('thorax target', defenseGame.canvas.width * 0.35,defenseGame.canvas.height * 0.6);
 	// this.abdomenTarget = new Target('abdomen target', defenseGame.canvas.width * 0.285,defenseGame.canvas.height * 0.6);
-	
-	this.infectionAlertMessage = 
-	{
-		name: 'infection alert message',
-		x: renderer.canvas.width * 0.615,
-		y: renderer.canvas.height * 0.665,
-		width: undefined,
-		infectionMessageShouldBeVisible: false,
-		fontSize: 45, 
-
-		initialize: function()
-		{
-			this.width = renderer.measureText(infectionAlertString).width;
-		},
-
-		draw: function() 
-		{
-			if (this.infectionMessageShouldBeVisible)
-			{
-				renderer.fillStyle = 'DarkGoldenRod';
-				renderer.fillRect(0,this.y, renderer.canvas.width,this.fontSize);
-
-				renderer.fillStyle = 'red';
-				renderer.font = '36px SmallBoldPixel';
-				renderer.fillText(infectionAlertString, renderer.canvas.width/2 - this.width/2,this.y + this.fontSize*0.75);
-			}
-		},
-
-		toggleVisibility: function()
-		{
-			
-			// if (defenseGame.bigAntManager.currentActiveAnt.infectionAlertMessage.infectionMessageShouldBeVisible === false)
-			// {
-			// 	defenseGame.bigAntManager.currentActiveAnt.infectionAlertMessage.infectionMessageShouldBeVisible = true;
-			// }
-			// else 
-			// {
-			// 	defenseGame.bigAntManager.currentActiveAnt.infectionAlertMessage.infectionMessageShouldBeVisible = false;
-			// }
-			var _this = this;
-			if (_this.infectionMessageShouldBeVisible === false)
-			{
-				_this.infectionMessageShouldBeVisible = true;
-			}
-			else 
-			{
-				_this.infectionMessageShouldBeVisible = false;
-			}
-			
-		}
-	}
-
 
 	this.hasBeenInfected = false;
 	this.toggleSpriteSheet = function()
