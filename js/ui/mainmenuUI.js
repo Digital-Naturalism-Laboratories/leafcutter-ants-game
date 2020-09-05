@@ -152,8 +152,8 @@ function mainMenuUICustomEvents(deltaTime)
 
     if(menuBigPlayButton.output == UIOUTPUT_SELECT)
     {
-        //ui.stateIndex = COLONYGAMEINTROUI;
-        ui.stateIndex = DEFENSEGAMEINTROUI;
+        ui.stateIndex = COLONYGAMEINTROUI;
+        //ui.stateIndex = DEFENSEGAMEINTROUI;
         menuBigPlayButton.resetOutput();
     }
     // else if(languageBtn.button.output == UIOUTPUT_SELECT)
