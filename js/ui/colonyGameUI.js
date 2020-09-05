@@ -117,9 +117,9 @@ function colonyGameUIResize() {
 
   if (colonyGridNodes != "undefined") {
     for (var i = 0; i < colonyGridNodes.length; i++) {
-        for (var j = 0; j < colonyGridNodes[i].length; j++){
-          colonyGridNodes[i][j].resize();
-        }
+      for (var j = 0; j < colonyGridNodes[i].length; j++) {
+        colonyGridNodes[i][j].resize();
+      }
     }
   }
 }
@@ -168,15 +168,19 @@ function resetColonySimGame() {
 
 function colonyGameUICustomDraw(deltaTime) {
 
-  fungus.update();
-  colony.update();
-  for (i = 0; i < colonyAnts.length; i++) {
-    colonyAnts[i].update();
-  }
-  banner.update();
+  if (queen.movementState == queen.movementStates.IDLE) {
 
-  totalMilliseconds += deltaTime;
-  totalCycles = Math.floor(totalMilliseconds / cycleLength);
+    fungus.update();
+    colony.update();
+    for (i = 0; i < colonyAnts.length; i++) {
+      colonyAnts[i].update();
+    }
+    banner.update();
+
+    totalMilliseconds += deltaTime;
+    totalCycles = Math.floor(totalMilliseconds / cycleLength);
+
+  }
 
   renderer.drawImage(groundBG, 0, -(groundBG.height * 0.35 * pixelSize), gameWidth, gameHeight * 0.95);
   renderer.drawImage(grassLayer, 0, -(groundBG.height * 0.20 * pixelSize), gameWidth, gameHeight * 0.35);
@@ -184,7 +188,10 @@ function colonyGameUICustomDraw(deltaTime) {
 
   drawColonyTiles();
 
-  fungus.draw();
+  if (queen.movementState == queen.movementStates.IDLE) {
+    fungus.draw();
+  }
+
 
   drawStatsBlock();
   banner.draw();
