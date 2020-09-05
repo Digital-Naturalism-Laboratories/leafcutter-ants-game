@@ -43,6 +43,10 @@ class ColonyWorkerAnt {
                     bgmColony.currentTime = 0;
                 }
                 ui.stateIndex = this.gameMode;
+
+                if (!colonyGameSFX[SFX_TRIGGER].isPlaying) {
+                    colonyGameSFX[SFX_TRIGGER].play();
+                }
             }
         }
     }

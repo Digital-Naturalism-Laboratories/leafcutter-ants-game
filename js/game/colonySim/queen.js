@@ -9,12 +9,15 @@ class Queen {
         }
 
         this.pixelCoord = pixelCoordAtCenterOfTileCoord(col, row);
-        //this.x = this.pixelCoord.x;
-        //this.y = this.pixelCoord.y;
         this.speedX = 2;
         this.speedY = 2;
-        this.sprite = new Sprite(tr(vec2(this.pixelCoord.x, this.pixelCoord.y - 20 * pixelSize), vec2(pixelSize * 0.4, pixelSize * 0.4)), new ImageObject("Visual Assets/8bit-Queen-no-wings-left.png", vec2(0, 0)));
+        this.sprite = new Sprite(tr(vec2(this.pixelCoord.x, this.pixelCoord.y - 15), vec2(pixelSize * 0.3, pixelSize * 0.3)), new ImageObject("images/Animations/queen_idle_spritesheet.png", vec2(0, 0)));
         this.collisionRadius = 15;
+
+        this.animationFrameLength = 2;
+        this.animationFrameCount = 60;
+        this.animationFrameCurrent = 0;
+        this.animationTimer = 0;
 
         colonyGameUI.push(this);
     }
@@ -30,6 +33,9 @@ class Queen {
 
             if (getDistBtwVec2(this.sprite.transform.position, vec2(lastTouchPos.x, lastTouchPos.y)) < 20) {
                 ui.stateIndex = FLIGHTGAMEINTROUI;
+                if (!colonyGameSFX[SFX_TRIGGER].isPlaying) {
+                    colonyGameSFX[SFX_TRIGGER].play();
+                }
             }
 
         }
@@ -37,33 +43,33 @@ class Queen {
     }
 
     update() {
-        /*
-        if (this.x < lastTouchPos.x) {
-            this.x += this.speedX;
-        }
 
-        if (this.x > lastTouchPos.x) {
-            this.x -= this.speedX;
-        }
-
-        if (this.y < lastTouchPos.y) {
-            this.y += this.speedY;
-        }
-
-        if (this.y > lastTouchPos.y) {
-            this.y -= this.speedY;
-        }
-
-        this.y = clamp(this.y, COLONY_H * 3 * pixelSize, gameHeight);
-
-        this.sprite.transform.position.x = this.x;
-        this.sprite.transform.position.y = this.y;
-        */
     }
 
     draw() {
-        //if (ui.getActiveState() != COLONYGAMEUI) return;
-        this.sprite.drawSc();
+
+        var inSize = {
+            x: 250,
+            y: 225
+        }
+
+        var inPos = {
+            x: (this.animationFrameCurrent * inSize.x),
+            y: 0
+        }
+
+        this.sprite.drawScIn(inPos, inSize);
+
+        if (this.animationTimer > this.animationFrameLength - 1) {
+            this.animationFrameCurrent++
+            this.animationTimer = 0;
+        }
+
+        if (this.animationFrameCurrent >= this.animationFrameCount) {
+            this.animationFrameCurrent = 0;
+        }
+
+        this.animationTimer++;
     }
 
 }

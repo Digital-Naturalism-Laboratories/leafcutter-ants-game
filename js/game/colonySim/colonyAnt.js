@@ -6,6 +6,11 @@ var colonyAntStates = {
     DEAD: "dead"
 }
 
+const FACING_RIGHT = 0;
+const FACING_LEFT = 1;
+const FACING_UP = 2;
+const FACING_DOWN = 3;
+
 class ColonyAnt {
     constructor(col, row, cycleBorn) {
 
@@ -27,10 +32,17 @@ class ColonyAnt {
 
         this.pixelCoord = pixelCoordAtCenterOfTileCoord(col, row);
 
-        this.sprite = new Sprite(tr(vec2(this.pixelCoord.x, this.pixelCoord.y), vec2(pixelSize * 0.15, pixelSize * 0.15)), new ImageObject("images/Animations/Soldier_Topdown_Walk_UpDown_Spritesheet.png", vec2(0, 0)));
+        this.sprite = new Sprite(tr(vec2(this.pixelCoord.x, this.pixelCoord.y), vec2(pixelSize * 0.15, pixelSize * 0.15)), new ImageObject("images/Animations/Soldier_Topdown_Walk_Spritesheet.png", vec2(0, 0)));
 
         this.speedX = (Math.random() - 0.5) * 3;
         this.speedY = (Math.random() - 0.5) * 3;
+        this.directionInRadians;
+        this.currentFacing;
+
+        this.animationFrameLength = 2;
+        this.animationFrameCount = 11;
+        this.animationFrameCurrent = 0;
+        this.animationTimer = 0
 
         colonyGameUI.push(this);
         colonyAnts.push(this);
@@ -70,6 +82,21 @@ class ColonyAnt {
         }
 
         this.updateEnergyLevel();
+
+        if (Math.abs(this.speedX) > Math.abs(this.speedY)){ //moving right or left
+            if (this.speedX >= 0){
+                this.currentFacing = FACING_RIGHT;
+            } else {
+                this.currentFacing = FACING_LEFT;
+            }
+        } else {//moving up or down
+            if (this.speedY >= 0){
+                this.currentFacing = FACING_DOWN;
+            } else {
+                this.currentFacing = FACING_UP;
+            }
+        }
+
     }
 
     killAnt(){
@@ -112,14 +139,24 @@ class ColonyAnt {
         }
 
         var inPos = {
-            //x: (this.animationFrameCurrent * inSize.x),
-            x: 0,
-            y: 0
+            x: (this.animationFrameCurrent * inSize.x),
+            y: (inSize.y * this.currentFacing)
         }
 
         if (this.state != colonyAntStates.DEAD){
             this.sprite.drawScIn(inPos, inSize);
         }
+
+        if (this.animationTimer > this.animationFrameLength - 1) {
+            this.animationFrameCurrent++
+            this.animationTimer = 0;
+        }
+
+        if (this.animationFrameCurrent >= this.animationFrameCount) {
+            this.animationFrameCurrent = 0;
+        }
+
+        this.animationTimer++;
         
     }
 

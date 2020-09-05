@@ -11,6 +11,9 @@ var rivalQueens = [];
 var energyBarLength = 100;
 var diversityBarLength = 0;
 
+var cicadSFXTimer = 0;
+var birdsSFXTimer = 400;
+
 var jungle_background_front_trees = document.createElement('img');
 var jungle_background_middle_trees = document.createElement('img');
 var jungle_background_back_trees = document.createElement('img');
@@ -21,15 +24,27 @@ jungle_background_back_trees.src = 'images/Backgrounds/Jungle_Background_Back_Tr
 jungle_background_sky.src = 'images/Backgrounds/Jungle_Background_Sky.png';
 
 var flyingGameSFX = [
+  document.createElement('audio'),
+  document.createElement('audio'),
+  document.createElement('audio'),
+  document.createElement('audio'),
   document.createElement('audio')
 ]
 
 var flyingGameSFXPaths = [
-  "audio/SFX/Collecting A Mate.wav"
+  "audio/SFX/Collecting A Mate.wav",
+  "audio/SFX/Ambience - Birds.wav",
+  "audio/SFX/Ambience - Cicadas and Birds.wav",
+  "audio/SFX/Collision With Queen.wav",
+  "audio/SFX/Wings Buzzing.wav"
 ]
 
 //SFX Indexes
 var SFX_MATING = 0;
+var SFX_BIRDS = 1;
+var SFX_CICADAS = 2;
+var SFX_COLLISION = 3;
+var SFX_WINGS = 4;
 
 var backgrounds = []
 backgrounds.push(jungle_background_front_trees);
@@ -56,7 +71,7 @@ function setupFlightGameUI() {
 
   for (let i = 0; i < flyingGameSFX.length; i++) {
     flyingGameSFX[i].setAttribute('src', flyingGameSFXPaths[i]);
-    flyingGameSFX[i].volume = 1;
+    flyingGameSFX[i].volume = 0.6;
   }
 
 }
@@ -159,6 +174,19 @@ function flightGameUICustomEvents(deltaTime) {
     resetColonySimGame();
     ui.stateIndex = COLONYGAMEINTROUI;
   }
+
+  cicadSFXTimer--;
+  if (!flyingGameSFX[SFX_CICADAS].isPlaying && cicadSFXTimer <= 0) {
+    flyingGameSFX[SFX_CICADAS].play();
+    cicadSFXTimer = 600;
+  }
+
+  birdsSFXTimer--;
+  if (!flyingGameSFX[SFX_BIRDS].isPlaying && birdsSFXTimer <= 0) {
+    flyingGameSFX[SFX_BIRDS].play();
+    birdsSFXTimer = 200;
+  }
+
 
   //cameraFollow();
 
