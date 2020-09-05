@@ -518,6 +518,7 @@ function PheremoneGapManager()
 					{
 						defenseGame.bigAntManager.arrayOfBigAnts[i].currentSpriteSheet = bigAntIdleSpriteSheet;
 					}
+					defenseGame.NPCBigAnt2.currentSpriteSheet = bigAntIdleSpriteSheet;
 				}
 				
 				defenseGame.flyManager.toggleSwarm();
