@@ -76,6 +76,18 @@ function setupFlightGameUI() {
 
 }
 
+function resetFlightGame() {
+  flyingMales = [];
+  for (i = 0; i < flyingMaleCount; i++) {
+    flyingMales[i] = new FlyingMale();
+  }
+
+  rivalQueens = [];
+  for (i = 0; i < rivalQueenCount; i++) {
+    rivalQueens[i] = new FlyingQueen(Math.random() * gameWidth, Math.random() * gameHeight, false);
+  }
+}
+
 function flightGameUIResize() {
   flyingQueen.resize();
   for (i = 0; i < flyingMaleCount; i++) {
@@ -135,12 +147,13 @@ function flightGameUICustomDraw(deltaTime) {
 
   flyingQueen.draw(deltaTime);
 
+  renderer.textAlign = "left";
   renderer.fillStyle = "white";
   renderer.font = (30 * pixelSize) + "px SmallBoldPixel";
-  renderer.fillText(string_Mates[currentLanguage] + mateCount, 25 * pixelSize, 25 * pixelSize);
+  renderer.fillText(string_Mates[currentLanguage] + mateCount, 16 * pixelSize, 25 * pixelSize);
 
-  renderer.fillText(string_GeneticDiversity[currentLanguage], 15 * pixelSize, 75  * pixelSize);
-  renderer.fillText(string_Energy[currentLanguage], 140 * pixelSize, 50  * pixelSize);
+  renderer.fillText(string_GeneticDiversity[currentLanguage], 15 * pixelSize, 75 * pixelSize);
+  renderer.fillText(string_Energy[currentLanguage], 140 * pixelSize, 50 * pixelSize);
 
   //draw genetic diversity bar
   renderer.fillStyle = 'blue';
@@ -152,7 +165,7 @@ function flightGameUICustomDraw(deltaTime) {
 
   //draw energy bar
   renderer.fillStyle = 'green';
-  renderer.fillRect(230 * pixelSize, 32 * pixelSize,  energyBarLength * pixelSize, 20 * pixelSize);
+  renderer.fillRect(230 * pixelSize, 32 * pixelSize, energyBarLength * pixelSize, 20 * pixelSize);
   renderer.beginPath();
   renderer.strokeStyle = 'white';
   renderer.rect(230 * pixelSize, 32 * pixelSize, 100 * pixelSize, 20 * pixelSize);
@@ -166,6 +179,7 @@ function flightGameUICustomDraw(deltaTime) {
 
 function flightGameUICustomEvents(deltaTime) {
   if (flyingQueen.movementState == flyingQueen.movementStates.FLYING) {
+  //if (flyingQueen.destinationReached = false) {
     energyBarLength -= 0.20;
   }
 
@@ -182,6 +196,7 @@ function flightGameUICustomEvents(deltaTime) {
     diversityBarLength = 0;
     mateCount = 0;
     resetColonySimGame();
+    resetFlightGame();
     ui.stateIndex = COLONYGAMEINTROUI;
   }
 

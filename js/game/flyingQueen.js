@@ -81,6 +81,8 @@ class FlyingQueen {
 
             if (this.isKnockedBack) {
 
+                energyBarLength -= 0.5;
+
                 this.knockbackTimerCurrent++;
                 this.x += this.horizontalSpeed * pixelSize * -6;
                 this.y += this.verticalSpeed * pixelSize * -4;
@@ -90,6 +92,8 @@ class FlyingQueen {
                 }
 
             } else if (!this.destinationReached) {
+
+                energyBarLength -= 0.05;
                 
                 if (this.x < lastTouchPos.x) {
                     this.x += this.horizontalSpeed * pixelSize;
