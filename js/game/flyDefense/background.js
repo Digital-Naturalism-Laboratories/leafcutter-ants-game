@@ -337,7 +337,7 @@ function Background()
 	{
 		this.touchStartCoordinates = vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY);
 		
-		defenseGame.muteButton.handleInput(this.touchStartCoordinates);
+		//defenseGame.muteButton.handleInput(this.touchStartCoordinates);
 		defenseGame.fullScreenButton.handleInput(this.touchStartCoordinates);
 		defenseGame.background.exitButton.handleInput(this.touchStartCoordinates);
 		let arrayOfPheremoneGaps = this.pheremoneGapManager.arrayOfPheremoneGaps;
@@ -359,7 +359,7 @@ function Background()
 	{
 		this.mouseDownCoordinates = vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY);
 		
-		defenseGame.muteButton.handleInput(this.mouseDownCoordinates);
+		//defenseGame.muteButton.handleInput(this.mouseDownCoordinates);
 		defenseGame.fullScreenButton.handleInput(this.mouseDownCoordinates);
 		defenseGame.background.exitButton.handleInput(this.mouseDownCoordinates);
 		let arrayOfPheremoneGaps = this.pheremoneGapManager.arrayOfPheremoneGaps;

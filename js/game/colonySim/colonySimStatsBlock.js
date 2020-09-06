@@ -27,20 +27,4 @@ function drawStatsBlock() {
     //renderer.fillText("Click to help the workers collect leaves!", 200, 75);
     renderer.textAlign = "left";
 
-    //Full Screen Button
-    //colorRect(gameWidth - 105, gameHeight * 0.8, 100, 50, 'white');
-    //renderer.fillStyle = "black";
-    renderer.font = "24px SmallBoldPixel";
-    //renderer.fillText("Full Screen", gameWidth - 100, gameHeight * 0.84);
-
-    //draw full screen button
-    //renderer.drawImage(fullscreen_button, 0, 0, gameWidth, gameHeight);
-
-    //draw mute/unmute buttons
-    if (defenseGame.audioManager.isMutingEverything){
-        renderer.drawImage(unmute_button, 0, 0, gameWidth, gameHeight);
-    } else {
-        renderer.drawImage(mute_button, 0, 0, gameWidth, gameHeight);
-    }
-
 }

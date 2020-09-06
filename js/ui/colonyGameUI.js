@@ -65,7 +65,6 @@ var larvaeCount = 0;
 var previousTunneledTileCount = 0;
 
 var banner;
-var muteButtonClickDelayTimer = 0;
 
 function setupColonyGameUI() {
 
@@ -224,49 +223,6 @@ function colonyGameUICustomEvents(deltaTime) {
 
       ui.stateIndex = DEFENSEGAMEUI;
     }
-
-    //click to mute/unmute
-    if (getDistBtwVec2(vec2(gameWidth - (50 * pixelSize), 100 * pixelSize), vec2(lastTouchPos.x, lastTouchPos.y)) < 50 &&
-      muteButtonClickDelayTimer <= 0) {
-
-      defenseGame.audioManager.toggleMuteForAllAudioTags();
-      muteButtonClickDelayTimer = 5;
-
-    }
-
-    if (muteButtonClickDelayTimer > 0) {
-      muteButtonClickDelayTimer--;
-    }
-
-    //click to enable fullscreen
-    /*
-    if (getDistBtwVec2(vec2(gameWidth - (50 * pixelSize), 50 * pixelSize), vec2(lastTouchPos.x, lastTouchPos.y)) < 50) {
-      enableFullScreen(canvas);
-
-      //reset screen size variables to new screen size
-      gameWidth = window.innerWidth;
-      gameHeight = window.innerHeight;
-
-      sizeFactor = 0;
-      if (gameWidth / gameHeight > 1.25) {
-        sizeFactor = gameHeight;
-        gameWidth = gameHeight + (gameHeight / 4);
-      } else {
-        sizeFactor = gameWidth - (gameWidth / 4);
-        gameHeight = gameWidth - (gameWidth / 4);
-      }
-
-      pixelSize = sizeFactor / 500.0;
-
-      canvas.width = gameWidth;
-      canvas.height = gameHeight;
-      canvas.style.position = "absolute";
-      canvasStartY = (window.innerHeight / 2) - (gameHeight / 2);
-      canvas.style.top = canvasStartY.toString() + "px";
-      canvasStartX = (window.innerWidth / 2) - (gameWidth / 2);
-      canvas.style.left = canvasStartX.toString() + "px";
-    }
-    */
 
   }
 

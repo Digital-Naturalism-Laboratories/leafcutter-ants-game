@@ -53,8 +53,8 @@ defenseGame.initialize = function()
 	defenseGame.background = new Background();
 	defenseGame.background.initialize();
 
-	this.muteButton = new flyDefenseMuteButton();
-    this.muteButton.initialize();
+	//this.muteButton = new flyDefenseMuteButton();
+    //this.muteButton.initialize();
 
     this.fullScreenButton = new defenseGameFullScreenButton();
 
@@ -227,7 +227,7 @@ defenseGame.initialize = function()
 			}
 
 		
-			this.muteButton.draw();
+			//this.muteButton.draw();
 			this.background.exitButton.draw();
 			//this.fullScreenButton.draw();
 			if (defenseGame.infectionAlertMessage.shouldBeVisible)
