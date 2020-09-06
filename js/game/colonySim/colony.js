@@ -10,7 +10,7 @@ class Colony {
         this.femaleReproductiveCount = 0;
         this.reproductiveCount = 0; //  Male REPRO + Female REPRO+QUEEN 
         this.deadCount = 0;
-        this.totalEggsLaid; // Total count of all ants ever produced (dead or alive). This is basically the "Score" of the entire game
+        this.totalEggsLaid = 0; // Total count of all ants ever produced (dead or alive). This is basically the "Score" of the entire game
         this.colonyPubertyThreshold = 20; // if threshold of number of living WORKERS is passed, some of the new brood will grow into new Male reproductives and Female Reproductives. Once there are male and female reproductives, the NUPTIAL FLIGHT game is enabled.
         this.colonyPubertyThresholdReached = false;
         this.infectionSpreadChance = 0.1; // When the infection timer of an ant goes off, what are the chances of some other amount of healthy ants also getting infected

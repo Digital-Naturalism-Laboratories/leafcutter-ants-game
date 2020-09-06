@@ -30,6 +30,8 @@ class ColonyWorkerAnt {
     }
 
     event() {
+        if (queen.movementState != queen.movementStates.IDLE) return;
+
         if (isTouched) {
             var lastTouchPos = {
                 x: touchPos[0].x - canvas.getBoundingClientRect().left,
@@ -52,6 +54,9 @@ class ColonyWorkerAnt {
     }
 
     update() {
+
+        if (queen.movementState != queen.movementStates.IDLE) return;
+
         if (this.sprite.transform.position.x > gameWidth || this.sprite.transform.position.x < 10) {
             this.sprite.transform.position.x = gameWidth - 10;
         }
@@ -80,6 +85,7 @@ class ColonyWorkerAnt {
 
     draw() {
 
+        if (queen.movementState != queen.movementStates.IDLE) return;
         //if (ui.getActiveState() != COLONYGAMEUI) return;
         var inSize = {
             x: 120,

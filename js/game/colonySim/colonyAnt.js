@@ -61,6 +61,8 @@ class ColonyAnt {
 
     update() {
 
+        if (queen.movementState != queen.movementStates.IDLE) return;
+
         this.prevPixelCoord = {
             x: (this.pixelCoord.x / pixelSize) * prevPixelSize,
             y: (this.pixelCoord.y / pixelSize) * prevPixelSize
@@ -150,6 +152,8 @@ class ColonyAnt {
     }
 
     draw() {
+
+        if (queen.movementState != queen.movementStates.IDLE) return;
 
         //if (ui.getActiveState() != COLONYGAMEUI) return;
 

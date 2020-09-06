@@ -10,6 +10,7 @@ class ColonyGridNode {
 
         this.isWalkable = (tileType === COLONY_WALL) ? false : true;
         this.isTunneled = false;
+        this.isTunneledByQueen = false;
 
         this.neighborNodes = [];
         this.parentNode;
@@ -41,7 +42,11 @@ class ColonyGridNode {
             this.isTunneled = true;
         }
 
-        if (this.isTunneled) {
+        if (this.isTunneled && queen.movementState == queen.movementStates.IDLE) {
+            renderer.drawImage(colonyTiles[colonyGridTileMap[this.gridCoord.row][this.gridCoord.col]], this.pixelCoord.x - (GRID_NODE_SIZE * pixelSize / 2), this.pixelCoord.y - (GRID_NODE_SIZE * pixelSize / 2), GRID_NODE_SIZE * pixelSize, GRID_NODE_SIZE * pixelSize);
+        }
+
+        if (this.isTunneledByQueen && this.isWalkable){
             renderer.drawImage(colonyTiles[colonyGridTileMap[this.gridCoord.row][this.gridCoord.col]], this.pixelCoord.x - (GRID_NODE_SIZE * pixelSize / 2), this.pixelCoord.y - (GRID_NODE_SIZE * pixelSize / 2), GRID_NODE_SIZE * pixelSize, GRID_NODE_SIZE * pixelSize);
         }
 

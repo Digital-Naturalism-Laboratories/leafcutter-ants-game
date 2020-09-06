@@ -18,12 +18,10 @@ class Queen {
         this.movementState = this.movementStates.IDLE;
         this.currentFacing = FACING_RIGHT;
 
-        //this.pixelCoord = pixelCoordAtCenterOfTileCoord(col, row);
         this.pixelCoord = vec2(gameWidth * 0.65, 5);
         this.speedX = 0.4;
         this.speedY = 0.4;
 
-        //this.sprite = new Sprite(tr(vec2(this.pixelCoord.x, this.pixelCoord.y), vec2(pixelSize * 0.3, pixelSize * 0.3)), new ImageObject("images/Animations/queen_idle_spritesheet.png", vec2(0, 0)));
         this.sprite = new Sprite(tr(vec2(gameWidth * 0.65, 5), vec2(pixelSize * 0.3, pixelSize * 0.3)), new ImageObject("images/Animations/Queen_Fly_250px_Spritesheet.png", vec2(0, 0)));
         this.leftWingSprite = new Sprite(tr(vec2(gameWidth * 0.65, 5), vec2(pixelSize * 0.5, pixelSize * 0.5)), new ImageObject("images/wing_left.png", vec2(0, 0)));
         this.rightWingSprite = new Sprite(tr(vec2(gameWidth * 0.65, 5), vec2(pixelSize * 0.5, pixelSize * 0.5)), new ImageObject("images/wing_right.png", vec2(0, 0)));
@@ -34,16 +32,6 @@ class Queen {
         this.animationFrameCount = 60;
         this.animationFrameCurrent = 0;
         this.animationTimer = 0;
-
-        //this.inSize = {
-        //    x: 250,
-        //    y: 225
-        //}
-
-        //this.inPos = {
-        //    x: (this.animationFrameCurrent * this.inSize.x),
-        //    y: 0
-        //}
 
         colonyGameUI.push(this);
     }
@@ -104,8 +92,6 @@ class Queen {
             default:
         }
 
-
-
     }
 
     update() {
@@ -113,10 +99,12 @@ class Queen {
         this.sprite.transform.position.x = this.pixelCoord.x;
         this.sprite.transform.position.y = this.pixelCoord.y - 15;
 
-        //this.rightWingSprite.transform.position.y = this.pixelCoord.y - 15;
+        colonyGridNodes[this.gridCoord.row][this.gridCoord.col].isTunneledByQueen = true;
 
         switch (this.movementState) {
             case this.movementStates.LANDING:
+
+                queen.currentFacing = FACING_RIGHT;
 
                 this.inSize = {
                     x: 250,
@@ -143,6 +131,19 @@ class Queen {
                 break;
             case this.movementStates.DIGGINGDOWN:
 
+                this.gridCoord = {
+                    col: colAtXCoord(this.pixelCoord.x / pixelSize),
+                    row: rowAtYCoord(this.pixelCoord.y / pixelSize)
+                }
+
+                this.sprite = new Sprite(tr(vec2(this.pixelCoord.x + 15, this.pixelCoord.y - 15), vec2(pixelSize * 0.3, pixelSize * 0.3)), new ImageObject("images/Animations/queen_idle_updown_spritesheet.png", vec2(0, 0)));
+                this.currentFacing = 1; //1 for down on this spritesheet
+
+                this.inSize = {
+                    x: 225,
+                    y: 250
+                }
+
                 this.pixelCoord.y += this.speedY * pixelSize;
 
                 if (rowAtYCoord(this.pixelCoord.y / pixelSize) >= fungus_row) {
@@ -152,8 +153,19 @@ class Queen {
                 break;
             case this.movementStates.DIGGINGRIGHT:
 
+                this.gridCoord = {
+                    col: colAtXCoord(this.pixelCoord.x / pixelSize),
+                    row: rowAtYCoord(this.pixelCoord.y / pixelSize)
+                }
+
+                this.sprite = new Sprite(tr(vec2(this.pixelCoord.x, this.pixelCoord.y), vec2(pixelSize * 0.3, pixelSize * 0.3)), new ImageObject("images/Animations/queen_idle_spritesheet.png", vec2(0, 0)));
                 this.currentFacing = FACING_RIGHT;
 
+                this.inSize = {
+                    x: 250,
+                    y: 225
+                }
+                
                 this.pixelCoord.x += this.speedX * pixelSize;
 
                 if (colAtXCoord(this.pixelCoord.x / pixelSize) >= fungus_col) {
@@ -183,7 +195,6 @@ class Queen {
     resize() {
 
         this.pixelCoord = resizeVec2(this.pixelCoord);
-        //this.sprite.transform.position = resizeVec2(this.sprite.transform.position);
         this.sprite.transform.scale = vec2(pixelSize * 0.3, pixelSize * 0.3);
 
     }
@@ -209,29 +220,6 @@ class Queen {
             default:
         }
 
-        //var inSize = {
-        //    x: 250,
-        //    y: 225
-        //}
-
-        //var inPos = {
-        //    x: (this.animationFrameCurrent * this.inSize.x),
-        //    y: (this.inSize.y * this.currentFacing)
-        //}
-
-        //this.sprite.drawScIn(inPos, this.inSize);
-        //this.animateSprite(this.sprite, this.animationFrameLength, this.animationFrameCount, this.inSize);
-
-        //if (this.animationTimer > this.animationFrameLength - 1) {
-        //    this.animationFrameCurrent++
-        //    this.animationTimer = 0;
-        //}
-
-        //if (this.animationFrameCurrent >= this.animationFrameCount) {
-        //    this.animationFrameCurrent = 0;
-        //}
-
-        //this.animationTimer++;
     }
 
     animateSprite(sprite, frameLength, framerameCount, inSize) {
@@ -240,11 +228,6 @@ class Queen {
         var animationFrameLength = frameLength;
         var animationFrameCount = framerameCount;
         var inSize = inSize;
-
-        //var inSize = {
-        //    x: 1000,
-        //    y: 750
-        //}
 
         var inPos = {
             x: (this.animationFrameCurrent * this.inSize.x),
