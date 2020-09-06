@@ -13,6 +13,8 @@ class Fungus {
     }
 
     update = function () {
+
+        this.sprite.transform.scale = vec2(pixelSize * (colony.fungus / 10) + 0.01, pixelSize * (colony.fungus / 10) + 0.01);
         
     }
 

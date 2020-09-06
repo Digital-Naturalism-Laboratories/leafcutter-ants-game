@@ -1,3 +1,5 @@
+var isDebugModeEnabled = false;
+
 function drawStatsBlock() {
     renderer.fillStyle = "white";
     renderer.textAlign = "left";
@@ -27,4 +29,25 @@ function drawStatsBlock() {
     //renderer.fillText("Click to help the workers collect leaves!", 200, 75);
     renderer.textAlign = "left";
 
+    if (isDebugModeEnabled) drawDebugInfo();
+}
+
+function drawDebugInfo() {
+
+    renderer.font = (16 * pixelSize) + "px SmallBoldPixel";
+    renderer.fillStyle = 'white';
+
+    renderer.fillText("Leaf Mass                           : " + colony.leaves, 20 * pixelSize, 40 * pixelSize);
+    renderer.fillText("Fungus Mass                         : " + colony.fungus, 20 * pixelSize, 50 * pixelSize);
+    renderer.fillText("Adults (Workers + Reproductives)    : " + colony.adultCount, 20 * pixelSize, 60 * pixelSize);
+    renderer.fillText("Male Reproductive Count             : " + colony.maleReproductiveCount, 20 * pixelSize, 70 * pixelSize);
+    renderer.fillText("Female Reproductive Count           : " + colony.femaleReproductiveCount, 20 * pixelSize, 80 * pixelSize);
+    renderer.fillText("Genetic Diversity                   : " + colony.geneticDiversity, 20 * pixelSize, 90 * pixelSize);
+    renderer.fillText("New Infections                      : " + colony.newInfections, 20 * pixelSize, 100 * pixelSize);
+    renderer.fillText("Contaminants Cleaned                : " + colony.contaminantsCleaned, 20 * pixelSize, 110 * pixelSize);
+    renderer.fillText("Dead Count                          : " + colony.deadCount, 20 * pixelSize, 120 * pixelSize);
+    renderer.fillText("Colony Puberty Threshold            : " + colony.colonyPubertyThreshold, 20 * pixelSize, 130 * pixelSize);
+    renderer.fillText("Colony Puberty Threshold Reached    : " + colony.colonyPubertyThresholdReached, 20 * pixelSize, 140 * pixelSize);
+
+    this.colonyPubertyThresholdReached = false;
 }

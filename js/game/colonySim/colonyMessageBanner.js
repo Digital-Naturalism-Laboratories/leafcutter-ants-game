@@ -58,5 +58,7 @@ class ColonyMessageBanner {
             renderer.fillText (this.messages[i], gameWidth / 2, this.bannerPosY - this.bannerHeight - (20 * i));
         }
         //renderer.fillText (this.message, gameWidth / 2, this.bannerPosY - this.bannerHeight);
+
     }
+
 }
