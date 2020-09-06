@@ -22,7 +22,7 @@ class FlyingQueen {
         this.matingSprite = new Sprite(tr(vec2(this.x * pixelSize, this.y * pixelSize), vec2(pixelSize / 3, pixelSize / 3)), new ImageObject("images/Animations/Queen_Mating_Spritesheet.png", vec2(625, 242)));
         this.flyingMomentum = 0;
         this.fallingMomentum = 0;
-        this.collisionRadius = 15;
+        this.collisionRadius = 55;
         this.isMating = false;
         this.lastMate;
         this.isKnockedBack = false;
