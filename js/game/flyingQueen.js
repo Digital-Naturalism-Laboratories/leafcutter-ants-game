@@ -18,6 +18,7 @@ class FlyingQueen {
 
         this.horizontalSpeed = 2;
         this.verticalSpeed = 3;
+        this.destinationReached = true;
         this.sprite = new Sprite(tr(vec2(this.x * pixelSize, this.y * pixelSize), vec2(pixelSize / 3, pixelSize / 3)), new ImageObject("images/Animations/Queen_Fly_250px_Spritesheet.png", vec2(128, 128)));
         this.matingSprite = new Sprite(tr(vec2(this.x * pixelSize, this.y * pixelSize), vec2(pixelSize / 3, pixelSize / 3)), new ImageObject("images/Animations/Queen_Mating_Spritesheet.png", vec2(625, 242)));
         this.flyingMomentum = 0;
@@ -53,6 +54,8 @@ class FlyingQueen {
 
         if (isTouched) {
 
+            this.destinationReached = false;
+
             lastTouchPos = {
                 x: touchPos[0].x - canvas.getBoundingClientRect().left,
                 y: touchPos[0].y - canvas.getBoundingClientRect().top
@@ -86,7 +89,8 @@ class FlyingQueen {
                     this.knockbackTimerCurrent = 0;
                 }
 
-            } else if (isTouched) {
+            } else if (!this.destinationReached) {
+                
                 if (this.x < lastTouchPos.x) {
                     this.x += this.horizontalSpeed * pixelSize;
                 }
@@ -126,6 +130,10 @@ class FlyingQueen {
                 }
 
                 flyingGameSFX[SFX_WINGS].pause();
+            }
+
+            if (getDistBtwVec2(vec2(this.x, this.y), lastTouchPos) < 10) {
+                this.destinationReached = true;
             }
 
             this.sprite.transform.position.x = this.x;
