@@ -81,8 +81,11 @@ class FlyingMale {
         }
 
         for (var i = 0; i < rivalQueens.length; i++) {
-            if (getDistBtwVec2(rivalQueens[i].sprite.transform.position, this.sprite.transform.position) < rivalQueens[i].collisionRadius + this.collisionRadius) {
+            if (getDistBtwVec2(rivalQueens[i].sprite.transform.position, this.sprite.transform.position) * pixelSize < ((rivalQueens[i].collisionRadius - 40 ) + this.collisionRadius) * pixelSize) {
+                rivalQueens[i].startMating(this);
                 this.sprite.transform.position.y = 10000;
+                this.verticalSpeed = 0;
+                this.horizontalSpeed = -2;
             }
         }
 

@@ -15,7 +15,7 @@ class Queen {
             DIGGINGRIGHT: "digging right",
             IDLE: "idle"
         }
-        this.movementState = this.movementStates.IDLE;
+        this.movementState = this.movementStates.LANDING;
         this.currentFacing = FACING_RIGHT;
 
         this.pixelCoord = vec2(gameWidth * 0.65, 5);
@@ -43,7 +43,7 @@ class Queen {
                 break;
             case this.movementStates.REMOVINGWINGS:
 
-                if (isTouched) {
+                if (isTouched && this.movementState == this.movementStates.REMOVINGWINGS) {
 
                     lastTouchPos = {
                         x: touchPos[0].x - canvas.getBoundingClientRect().left,
@@ -124,6 +124,11 @@ class Queen {
 
                 this.sprite = new Sprite(tr(vec2(this.pixelCoord.x, this.pixelCoord.y - 15), vec2(pixelSize * 0.3, pixelSize * 0.3)), new ImageObject("images/Animations/queen_idle_spritesheet.png", vec2(0, 0)));
 
+                if (this.rightWingSprite.transform.position.y < this.sprite.transform.position.y + 50){
+                    this.rightWingSprite.transform.position.x -= 1;
+                    this.rightWingSprite.transform.position.y += 1;
+                }
+               
                 this.inSize = {
                     x: 250,
                     y: 225
@@ -208,6 +213,7 @@ class Queen {
                 break;
             case this.movementStates.REMOVINGWINGS:
                 this.rightWingSprite.drawSc();
+                //this.leftWingSprite.drawSc();
                 break;
             case this.movementStates.DIGGINGDOWN:
                 break;
