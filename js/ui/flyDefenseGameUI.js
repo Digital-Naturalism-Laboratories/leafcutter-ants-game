@@ -214,10 +214,19 @@ defenseGame.initialize = function()
 				let fontSize = 150;
 				let stringedFontSize = fontSize.toString();
 				renderer.font = stringedFontSize + 'px SmallBoldPixel';
+
 				let colonyReachedText = string_COLONY_REACHED[currentLanguage];
 				let colonyReachedTextWidth = renderer.measureText(colonyReachedText).width;
 				renderer.fillText(colonyReachedText, renderer.canvas.width/2 - colonyReachedTextWidth/2,
 													 renderer.canvas.height/2 - fontSize/2);
+
+				let clickToContinueTextFontSize = 100;
+				let stringedClickToContinueTextFontSize = clickToContinueTextFontSize.toString();
+				renderer.font = stringedClickToContinueTextFontSize + 'px SmallBoldPixel';
+				let clickToContinueText = string_CLICK_TO_CONTINUE[currentLanguage];
+				let clickToContinueTextWidth = renderer.measureText(clickToContinueText).width;
+				renderer.fillText(clickToContinueText, renderer.canvas.width/2 - clickToContinueTextWidth/2,
+													   renderer.canvas.height/2 + fontSize/2);
 				if (isTouched) {
 					timeToReturnWithLeaves = this.timeLeft;
 					badFungusFromLeaves = 200 - defenseGame.background.fungusTallyDiv.tallyOfEatenFungusSpores;
@@ -228,7 +237,7 @@ defenseGame.initialize = function()
 
 		
 			//this.muteButton.draw();
-			this.background.exitButton.draw();
+			//this.background.exitButton.draw();
 			//this.fullScreenButton.draw();
 			if (defenseGame.infectionAlertMessage.shouldBeVisible)
 			{

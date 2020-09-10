@@ -158,6 +158,11 @@ var string_COLONY_REACHED = [
     "COLONY REACHED"
 ]
 
+var string_CLICK_TO_CONTINUE = [
+    "HAZ CLIC PARA CONTINUAR",
+    "CLICK TO CONTINUE"
+]
+
 var string_TIME_LEFT = [
     "Tiempo restante: ",
     "TIME LEFT: "
