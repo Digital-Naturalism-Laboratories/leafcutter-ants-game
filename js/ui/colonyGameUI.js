@@ -69,6 +69,7 @@ var eggCount = 0;
 var larvaeCount = 0;
 var eggClusters = [];
 var colonyWingedQueens = [];
+var colonyWingedMales = [];
 
 var previousTunneledTileCount = 0;
 
@@ -261,7 +262,16 @@ function colonyGameUICustomUpdate(deltaTime) {
         new ColonyWingedQueen(eggClusters[randomEggClusterIndex].gridCoord.col, eggClusters[randomEggClusterIndex].gridCoord.row);
         i++;
       }
+    }
+  }
 
+  if (colonyWingedMales.length < colony.maleReproductiveCount) {
+    for (var i = 0; i < colony.maleReproductiveCount;) {
+      var randomEggClusterIndex = getRandomInt(0, eggClusters.length);
+      if (eggClusters[randomEggClusterIndex].isVisible) {
+        new ColonyWingedMale(eggClusters[randomEggClusterIndex].gridCoord.col, eggClusters[randomEggClusterIndex].gridCoord.row);
+        i++;
+      }
     }
   }
 
