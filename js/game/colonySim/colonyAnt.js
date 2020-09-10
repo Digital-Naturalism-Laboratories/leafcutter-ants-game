@@ -191,27 +191,25 @@ class ColonyAnt {
             return false;
         }
 
-        if (colonyGridTileMap[this.gridCoord.row][this.gridCoord.col] == COLONY_WALL ||
-            colonyGridNodes[this.gridCoord.row][this.gridCoord.col].isTunneled === false) {
+        var nextTileCol = colAtXCoord((this.pixelCoord.x + this.speedX) / pixelSize);
+        var nextTileRow = rowAtYCoord((this.pixelCoord.y + this.speedY) / pixelSize);
 
-            var prevX = this.prevPixelCoord.x - this.speedX;
-            var prevY = this.prevPixelCoord.y - this.speedY;
-            var prevTileCol = colAtXCoord(prevX / prevPixelSize);
-            var prevTileRow = rowAtYCoord(prevY / prevPixelSize);
+        if (colonyGridTileMap[nextTileRow][nextTileCol] == COLONY_WALL ||
+            colonyGridNodes[nextTileRow][nextTileCol].isTunneled === false) {
 
             var bothTestsFailed = true;
 
-            if (prevTileCol != this.gridCoord.col) {
+            if (nextTileCol != this.gridCoord.col) {
 
-                if (colonyGridTileMap[this.gridCoord.row][prevTileCol] != COLONY_WALL) {
+                if (colonyGridTileMap[this.gridCoord.row][nextTileCol] == COLONY_WALL) {
                     this.speedX *= -1;
                     bothTestsFailed = false;
                 }
             }
 
-            if (prevTileRow != this.gridCoord.row) {
+            if (nextTileRow != this.gridCoord.row) {
 
-                if (colonyGridTileMap[prevTileRow][this.gridCoord.col] != COLONY_WALL) {
+                if (colonyGridTileMap[nextTileRow][this.gridCoord.col] == COLONY_WALL) {
                     this.speedY *= -1;
                     bothTestsFailed = false;
                 }
@@ -222,17 +220,6 @@ class ColonyAnt {
                 this.speedY *= -1;
             }
 
-            if (colonyGridTileMap[prevTileRow][prevTileCol] == COLONY_WALL ||
-                colonyGridNodes[prevTileRow][prevTileCol].isTunneled === false) {
-
-                //this.pixelCoord = this.lastValidPosition;
-                this.pixelCoord = pixelCoordAtCenterOfTileCoord(fungus_col, fungus_row);
-                //console.log("stuck");
-
-            }
-
-        } else {
-            this.lastValidPosition = this.pixelCoord;
         }
     }
 
