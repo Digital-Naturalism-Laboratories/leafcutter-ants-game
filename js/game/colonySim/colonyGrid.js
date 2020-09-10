@@ -344,4 +344,11 @@ function drawCircle(centerX, centerY, radius, width, strokeColor) {
   renderer.stroke();
   renderer.lineWidth = prevLineWidth;
 }
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min);
+}
+
 //#endregion Grid Utility Functions

@@ -68,6 +68,7 @@ var colonyAnts = [];
 var eggCount = 0;
 var larvaeCount = 0;
 var eggClusters = [];
+var colonyWingedQueens = [];
 
 var previousTunneledTileCount = 0;
 
@@ -95,7 +96,7 @@ function setupColonyGameUI() {
     new ColonyAnt(fungus.gridCoord.col, fungus.gridCoord.row, 0);
   }
 
-  for (var i = 0; i < eggChamberGridCoords.length; i++){
+  for (var i = 0; i < eggChamberGridCoords.length; i++) {
     new EggCluster(eggChamberGridCoords[i].col, eggChamberGridCoords[i].row, eggChamberGridCoords[i].offset);
   }
 
@@ -195,7 +196,7 @@ function colonyGameUICustomDraw(deltaTime) {
     //fungus.update();
     //colony.update();
     //for (i = 0; i < colonyAnts.length; i++) {
-      //colonyAnts[i].update();
+    //colonyAnts[i].update();
     //}
     banner.update();
 
@@ -222,11 +223,15 @@ function colonyGameUICustomDraw(deltaTime) {
     renderer.fillStyle = 'white';
     renderer.textAlign = 'center';
     renderer.font = (20 * pixelSize) + "px SmallBoldPixel";
-    renderer.fillText(string_CLICK_WORKERS[currentLanguage], gameWidth/2, 85);
+    renderer.fillText(string_CLICK_WORKERS[currentLanguage], gameWidth / 2, 85);
   }
 
-  for (var i = 0; i < eggClusters.length; i++){
+  for (var i = 0; i < eggClusters.length; i++) {
     eggClusters[i].draw();
+  }
+
+  for (var i = 0; i < colonyWingedQueens.length; i++) {
+    colonyWingedQueens[i].draw();
   }
 
   drawStatsBlock();
@@ -234,13 +239,24 @@ function colonyGameUICustomDraw(deltaTime) {
 
 
 
-  
+
 
   //defenseGameButton.draw();
 
 }
 
-function colonyGameUICustomUpdate(deltaTime){
+function colonyGameUICustomUpdate(deltaTime) {
+
+  if (colonyWingedQueens.length < colony.femaleReproductiveCount) {
+    for (var i = 0; i < colony.femaleReproductiveCount;) {
+      var randomEggClusterIndex = getRandomInt(0, eggClusters.length);
+      if (eggClusters[randomEggClusterIndex].isVisible) {
+        new ColonyWingedQueen(eggClusters[randomEggClusterIndex].gridCoord.col, eggClusters[randomEggClusterIndex].gridCoord.row);
+        i++;
+      }
+      
+    }
+  }
 
 }
 
