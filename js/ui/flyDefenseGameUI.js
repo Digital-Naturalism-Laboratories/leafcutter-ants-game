@@ -231,7 +231,14 @@ defenseGame.initialize = function()
 					timeToReturnWithLeaves = this.timeLeft;
 					badFungusFromLeaves = 200 - defenseGame.background.fungusTallyDiv.tallyOfEatenFungusSpores;
 					infectedAntsReturning = defenseGame.background.bigAntTallyOfInfections;
+
+					// for (let i = 0; i < defenseGame.arrayOfTimeouts.length; i++) 
+					// 	{clearTimeout(defenseGame.arrayOfTimeouts[i]);};
+
+					this.reset();
+
 					ui.stateIndex = COLONYGAMEINTROUI;
+					this.colonyReached = false;
 				}
 			}
 
@@ -285,7 +292,7 @@ defenseGame.initialize = function()
 
 		//other settings
 		this.timeLeft = 120;
-		this.colonyReached = false;
+		//this.colonyReached = false;
 		this.background.slowDownRateFromInfections = 1;
 		this.background.groundImage1xCoordinate = 0;
 		this.background.groundImage2xCoordinate = renderer.canvas.width;

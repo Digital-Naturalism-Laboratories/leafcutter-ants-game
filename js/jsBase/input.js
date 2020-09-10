@@ -205,17 +205,21 @@ function onKeyDown(ev)
         downArrowIsBeingHeld = true;
         break;
 
+        case 67://c
+        //defenseGame.colonyReached = true;
+        break;
+
         case 68://d
-        if (defenseGame.debugOn === false)
-        {
-            defenseGame.debugOn = true;
-            console.log('debug on');
-        }
-        else
-        {
-            defenseGame.debugOn = false;
-            console.log('debug off');
-        }
+        // if (defenseGame.debugOn === false)
+        // {
+        //     defenseGame.debugOn = true;
+        //     console.log('debug on');
+        // }
+        // else
+        // {
+        //     defenseGame.debugOn = false;
+        //     console.log('debug off');
+        // }
         break;
 
         case 80://p
