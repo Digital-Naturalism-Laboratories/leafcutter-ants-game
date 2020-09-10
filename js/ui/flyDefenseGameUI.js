@@ -128,6 +128,8 @@ defenseGame.initialize = function()
 		defenseGame.background.update();
 		defenseGame.background.pheremoneGapManager.updatePheremoneGaps();
 
+		//console.log('groundImage3xCoordinate: ' + defenseGame.background.groundImage3xCoordinate);
+
 		this.flyManager.updateFlies();
 		//this.parentAntObject.update();
 		this.backgroundSoldier.update();
@@ -185,15 +187,7 @@ defenseGame.initialize = function()
 
 			this.groundMinimManager.drawGroundMinims();
 			
-		  	
-
-		  	
-			
 			this.flyManager.drawFlies();
-
-			console.log('defenseGame.infectionAlertMessage.shouldBeVisible:  ' + defenseGame.infectionAlertMessage.shouldBeVisible);
-			
-			
 
 			this.background.fungusTallyDiv.draw();
 			this.background.infectionTallyDiv.draw();
@@ -276,7 +270,6 @@ defenseGame.initialize = function()
 		for (let i = 0; i < this.arrayOfFrameIntervals.length; i++)
 		{
 			this.arrayOfFrameIntervals[i].stop();
-			console.log('stopped frameIntervals');
 		}
 
 		for (let i = 0; i < this.arrayOfTimeouts.length; i++)
@@ -287,7 +280,6 @@ defenseGame.initialize = function()
 		for (let i = 0; i < this.arrayOfIntervals.length; i++)
 		{
 			clearInterval(this.arrayOfIntervals[i]);
-			console.log('this.arrayOfIntervals: ' + this.arrayOfIntervals);
 		}
 
 		//other settings
@@ -312,8 +304,7 @@ defenseGame.initialize = function()
 
 		this.background.currentPheremoneGapArrayIndex = 0;
 		this.background.currentPheremoneGap = this.background.pheremoneGapManager.arrayOfPheremoneGaps[this.background.currentPheremoneGapArrayIndex];
-		console.log(this.background.pheremoneGapManager.arrayOfPheremoneGaps);
-		console.log(this.background.currentPheremoneGap);
+		
 
 		this.background.fungusTallyDiv.tallyOfEatenFungusSpores = 0;
 		defenseGame.background.bigAntTallyOfInfections = 0;
@@ -328,7 +319,6 @@ defenseGame.initialize = function()
 		for (let i = 0; i < this.flyManager.arrayOfFlies.length; i++)
 		{
 			this.flyManager.arrayOfFlies[i].assignRandomXYCoordinatesInARange();
-			console.log('reset fly coordinates called at exit');
 		}
 
 		

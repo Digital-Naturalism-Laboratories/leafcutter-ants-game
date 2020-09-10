@@ -242,6 +242,44 @@ function Fly(name,status)
 
 						defenseGame.bigAntManager.updateCurrentActiveAnt();
 						defenseGame.flyManager.updateTargets();
+
+						defenseGame.background.stuckOnPheremoneGap = false;
+						defenseGame.background.currentPheremoneGap.isFilledIn = true;
+						defenseGame.background.currentPheremoneGapArrayIndex++;
+						defenseGame.background.currentPheremoneGap = defenseGame.background.pheremoneGapManager.arrayOfPheremoneGaps[defenseGame.background.currentPheremoneGapArrayIndex];
+						defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.pause();
+						defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.currentTime = 0;
+						defenseGame.audioManager.sfxManager.beefUpTrailFeedback.play();
+						defenseGame.audioManager.sfxManager.fliesSwarming.pause();
+						defenseGame.audioManager.sfxManager.flyBuzzingNormal.play();
+						defenseGame.audioManager.sfxManager.groundMinimFootstepsAccelerated.pause();
+						defenseGame.audioManager.sfxManager.groundMinimFootstepsAccelerated.currentTime = 0;
+						defenseGame.audioManager.sfxManager.groundMinimFootsteps.play();
+						for (let i = 0; i < defenseGame.groundMinimManager.arrayOfGroundMinims.length; i++)
+						{
+							defenseGame.groundMinimManager.arrayOfGroundMinims[i].coinFlipAMeanderDirection();
+							defenseGame.groundMinimManager.arrayOfGroundMinims[i].velocity = getRandomIntInclusive(1,4);
+						}
+						 defenseGame.flyManager.currentStatus = 'normal';
+						// defenseGame.flyManager.arrayOfFlies[0].status = 'swatted';
+						// defenseGame.flyManager.arrayOfFlies[1].status = 'swatted';
+						// defenseGame.flyManager.arrayOfFlies[2].status = 'swatted';
+						// defenseGame.flyManager.arrayOfFlies[3].status = 'swatted';
+						// defenseGame.flyManager.currentFlyIndex = -1;
+
+						defenseGame.background.flashAlertInterval.stop();
+
+						for (let i = 0; i < defenseGame.bigAntManager.arrayOfBigAnts.length; i++)
+						{
+							if (defenseGame.bigAntManager.arrayOfBigAnts[i].hasBeenInfected)
+							{
+								defenseGame.bigAntManager.arrayOfBigAnts[i].currentSpriteSheet = bigAntWalkingInfectedSpriteSheet;
+							}
+							else if (!defenseGame.bigAntManager.arrayOfBigAnts[i].hasBeenInfected)
+							{
+								defenseGame.bigAntManager.arrayOfBigAnts[i].currentSpriteSheet = bigAntWalkingSpriteSheet;
+							}
+						}
 					}
 					
 				}
