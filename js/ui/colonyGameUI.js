@@ -17,6 +17,12 @@ var fullscreen_button = document.createElement('img');
 var mute_button = document.createElement('img');
 var unmute_button = document.createElement('img');
 
+var egg_single = document.createElement('img');
+var egg_cluster = document.createElement('img');
+var egg_many = document.createElement('img');
+var egg_pupae_normal = document.createElement('img');
+var egg_pupae_large = document.createElement('img');
+
 //SFX variables
 var bgmColony = document.createElement('audio');
 var colonyGameSFX = [
@@ -296,6 +302,26 @@ function loadImages() {
     {
       varName: unmute_button,
       fileName: "Game-UI-unmute.png"
+    },
+    {
+      varName: egg_single,
+      fileName: "egg-single.png"
+    },
+    {
+      varName: egg_cluster,
+      fileName: "egg-cluster.png"
+    },
+    {
+      varName: egg_many,
+      fileName: "egg-many.png"
+    },
+    {
+      varName: egg_pupae_normal,
+      fileName: "egg-pupae-normal.png"
+    },
+    {
+      varName: egg_pupae_large,
+      fileName: "egg-pupae-large.png"
     },
     {
       tunnelType: COLONY_TUNNEL_VERT,
