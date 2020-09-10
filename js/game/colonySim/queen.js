@@ -17,7 +17,7 @@ class Queen {
             DIGGINGRIGHT: "digging right",
             IDLE: "idle"
         }
-        this.movementState = this.movementStates.IDLE;
+        this.movementState = this.movementStates.LANDING;
         this.currentFacing = FACING_RIGHT;
         this.clickCooldownTime = 60;
         this.clickCooldownTimer = this.clickCooldownTime;
@@ -239,6 +239,8 @@ class Queen {
 
         this.pixelCoord = resizeVec2(this.pixelCoord);
         this.sprite.transform.scale = vec2(pixelSize * 0.3, pixelSize * 0.3);
+        this.rightWingSprite.transform.position = resizeVec2(this.rightWingSprite.transform.position);
+        this.leftWingSprite.transform.position = resizeVec2(this.leftWingSprite.transform.position);
 
     }
 
@@ -255,14 +257,14 @@ class Queen {
                 break;
             case this.movementStates.LANDED:
                 this.rightWingSprite.drawSc();
-                renderer.fillText(string_REMOVE_WINGS[currentLanguage], this.pixelCoord.x, this.pixelCoord.y + 50)
-                drawCircle(this.pixelCoord.x, this.pixelCoord.y, (circleIndicatorTimer / 60) * 40, 4, 'green');
+                renderer.fillText(string_REMOVE_WINGS[currentLanguage], gameWidth/2, (this.pixelCoord.y + 50) * pixelSize)
+                drawCircle(this.pixelCoord.x, this.pixelCoord.y, (circleIndicatorTimer / 60) * 40 * pixelSize, 4 * pixelSize, 'green');
                 break;
             case this.movementStates.REMOVINGRIGHTWING:
                 this.rightWingSprite.drawSc();
                 this.leftWingSprite.drawSc();
-                renderer.fillText(string_REMOVE_WINGS[currentLanguage], this.pixelCoord.x, this.pixelCoord.y + 50)
-                drawCircle(this.pixelCoord.x, this.pixelCoord.y, (circleIndicatorTimer / 60) * 40, 4, 'green');
+                renderer.fillText(string_REMOVE_WINGS[currentLanguage], gameWidth/2, (this.pixelCoord.y + 50) * pixelSize)
+                drawCircle(this.pixelCoord.x, this.pixelCoord.y, (circleIndicatorTimer / 60) * 40 * pixelSize, 4 * pixelSize, 'green');
                 break;
             case this.movementStates.REMOVINGLEFTWING:
                 this.rightWingSprite.drawSc();

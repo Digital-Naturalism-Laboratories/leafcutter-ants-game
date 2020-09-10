@@ -192,20 +192,6 @@ function resetColonySimGame() {
 
 function colonyGameUICustomDraw(deltaTime) {
 
-  if (queen.movementState == queen.movementStates.IDLE) {
-
-    //fungus.update();
-    //colony.update();
-    //for (i = 0; i < colonyAnts.length; i++) {
-    //colonyAnts[i].update();
-    //}
-    banner.update();
-
-    totalMilliseconds += deltaTime;
-    totalCycles = Math.floor(totalMilliseconds / cycleLength);
-
-  }
-
   renderer.drawImage(groundBG, 0, -(groundBG.height * 0.35 * pixelSize), gameWidth, gameHeight * 0.95);
   renderer.drawImage(grassLayer, 0, -(groundBG.height * 0.20 * pixelSize), gameWidth, gameHeight * 0.35);
 
@@ -245,15 +231,14 @@ function colonyGameUICustomDraw(deltaTime) {
   drawStatsBlock();
   banner.draw();
 
-
-
-
-
-  //defenseGameButton.draw();
-
 }
 
 function colonyGameUICustomUpdate(deltaTime) {
+
+  if (queen.movementState == queen.movementStates.IDLE) {
+    totalMilliseconds += deltaTime;
+    totalCycles = Math.floor(totalMilliseconds / cycleLength);
+  }
 
   if (colonyWingedQueens.length < colony.femaleReproductiveCount) {
     for (var i = 0; i < colony.femaleReproductiveCount;) {

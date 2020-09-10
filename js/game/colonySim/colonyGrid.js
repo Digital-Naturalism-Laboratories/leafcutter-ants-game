@@ -242,24 +242,11 @@ function explore_neighbors(row, col) {
 }
 
 function drawColonyTiles() {
-  var colonyIndex = 0;
-  var colonyLeftEdgeX = 0;
-
   for (var eachRow = 0; eachRow < colonyGridNodes.length; eachRow++) {
-
-    colonyLeftEdgeX = 0;
-
     for (var eachCol = 0; eachCol < colonyGridNodes[eachRow].length; eachCol++) {
-
       colonyGridNodes[eachRow][eachCol].draw();
-
-      colonyIndex++;
-      colonyLeftEdgeX += GRID_NODE_SIZE * pixelSize;
-
     }
-
   }
-
 }
 
 function getTunneledTileCount() {
