@@ -167,3 +167,8 @@ var string_REMOVE_WINGS = [
     "Haz clic en la reina para ayudarla a quitarse las alas",
     "Click on the queen to help her remove her wings"
 ]
+
+var string_CLICK_WORKERS = [
+    "Haga clic en un trabajador para ayudar a recoger hojas.",
+    "Click on a worker to help collect leaves"
+]

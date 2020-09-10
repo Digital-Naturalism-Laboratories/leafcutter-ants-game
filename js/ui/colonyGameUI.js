@@ -201,10 +201,19 @@ function colonyGameUICustomDraw(deltaTime) {
 
   if (queen.movementState == queen.movementStates.IDLE) {
     fungus.draw();
+
+    renderer.fillStyle = 'white';
+    renderer.textAlign = 'center';
+    renderer.font = (20 * pixelSize) + "px SmallBoldPixel";
+    renderer.fillText(string_CLICK_WORKERS[currentLanguage], gameWidth/2, 85);
   }
 
   drawStatsBlock();
   banner.draw();
+
+
+
+  
 
   //defenseGameButton.draw();
 
@@ -213,7 +222,7 @@ function colonyGameUICustomDraw(deltaTime) {
 function colonyGameUICustomEvents(deltaTime) {
 
   circleIndicatorTimer--
-  if (circleIndicatorTimer <= 0){
+  if (circleIndicatorTimer <= 0) {
     circleIndicatorTimer = 60;
   }
 

@@ -24,7 +24,7 @@ class ColonyWorkerAnt {
         this.animationTimer = 0
 
         this.mode = MODES.NO_LEAF;
-        this.gameMode = DEFENSEGAMEUI;
+        this.gameMode = LEAFCUTTINGINTROUI;
 
         colonyGameUI.push(this);
     }
@@ -117,6 +117,7 @@ class ColonyWorkerAnt {
         //}
 
         this.sprite.drawScIn(inPos, inSize);
+        drawCircle(this.pixelCoord.x + (10 * pixelSize), this.pixelCoord.y + (10 * pixelSize), (circleIndicatorTimer/60) * 30, 4, 'green');
 
         if (this.animationTimer > this.animationFrameLength - 1) {
             this.animationFrameCurrent++
