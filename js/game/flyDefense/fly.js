@@ -280,6 +280,7 @@ function Fly(name,status)
 								defenseGame.bigAntManager.arrayOfBigAnts[i].currentSpriteSheet = bigAntWalkingSpriteSheet;
 							}
 						}
+						
 					}
 					
 				}

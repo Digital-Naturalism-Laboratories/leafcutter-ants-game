@@ -293,6 +293,7 @@ function GroundMinimManager()
 					defenseGame.bigAntManager.arrayOfBigAnts[i].currentSpriteSheet = bigAntWalkingSpriteSheet;
 				}
 			}
+			defenseGame.NPCBigAnt2.currentSpriteSheet = bigAntWalkingSpriteSheet;
 		}
 	}
 }
