@@ -54,13 +54,13 @@ var string_Reproductives = [
 var string_LeavesCollected = [
     "Hojas Recolectadas",
     "Leaves Collected"
-    
+
 ]
 
 var string_LeavesCollected_COLON = [
     "Hojas Recolectadas: ",
     "Leaves Collected: "
-    
+
 ]
 
 var string_Time = [
@@ -174,6 +174,11 @@ var string_REMOVE_WINGS = [
 ]
 
 var string_CLICK_WORKERS = [
-    "Haga clic en un trabajador para ayudar a recoger hojas.",
+    "Haga clic en un trabajador para ayudar a recoger hojas",
     "Click on a worker to help collect leaves"
+]
+
+var string_CLICK_QUEEN = [
+    "Haga clic en una nueva reina para comenzar una nueva colonia",
+    "Click on a new queen to start a new colony"
 ]

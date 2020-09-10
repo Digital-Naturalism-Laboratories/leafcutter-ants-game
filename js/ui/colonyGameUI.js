@@ -223,7 +223,14 @@ function colonyGameUICustomDraw(deltaTime) {
     renderer.fillStyle = 'white';
     renderer.textAlign = 'center';
     renderer.font = (20 * pixelSize) + "px SmallBoldPixel";
-    renderer.fillText(string_CLICK_WORKERS[currentLanguage], gameWidth / 2, 85);
+    renderer.fillText(string_CLICK_WORKERS[currentLanguage], gameWidth / 2, 65 * pixelSize);
+  }
+
+  if (colonyWingedQueens.length > 0) {
+    renderer.fillStyle = 'white';
+    renderer.textAlign = 'center';
+    renderer.font = (20 * pixelSize) + "px SmallBoldPixel";
+    renderer.fillText(string_CLICK_QUEEN[currentLanguage], gameWidth / 2, 75 * pixelSize);
   }
 
   for (var i = 0; i < eggClusters.length; i++) {
@@ -254,7 +261,7 @@ function colonyGameUICustomUpdate(deltaTime) {
         new ColonyWingedQueen(eggClusters[randomEggClusterIndex].gridCoord.col, eggClusters[randomEggClusterIndex].gridCoord.row);
         i++;
       }
-      
+
     }
   }
 

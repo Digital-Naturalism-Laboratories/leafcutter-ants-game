@@ -102,14 +102,6 @@ class Queen {
                 case this.movementStates.DIGGINGRIGHT:
                     break;
                 case this.movementStates.IDLE:
-
-                    if (getDistBtwVec2(this.pixelCoord, vec2(lastTouchPos.x, lastTouchPos.y)) < 20) {
-                        ui.stateIndex = FLIGHTGAMEINTROUI;
-                        if (!colonyGameSFX[SFX_TRIGGER].isPlaying) {
-                            colonyGameSFX[SFX_TRIGGER].play();
-                        }
-                    }
-
                     break;
                 default:
             }
@@ -264,13 +256,13 @@ class Queen {
             case this.movementStates.LANDED:
                 this.rightWingSprite.drawSc();
                 renderer.fillText(string_REMOVE_WINGS[currentLanguage], this.pixelCoord.x, this.pixelCoord.y + 50)
-                drawCircle(this.pixelCoord.x, this.pixelCoord.y, (circleIndicatorTimer/60) * 40, 4, 'green');
+                drawCircle(this.pixelCoord.x, this.pixelCoord.y, (circleIndicatorTimer / 60) * 40, 4, 'green');
                 break;
             case this.movementStates.REMOVINGRIGHTWING:
                 this.rightWingSprite.drawSc();
                 this.leftWingSprite.drawSc();
                 renderer.fillText(string_REMOVE_WINGS[currentLanguage], this.pixelCoord.x, this.pixelCoord.y + 50)
-                drawCircle(this.pixelCoord.x, this.pixelCoord.y, (circleIndicatorTimer/60) * 40, 4, 'green');
+                drawCircle(this.pixelCoord.x, this.pixelCoord.y, (circleIndicatorTimer / 60) * 40, 4, 'green');
                 break;
             case this.movementStates.REMOVINGLEFTWING:
                 this.rightWingSprite.drawSc();

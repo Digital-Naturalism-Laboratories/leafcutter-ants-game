@@ -39,8 +39,7 @@ class ColonyWorkerAnt {
             }
 
             if (getDistBtwVec2(this.sprite.transform.position, vec2(lastTouchPos.x, lastTouchPos.y)) < 20) {
-                if(this.gameMode != COLONYGAMEUI)
-                {
+                if (this.gameMode != COLONYGAMEUI) {
                     bgmColony.pause();
                     bgmColony.currentTime = 0;
                 }
@@ -74,9 +73,8 @@ class ColonyWorkerAnt {
 
     }
 
-    resize()
-    {
- 
+    resize() {
+
         this.pixelCoord = resizeVec2(this.pixelCoord);
         this.sprite.transform.position = resizeVec2(this.sprite.transform.position);
         this.sprite.transform.scale = vec2(pixelSize * 0.4, pixelSize * 0.4);
@@ -86,7 +84,7 @@ class ColonyWorkerAnt {
     draw() {
 
         if (queen.movementState != queen.movementStates.IDLE) return;
-        //if (ui.getActiveState() != COLONYGAMEUI) return;
+
         var inSize = {
             x: 120,
             y: 108
@@ -108,16 +106,8 @@ class ColonyWorkerAnt {
                 break;
         }
 
-        //if (this.pixelCoord.x > gameWidth * 0.66){
-        //    inPos.y = inPos.y * 0;
-        //    this.mode = MODES.CARRYING_LEAF; //for testing only
-        //} else {
-        //    inPos.y = 0;
-        //    this.mode = MODES.NO_LEAF; //For testing only
-        //}
-
         this.sprite.drawScIn(inPos, inSize);
-        drawCircle(this.pixelCoord.x + (10 * pixelSize), this.pixelCoord.y + (10 * pixelSize), (circleIndicatorTimer/60) * 30, 4, 'green');
+        drawCircle(this.pixelCoord.x + (10 * pixelSize), this.pixelCoord.y + (10 * pixelSize), (circleIndicatorTimer / 60) * 20 * pixelSize, 4 * pixelSize, 'green');
 
         if (this.animationTimer > this.animationFrameLength - 1) {
             this.animationFrameCurrent++

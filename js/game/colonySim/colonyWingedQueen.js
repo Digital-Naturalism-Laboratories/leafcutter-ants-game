@@ -11,7 +11,7 @@ class ColonyWingedQueen {
         this.leftWingSprite = new Sprite(tr(this.pixelCoord, vec2(pixelSize * 0.3, pixelSize * 0.3)), new ImageObject("images/wing_left.png", vec2(0, 0)));
         this.rightWingSprite = new Sprite(tr(this.pixelCoord, vec2(pixelSize * 0.3, pixelSize * 0.3)), new ImageObject("images/wing_right.png", vec2(0, 0)));
         this.currentFacing = FACING_RIGHT;
-        
+
         this.inSize = {
             x: 250,
             y: 225
@@ -23,13 +23,19 @@ class ColonyWingedQueen {
         this.animationTimer = 0;
 
         colonyWingedQueens.push(this);
+        colonyGameUI.push(this);
     }
 
-    event(){
-
+    event() {
+        if (getDistBtwVec2(this.pixelCoord, vec2(lastTouchPos.x, lastTouchPos.y)) < 20 * pixelSize) {
+            ui.stateIndex = FLIGHTGAMEINTROUI;
+            if (!colonyGameSFX[SFX_TRIGGER].isPlaying) {
+                colonyGameSFX[SFX_TRIGGER].play();
+            }
+        }
     }
 
-    update(){
+    update() {
 
     }
 
@@ -39,13 +45,13 @@ class ColonyWingedQueen {
 
     }
 
-    draw(){
+    draw() {
 
         this.animateSprite(this.sprite, this.animationFrameLength, this.animationFrameCount, this.inSize);
         this.rightWingSprite.drawSc();
-
+        drawCircle(this.pixelCoord.x, this.pixelCoord.y + (5 * pixelSize), (circleIndicatorTimer / 60) * 20 * pixelSize, 4 * pixelSize, 'green');
         //renderer.fillText(this.gridCoord.col + "," + this.gridCoord.row, this.pixelCoord.x, this.pixelCoord.y)
-        
+
     }
 
     animateSprite(sprite, frameLength, framerameCount, inSize) {
