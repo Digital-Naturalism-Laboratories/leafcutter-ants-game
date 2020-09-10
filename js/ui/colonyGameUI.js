@@ -66,6 +66,8 @@ var previousTunneledTileCount = 0;
 
 var banner;
 
+var circleIndicatorTimer = 60;
+
 function setupColonyGameUI() {
 
   createGrid();
@@ -162,7 +164,7 @@ function resetColonySimGame() {
   for (i = 0; i < colony.population; i++) {
     new ColonyAnt(fungus.gridCoord.col, fungus.gridCoord.row, 0);
   }
-  
+
   queen.sprite = new Sprite(tr(vec2(gameWidth * 0.65, 5), vec2(pixelSize * 0.3, pixelSize * 0.3)), new ImageObject("images/Animations/Queen_Fly_250px_Spritesheet.png", vec2(0, 0)));
   queen.pixelCoord = vec2(gameWidth * 0.65, 5);
   queen.movementState = queen.movementStates.LANDING;
@@ -188,10 +190,13 @@ function colonyGameUICustomDraw(deltaTime) {
   renderer.drawImage(groundBG, 0, -(groundBG.height * 0.35 * pixelSize), gameWidth, gameHeight * 0.95);
   renderer.drawImage(grassLayer, 0, -(groundBG.height * 0.20 * pixelSize), gameWidth, gameHeight * 0.35);
 
-  if (queen.movementState != queen.movementStates.LANDING && queen.movementState != queen.movementStates.REMOVINGWINGS){
+  if (queen.movementState != queen.movementStates.LANDING &&
+    queen.movementState != queen.movementStates.LANDED &&
+    queen.movementState != queen.movementStates.REMOVINGLEFTWING &&
+    queen.movementState != queen.movementStates.REMOVINGRIGHTWING) {
     renderer.drawImage(top_mound, gameWidth * 0.59, 5 * pixelSize, (top_mound.width / 2) * pixelSize, (top_mound.height / 2) * pixelSize);
   }
-  
+
   drawColonyTiles();
 
   if (queen.movementState == queen.movementStates.IDLE) {
@@ -206,6 +211,12 @@ function colonyGameUICustomDraw(deltaTime) {
 }
 
 function colonyGameUICustomEvents(deltaTime) {
+
+  circleIndicatorTimer--
+  if (circleIndicatorTimer <= 0){
+    circleIndicatorTimer = 60;
+  }
+
   if (userInteracted && !bgmColony.isPlaying)
     bgmColony.play();
 

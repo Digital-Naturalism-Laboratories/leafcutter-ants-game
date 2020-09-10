@@ -242,4 +242,14 @@ function colorCircle(centerX, centerY, radius, fillColor) {
   renderer.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
   renderer.fill();
 }
+
+function drawCircle(centerX, centerY, radius, width, strokeColor) {
+  var prevLineWidth = renderer.lineWidth;
+  renderer.strokeStyle = strokeColor;
+  renderer.lineWidth = 4;
+  renderer.beginPath();
+  renderer.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+  renderer.stroke();
+  renderer.lineWidth = prevLineWidth;
+}
 //#endregion Grid Utility Functions

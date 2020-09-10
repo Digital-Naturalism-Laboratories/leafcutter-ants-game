@@ -162,3 +162,8 @@ var string_TIME_LEFT = [
     "Tiempo restante: ",
     "TIME LEFT: "
 ]
+
+var string_REMOVE_WINGS = [
+    "Haz clic en la reina para ayudarla a quitarse las alas",
+    "Click on the queen to help her remove her wings"
+]
