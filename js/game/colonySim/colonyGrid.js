@@ -60,6 +60,98 @@ var colonyGridTileMap = [
   [00, 00, 00, 00, 00, 14, 02, 24, 13, 00, 00, 00, 00, 00, 00, 00, 00, 14, 24, 02, 02, 13, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00],
 ];
 
+var eggChamberGridCoords = [{
+  col: 2,
+  row: 5,
+  offset: -0.5 * GRID_NODE_SIZE
+},
+{
+  col: 1,
+  row: 8,
+  offset: 0.5 * GRID_NODE_SIZE
+},
+{
+  col: 1,
+  row: 11,
+  offset: 0.5 * GRID_NODE_SIZE
+},
+{
+  col: 2,
+  row: 16,
+  offset: 0.5 * GRID_NODE_SIZE
+},
+{
+  col: 8,
+  row: 15,
+  offset: -0.5 * GRID_NODE_SIZE
+},
+{
+  col: 8,
+  row: 18,
+  offset: -0.5 * GRID_NODE_SIZE
+},
+{
+  col: 9,
+  row: 12,
+  offset: -0.5 * GRID_NODE_SIZE
+},
+{
+  col: 10,
+  row: 17,
+  offset: 0.5 * GRID_NODE_SIZE
+},
+{
+  col: 12,
+  row: 5,
+  offset: -0.5 * GRID_NODE_SIZE
+},
+{
+  col: 11,
+  row: 13,
+  offset: 0.5 * GRID_NODE_SIZE
+},
+{
+  col: 11,
+  row: 9,
+  offset: 0.5 * GRID_NODE_SIZE
+},
+{
+  col: 17,
+  row: 9,
+  offset: -0.5 * GRID_NODE_SIZE
+},
+{
+  col: 17,
+  row: 18,
+  offset: 0.5 * GRID_NODE_SIZE
+},
+{
+  col: 18,
+  row: 15,
+  offset: 0.5 * GRID_NODE_SIZE
+},
+{
+  col: 26,
+  row: 16,
+  offset: -0.5 * GRID_NODE_SIZE
+},
+{
+  col: 27,
+  row: 4,
+  offset: -0.5 * GRID_NODE_SIZE
+},
+{
+  col: 27,
+  row: 10,
+  offset: -0.5 * GRID_NODE_SIZE
+},
+{
+  col: 28,
+  row: 17,
+  offset: 0.5 * GRID_NODE_SIZE
+}
+];
+
 function createGrid() {
   for (var eachRow = 0; eachRow < COLONY_ROWS; eachRow++) {
 

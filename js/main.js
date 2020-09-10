@@ -30,7 +30,7 @@ function update(deltaTime)
     {
         case MAINMENUUI: mainMenuUICustomUpdate(deltaTime); ui.update(); break;
         //case FLIGHTGAMEUI: flightGameUICustomUpdate(deltaTime); ui.update(); break;
-        //case COLONYGAMEUI: colonyGameUICustomUpdate(deltaTime); ui.update(); break;
+        case COLONYGAMEUI: colonyGameUICustomUpdate(deltaTime); ui.update(); break;
         case LEAFCUTTINGUI: leafcuttingUICustomUpdate(deltaTime); ui.update(); break;
         case DEFENSEGAMEUI: defenseGame.update(); break;
     }

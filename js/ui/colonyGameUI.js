@@ -67,6 +67,7 @@ var workers = [];
 var colonyAnts = [];
 var eggCount = 0;
 var larvaeCount = 0;
+var eggClusters = [];
 
 var previousTunneledTileCount = 0;
 
@@ -94,6 +95,10 @@ function setupColonyGameUI() {
     new ColonyAnt(fungus.gridCoord.col, fungus.gridCoord.row, 0);
   }
 
+  for (var i = 0; i < eggChamberGridCoords.length; i++){
+    new EggCluster(eggChamberGridCoords[i].col, eggChamberGridCoords[i].row, eggChamberGridCoords[i].offset);
+  }
+
   //initialize BGM
   bgmColony.setAttribute('src', 'audio/Intro Music.mp3');
   bgmColony.loop = true;
@@ -119,6 +124,12 @@ function colonyGameUIResize() {
   if (colonyAnts != "undefined") {
     for (var i = 0; i < colonyAnts.length; i++) {
       colonyAnts[i].resize();
+    }
+  }
+
+  if (eggClusters != "undefined") {
+    for (var i = 0; i < eggClusters.length; i++) {
+      eggClusters[i].resize();
     }
   }
 
@@ -181,11 +192,11 @@ function colonyGameUICustomDraw(deltaTime) {
 
   if (queen.movementState == queen.movementStates.IDLE) {
 
-    fungus.update();
-    colony.update();
-    for (i = 0; i < colonyAnts.length; i++) {
-      colonyAnts[i].update();
-    }
+    //fungus.update();
+    //colony.update();
+    //for (i = 0; i < colonyAnts.length; i++) {
+      //colonyAnts[i].update();
+    //}
     banner.update();
 
     totalMilliseconds += deltaTime;
@@ -214,6 +225,10 @@ function colonyGameUICustomDraw(deltaTime) {
     renderer.fillText(string_CLICK_WORKERS[currentLanguage], gameWidth/2, 85);
   }
 
+  for (var i = 0; i < eggClusters.length; i++){
+    eggClusters[i].draw();
+  }
+
   drawStatsBlock();
   banner.draw();
 
@@ -222,6 +237,10 @@ function colonyGameUICustomDraw(deltaTime) {
   
 
   //defenseGameButton.draw();
+
+}
+
+function colonyGameUICustomUpdate(deltaTime){
 
 }
 

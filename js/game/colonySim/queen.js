@@ -120,7 +120,7 @@ class Queen {
     update() {
 
         this.clickCooldownTimer--;
-        console.log(this.movementState);
+
         this.sprite.transform.position.x = this.pixelCoord.x;
         this.sprite.transform.position.y = this.pixelCoord.y - 15;
 

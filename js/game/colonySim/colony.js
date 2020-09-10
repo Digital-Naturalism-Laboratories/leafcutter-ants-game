@@ -20,9 +20,9 @@ class Colony {
         this.fungus = 0; // Mass of Grown Fungus. Current fungus + Leaves*FungusConversionRate  - Brood(Brood eating rate)
 
         this.fungusConversionRate = (0.002 / 60); // Proportion of leaves that are converted to edible funugs for the babies  // This rate can get LOWERED temporarily by contaminants that were not cleaned by the Leaf Transport game (roughly per frame)
-        this.broodEatingRate = (0.005 / 60); // How much  fungus each brood will eat
-        this.workerEatingRate = (0.005 / 60); // how much leaf mass each worker will eat (Much less than a brood would eat of the fungus, the workers just drink a bit of the sap for more energy, let's make this like 10% of the Brood Rate)
-        this.leafCollectionRate = (0.5 / 60); // average input of leaves into the colony per worker. This rate can get INCREASED temporarily by playing the Leaf CUTTING and Leaf TRANSPORT games
+        this.broodEatingRate = (0.003 / 60); // How much  fungus each brood will eat
+        this.workerEatingRate = (0.003 / 60); // how much leaf mass each worker will eat (Much less than a brood would eat of the fungus, the workers just drink a bit of the sap for more energy, let's make this like 10% of the Brood Rate)
+        this.leafCollectionRate = (2 / 60); // average input of leaves into the colony per worker. This rate can get INCREASED temporarily by playing the Leaf CUTTING and Leaf TRANSPORT games
 
         this.geneticDiversity = geneticDiversity; // Basically just gives a new colony permanently elevated stats, a very slight boost to all the positives  and slight decline in all the negatives. For instance the Infection Spread chance would be lower for a colony with a higher genetic diversity
         this.newInfections; // this many new ants will be infected in the main simulation
@@ -31,6 +31,12 @@ class Colony {
         this.reproductionTimerLength = 60;
         this.reproductionTimerCount = 0;
         this.newAntsPerCycle = Math.floor(1 + (this.leaves * 0.01));
+
+        colonyGameUI.push(this);
+    }
+
+    event(){
+
     }
 
     update() {
@@ -116,6 +122,10 @@ class Colony {
         if (this.workerCount >= this.colonyPubertyThreshold) {
             this.colonyPubertyThresholdReached = true;
         }
+    }
+
+    draw(){
+        
     }
 
 }

@@ -20,6 +20,10 @@ class ColonyGridNode {
         this.gCost = 0; //distance from origin node
         this.hCost = 0; //distance to target node
 
+        //debug options
+        this.displayGridCoord = false;
+        this.displayDistance = false;
+
     }
 
     fCost = function () {
@@ -50,14 +54,19 @@ class ColonyGridNode {
             renderer.drawImage(colonyTiles[colonyGridTileMap[this.gridCoord.row][this.gridCoord.col]], this.pixelCoord.x - (GRID_NODE_SIZE * pixelSize / 2), this.pixelCoord.y - (GRID_NODE_SIZE * pixelSize / 2), GRID_NODE_SIZE * pixelSize, GRID_NODE_SIZE * pixelSize);
         }
 
-        renderer.font = (14 * pixelSize).toString() + "px SmallBoldPixel";
+        renderer.font = (6 * pixelSize).toString() + "px Arial";
         renderer.fillStyle = "white";
         renderer.textAlign = "center";
 
-        //write distance to fungus value on each tile for troublshooting
-        //if (this.distanceFromFungus != null) {
-        //renderer.fillText(Math.floor(this.distanceFromFungus), this.pixelCoord.x, this.pixelCoord.y);
-        //}
+        //display grid coords on each tile for debuging
+        if (this.displayGridCoord){
+            renderer.fillText(this.gridCoord.col + "," + this.gridCoord.row, this.pixelCoord.x, this.pixelCoord.y)
+        }
+
+        //display distance to fungus value on each tile for debugging
+        if (this.distanceFromFungus != null && this.displayDistance) {
+            renderer.fillText(Math.floor(this.distanceFromFungus), this.pixelCoord.x, this.pixelCoord.y);
+        }
 
     }
 }

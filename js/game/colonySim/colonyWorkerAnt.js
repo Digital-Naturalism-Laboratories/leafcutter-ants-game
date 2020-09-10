@@ -13,7 +13,7 @@ class ColonyWorkerAnt {
 
         this.pixelCoord = pixelCoordAtCenterOfTileCoord(col, row);
 
-        this.horizontalSpeed = -1;
+        this.horizontalSpeed = -0.5;
         this.verticalSpeed = 2;
         this.sprite = new Sprite(tr(vec2(this.pixelCoord.x, this.pixelCoord.y - 10), vec2(pixelSize * 0.4, pixelSize * 0.4)), new ImageObject("images/Animations/Worker_Walking_Spritesheet.png", vec2(0, 0)));
         this.collisionRadius = 15;
