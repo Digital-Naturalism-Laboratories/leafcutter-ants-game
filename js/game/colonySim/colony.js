@@ -35,7 +35,7 @@ class Colony {
         colonyGameUI.push(this);
     }
 
-    event(){
+    event() {
 
     }
 
@@ -53,9 +53,26 @@ class Colony {
 
         this.reproductionTimerCount++;
         if (this.reproductionTimerCount >= this.reproductionTimerLength) {
-            for (var i = 0; i < this.newAntsPerCycle; i++) {
-                new ColonyAnt(fungus.gridCoord.col, fungus.gridCoord.row, totalCycles);
-            }
+
+            if (eggClusters.length > 0){
+                var attemptCount = 0;
+                for (var i = 0; i < this.newAntsPerCycle;) {
+
+                    attemptCount++;
+                    var randomEggClusterIndex = getRandomInt(0, eggClusters.length);
+
+                    if (eggClusters[randomEggClusterIndex].isVisible) {
+                        new ColonyAnt(eggClusters[randomEggClusterIndex].gridCoord.col, eggClusters[randomEggClusterIndex].gridCoord.row, totalCycles);
+                        i++;;
+                    }
+
+                    if (attemptCount > 50){
+                        new ColonyAnt(fungus.gridCoord.col, fungus.gridCoord.row, totalCycles);
+                        i++;
+                    }
+                }
+            } 
+
             this.reproductionTimerCount = 0;
         }
     }
@@ -124,8 +141,8 @@ class Colony {
         }
     }
 
-    draw(){
-        
+    draw() {
+
     }
 
 }

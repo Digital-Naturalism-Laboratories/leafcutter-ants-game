@@ -194,6 +194,11 @@ class ColonyAnt {
         var nextTileCol = colAtXCoord((this.pixelCoord.x + this.speedX) / pixelSize);
         var nextTileRow = rowAtYCoord((this.pixelCoord.y + this.speedY) / pixelSize);
 
+        if (nextTileCol < 0 || nextTileCol >= COLONY_COLS ||
+            nextTileRow < 0 || nextTileRow >= COLONY_ROWS) {
+            return false;
+        }
+
         if (colonyGridTileMap[nextTileRow][nextTileCol] == COLONY_WALL ||
             colonyGridNodes[nextTileRow][nextTileCol].isTunneled === false) {
 
