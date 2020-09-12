@@ -71,7 +71,7 @@ var eggClusters = [];
 var colonyWingedQueens = [];
 var colonyWingedMales = [];
 
-var previousTunneledTileCount = 0;
+//var previousTunneledTileCount = 0;
 
 var banner;
 
@@ -323,10 +323,10 @@ function colonyGameUICustomEvents(deltaTime) {
 
   }
 
-  if (getTunneledTileCount() > previousTunneledTileCount) {
-    colonyGameSFX[SFX_DIGGING].play();
-  }
-  previousTunneledTileCount = getTunneledTileCount();
+  //if (getTunneledTileCount() > previousTunneledTileCount) {
+  //  colonyGameSFX[SFX_DIGGING].play();
+  //}
+  //previousTunneledTileCount = getTunneledTileCount();
 }
 
 //#region Image Loading
