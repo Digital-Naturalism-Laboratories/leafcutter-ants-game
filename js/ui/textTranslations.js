@@ -182,3 +182,8 @@ var string_CLICK_QUEEN = [
     "Haga clic en una nueva reina para comenzar una nueva colonia",
     "Click on a new queen to start a new colony"
 ]
+
+var string_LANGUAGE = [
+    "IDIOMA: ",
+    "LANGUAGE: "
+]

@@ -53,7 +53,7 @@ function setupMainMenuUI() {
     mainMenuUI.push(menuBigPlayButton);
 
     languageBtn = new TextButton(tr(vec2(1, gameHeight-(btnSize.y*2)), vec2(gameWidth-2, btnSize.y*2)),
-        new Label(tr(), "LANGUAGE: " + (currentLanguage == ENGLISH ? languages[1].text_label : languages[0].text_label), mainMenuFontSize.toString() + "px SmallBoldPixel", "white", 0),
+        new Label(tr(), string_LANGUAGE[currentLanguage] + (currentLanguage == ENGLISH ? languages[1].text_label : languages[0].text_label), mainMenuFontSize.toString() + "px SmallBoldPixel", "white", 0),
         new Button(tr(), "#00000044", "#00000044", "#00000044"), 
         "");
     mainMenuUI.push(languageBtn);
@@ -185,16 +185,16 @@ function mainMenuUICustomEvents(deltaTime)
            }
             var done = false;
             for (let i = 1; i < languages.length; i++) {
-                if (languageBtn.label.text == "LANGUAGE: " + languages[i].text_label) {
-                    languageBtn.label.text = "LANGUAGE: " + languages[i - 1].text_label;
+                if (languageBtn.label.text == string_LANGUAGE[currentLanguage] + languages[i].text_label) {
+                    languageBtn.label.text = string_LANGUAGE[0] + languages[i - 1].text_label;
                     done = true;
                     break;
                 }
             }
-            if (!done) languageBtn.label.text = "LANGUAGE: " + languages[languages.length - 1].text_label;
+            if (!done) languageBtn.label.text = string_LANGUAGE[1] + languages[languages.length - 1].text_label;
             languageBtn.button.resetOutput();
 
-            if (languageBtn.label.text == "LANGUAGE: Español") {
+            if (languageBtn.label.text == string_LANGUAGE[0] + "Español") {
                 currentLanguage = ESPAÑOL;
             } else {
                 currentLanguage = ENGLISH;
@@ -212,12 +212,12 @@ function mainMenuUICustomEvents(deltaTime)
 
         {
             currentLanguage = ESPAÑOL;
-            languageBtn.label.text = "LANGUAGE: " + languages[0].text_label;
+            languageBtn.label.text = string_LANGUAGE[0] + languages[0].text_label;
         }
         else if(currentLanguage == ESPAÑOL)
         {
             currentLanguage = ENGLISH;
-            languageBtn.label.text = "LANGUAGE: " + languages[1].text_label;
+            languageBtn.label.text = string_LANGUAGE[1] + languages[1].text_label;
         }
         languageBtn.button.resetOutput();
     }
