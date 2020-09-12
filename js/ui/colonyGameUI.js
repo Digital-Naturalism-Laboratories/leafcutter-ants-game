@@ -174,12 +174,22 @@ function resetColonySimGame() {
   previousEggTotal += colony.totalEggsLaid
   colony = new Colony();
   colonyGrid = [];
+  eggClusters = [];
+  colonyWingedQueens = [];
+  colonyWingedMales = [];
   createGrid();
   setDistFromFungusOnEachColonyNode();
 
   for (i = 0; i < colonyAnts.length; i++) {
     colonyAnts[i].killAnt();
   }
+
+  for (i = 0; i < colonyGameUI.length; i++) {
+    if (colonyGameUI[i].constructor.name == "ColonyWingedQueen") {
+      colonyGameUI.splice(i, 1);
+    }
+  }
+
   for (i = 0; i < colony.population; i++) {
     new ColonyAnt(fungus.gridCoord.col, fungus.gridCoord.row, 0);
   }
@@ -260,6 +270,18 @@ function colonyGameUICustomUpdate(deltaTime) {
     }
   }
 
+  for (var i = 0; i < colonyWingedQueens.length; i++){
+    colonyWingedQueens[i].update();
+  }
+
+  for (var i = 0; i < colonyWingedMales.length; i++){
+    colonyWingedMales[i].update();
+  }
+
+  for (var i = 0; i < eggClusters.length; i++){
+    eggClusters[i].update();
+  }
+
 }
 
 function colonyGameUICustomEvents(deltaTime) {
@@ -280,11 +302,23 @@ function colonyGameUICustomEvents(deltaTime) {
 
     defenseGameButton.handleInput(lastTouchPos);
 
-    if (getDistBtwVec2(vec2((colonyTiles[COLONY_TUNNEL_VERT].width * 13) * pixelSize, (colonyTiles[COLONY_TUNNEL_VERT].height + 20) * pixelSize), vec2(touchPos[0].x - canvas.getBoundingClientRect().left, touchPos[0].y - canvas.getBoundingClientRect().top)) < 40 * pixelSize) {
-      bgmColony.pause();
-      bgmColony.currentTime = 0;
+    //if (getDistBtwVec2(vec2((colonyTiles[COLONY_TUNNEL_VERT].width * 13) * pixelSize, (colonyTiles[COLONY_TUNNEL_VERT].height + 20) * pixelSize), vec2(touchPos[0].x - canvas.getBoundingClientRect().left, touchPos[0].y - canvas.getBoundingClientRect().top)) < 40 * pixelSize) {
+    //  bgmColony.pause();
+    //  bgmColony.currentTime = 0;
 
-      ui.stateIndex = DEFENSEGAMEUI;
+    //  ui.stateIndex = DEFENSEGAMEUI;
+    //}
+
+    for (var i = 0; i < colonyWingedQueens.length; i++){
+      colonyWingedQueens[i].event();
+    }
+
+    for (var i = 0; i < colonyWingedMales.length; i++){
+      colonyWingedMales[i].event();
+    }
+
+    for (var i = 0; i < eggClusters.length; i++){
+      eggClusters[i].event();
     }
 
   }

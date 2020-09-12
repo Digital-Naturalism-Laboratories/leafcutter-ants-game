@@ -22,7 +22,6 @@ class ColonyWingedMale {
         this.animationTimer = 0;
 
         colonyWingedMales.push(this);
-        colonyGameUI.push(this);
     }
 
     event() {

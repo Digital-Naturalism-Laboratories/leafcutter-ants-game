@@ -25,7 +25,6 @@ class ColonyWingedQueen {
         this.animationTimer = 0;
 
         colonyWingedQueens.push(this);
-        colonyGameUI.push(this);
     }
 
     event() {

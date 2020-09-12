@@ -12,7 +12,6 @@ class EggCluster {
         this.isVisible = false;
 
         eggClusters.push(this);
-        colonyGameUI.push(this);
 
     }
 
