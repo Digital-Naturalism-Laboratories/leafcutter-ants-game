@@ -55,7 +55,7 @@ class FlyingQueen {
 
     event() {
         if (!this.isPlayerControlled) return;
-        //if (this.isMating) return;
+        if (this.isMating) return;
 
         if (isTouched) {
 
