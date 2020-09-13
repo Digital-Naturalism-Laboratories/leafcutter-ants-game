@@ -287,6 +287,8 @@ function colonyGameUICustomUpdate(deltaTime) {
     eggClusters[i].update();
   }
 
+  fungus.update();
+
 }
 
 function colonyGameUICustomEvents(deltaTime) {
