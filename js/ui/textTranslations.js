@@ -114,8 +114,8 @@ var string_LEAF_BONUS = [
 ]
 
 var string_CONTAMINATED_FUNGUS_RETURNED = [
-    "CONTAMINATED FUNGUS RETURNED",
-    "HONGOS CONTAMINADOS DEVUELTOS"
+    "HONGOS CONTAMINADOS DEVUELTOS",
+    "CONTAMINATED FUNGUS RETURNED"
 ]
 
 var string_TIME_BONUS_FOR_RETURNING_WITH_LEAVES = [
@@ -124,8 +124,8 @@ var string_TIME_BONUS_FOR_RETURNING_WITH_LEAVES = [
 ]
 
 var string_PARASITE_INFECTIONS = [
+    "Infecciones de parásitos: ",
     "Parasite Infections: ",
-    "Infecciones de parásitos: "
 ]
 
 var string_GENETIC_DIVERSITY_FROM_MATING = [

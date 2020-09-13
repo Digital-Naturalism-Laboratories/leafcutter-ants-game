@@ -325,7 +325,8 @@ function Background()
 			// renderer.fillRect(this.x,this.y - this.labelHeight*0.7, this.labelWidth*9.25,this.labelHeight);
 			//div text
 			renderer.fillStyle = 'white';//dark violet, medium orchid
-			renderer.font = '45px SmallBoldPixel';
+			renderer.font = (45 * pixelSize) + 'px SmallBoldPixel';
+			renderer.textAlign = "left";
 			renderer.fillText(this.label + defenseGame.background.bigAntTallyOfInfections, this.x,this.y);
 		}
 	}
@@ -480,7 +481,7 @@ function PheremoneGap(x)
 			// renderer.fillRect(this.x  - this.alertMessage.width,this.y - this.fontSize*1.25, this.alertMessage.width*1.25,this.fontSize*2);
 
 			renderer.fillStyle = 'white';
-			renderer.font = '36px SmallBoldPixel';
+			renderer.font = (24 * pixelSize) + 'px SmallBoldPixel';
 			this.alertMessage.width = renderer.measureText(pheremoneGapAlertMessage).width;
 			renderer.fillText(pheremoneGapAlertMessage, this.alertMessage.x - this.alertMessage.width,this.alertMessage.y + renderer.canvas.height*0.05);
 		}

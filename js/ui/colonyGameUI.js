@@ -307,7 +307,7 @@ function colonyGameUICustomEvents(deltaTime) {
       y: touchPos[0].y - canvas.getBoundingClientRect().top
     }
 
-    defenseGameButton.handleInput(lastTouchPos);
+    //defenseGameButton.handleInput(lastTouchPos);
 
     //if (getDistBtwVec2(vec2((colonyTiles[COLONY_TUNNEL_VERT].width * 13) * pixelSize, (colonyTiles[COLONY_TUNNEL_VERT].height + 20) * pixelSize), vec2(touchPos[0].x - canvas.getBoundingClientRect().left, touchPos[0].y - canvas.getBoundingClientRect().top)) < 40 * pixelSize) {
     //  bgmColony.pause();

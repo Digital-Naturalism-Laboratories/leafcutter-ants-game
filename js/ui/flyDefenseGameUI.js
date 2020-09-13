@@ -199,26 +199,29 @@ defenseGame.initialize = function()
 		  	let labelWidth =  renderer.measureText(timerNumberConvertedToString).width;
 
 		  	renderer.fillStyle = 'white';
-			renderer.font = '75px SmallBoldPixel';
+			renderer.font = (75 * pixelSize) * 'px SmallBoldPixel';
+			renderer.textAlign = 'left';
 		  	renderer.fillText(string_TIME_LEFT[currentLanguage] + timerNumberConvertedToString, renderer.canvas.width * 0.01,renderer.canvas.height * 0.25);
 
 			if (this.colonyReached)
 			{
 				renderer.fillStyle = 'white';
-				let fontSize = 150;
+				let fontSize = 80;
 				let stringedFontSize = fontSize.toString();
 				renderer.font = stringedFontSize + 'px SmallBoldPixel';
 
 				let colonyReachedText = string_COLONY_REACHED[currentLanguage];
 				let colonyReachedTextWidth = renderer.measureText(colonyReachedText).width;
+				renderer.textAlign = 'left';
 				renderer.fillText(colonyReachedText, renderer.canvas.width/2 - colonyReachedTextWidth/2,
 													 renderer.canvas.height/2 - fontSize/2);
 
-				let clickToContinueTextFontSize = 100;
+				let clickToContinueTextFontSize = 80;
 				let stringedClickToContinueTextFontSize = clickToContinueTextFontSize.toString();
 				renderer.font = stringedClickToContinueTextFontSize + 'px SmallBoldPixel';
 				let clickToContinueText = string_CLICK_TO_CONTINUE[currentLanguage];
 				let clickToContinueTextWidth = renderer.measureText(clickToContinueText).width;
+				renderer.textAlign = 'left';
 				renderer.fillText(clickToContinueText, renderer.canvas.width/2 - clickToContinueTextWidth/2,
 													   renderer.canvas.height/2 + fontSize/2);
 				if (isTouched) {
