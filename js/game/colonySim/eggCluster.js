@@ -1,3 +1,5 @@
+var visibleEggClusterCount = 0;
+
 class EggCluster {
     constructor(col, row, offset) {
 
@@ -21,13 +23,15 @@ class EggCluster {
 
     }
 
-    event(){
-        
+    event() {
+
     }
 
-    update(){
+    update() {
+        
         if (colonyGridNodes[this.gridCoord.row][this.gridCoord.col].isTunneled == true) {
             this.isVisible = true;
+            visibleEggClusterCount++;
         }
     }
 

@@ -80,6 +80,8 @@ class ColonyWingedMale {
         if (this.animationFrameCurrent >= animationFrameCount) {
             this.animationFrameCurrent = 0;
         }
+        
+        this.animationFrameCurrent = this.currentFacing == FACING_RIGHT ? 0 : 19;
 
         this.animationTimer++
         animationSprite.drawScIn(inPos, inSize);

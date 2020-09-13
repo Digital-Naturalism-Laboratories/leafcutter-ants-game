@@ -238,6 +238,10 @@ function colonyGameUICustomDraw(deltaTime) {
     colonyWingedQueens[i].draw();
   }
 
+  for (var i = 0; i < colonyWingedMales.length; i++) {
+    colonyWingedMales[i].draw();
+  }
+
   drawStatsBlock();
   banner.draw();
 
@@ -250,7 +254,7 @@ function colonyGameUICustomUpdate(deltaTime) {
     totalCycles = Math.floor(totalMilliseconds / cycleLength);
   }
 
-  if (colonyWingedQueens.length < colony.femaleReproductiveCount) {
+  if (colonyWingedQueens.length < colony.femaleReproductiveCount && colony.femaleReproductiveCount < visibleEggClusterCount) {
     for (var i = 0; i < colony.femaleReproductiveCount;) {
       var randomEggClusterIndex = getRandomInt(0, eggClusters.length);
       if (eggClusters[randomEggClusterIndex].isVisible) {
@@ -260,7 +264,7 @@ function colonyGameUICustomUpdate(deltaTime) {
     }
   }
 
-  if (colonyWingedMales.length < colony.maleReproductiveCount) {
+  if (colonyWingedMales.length < colony.maleReproductiveCount && colony.maleReproductiveCount < visibleEggClusterCount) {
     for (var i = 0; i < colony.maleReproductiveCount;) {
       var randomEggClusterIndex = getRandomInt(0, eggClusters.length);
       if (eggClusters[randomEggClusterIndex].isVisible) {
@@ -270,15 +274,16 @@ function colonyGameUICustomUpdate(deltaTime) {
     }
   }
 
-  for (var i = 0; i < colonyWingedQueens.length; i++){
+  for (var i = 0; i < colonyWingedQueens.length; i++) {
     colonyWingedQueens[i].update();
   }
 
-  for (var i = 0; i < colonyWingedMales.length; i++){
+  for (var i = 0; i < colonyWingedMales.length; i++) {
     colonyWingedMales[i].update();
   }
 
-  for (var i = 0; i < eggClusters.length; i++){
+  visibleEggClusterCount = 0;
+  for (var i = 0; i < eggClusters.length; i++) {
     eggClusters[i].update();
   }
 
@@ -309,15 +314,15 @@ function colonyGameUICustomEvents(deltaTime) {
     //  ui.stateIndex = DEFENSEGAMEUI;
     //}
 
-    for (var i = 0; i < colonyWingedQueens.length; i++){
+    for (var i = 0; i < colonyWingedQueens.length; i++) {
       colonyWingedQueens[i].event();
     }
 
-    for (var i = 0; i < colonyWingedMales.length; i++){
+    for (var i = 0; i < colonyWingedMales.length; i++) {
       colonyWingedMales[i].event();
     }
 
-    for (var i = 0; i < eggClusters.length; i++){
+    for (var i = 0; i < eggClusters.length; i++) {
       eggClusters[i].event();
     }
 
