@@ -107,7 +107,7 @@ class ColonyWorkerAnt {
         }
 
         this.sprite.drawScIn(inPos, inSize);
-        drawCircle(this.pixelCoord.x + (10 * pixelSize), this.pixelCoord.y + (10 * pixelSize), (circleIndicatorTimer / 60) * 20 * pixelSize, 4 * pixelSize, 'green');
+        drawCustomCircle(this.pixelCoord.x + (10 * pixelSize), this.pixelCoord.y + (10 * pixelSize), (circleIndicatorTimer / 60) * 20 * pixelSize, 4 * pixelSize, 'green');
 
         if (this.animationTimer > this.animationFrameLength - 1) {
             this.animationFrameCurrent++

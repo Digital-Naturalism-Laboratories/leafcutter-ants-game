@@ -64,7 +64,7 @@ class ColonyWingedQueen {
 
         this.animateSprite(this.sprite, this.animationFrameLength, this.animationFrameCount, this.inSize);
         this.visibleWing.drawSc();
-        drawCircle(this.pixelCoord.x, this.pixelCoord.y + (5 * pixelSize), (circleIndicatorTimer / 60) * 20 * pixelSize, 4 * pixelSize, 'green');
+        drawCustomCircle(this.pixelCoord.x, this.pixelCoord.y + (5 * pixelSize), (circleIndicatorTimer / 60) * 20 * pixelSize, 4 * pixelSize, 'green');
         //renderer.fillText(this.gridCoord.col + "," + this.gridCoord.row, this.pixelCoord.x, this.pixelCoord.y)
 
     }

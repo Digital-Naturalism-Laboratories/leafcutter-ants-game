@@ -312,7 +312,7 @@ function colorCircle(centerX, centerY, radius, fillColor) {
   renderer.fill();
 }
 
-function drawCircle(centerX, centerY, radius, width, strokeColor) {
+function drawCustomCircle(centerX, centerY, radius, width, strokeColor) {
   var prevLineWidth = renderer.lineWidth;
   renderer.strokeStyle = strokeColor;
   renderer.lineWidth = 4;
