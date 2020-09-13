@@ -23,7 +23,7 @@ function setupColonyGameIntroUI() {
     new ImageObject("images/Animations/info_screen_colony_spritesheet.png", vec2(1000, 750))));
 
   //fix for english title on sencond ES colony info screen
-  titleESSprite = new Sprite(tr(vec2(gameWidth / 2, 60), vec2(gameWidth / 1000, gameHeight / 750)),
+  titleESSprite = new Sprite(tr(vec2(gameWidth / 2, 40 * pixelSize), vec2(gameWidth / 1000, gameHeight / 750)),
     new ImageObject("images/Animations/info_screen_colony_spritesheet_ES.png", vec2(1000, 750)));
 
   bgmColony.setAttribute('src', 'audio/Intro Music.mp3');
@@ -78,6 +78,8 @@ function colonyGameIntroUIResize() {
   for (let i = 0; i < colonyInfoScreenSprites.length; i++) {
     colonyInfoScreenSprites[i].transform.position = vec2(gameWidth / 2, gameHeight / 2);
     colonyInfoScreenSprites[i].transform.scale = vec2(gameWidth / 1000, gameHeight / 750);
+    titleESSprite.transform.position = vec2(gameWidth / 2, 40 * pixelSize);
+    titleESSprite.transform.scale = vec2(gameWidth / 1000, gameHeight / 750);
   }
 }
 
