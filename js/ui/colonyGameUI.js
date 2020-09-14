@@ -288,6 +288,7 @@ function colonyGameUICustomUpdate(deltaTime) {
   }
 
   fungus.update();
+  banner.update();
 
 }
 

@@ -45,7 +45,6 @@ class ColonyMessageBanner {
 
         //draw banner background
         renderer.fillStyle = 'orange';
-        //renderer.fillRect(0, this.bannerPosY - 50 * pixelSize, gameWidth, this.bannerHeight);
         for (var i = 0; i < this.messages.length; i++){
             renderer.fillRect(0, this.bannerPosY - (50 * (i + 1)) + (20 * i) * pixelSize, gameWidth, this.bannerHeight);
         }
@@ -57,7 +56,6 @@ class ColonyMessageBanner {
         for (var i = 0; i < this.messages.length; i++){
             renderer.fillText (this.messages[i], gameWidth / 2, this.bannerPosY - this.bannerHeight - (20 * i));
         }
-        //renderer.fillText (this.message, gameWidth / 2, this.bannerPosY - this.bannerHeight);
 
     }
 

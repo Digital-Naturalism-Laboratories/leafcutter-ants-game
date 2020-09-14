@@ -85,6 +85,7 @@ class ColonyAnt {
 
             if (this.age >= this.pubertyAge && colony.colonyPubertyThresholdReached) {
                 this.state = Math.random() > 0.5 ? colonyAntStates.MALE_REPRODUCTIVE : colonyAntStates.FEMALE_REPRODUCTIVE;
+                this.state = Math.random() > 0.3 ? colonyAntStates.WORKER : this.state;
             } else if (this.age >= this.pubertyAge) {
                 this.state = colonyAntStates.WORKER;
             }
