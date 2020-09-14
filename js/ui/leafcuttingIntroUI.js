@@ -22,7 +22,7 @@ function setupLeafcuttingIntroUI()
 
   //bgmCutting.setAttribute('src', 'audio/Intro Music.mp3');
   //bgmCutting.loop = true;
-  //bgmCutting.volume = 0.6;
+  //bgmCutting.volume = 0.1;
 }
 
 function leafcuttingAnimateSprite(sprite, frameLength, framerameCount)

@@ -24,7 +24,7 @@ function setupFlightGameIntroUI() {
 
   //bgmFlight.setAttribute('src', 'audio/Intro Music.mp3');
   //bgmFlight.loop = true;
-  //bgmFlight.volume = 0.6;
+  //bgmFlight.volume = 0.1;
 
 }
 

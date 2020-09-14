@@ -71,7 +71,7 @@ function setupFlightGameUI() {
 
   for (let i = 0; i < flyingGameSFX.length; i++) {
     flyingGameSFX[i].setAttribute('src', flyingGameSFXPaths[i]);
-    flyingGameSFX[i].volume = 0.6;
+    flyingGameSFX[i].volume = 0.25;
   }
 
 }

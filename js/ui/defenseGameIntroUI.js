@@ -21,7 +21,7 @@ function setupDefenseGameIntroUI() {
 
   //bgmDefensegame.setAttribute('src', 'audio/Intro Music.mp3');
   //bgmDefensegame.loop = true;
-  //bgmDefensegame.volume = 0.6;
+  //bgmDefensegame.volume = 0.1;
 }
 
 function defenseGameAnimateSprite(sprite, frameLength, framerameCount) {

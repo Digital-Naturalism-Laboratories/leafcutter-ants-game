@@ -104,11 +104,11 @@ function setupColonyGameUI() {
   //initialize BGM
   bgmColony.setAttribute('src', 'audio/Intro Music.mp3');
   bgmColony.loop = true;
-  bgmColony.volume = 0.6;
+  bgmColony.volume = 0.1;
 
   for (let i = 0; i < colonyGameSFX.length; i++) {
     colonyGameSFX[i].setAttribute('src', colonyGameSFXPaths[i]);
-    colonyGameSFX[i].volume = 0.6;
+    colonyGameSFX[i].volume = 0.25;
   }
 
 }

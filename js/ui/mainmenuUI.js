@@ -97,7 +97,7 @@ function setupMainMenuUI() {
      
     for (let i = 0; i < mainMenuSFX.length; i++) {
       mainMenuSFX[i].setAttribute('src', mainMenuSFXPaths[i]);
-      mainMenuSFX[i].volume = 0.6;
+      mainMenuSFX[i].volume = 0.25;
     }
 }
 

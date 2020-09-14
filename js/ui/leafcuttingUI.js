@@ -22,7 +22,7 @@ var leafcuttingLosePenalty = 2;
 var prevBGM = -1;
 var currentBGM = 0;
 
-var leafcuttingBGMMaxVolume = 0.6;
+var leafcuttingBGMMaxVolume = 0.1;
 var leafcuttingBGMVolumeStep = 0.0004;
 var leafcuttingBGM = [
     document.createElement('audio'),
@@ -154,7 +154,7 @@ function setupLeafcuttingUI()
     for(let i = 0; i < leafcuttingSFX.length; i++)
     {
         leafcuttingSFX[i].setAttribute('src', leafcuttingSFXPaths[i]);
-        leafcuttingSFX[i].volume = 1;
+        leafcuttingSFX[i].volume = 0.25;
     }
 }
 

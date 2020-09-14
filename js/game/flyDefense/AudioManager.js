@@ -97,7 +97,7 @@ function AmbienceManager()
 	this.ambienceWash = document.createElement('audio');
 	this.ambienceWash.setAttribute('src', 'audio/flyDefense/ambience/breeze.mp3');
     this.ambienceWash.loop = true;
-    this.ambienceWash.volume = 0.3;
+    this.ambienceWash.volume = 0.25;
 
     this.startAmbience = function()
     {
@@ -138,16 +138,16 @@ function AmbienceManager()
 
     this.cicada1 = document.createElement('audio');
     this.cicada1.setAttribute('src', 'audio/flyDefense/ambience/cicada1.mp3');
-    this.cicada1.volume = 0.25;
+    this.cicada1.volume = 0.20;
     this.cicada2 = document.createElement('audio');
     this.cicada2.setAttribute('src', 'audio/flyDefense/ambience/cicada2.mp3');
-    this.cicada2.volume = 0.25;
+    this.cicada2.volume = 0.20;
     this.cicada3 = document.createElement('audio');
     this.cicada3.setAttribute('src', 'audio/flyDefense/ambience/cicada3.mp3');
-    this.cicada3.volume = 0.25;
+    this.cicada3.volume = 0.20;
     this.cicada4 = document.createElement('audio');
     this.cicada4.setAttribute('src', 'audio/flyDefense/ambience/cicada4.mp3');
-    this.cicada4.volume = 0.25;
+    this.cicada4.volume = 0.20;
 
     this.arrayOfCicadaSounds = [this.cicada1,this.cicada2,this.cicada3,this.cicada4];
 
@@ -187,7 +187,7 @@ function SFXManager()
 	this.stuckSwarmAlertSound = document.createElement('audio');
 	this.stuckSwarmAlertSound.setAttribute('src', 'audio/flyDefense/pheremoneGapSwarmAlert.mp3');
 	this.stuckSwarmAlertSound.loop = true;
-	this.stuckSwarmAlertSound.volume = 0.4;
+	this.stuckSwarmAlertSound.volume = 0.05;
 
 	//one shots
 	this.beefUpTrailFeedback = document.createElement('audio');
@@ -199,10 +199,13 @@ function SFXManager()
 	//avoid cutoff one shots
 	this.eatingFungusSound1 = document.createElement('audio');
 	this.eatingFungusSound1.setAttribute('src', 'audio/flyDefense/eatingFungus.mp3');
+	this.eatingFungusSound1.volume = 0.1;
 	this.eatingFungusSound2 = document.createElement('audio');
 	this.eatingFungusSound2.setAttribute('src', 'audio/flyDefense/eatingFungus.mp3');
+	this.eatingFungusSound2.volume = 0.1;
 	this.eatingFungusSound3 = document.createElement('audio');
 	this.eatingFungusSound3.setAttribute('src', 'audio/flyDefense/eatingFungus.mp3');
+	this.eatingFungusSound3.volume = 0.1;
 	this.eatingFungusSoundArrayIndex = 0;
 	this.arrayOfEatingFungusSounds = [];
 
@@ -223,13 +226,13 @@ function SFXManager()
 
 	this.flyChasedSound1 = document.createElement('audio');
 	this.flyChasedSound1.setAttribute('src', 'audio/flyDefense/flyChasedFeedback.mp3');
-	this.flyChasedSound1.volume = 0.2;
+	this.flyChasedSound1.volume = 0.1;
 	this.flyChasedSound2 = document.createElement('audio');
 	this.flyChasedSound2.setAttribute('src', 'audio/flyDefense/flyChasedFeedback.mp3');
-	this.flyChasedSound2.volume = 0.2;
+	this.flyChasedSound2.volume = 0.1;
 	this.flyChasedSound3 = document.createElement('audio');
 	this.flyChasedSound3.setAttribute('src', 'audio/flyDefense/flyChasedFeedback.mp3');
-	this.flyChasedSound3.volume = 0.2;
+	this.flyChasedSound3.volume = 0.1;
 	this.flyChasedSoundArrayIndex = 0;
 	this.arrayOfFlyChasedSounds = [];
 
@@ -251,13 +254,13 @@ function SFXManager()
 	//touch feedback sounds
 	this.pheremoneGapTouchedSound1 = document.createElement('audio');
 	this.pheremoneGapTouchedSound1.setAttribute('src', 'audio/flyDefense/touchedPheremoneGapSound.mp3');
-    this.pheremoneGapTouchedSound1.volume = 1;
+    this.pheremoneGapTouchedSound1.volume = 0.1;
     this.pheremoneGapTouchedSound2 = document.createElement('audio');
 	this.pheremoneGapTouchedSound2.setAttribute('src', 'audio/flyDefense/touchedPheremoneGapSound.mp3');
-    this.pheremoneGapTouchedSound2.volume = 1;
+    this.pheremoneGapTouchedSound2.volume = 0.1;
 	this.pheremoneGapTouchedSound3 = document.createElement('audio');
 	this.pheremoneGapTouchedSound3.setAttribute('src', 'audio/flyDefense/touchedPheremoneGapSound.mp3');
-    this.pheremoneGapTouchedSound3.volume = 1;
+    this.pheremoneGapTouchedSound3.volume = 0.1;
     this.arrayOfPheremoneGapTouchedSoundsIndex = 0;
     this.arrayOfPheremoneGapTouchedSounds = [this.pheremoneGapTouchedSound1,this.pheremoneGapTouchedSound2,this.pheremoneGapTouchedSound3];
 
@@ -295,13 +298,13 @@ function SFXManager()
 
     this.thatDoesNothingSound1 = document.createElement('audio');
 	this.thatDoesNothingSound1.setAttribute('src', 'audio/flyDefense/thatDoesNothing.mp3');
-    this.thatDoesNothingSound1.volume = 0.5;
+    this.thatDoesNothingSound1.volume = 0.1;
     this.thatDoesNothingSound2 = document.createElement('audio');
 	this.thatDoesNothingSound2.setAttribute('src', 'audio/flyDefense/thatDoesNothing.mp3');
-    this.thatDoesNothingSound2.volume = 0.5;
+    this.thatDoesNothingSound2.volume = 0.1;
     this.thatDoesNothingSound3 = document.createElement('audio');
 	this.thatDoesNothingSound3.setAttribute('src', 'audio/flyDefense/thatDoesNothing.mp3');
-    this.thatDoesNothingSound3.volume = 0.5;
+    this.thatDoesNothingSound3.volume = 0.1;
 	this.arrayOfThatDoesNothingSoundsIndex = 0;
     this.arrayOfThatDoesNothingSounds = [this.thatDoesNothingSound1,this.thatDoesNothingSound2,this.thatDoesNothingSound3];
     this.playThatDoesNothingSound = function()
@@ -318,7 +321,7 @@ function SFXManager()
 	this.flyBuzzingNormal = document.createElement('audio');
 	this.flyBuzzingNormal.setAttribute('src', 'audio/flyDefense/flyBuzzingNormal.mp3');
 	this.flyBuzzingNormal.loop = true;
-	this.flyBuzzingNormal.volume = 0.05;
+	this.flyBuzzingNormal.volume = 0.03;
 
 	this.fliesSwarming = document.createElement('audio');
 	this.fliesSwarming.setAttribute('src', 'audio/flyDefense/fliesSwarming.mp3');
@@ -333,18 +336,18 @@ function SFXManager()
 	this.groundMinimFootstepsAccelerated = document.createElement('audio');
 	this.groundMinimFootstepsAccelerated.setAttribute('src', 'audio/flyDefense/groundMinimFootstepsAccelerated.mp3');
 	this.groundMinimFootstepsAccelerated.loop = true;
-	this.groundMinimFootstepsAccelerated.volume = 0.35;
+	this.groundMinimFootstepsAccelerated.volume = 0.25;
 
 	this.leafMinimFootsteps = document.createElement('audio');
 	this.leafMinimFootsteps.setAttribute('src', 'audio/flyDefense/leafMinimFootsteps.mp3');
 	this.leafMinimFootsteps.loop = true;
 	this.leafMinimFootsteps.playbackRate = 1;
-	this.leafMinimFootsteps.volume = 0.4;
+	this.leafMinimFootsteps.volume = 0.2;
 
 	this.timeIsAlmostOutClockTickingLoop = document.createElement('audio');
 	this.timeIsAlmostOutClockTickingLoop.setAttribute('src', 'audio/flyDefense/clockTickingLoop.mp3');
 	this.timeIsAlmostOutClockTickingLoop.loop = true;
-	this.timeIsAlmostOutClockTickingLoop.volume = 0.4;
+	this.timeIsAlmostOutClockTickingLoop.volume = 0.2;
 
 	this.arrayOfLoopSoundsToBeLoopedBeforeAwkwardSilence = 
 	[
