@@ -17,7 +17,7 @@ class Queen {
             DIGGINGRIGHT: "digging right",
             IDLE: "idle"
         }
-        this.movementState = this.movementStates.LANDING;
+        this.movementState = this.movementStates.IDLE;
         this.currentFacing = FACING_RIGHT;
         this.clickCooldownTime = 60;
         this.clickCooldownTimer = this.clickCooldownTime;
