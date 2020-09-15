@@ -14,15 +14,15 @@ function onResize(ev)
     gameWidth = window.innerWidth;
     gameHeight = window.innerHeight;
     
-    if(gameWidth/gameHeight > 1.25)
+    if(gameWidth/gameHeight > 1.33)
     {
         sizeFactor = gameHeight;
         gameWidth = gameHeight + (gameHeight/4);
     }
     else
     {
-        sizeFactor = gameWidth - (gameWidth/4);
-        gameHeight = gameWidth - (gameWidth/4);
+        sizeFactor = gameWidth - (gameWidth/5);
+        gameHeight = gameWidth - (gameWidth/5);
     }
 
     pixelSize = sizeFactor / 500.0;
