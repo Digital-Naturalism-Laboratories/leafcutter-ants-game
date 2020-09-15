@@ -19,6 +19,7 @@ defenseGame.initialize = function()
 
 	//timer
 	this.timeLeft = 120;
+	this.ranOutOfTime = false;
 	this.decreaseCounter = function() 
 	{
 		if(ui.stateIndex == DEFENSEGAMEUI)
@@ -37,7 +38,8 @@ defenseGame.initialize = function()
 				timeToReturnWithLeaves = this.timeLeft;
 				badFungusFromLeaves = 200 - this.fungusTallyDiv.tallyOfEatenFungusSpores;
 				infectedAntsReturning = defenseGame.background.bigAntTallyOfInfections;
-				ui.stateIndex = COLONYGAMEINTROUI;
+				//ui.stateIndex = COLONYGAMEINTROUI;
+				this.ranOutOfTime = true;
 			}
 		}
 	};
@@ -143,14 +145,7 @@ defenseGame.initialize = function()
 		this.groundMinimManager.updateGroundMinims();
 		this.groundMinimManager.checkIfAllGroundMinimsHaveReachedPheremoneGap();
 
-		if (this.timeLeft === 0 && this.parentAntObject.arrayOfFungusSpores.length > 0)
-	    {
-	      //alert("You're leaf is still fungusy. You Lose!");
-	    }
-	    else if (this.timeLeft === 0 && this.parentAntObject.arrayOfFungusSpores.length === 0)
-	    {
-	      //alert("You made it back without being infected and with a clean leaf. You win!");
-	    }
+		
 
 	    this.audioManager.sfxManager.avoidAwkwardSilenceForLoopedAudioFiles();
 
@@ -158,6 +153,42 @@ defenseGame.initialize = function()
 	    this.NPCBigAnt2.update();
 
 	    this.bigAntManager.updateBigAnts();
+
+	    if (this.colonyReached && isTouched) 
+	    {
+			timeToReturnWithLeaves = this.timeLeft;
+			badFungusFromLeaves = 200 - defenseGame.background.fungusTallyDiv.tallyOfEatenFungusSpores;
+			infectedAntsReturning = defenseGame.background.bigAntTallyOfInfections;
+
+			// for (let i = 0; i < defenseGame.arrayOfTimeouts.length; i++) 
+			// 	{clearTimeout(defenseGame.arrayOfTimeouts[i]);};
+
+			this.reset();
+
+			ui.stateIndex = COLONYGAMEINTROUI;
+			this.colonyReached = false;
+		}
+		
+		if (this.ranOutOfTime && isTouched)
+		{
+			console.log('inside no time left and isTouched check');
+			timeToReturnWithLeaves = this.timeLeft;
+			console.log('AFTER: timeToReturnWithLeaves = this.timeLeft;');
+			badFungusFromLeaves = 200 - defenseGame.background.fungusTallyDiv.tallyOfEatenFungusSpores;
+			console.log('AFTER: badFungusFromLeaves = 200 - defenseGame.background.fungusTallyDiv.tallyOfEatenFungusSpores;');
+			infectedAntsReturning = defenseGame.background.bigAntTallyOfInfections;
+			console.log('AFTER: infectedAntsReturning = defenseGame.background.bigAntTallyOfInfections;');
+			// for (let i = 0; i < defenseGame.arrayOfTimeouts.length; i++) 
+			// 	{clearTimeout(defenseGame.arrayOfTimeouts[i]);};
+
+			this.reset();
+			console.log('AFTER: this.reset();');
+
+			ui.stateIndex = COLONYGAMEINTROUI;
+			console.log('AFTER: ui.stateIndex = COLONYGAMEINTROUI;');
+			this.colonyReached = false;
+			console.log('AFTER: this.colonyReached = false;');
+		}
 	}
 
 	renderer.save();
@@ -224,19 +255,30 @@ defenseGame.initialize = function()
 				renderer.textAlign = 'left';
 				renderer.fillText(clickToContinueText, renderer.canvas.width/2 - clickToContinueTextWidth/2,
 													   renderer.canvas.height/2 + fontSize/2);
-				if (isTouched) {
-					timeToReturnWithLeaves = this.timeLeft;
-					badFungusFromLeaves = 200 - defenseGame.background.fungusTallyDiv.tallyOfEatenFungusSpores;
-					infectedAntsReturning = defenseGame.background.bigAntTallyOfInfections;
+				
+			}
 
-					// for (let i = 0; i < defenseGame.arrayOfTimeouts.length; i++) 
-					// 	{clearTimeout(defenseGame.arrayOfTimeouts[i]);};
+			if (this.ranOutOfTime)
+			{
+				renderer.fillStyle = 'white';
+				let fontSize = 80;
+				let stringedFontSize = fontSize.toString();
+				renderer.font = stringedFontSize + 'px SmallBoldPixel';
 
-					this.reset();
+				let noTimeLeftText = string_NO_TIME_LEFT[currentLanguage];
+				let noTimeLeftTextWidth = renderer.measureText(noTimeLeftText).width;
+				renderer.textAlign = 'left';
+				renderer.fillText(noTimeLeftText, renderer.canvas.width/2 - noTimeLeftTextWidth/2,
+												  renderer.canvas.height/2 - fontSize/2);
 
-					ui.stateIndex = COLONYGAMEINTROUI;
-					this.colonyReached = false;
-				}
+				let clickToContinueTextFontSize = 80;
+				let stringedClickToContinueTextFontSize = clickToContinueTextFontSize.toString();
+				renderer.font = stringedClickToContinueTextFontSize + 'px SmallBoldPixel';
+				let clickToContinueText = string_CLICK_TO_CONTINUE[currentLanguage];
+				let clickToContinueTextWidth = renderer.measureText(clickToContinueText).width;
+				renderer.textAlign = 'left';
+				renderer.fillText(clickToContinueText, renderer.canvas.width/2 - clickToContinueTextWidth/2,
+													   renderer.canvas.height/2 + fontSize/2);
 			}
 
 		

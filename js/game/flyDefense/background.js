@@ -191,6 +191,7 @@ function Background()
 				
 				if (defenseGame.bigAntManager.currentActiveAnt.bigAntX + defenseGame.bigAntManager.currentActiveAnt.bigAntWidth >= this.colonyMoundMidpoint)
 				{
+					console.log('colony reached');
 					defenseGame.colonyReached = true;
 					defenseGame.bigAntManager.changeToIdleSpriteSheets();
 				}

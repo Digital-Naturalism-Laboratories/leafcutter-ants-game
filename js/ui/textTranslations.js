@@ -158,6 +158,11 @@ var string_COLONY_REACHED = [
     "COLONY REACHED"
 ]
 
+var string_NO_TIME_LEFT = [
+    'NO QUEDA TIEMPO',
+    'NO TIME LEFT'
+]
+
 var string_CLICK_TO_CONTINUE = [
     "HAZ CLIC PARA CONTINUAR",
     "CLICK TO CONTINUE"

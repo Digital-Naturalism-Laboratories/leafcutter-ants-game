@@ -222,6 +222,10 @@ function onKeyDown(ev)
         // }
         break;
 
+        case 83://s
+        defenseGame.timeLeft = 0;
+        break;
+
         case 80://p
         console.log('game paused')
         if (gamePaused)
