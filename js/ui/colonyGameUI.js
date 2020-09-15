@@ -230,6 +230,10 @@ function colonyGameUICustomDraw(deltaTime) {
     renderer.fillText(string_CLICK_QUEEN[currentLanguage], gameWidth / 2, 75 * pixelSize);
   }
 
+  for (var i = 0; i < colonyAnts.length; i++) {
+    colonyAnts[i].draw();
+  }
+
   for (var i = 0; i < eggClusters.length; i++) {
     eggClusters[i].draw();
   }
@@ -272,6 +276,10 @@ function colonyGameUICustomUpdate(deltaTime) {
         i++;
       }
     }
+  }
+
+  for (var i = 0; i < colonyAnts.length; i++) {
+    colonyAnts[i].update();
   }
 
   for (var i = 0; i < colonyWingedQueens.length; i++) {

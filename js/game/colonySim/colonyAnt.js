@@ -51,7 +51,7 @@ class ColonyAnt {
         this.animationFrameCurrent = 0;
         this.animationTimer = 0
 
-        colonyGameUI.push(this);
+        //colonyGameUI.push(this);
         colonyAnts.push(this);
     }
 
