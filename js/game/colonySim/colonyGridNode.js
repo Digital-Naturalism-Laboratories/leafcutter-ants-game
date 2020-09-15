@@ -42,7 +42,7 @@ class ColonyGridNode {
 
     draw = function () {
 
-        if (this.isWalkable && this.distanceFromFungus < colony.population || colonyGridTileMap[this.gridCoord.row][this.gridCoord.col] >= 90) {
+        if (this.isWalkable && this.distanceFromFungus < colony.population || colonyGridTileMap[this.gridCoord.row][this.gridCoord.col] >= 89) {
             this.isTunneled = true;
         }
 

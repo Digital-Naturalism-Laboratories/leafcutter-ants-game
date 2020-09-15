@@ -43,7 +43,7 @@ var SFX_EATING = 1;
 var SFX_TRIGGER = 2;
 
 var fungus_col = 23;
-var fungus_row = 7;
+var fungus_row = 8;
 
 // variables from the mini-games that affect colony growth
 var geneticDiversity = 0; //from flying game
@@ -423,6 +423,10 @@ function loadImages() {
       fileName: "dirt_tile.png"
     },
     {
+      tunnelType: COLONY_TUNNEL_START_INTERIOR,
+      fileName: "dirt_tile.png"
+    },
+    {
       tunnelType: COLONY_TUNNEL_START_VERT,
       fileName: "tunnel_tile_vert.png"
     },
@@ -432,19 +436,19 @@ function loadImages() {
     },
     {
       tunnelType: COLONY_TUNNEL_START_LEFT_WALL,
-      fileName: "dirt_tile_left_wall.png"
+      fileName: "dirt_tile_start_left_wall.png"
     },
     {
       tunnelType: COLONY_TUNNEL_START_UP_WALL,
-      fileName: "dirt_tile_up_wall.png"
+      fileName: "dirt_tile_start_up_wall.png"
     },
     {
       tunnelType: COLONY_TUNNEL_START_RIGHT_WALL,
-      fileName: "dirt_tile_right_wall.png"
+      fileName: "dirt_tile_start_right_wall.png"
     },
     {
       tunnelType: COLONY_TUNNEL_START_DOWN_WALL,
-      fileName: "dirt_tile_down_wall.png"
+      fileName: "dirt_tile_start_down_wall.png"
     },
     {
       tunnelType: COLONY_TUNNEL_START_CORNER_DOWN_RIGHT,

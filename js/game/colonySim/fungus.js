@@ -8,13 +8,13 @@ class Fungus {
 
         this.pixelCoord = pixelCoordAtCenterOfTileCoord(col, row);
 
-        this.sprite = new Sprite(tr(vec2(this.pixelCoord.x, this.pixelCoord.y - 15), vec2(pixelSize * 0.3, pixelSize * 0.3)), new ImageObject("images/Fungus_Nest.png", vec2(0, 0)));
+        this.sprite = new Sprite(tr(vec2(this.pixelCoord.x + (GRID_NODE_SIZE * pixelSize / 2), this.pixelCoord.y - 20), vec2(pixelSize * 0.3, pixelSize * 0.3)), new ImageObject("images/Fungus_Nest.png", vec2(0, 0)));
        
     }
 
     update = function () {
 
-        this.sprite.transform.scale = vec2(pixelSize * Math.min(colony.fungus / 12, 0.5) + 0.01, pixelSize * Math.min(colony.fungus / 12, 0.5) + 0.01);
+        this.sprite.transform.scale = vec2(pixelSize * Math.min(colony.fungus / 8, 0.7) + 0.01, pixelSize * Math.min(colony.fungus / 7, 0.7) + 0.01);
     
     }
 

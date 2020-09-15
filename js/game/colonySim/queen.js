@@ -17,7 +17,7 @@ class Queen {
             DIGGINGRIGHT: "digging right",
             IDLE: "idle"
         }
-        this.movementState = this.movementStates.IDLE;
+        this.movementState = this.movementStates.LANDING;
         this.currentFacing = FACING_RIGHT;
         this.clickCooldownTime = 60;
         this.clickCooldownTimer = this.clickCooldownTime;
@@ -117,7 +117,10 @@ class Queen {
         this.sprite.transform.position.x = this.pixelCoord.x;
         this.sprite.transform.position.y = this.pixelCoord.y - 15;
 
-        colonyGridNodes[this.gridCoord.row][this.gridCoord.col].isTunneledByQueen = true;
+        if (this.gridCoord.row != fungus_row || this.gridCoord.col != fungus_col){
+            colonyGridNodes[this.gridCoord.row][this.gridCoord.col].isTunneledByQueen = true;
+        }
+        
 
         switch (this.movementState) {
             case this.movementStates.LANDING:
@@ -213,6 +216,7 @@ class Queen {
                 this.pixelCoord.x += this.speedX * pixelSize;
 
                 if (colAtXCoord(this.pixelCoord.x / pixelSize) >= fungus_col) {
+                    //resetColonySimGame();
                     this.movementState = this.movementStates.IDLE;
                     fungus = new Fungus(fungus_col, fungus_row);
                 }
