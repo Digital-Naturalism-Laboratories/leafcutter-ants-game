@@ -29,6 +29,7 @@ class Queen {
         this.sprite = new Sprite(tr(vec2(gameWidth * 0.65, 5), vec2(pixelSize * 0.3, pixelSize * 0.3)), new ImageObject("images/Animations/Queen_Fly_250px_Spritesheet.png", vec2(0, 0)));
         this.leftWingSprite = new Sprite(tr(vec2(gameWidth * 0.65, 5), vec2(pixelSize * 0.5, pixelSize * 0.5)), new ImageObject("images/wing_left.png", vec2(0, 0)));
         this.rightWingSprite = new Sprite(tr(vec2(gameWidth * 0.65, 5), vec2(pixelSize * 0.5, pixelSize * 0.5)), new ImageObject("images/wing_right.png", vec2(0, 0)));
+        this.downwardSprite = new Sprite(tr(vec2(this.pixelCoord.x + 15, this.pixelCoord.y - 15), vec2(pixelSize * 0.3, pixelSize * 0.3)), new ImageObject("images/Animations/queen_idle_updown_spritesheet.png", vec2(0, 0)));
 
         this.collisionRadius = 15;
 
