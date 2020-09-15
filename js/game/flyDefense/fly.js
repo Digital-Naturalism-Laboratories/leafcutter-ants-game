@@ -243,10 +243,15 @@ function Fly(name,status)
 						defenseGame.bigAntManager.updateCurrentActiveAnt();
 						defenseGame.flyManager.updateTargets();
 
+
 						defenseGame.background.stuckOnPheremoneGap = false;
-						defenseGame.background.currentPheremoneGap.isFilledIn = true;
-						defenseGame.background.currentPheremoneGapArrayIndex++;
-						defenseGame.background.currentPheremoneGap = defenseGame.background.pheremoneGapManager.arrayOfPheremoneGaps[defenseGame.background.currentPheremoneGapArrayIndex];
+						if (defenseGame.background.currentPheremoneGap !== undefined)
+						{
+							defenseGame.background.currentPheremoneGap.isFilledIn = true;
+							defenseGame.background.currentPheremoneGapArrayIndex++;
+							defenseGame.background.currentPheremoneGap = defenseGame.background.pheremoneGapManager.arrayOfPheremoneGaps[defenseGame.background.currentPheremoneGapArrayIndex];
+						}
+						
 						defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.pause();
 						defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.currentTime = 0;
 						defenseGame.audioManager.sfxManager.beefUpTrailFeedback.play();
