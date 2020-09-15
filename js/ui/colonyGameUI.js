@@ -170,15 +170,18 @@ function animateSprite(sprite, frameLength, framerameCount) {
 }
 
 function resetColonySimGame() {
+
+  colonyGrid = [];
+  createGrid();
+  setDistFromFungusOnEachColonyNode();
+
   totalMilliseconds = 0;
   previousEggTotal += colony.totalEggsLaid
   colony = new Colony();
-  colonyGrid = [];
+
   eggClusters = [];
   colonyWingedQueens = [];
   colonyWingedMales = [];
-  createGrid();
-  setDistFromFungusOnEachColonyNode();
 
   for (i = 0; i < colonyAnts.length; i++) {
     colonyAnts[i].killAnt();
@@ -192,6 +195,10 @@ function resetColonySimGame() {
 
   for (i = 0; i < colony.population; i++) {
     new ColonyAnt(fungus.gridCoord.col, fungus.gridCoord.row, 0);
+  }
+
+  for (var i = 0; i < eggChamberGridCoords.length; i++) {
+    new EggCluster(eggChamberGridCoords[i].col, eggChamberGridCoords[i].row, eggChamberGridCoords[i].offset);
   }
 
   queen.sprite = new Sprite(tr(vec2(gameWidth * 0.65, 5), vec2(pixelSize * 0.3, pixelSize * 0.3)), new ImageObject("images/Animations/Queen_Fly_250px_Spritesheet.png", vec2(0, 0)));
@@ -254,48 +261,52 @@ function colonyGameUICustomDraw(deltaTime) {
 function colonyGameUICustomUpdate(deltaTime) {
 
   if (queen.movementState == queen.movementStates.IDLE) {
+    
     totalMilliseconds += deltaTime;
     totalCycles = Math.floor(totalMilliseconds / cycleLength);
-  }
 
-  if (colonyWingedQueens.length < colony.femaleReproductiveCount && colony.femaleReproductiveCount < visibleEggClusterCount) {
-    for (var i = 0; i < colony.femaleReproductiveCount;) {
-      var randomEggClusterIndex = getRandomInt(0, eggClusters.length);
-      if (eggClusters[randomEggClusterIndex].isVisible) {
-        new ColonyWingedQueen(eggClusters[randomEggClusterIndex].gridCoord.col, eggClusters[randomEggClusterIndex].gridCoord.row);
-        i++;
+    colony.update();
+
+    if (colonyWingedQueens.length < colony.femaleReproductiveCount && colony.femaleReproductiveCount < visibleEggClusterCount) {
+      for (var i = 0; i < colony.femaleReproductiveCount;) {
+        var randomEggClusterIndex = getRandomInt(0, eggClusters.length);
+        if (eggClusters[randomEggClusterIndex].isVisible) {
+          new ColonyWingedQueen(eggClusters[randomEggClusterIndex].gridCoord.col, eggClusters[randomEggClusterIndex].gridCoord.row);
+          i++;
+        }
       }
     }
-  }
 
-  if (colonyWingedMales.length < colony.maleReproductiveCount && colony.maleReproductiveCount < visibleEggClusterCount) {
-    for (var i = 0; i < colony.maleReproductiveCount;) {
-      var randomEggClusterIndex = getRandomInt(0, eggClusters.length);
-      if (eggClusters[randomEggClusterIndex].isVisible) {
-        new ColonyWingedMale(eggClusters[randomEggClusterIndex].gridCoord.col, eggClusters[randomEggClusterIndex].gridCoord.row);
-        i++;
+    if (colonyWingedMales.length < colony.maleReproductiveCount && colony.maleReproductiveCount < visibleEggClusterCount) {
+      for (var i = 0; i < colony.maleReproductiveCount;) {
+        var randomEggClusterIndex = getRandomInt(0, eggClusters.length);
+        if (eggClusters[randomEggClusterIndex].isVisible) {
+          new ColonyWingedMale(eggClusters[randomEggClusterIndex].gridCoord.col, eggClusters[randomEggClusterIndex].gridCoord.row);
+          i++;
+        }
       }
     }
-  }
 
-  for (var i = 0; i < colonyAnts.length; i++) {
-    colonyAnts[i].update();
-  }
+    for (var i = 0; i < colonyAnts.length; i++) {
+      colonyAnts[i].update();
+    }
 
-  for (var i = 0; i < colonyWingedQueens.length; i++) {
-    colonyWingedQueens[i].update();
-  }
+    for (var i = 0; i < colonyWingedQueens.length; i++) {
+      colonyWingedQueens[i].update();
+    }
 
-  for (var i = 0; i < colonyWingedMales.length; i++) {
-    colonyWingedMales[i].update();
-  }
+    for (var i = 0; i < colonyWingedMales.length; i++) {
+      colonyWingedMales[i].update();
+    }
 
-  visibleEggClusterCount = 0;
-  for (var i = 0; i < eggClusters.length; i++) {
-    eggClusters[i].update();
-  }
+    visibleEggClusterCount = 0;
+    for (var i = 0; i < eggClusters.length; i++) {
+      eggClusters[i].update();
+    }
 
-  fungus.update();
+    fungus.update();
+
+  }
   banner.update();
 
 }

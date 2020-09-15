@@ -118,7 +118,7 @@ var eggChamberGridCoords = [{
 },
 {
   col: 18,
-  row: 15,
+  row: 16,
   offset: 0.5 * GRID_NODE_SIZE
 },
 {

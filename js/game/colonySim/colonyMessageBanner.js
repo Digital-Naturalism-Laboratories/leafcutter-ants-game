@@ -4,12 +4,16 @@ class ColonyMessageBanner {
     constructor() {
         this.isActive = false;
         this.bannerHeight = 20 * pixelSize;
-        this.bannerPosY = gameHeight * 0.80;
+        this.bannerPosY = gameHeight * 0.60;
         this.message = INFECTION;
         this.messages = [];
     }
 
     update(){
+
+        this.bannerHeight = 20 * pixelSize;
+        this.bannerPosY = gameHeight * 0.80;
+
         this.messages = [];
 
         if (leafMaterial > 0){
@@ -29,7 +33,7 @@ class ColonyMessageBanner {
         }
 
         if (colony.geneticDiversity > 0){
-            this.messages.push (string_GENETIC_DIVERSITY_FROM_MATING[currentLanguage] + colony.geneticDiversity * 100 + "%");
+            this.messages.push (string_GENETIC_DIVERSITY_FROM_MATING[currentLanguage] + Math.floor(colony.geneticDiversity * 100) + "%");
         }
 
         if (this.messages.length > 0){
@@ -45,8 +49,9 @@ class ColonyMessageBanner {
 
         //draw banner background
         renderer.fillStyle = 'orange';
-        for (var i = 0; i < this.messages.length; i++){
-            renderer.fillRect(0, this.bannerPosY - (50 * (i + 1)) + (20 * i) * pixelSize, gameWidth, this.bannerHeight);
+        for (var i = 1; i <= this.messages.length; i++){
+            //renderer.fillRect(0, this.bannerPosY - (42 * (i + 1)) + (20 * i) * pixelSize, gameWidth, this.bannerHeight);
+            renderer.fillRect(0, this.bannerPosY - (this.bannerHeight * (i + 1)), gameWidth, this.bannerHeight - 2);
         }
 
         //draw banner text
@@ -54,7 +59,7 @@ class ColonyMessageBanner {
         renderer.fillStyle = 'red';
         renderer.textAlign = 'center';
         for (var i = 0; i < this.messages.length; i++){
-            renderer.fillText (this.messages[i], gameWidth / 2, this.bannerPosY - this.bannerHeight - (20 * i));
+            renderer.fillText (this.messages[i], gameWidth / 2, this.bannerPosY - (6 * pixelSize) - (this.bannerHeight * (i + 1)));
         }
 
     }

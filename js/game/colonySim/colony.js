@@ -32,7 +32,7 @@ class Colony {
         this.reproductionTimerCount = 0;
         this.newAntsPerCycle = Math.floor(1 + (this.leaves * 0.01));
 
-        colonyGameUI.push(this);
+        //colonyGameUI.push(this);
     }
 
     event() {
@@ -78,10 +78,10 @@ class Colony {
     }
 
     updateConversionRates() {
-        this.adjustedfungusConversionRate = geneticDiversity > 0 ? this.fungusConversionRate * geneticDiversity : this.fungusConversionRate;
+        this.adjustedfungusConversionRate = geneticDiversity > 0 ? this.fungusConversionRate + (this.fungusConversionRate * geneticDiversity) : this.fungusConversionRate;
         //this.adjustedbroodEatingRate;
         //this.adjustedworkerEatingRate;
-        this.adjustedleafCollectionRate = geneticDiversity > 0 ? this.leafCollectionRate * geneticDiversity: this.leafCollectionRate;
+        this.adjustedleafCollectionRate = geneticDiversity > 0 ? this.leafCollectionRate + (this.leafCollectionRate * geneticDiversity) : this.leafCollectionRate;
     }
 
     updateResourceCounts() {
