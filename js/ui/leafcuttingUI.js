@@ -120,13 +120,13 @@ function setupLeafcuttingUI()
 
     gameplayTopLeftLabels = [];
     scoreLabel = new Label(tr(), string_LeavesCollected_COLON[currentLanguage] + leafcuttingScore.toString(),
-        (54*pixelSize).toString() + "px " + uiContext.fontFamily, "white", -1);
+        (54*pixelSize).toString() + "px " + uiContext.fontFamily, "white", 'center');
     gameplayTopLeftLabels.push(scoreLabel);
     timeLabel = new Label(tr(), "TIME: " + (leafcuttingTimeLeft/1000).toString(),
-        (54*pixelSize).toString() + "px " + uiContext.fontFamily, "white", -1);
+        (54*pixelSize).toString() + "px " + uiContext.fontFamily, "white", 'center');
     gameplayTopLeftLabels.push(timeLabel);
 
-    leafcuttingUI.push(new FlexGroup(tr(vec2(20*pixelSize, 20*pixelSize), vec2(window.innerWidth, 80*pixelSize)),
+    leafcuttingUI.push(new FlexGroup(tr(vec2(200*pixelSize, 20*pixelSize), vec2(window.innerWidth, 80*pixelSize)),
         new SubState(tr(), gameplayTopLeftLabels), false, vec2(0, 10*pixelSize), vec2(1, 2), true));
 
     //centerLabel1 = new Label(tr(vec2(0, -40 * pixelSize), vec2(gameWidth, gameHeight)), string_CLICK_EDGE_TO[currentLanguage],
@@ -167,9 +167,9 @@ function leafcuttingUIResize()
     leafcuttingUI[0].gridSpace = vec2(0, 10*pixelSize);
 
     //centerLabel1.transform.position = vec2(0, -40 * pixelSize);
-    centerLabel1.transform.position = vec2(gameWidth / 10, -40 * pixelSize);
+    centerLabel1.transform.position = vec2(gameWidth / 12, -40 * pixelSize); //workaround for text alignment resize issue
     //centerLabel2.transform.position = vec2(0, 40 * pixelSize);
-    centerLabel2.transform.position = vec2(gameWidth / 10, 40 * pixelSize);
+    centerLabel2.transform.position = vec2(gameWidth / 5, 40 * pixelSize); //workaround for text alignment resize issue
     centerLabel1.transform.scale = centerLabel2.transform.scale = vec2(gameWidth, gameHeight);
     centerLabel1.font = centerLabel2.font = (60*pixelSize).toString() + "px " + uiContext.fontFamily;
 
@@ -230,6 +230,11 @@ function leafcuttingUICustomUpdate(deltaTime)
     {
         if(clickEdgeDisplayStart)
         {
+
+            //workaround for text alignment resize issue
+            centerLabel1.transform.position = vec2(gameWidth / 2, -40 * pixelSize);
+            centerLabel2.transform.position = vec2(gameWidth / 2, 40 * pixelSize);
+
             centerLabel1.text = string_CLICK_EDGE_TO[currentLanguage];
             centerLabel2.text = string_START_CUTTING[currentLanguage];
             centerLabel1.enabled = centerLabel2.enabled = true;
