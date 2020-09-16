@@ -394,8 +394,11 @@ class AutoAnt
     rotationMechanic(deltaTime)
     {
         var bgValueBorder = 100;
+        var loopCount = 0
         do
         {
+            loopCount++;
+
             if(!this.alternateRotation)
             {
                 this.bodySprite.transform.rotation -= (0.025 * this.timedJawCutSpeedBonus);
@@ -423,8 +426,8 @@ class AutoAnt
                 this.cutPointTimer -= deltaTime;
             }
         }
-        while ((pixelData[0] < bgValueBorder && pixelData[1] < bgValueBorder && pixelData[2] < bgValueBorder)
-        || (this.cutPoint.x < 0 || this.cutPoint.y < 0 || this.cutPoint.x > gameWidth || this.cutPoint.y > gameHeight));
+        while (loopCount < 1000 && ((pixelData[0] < bgValueBorder && pixelData[1] < bgValueBorder && pixelData[2] < bgValueBorder)
+        || (this.cutPoint.x < 0 || this.cutPoint.y < 0 || this.cutPoint.x > gameWidth || this.cutPoint.y > gameHeight)));
 
         if(this.addVoidAreaWhenRotationCompletes())
             this.onLeafCutSuccess();
