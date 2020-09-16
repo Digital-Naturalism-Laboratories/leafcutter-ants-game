@@ -121,8 +121,9 @@ class Queen {
         if (this.gridCoord.row != fungus_row || this.gridCoord.col != fungus_col){
             colonyGridNodes[this.gridCoord.row][this.gridCoord.col].isTunneledByQueen = true;
         }
-        
 
+        colonyGridNodes[fungus_row][fungus_col - 1].isTunneledByQueen = false;
+        
         switch (this.movementState) {
             case this.movementStates.LANDING:
 
@@ -137,7 +138,9 @@ class Queen {
 
                 if (this.pixelCoord.y >= gameHeight * 0.07) {
                     this.leftWingSprite.transform.position.y = this.pixelCoord.y - 15;
+                    this.leftWingSprite.transform.position.x = this.pixelCoord.x;
                     this.rightWingSprite.transform.position.y = this.pixelCoord.y - 15;
+                    this.rightWingSprite.transform.position.x = this.pixelCoord.x;
                     this.movementState = this.movementStates.LANDED;
                 }
 
@@ -145,7 +148,11 @@ class Queen {
             case this.movementStates.LANDED:
 
                 this.sprite = new Sprite(tr(vec2(this.pixelCoord.x, this.pixelCoord.y - 15), vec2(pixelSize * 0.3, pixelSize * 0.3)), new ImageObject("images/Animations/queen_idle_spritesheet.png", vec2(0, 0)));
-
+                this.leftWingSprite.transform.position.y = this.pixelCoord.y - 15;
+                this.leftWingSprite.transform.position.x = this.pixelCoord.x;
+                this.rightWingSprite.transform.position.y = this.pixelCoord.y - 15;
+                this.rightWingSprite.transform.position.x = this.pixelCoord.x;
+                
                 this.inSize = {
                     x: 250,
                     y: 225
