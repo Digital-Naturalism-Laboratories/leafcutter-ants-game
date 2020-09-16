@@ -285,6 +285,7 @@ function ParentAntObject()
 			while(this.tallyRaycastIntersectionsWithLeafPolygon(potentialFungusPoint, this.leafPolygonFungusBorderLineSegments) === 0 || 
 				this.tallyRaycastIntersectionsWithLeafPolygon(potentialFungusPoint, this.leafPolygonFungusBorderLineSegments) % 2 === 0)
 			{
+				if (isOutOfTime) break; //added to break out of infinite loop when time runs out
 				potentialFungusPoint = {x:Math.floor(getRandomIntInclusive(this.leafX,this.leafX + this.leafWidth)),
 											  y:Math.floor(getRandomIntInclusive(this.leafY,this.leafY + this.leafHeight))};
 			}

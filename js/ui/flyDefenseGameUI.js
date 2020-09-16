@@ -1,6 +1,8 @@
 const DEFENSEGAMEUI = 4;
 var defenseGame = {};
 
+isOutOfTime = false; //added as a workaround to use in place of this.ranOutOfTime, which seems to be getting intentionally reset to false every frame.
+
 defenseGame.initialize = function()
 {
 
@@ -19,7 +21,7 @@ defenseGame.initialize = function()
 
 	//timer
 	this.timeLeft = 120;
-	this.ranOutOfTime = false;
+	//this.ranOutOfTime = false;
 	this.decreaseCounter = function() 
 	{
 		if(ui.stateIndex == DEFENSEGAMEUI)
@@ -36,10 +38,12 @@ defenseGame.initialize = function()
 			{
 				defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.pause();
 				timeToReturnWithLeaves = this.timeLeft;
-				badFungusFromLeaves = 200 - this.fungusTallyDiv.tallyOfEatenFungusSpores;
+				//badFungusFromLeaves = 200 - this.fungusTallyDiv.tallyOfEatenFungusSpores;
+				badFungusFromLeaves = 200 - defenseGame.background.fungusTallyDiv.tallyOfEatenFungusSpores;  //corrected variable name that was causing a crash
 				infectedAntsReturning = defenseGame.background.bigAntTallyOfInfections;
 				//ui.stateIndex = COLONYGAMEINTROUI;
-				this.ranOutOfTime = true;
+				//this.ranOutOfTime = true;
+				isOutOfTime = true;
 			}
 		}
 	};
@@ -169,7 +173,8 @@ defenseGame.initialize = function()
 			this.colonyReached = false;
 		}
 		
-		if (this.ranOutOfTime && isTouched)
+		//if (this.ranOutOfTime && isTouched)
+		if (isOutOfTime && isTouched)
 		{
 			console.log('inside no time left and isTouched check');
 			timeToReturnWithLeaves = this.timeLeft;
@@ -258,7 +263,8 @@ defenseGame.initialize = function()
 				
 			}
 
-			if (this.ranOutOfTime)
+			//if (this.ranOutOfTime)
+			if (isOutOfTime)
 			{
 				renderer.fillStyle = 'white';
 				let fontSize = 80;
