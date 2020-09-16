@@ -20,7 +20,7 @@ defenseGame.initialize = function()
 	this.debugOn = false;
 
 	//timer
-	this.timeLeft = 120;
+	this.timeLeft = 10;
 	//this.ranOutOfTime = false;
 	this.decreaseCounter = function() 
 	{
@@ -339,12 +339,16 @@ defenseGame.initialize = function()
 		this.background.slowDownRateFromInfections = 1;
 		this.background.groundImage1xCoordinate = 0;
 		this.background.groundImage2xCoordinate = renderer.canvas.width;
+		this.background.groundImage3xCoordinate = -renderer.canvas.width;
 		this.background.grassLayerImage1XCoordinate = 0;
 		this.background.grassLayerImage2XCoordinate = renderer.canvas.width;
+		this.background.grassLayerImage3XCoordinate = -renderer.canvas.width;
 		this.background.leavesLayerImage1XCoordinate = 0;
 		this.background.leavesLayerImage2XCoordinate = renderer.canvas.width;
+		this.background.leavesLayerImage3XCoordinate = -renderer.canvas.width;
 		this.background.forageLayerImage1XCoordinate = 0;
 		this.background.forageLayerImage2XCoordinate = renderer.canvas.width;
+		this.background.forageLayerImage3XCoordinate = -renderer.canvas.width;
 
 		this.background.pheremoneStrip1ImageXCoordinate = 0;
 		this.background.pheremoneStrip2ImageXCoordinate = renderer.canvas.width*1.01 + this.pheremoneGapWidth;
