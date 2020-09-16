@@ -372,7 +372,7 @@ defenseGame.initialize = function()
 			this.flyManager.arrayOfFlies[i].assignRandomXYCoordinatesInARange();
 		}
 
-		
+		isOutOfTime = false;
 	}
 
 	this.arrayOfIntervalsToRestart = [];
