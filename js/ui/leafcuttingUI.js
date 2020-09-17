@@ -118,27 +118,20 @@ function setupLeafcuttingUI()
     loadLeafCuttingGameTextures();
     leafcuttingResetGame();
 
-    gameplayTopLeftLabels = [];
-    scoreLabel = new Label(tr(), string_LeavesCollected_COLON[currentLanguage] + leafcuttingScore.toString(),
-        (54*pixelSize).toString() + "px " + uiContext.fontFamily, "white", 'center');
-    gameplayTopLeftLabels.push(scoreLabel);
-    timeLabel = new Label(tr(), "TIME: " + (leafcuttingTimeLeft/1000).toString(),
-        (54*pixelSize).toString() + "px " + uiContext.fontFamily, "white", 'center');
-    gameplayTopLeftLabels.push(timeLabel);
+    scoreLabel = new Label(tr(vec2(10 * pixelSize, -220 * pixelSize), vec2(gameWidth, gameHeight)), string_LeavesCollected_COLON[currentLanguage] + leafcuttingScore.toString(),
+        (54*pixelSize).toString() + "px " + uiContext.fontFamily, "white", -1);
+    leafcuttingUI.push(scoreLabel);
 
-    leafcuttingUI.push(new FlexGroup(tr(vec2(200*pixelSize, 20*pixelSize), vec2(window.innerWidth, 80*pixelSize)),
-        new SubState(tr(), gameplayTopLeftLabels), false, vec2(0, 10*pixelSize), vec2(1, 2), true));
-
-    //centerLabel1 = new Label(tr(vec2(0, -40 * pixelSize), vec2(gameWidth, gameHeight)), string_CLICK_EDGE_TO[currentLanguage],
-    //    (96*pixelSize).toString() + "px " + uiContext.fontFamily, "white", 0);
-    centerLabel1 = new Label(tr(vec2(gameWidth / 2, -40 * pixelSize), vec2(gameWidth, gameHeight)), string_CLICK_EDGE_TO[currentLanguage],
-        (60*pixelSize).toString() + "px " + uiContext.fontFamily, "white", "center");
-    leafcuttingUI.push(centerLabel1);
-    //centerLabel2 = new Label(tr(vec2(0, 40 * pixelSize), vec2(gameWidth, gameHeight)), string_START_CUTTING[currentLanguage],
-    //    (96*pixelSize).toString() + "px " + uiContext.fontFamily, "white", 0);
-    centerLabel2 = new Label(tr(vec2(gameWidth / 2, 40 * pixelSize), vec2(gameWidth, gameHeight)), string_START_CUTTING[currentLanguage],
-        (60*pixelSize).toString() + "px " + uiContext.fontFamily, "white", "center");
-    leafcuttingUI.push(centerLabel2);
+    timeLabel = new Label(tr(vec2(10 * pixelSize, -190 * pixelSize), vec2(gameWidth, gameHeight)), string_Time[currentLanguage] + (Math.floor(leafcuttingTimeLeft/1000)).toString(),
+        (54*pixelSize).toString() + "px " + uiContext.fontFamily, "white", -1);
+    leafcuttingUI.push(timeLabel);
+    
+    leafCenterLabel1 = new Label(tr(vec2(0, -40 * pixelSize), vec2(gameWidth, gameHeight)), string_CLICK_EDGE_TO[currentLanguage],
+        (60*pixelSize).toString() + "px " + uiContext.fontFamily, "white", 0);
+    leafcuttingUI.push(leafCenterLabel1);
+    leafCenterLabel2 = new Label(tr(vec2(0, 40 * pixelSize), vec2(gameWidth, gameHeight)), string_START_CUTTING[currentLanguage],
+        (60*pixelSize).toString() + "px " + uiContext.fontFamily, "white", 0);
+    leafcuttingUI.push(leafCenterLabel2);
 
     controlHintLabel = new Label(tr(vec2(350 * pixelSize, 280 * pixelSize), vec2(240 * pixelSize, 40 * pixelSize)), string_CLICK_WHEN_GREEN[currentLanguage],
         (40*pixelSize).toString() + "px " + uiContext.fontFamily, "#ffffffdd", 0);
@@ -160,18 +153,15 @@ function setupLeafcuttingUI()
 
 function leafcuttingUIResize()
 {
+    scoreLabel.transform.position = vec2(10*pixelSize, -220 * pixelSize);
+    timeLabel.transform.position = vec2(10*pixelSize, -190 * pixelSize);
+    scoreLabel.transform.scale = timeLabel.transform.scale = vec2(gameWidth, gameHeight);
     scoreLabel.font = timeLabel.font = (54*pixelSize).toString() + "px " + uiContext.fontFamily;
 
-    leafcuttingUI[0].transform.position = vec2(20*pixelSize, 20*pixelSize);
-    leafcuttingUI[0].transform.scale = vec2(window.innerWidth, 80*pixelSize);
-    leafcuttingUI[0].gridSpace = vec2(0, 10*pixelSize);
-
-    //centerLabel1.transform.position = vec2(0, -40 * pixelSize);
-    centerLabel1.transform.position = vec2(gameWidth / 12, -40 * pixelSize); //workaround for text alignment resize issue
-    //centerLabel2.transform.position = vec2(0, 40 * pixelSize);
-    centerLabel2.transform.position = vec2(gameWidth / 5, 40 * pixelSize); //workaround for text alignment resize issue
-    centerLabel1.transform.scale = centerLabel2.transform.scale = vec2(gameWidth, gameHeight);
-    centerLabel1.font = centerLabel2.font = (60*pixelSize).toString() + "px " + uiContext.fontFamily;
+    leafCenterLabel1.transform.position = vec2(0, -40 * pixelSize);
+    leafCenterLabel2.transform.position = vec2(0, 40 * pixelSize);
+    leafCenterLabel1.transform.scale = leafCenterLabel2.transform.scale = vec2(gameWidth, gameHeight);
+    leafCenterLabel1.font = leafCenterLabel2.font = (60*pixelSize).toString() + "px " + uiContext.fontFamily;
 
     controlHintLabel.transform.position = vec2(350 * pixelSize, 280 * pixelSize);
     controlHintLabel.transform.scale = vec2(240 * pixelSize, 40 * pixelSize);
@@ -230,20 +220,15 @@ function leafcuttingUICustomUpdate(deltaTime)
     {
         if(clickEdgeDisplayStart)
         {
-
-            //workaround for text alignment resize issue
-            centerLabel1.transform.position = vec2(gameWidth / 2, -40 * pixelSize);
-            centerLabel2.transform.position = vec2(gameWidth / 2, 40 * pixelSize);
-
-            centerLabel1.text = string_CLICK_EDGE_TO[currentLanguage];
-            centerLabel2.text = string_START_CUTTING[currentLanguage];
-            centerLabel1.enabled = centerLabel2.enabled = true;
+            leafCenterLabel1.text = string_CLICK_EDGE_TO[currentLanguage];
+            leafCenterLabel2.text = string_START_CUTTING[currentLanguage];
+            leafCenterLabel1.enabled = leafCenterLabel2.enabled = true;
             clickEdgeDisplayStart = false;
         }
     }
     else if(!(ant.disabled && ant2.disabled))
     {
-        centerLabel1.enabled = centerLabel2.enabled = false;
+        leafCenterLabel1.enabled = leafCenterLabel2.enabled = false;
     }
 
     if((ant.rotationMode && (clickGreenDisplayStart > 0 || ant.timedJawSpeedFactor <= ant.timedJawSpeedFactorMin * 1.5))
@@ -383,16 +368,16 @@ function leafcuttingAudioHandling(deltaTime)
                 leafcuttingSFX[SFX_TIMEOUT].play();
 
                 if(leafcuttingScore >= 2400)
-                    centerLabel1.text = string_AMAZING_AMOUNT_OF[currentLanguage];
+                    leafCenterLabel1.text = string_AMAZING_AMOUNT_OF[currentLanguage];
                 else if(leafcuttingScore >= 1200)
-                    centerLabel1.text = string_GOOD_AMOUNT_OF[currentLanguage];
+                    leafCenterLabel1.text = string_GOOD_AMOUNT_OF[currentLanguage];
                 else if(leafcuttingScore >= 600)
-                    centerLabel1.text = string_OK_AMOUNT_OF[currentLanguage];
+                    leafCenterLabel1.text = string_OK_AMOUNT_OF[currentLanguage];
                 else
-                    centerLabel1.text = string_BARELY_ANY[currentLanguage];
+                    leafCenterLabel1.text = string_BARELY_ANY[currentLanguage];
                 
-                centerLabel2.text = string_LeavesCollected[currentLanguage];
-                centerLabel1.enabled = centerLabel2.enabled = true;
+                leafCenterLabel2.text = string_LeavesCollected[currentLanguage];
+                leafCenterLabel1.enabled = centerLabel2.enabled = true;
 
                 leafcuttingDisableBothAnts();
             }

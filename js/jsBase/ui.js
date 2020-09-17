@@ -264,9 +264,15 @@ class Label extends UIObject
                 var lineHeight = uiContext.renderer.measureText('M').width;
 
                 var posAlignFactor = 0;
-                if(this.align == 0) posAlignFactor = (this.transform.scale.x / 2)
-                - (uiContext.renderer.measureText(this.text).width / 2);
-                else if(this.align == 1) posAlignFactor = this.transform.scale.x - uiContext.renderer.measureText(this.text).width;
+
+                if(this.align == 0)
+                {
+                    posAlignFactor = (this.transform.scale.x / 2) - (uiContext.renderer.measureText(this.text).width / 2);
+                }
+                else if(this.align == 1)
+                {
+                    posAlignFactor = this.transform.scale.x - uiContext.renderer.measureText(this.text).width;
+                }
             
                 uiContext.renderer.fillStyle = this.textColor;
                 uiContext.renderer.fillText(this.text, this.transform.position.x + posAlignFactor,

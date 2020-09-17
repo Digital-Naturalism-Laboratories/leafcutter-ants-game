@@ -70,7 +70,7 @@ var string_Time = [
 
 var string_CLICK_EDGE_TO = [
     "Haz clic en el borde para",
-    "CLICK EDGE TO: "
+    "CLICK EDGE TO"
 ]
 
 var string_START_CUTTING = [

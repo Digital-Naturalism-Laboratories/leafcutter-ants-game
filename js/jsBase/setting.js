@@ -4,8 +4,6 @@ function init()
     canvas = document.getElementById("gameCanvas");
     
     renderer = canvas.getContext("2d");
-    renderer.canvas.width = window.innerWidth;
-    renderer.canvas.height = window.innerHeight;
 
     platform = getPlatform();
     
@@ -42,7 +40,7 @@ function init()
 
     isFirefox = (navigator.userAgent.indexOf("Firefox") != -1 || typeof InstallTrigger !== 'undefined');
 
-    loadingAntSprite = new Sprite(tr(vec2(), vec2(pixelSize, pixelSize)), new ImageObject("images/loadingAntAnimation.png", vec2(192, 19)));
+    loadingAntSprite = new Sprite(tr(vec2(), vec2(pixelSize, pixelSize)), new ImageObject("images/loadingAntAnimation.png", vec2(192, 40)));
     loadingAntFrame = 0;
     loadingAntDelay = 200;
     
