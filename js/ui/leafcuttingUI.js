@@ -134,7 +134,7 @@ function setupLeafcuttingUI()
     leafcuttingUI.push(leafCenterLabel2);
 
     controlHintLabel = new Label(tr(vec2(350 * pixelSize, 280 * pixelSize), vec2(240 * pixelSize, 40 * pixelSize)), string_CLICK_WHEN_GREEN[currentLanguage],
-        (40*pixelSize).toString() + "px " + uiContext.fontFamily, "#ffffffdd", 0);
+        (32*pixelSize).toString() + "px " + uiContext.fontFamily, "#ffffffdd", 0);
     leafcuttingUI.push(controlHintLabel);
     controlHintLabel.enabled = false;
 
@@ -165,7 +165,7 @@ function leafcuttingUIResize()
 
     controlHintLabel.transform.position = vec2(350 * pixelSize, 280 * pixelSize);
     controlHintLabel.transform.scale = vec2(240 * pixelSize, 40 * pixelSize);
-    controlHintLabel.font = (40*pixelSize).toString() + "px " + uiContext.fontFamily;
+    controlHintLabel.font = (32*pixelSize).toString() + "px " + uiContext.fontFamily;
 
     leaf.resize();
 
