@@ -175,8 +175,12 @@ function mainMenuUICustomEvents(deltaTime)
 
     if (!isGameSelectEnabled) {
         if(menuBigPlayButton.output == UIOUTPUT_SELECT) {
-            //ui.stateIndex = COLONYGAMEINTROUI;
-            ui.stateIndex = DEFENSEGAMEINTROUI;
+            ui.stateIndex = COLONYGAMEINTROUI;
+            //ui.stateIndex = DEFENSEGAMEINTROUI;
+            if (defenseGame.hasBeenPlayedOnce)
+            {
+                defenseGame.restartIntervals();
+            }
         } else if(languageBtn.button.output == UIOUTPUT_SELECT)
         {
           

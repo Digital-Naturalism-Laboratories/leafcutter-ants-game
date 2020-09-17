@@ -46,6 +46,7 @@ function BackgroundSoldier()
 	this.initialize = function()
 	{
 		var _this = this;
-		setInterval(function(){_this.cycleImages()},100)
+		setInterval(function(){_this.cycleImages()},100);
+
 	}
 }

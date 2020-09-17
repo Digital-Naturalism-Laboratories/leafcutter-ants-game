@@ -210,16 +210,16 @@ function onKeyDown(ev)
         break;
 
         case 68://d
-        // if (defenseGame.debugOn === false)
-        // {
-        //     defenseGame.debugOn = true;
-        //     console.log('debug on');
-        // }
-        // else
-        // {
-        //     defenseGame.debugOn = false;
-        //     console.log('debug off');
-        // }
+        if (defenseGame.debugOn === false)
+        {
+            defenseGame.debugOn = true;
+            console.log('debug on');
+        }
+        else
+        {
+            defenseGame.debugOn = false;
+            console.log('debug off');
+        }
         break;
 
         case 83://s

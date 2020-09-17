@@ -6,6 +6,8 @@ isOutOfTime = false; //added as a workaround to use in place of this.ranOutOfTim
 defenseGame.initialize = function()
 {
 
+
+
 	this.arrayOfUIObjects = [];
 
 	
@@ -20,7 +22,7 @@ defenseGame.initialize = function()
 	this.debugOn = false;
 
 	//timer
-	this.timeLeft = 10;
+	this.timeLeft = 120;
 	//this.ranOutOfTime = false;
 	this.decreaseCounter = function() 
 	{
@@ -88,8 +90,7 @@ defenseGame.initialize = function()
 	this.bigAntManager.arrayOfBigAnts.push(this.parentAntObject,this.NPCBigAnt1,this.NPCBigAntNegative1,
 										   this.NPCBigAntNegative2,this.NPCBigAntNegative3);
 	
-	this.backgroundSoldier = new BackgroundSoldier();
-	this.backgroundSoldier.initialize();
+	
 
 	//fly stuff
 	this.flyManager = new FlyManager();
@@ -118,6 +119,9 @@ defenseGame.initialize = function()
 
 	// console.log('defense game init called');
 	this.arrayOfFrameIntervals = [this.countdownInterval,this.background.flashAlertInterval];
+
+	this.backgroundSoldier = new BackgroundSoldier();
+	this.backgroundSoldier.initialize();
 
 	this.transitioningToUninfectedAnt = false;
 
@@ -171,28 +175,37 @@ defenseGame.initialize = function()
 
 			ui.stateIndex = COLONYGAMEINTROUI;
 			this.colonyReached = false;
+
+			this.hasBeenPlayedOnce = true;
 		}
 		
 		//if (this.ranOutOfTime && isTouched)
 		if (isOutOfTime && isTouched)
 		{
-			console.log('inside no time left and isTouched check');
+			console.log(this.background.pheremoneGapManager);
+			console.log(this.background);
+
+			
 			timeToReturnWithLeaves = this.timeLeft;
-			console.log('AFTER: timeToReturnWithLeaves = this.timeLeft;');
+			
 			badFungusFromLeaves = 200 - defenseGame.background.fungusTallyDiv.tallyOfEatenFungusSpores;
-			console.log('AFTER: badFungusFromLeaves = 200 - defenseGame.background.fungusTallyDiv.tallyOfEatenFungusSpores;');
+			
 			infectedAntsReturning = defenseGame.background.bigAntTallyOfInfections;
-			console.log('AFTER: infectedAntsReturning = defenseGame.background.bigAntTallyOfInfections;');
+			
 			// for (let i = 0; i < defenseGame.arrayOfTimeouts.length; i++) 
 			// 	{clearTimeout(defenseGame.arrayOfTimeouts[i]);};
 
 			this.reset();
-			console.log('AFTER: this.reset();');
+			
 
-			ui.stateIndex = COLONYGAMEINTROUI;
-			console.log('AFTER: ui.stateIndex = COLONYGAMEINTROUI;');
+			ui.stateIndex = COLONYGAMEINTROUI;//COLONYGAMEINTROUI
+			
 			this.colonyReached = false;
-			console.log('AFTER: this.colonyReached = false;');
+			
+
+			this.hasBeenPlayedOnce = true;
+
+			
 		}
 	}
 
@@ -204,7 +217,7 @@ defenseGame.initialize = function()
 	this.draw = function()
 	{
 		
-				//console.log('inside draw function of defense game');
+				
 			defenseGame.background.draw();
 			
 			
@@ -300,23 +313,23 @@ defenseGame.initialize = function()
 
 	this.passStats = function()
 	{
-		console.log('put stats code here');
+		
 		let tallyOfLeafContaminantsCleaned = defenseGame.background.fungusTallyDiv.tallyOfEatenFungusSpores;
-		console.log('tallyOfLeafContaminantsCleaned: ' + tallyOfLeafContaminantsCleaned);
+		
 
 		let elapsedTime = 120 - this.timeLeft;
-		console.log('elapsedTime: ' + elapsedTime);
+		
 
 		let bigAntTallyOfInfections = defenseGame.background.bigAntTallyOfInfections;
-		console.log('bigAntTallyOfInfections: ' + bigAntTallyOfInfections);
+		
 	}
 
 	this.arrayOfTimeouts = [];
 	
 	this.reset = function()
 	{
-		//console.log('put reset code here');
 		
+		defenseGame.transitioningToUninfectedAnt = false;
 		//clearing intervals and timeouts for potential performance issues
 		for (let i = 0; i < this.arrayOfFrameIntervals.length; i++)
 		{
@@ -333,8 +346,9 @@ defenseGame.initialize = function()
 			clearInterval(this.arrayOfIntervals[i]);
 		}
 
+
 		//other settings
-		this.timeLeft = 120;
+		this.timeLeft = 10;
 		//this.colonyReached = false;
 		this.background.slowDownRateFromInfections = 1;
 		this.background.groundImage1xCoordinate = 0;
@@ -351,23 +365,39 @@ defenseGame.initialize = function()
 		this.background.forageLayerImage3XCoordinate = -renderer.canvas.width;
 
 		this.background.pheremoneStrip1ImageXCoordinate = 0;
-		this.background.pheremoneStrip2ImageXCoordinate = renderer.canvas.width*1.01 + this.pheremoneGapWidth;
+		this.background.pheremoneStrip2ImageXCoordinate = renderer.canvas.width*1.01 + this.background.pheremoneGapWidth;
+
 		this.background.colonyMoundXCoordinate = 2.7*renderer.canvas.width;
-		this.background.colonyMoundMidpoint = this.colonyMoundXCoordinate + this.colonyMoundWidth/2;
+		this.background.colonyMoundMidpoint = this.background.colonyMoundXCoordinate + this.background.colonyMoundWidth/2;
+		
 		this.background.pheremoneGapManager = new PheremoneGapManager();
 		this.background.pheremoneGapManager.instantiatePheremoneGaps();
 
 		this.background.currentPheremoneGapArrayIndex = 0;
 		this.background.currentPheremoneGap = this.background.pheremoneGapManager.arrayOfPheremoneGaps[this.background.currentPheremoneGapArrayIndex];
 		
+		this.background.stuckOnPheremoneGap = false;
+
+		defenseGame.flyManager.currentStatus = 'normal';
+		defenseGame.flyManager.arrayOfFlies[0].status = 'swatted';
+		defenseGame.flyManager.arrayOfFlies[1].status = 'swatted';
+		defenseGame.flyManager.arrayOfFlies[2].status = 'swatted';
+		defenseGame.flyManager.arrayOfFlies[3].status = 'swatted';
+		defenseGame.flyManager.currentFlyIndex = -1;
 
 		this.background.fungusTallyDiv.tallyOfEatenFungusSpores = 0;
 		defenseGame.background.bigAntTallyOfInfections = 0;
 
 
 		this.parentAntObject.currentSpriteSheet = bigAntWalkingSpriteSheet;
-		this.parentAntObject.initializeArrayOfFungusSpores();
+		
+		for (let i = 0; i < defenseGame.bigAntManager.arrayOfBigAnts.length; i++)
+		{
+			defenseGame.bigAntManager.arrayOfBigAnts[i].currentSpriteSheet = bigAntWalkingSpriteSheet;
+		}
 
+		this.NPCBigAnt2.currentSpriteSheet = bigAntWalkingSpriteSheet;
+		this.background.pheremoneStrip2ImageXCoordinate = renderer.canvas.width*1.01 + this.background.pheremoneGapWidth;
 
 		this.audioManager.resetFlyDefenseAudio();
 
@@ -375,21 +405,117 @@ defenseGame.initialize = function()
 		{
 			this.flyManager.arrayOfFlies[i].assignRandomXYCoordinatesInARange();
 		}
-
 		isOutOfTime = false;
 
 		defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.pause();
 		defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.currentTime = 0;
+
+
+		this.parentAntObject.leafWidth = this.parentAntObject.bigAntWidth*0.7;
+		this.parentAntObject.leafHeight = this.parentAntObject.bigAntHeight*2;
+		this.parentAntObject.leafX = this.parentAntObject.bigAntX + this.parentAntObject.bigAntWidth*0.55;
+		this.parentAntObject.leafY = this.parentAntObject.bigAntY + this.parentAntObject.bigAntHeight/2 - this.parentAntObject.leafHeight*1.05;
+
+		this.NPCBigAnt1.bigAntX = firstBigAntX - bigAntWidth; 
+		this.NPCBigAnt1.leafWidth = this.NPCBigAnt1.bigAntWidth*0.7;
+		this.NPCBigAnt1.leafHeight = this.NPCBigAnt1.bigAntHeight*2;
+		this.NPCBigAnt1.leafX = this.NPCBigAnt1.bigAntX + this.NPCBigAnt1.bigAntWidth*0.55;
+		this.NPCBigAnt1.leafY = this.NPCBigAnt1.bigAntY + this.NPCBigAnt1.bigAntHeight/2 - this.NPCBigAnt1.leafHeight*1.05;
+		
+		this.NPCBigAnt2.bigAntX = renderer.canvas.width - renderer.canvas.width*0.33;
+		this.NPCBigAnt2.leafWidth = this.NPCBigAnt2.bigAntWidth*0.7;
+		this.NPCBigAnt2.leafHeight = this.NPCBigAnt2.bigAntHeight*2;
+		this.NPCBigAnt2.leafX = this.NPCBigAnt2.bigAntX + this.NPCBigAnt2.bigAntWidth*0.55;
+		this.NPCBigAnt2.leafY = this.NPCBigAnt2.bigAntY + this.NPCBigAnt2.bigAntHeight/2 - this.NPCBigAnt2.leafHeight*1.05;
+
+		this.NPCBigAntNegative1.bigAntX = firstBigAntX - (bigAntWidth*2);
+		this.NPCBigAntNegative1.leafWidth = this.NPCBigAntNegative1.bigAntWidth*0.7;
+		this.NPCBigAntNegative1.leafHeight = this.NPCBigAntNegative1.bigAntHeight*2;
+		this.NPCBigAntNegative1.leafX = this.NPCBigAntNegative1.bigAntX + this.NPCBigAntNegative1.bigAntWidth*0.55;
+		this.NPCBigAntNegative1.leafY = this.NPCBigAntNegative1.bigAntY + this.NPCBigAntNegative1.bigAntHeight/2 - this.NPCBigAntNegative1.leafHeight*1.05;
+
+		this.NPCBigAntNegative2.bigAntX = firstBigAntX - (bigAntWidth*3);
+		this.NPCBigAntNegative2.leafWidth = this.NPCBigAntNegative2.bigAntWidth*0.7;
+		this.NPCBigAntNegative2.leafHeight = this.NPCBigAntNegative2.bigAntHeight*2;
+		this.NPCBigAntNegative2.leafX = this.NPCBigAntNegative2.bigAntX + this.NPCBigAntNegative2.bigAntWidth*0.55;
+		this.NPCBigAntNegative2.leafY = this.NPCBigAntNegative2.bigAntY + this.NPCBigAntNegative2.bigAntHeight/2 - this.NPCBigAntNegative2.leafHeight*1.05;
+
+		this.NPCBigAntNegative3.bigAntX = firstBigAntX - (bigAntWidth*4);
+		this.NPCBigAntNegative3.leafWidth = this.NPCBigAntNegative3.bigAntWidth*0.7;
+		this.NPCBigAntNegative3.leafHeight = this.NPCBigAntNegative3.bigAntHeight*2;
+		this.NPCBigAntNegative3.leafX = this.NPCBigAntNegative3.bigAntX + this.NPCBigAntNegative3.bigAntWidth*0.55;
+		this.NPCBigAntNegative3.leafY = this.NPCBigAntNegative3.bigAntY + this.NPCBigAntNegative3.bigAntHeight/2 - this.NPCBigAntNegative3.leafHeight*1.05;
+
+		this.bigAntManager.arrayOfBigAnts = [this.parentAntObject,this.NPCBigAnt1,this.NPCBigAntNegative1,
+											this.NPCBigAntNegative2,this.NPCBigAntNegative3];
+		this.bigAntManager.currentIndex = 0;
+		this.bigAntManager.currentActiveAnt = defenseGame.parentAntObject;
+		//this.parentAntObject.initializeArrayOfFungusSpores();
 	}
 
+	this.hasBeenPlayedOnce = false;
 	this.arrayOfIntervalsToRestart = [];
 	this.restartIntervals = function()
 	{
-		// for (let i = 0; i < this.arrayOfIntervals.length; i++)
+		for (let i = 0; i < this.arrayOfFrameIntervals.length; i++)
+		{
+			this.arrayOfFrameIntervals[i].start();
+		}
+
+		defenseGame.arrayOfIntervals = [];
+
+		let backgroundWalkingInterval = setInterval(function(){defenseGame.backgroundSoldier.cycleImages()},100);
+		defenseGame.arrayOfIntervals.push(backgroundWalkingInterval);
+
+		for (let i = 0; i < defenseGame.flyManager.arrayOfFlies.length; i++)
+		{
+			let flyAnimation = 
+			setInterval(function() {defenseGame.flyManager.arrayOfFlies[i].cycleImages()},25);
+
+			defenseGame.arrayOfIntervals.push(flyAnimation);
+		}
+
+		// for (let i = 0; defenseGame.groundMinimManager.arrayOfGroundMinims.length; i++)
 		// {
-		// 	console.log('this.arrayOfIntervals[i]: ' + this.arrayOfIntervals[i]);
-		// 	this.arrayOfIntervals[i].start();
+		// 	console.log('defenseGame.groundMinimManager.arrayOfGroundMinims.length: ' + defenseGame.groundMinimManager.arrayOfGroundMinims.length);
+		// 	console.log('i: ' + i);
+		// 	// let groundMinimAnimation = setInterval(function() {defenseGame.groundMinimManager.arrayOfGroundMinims[i].cycleImages()},50);
+		// 	// defenseGame.arrayOfIntervals.push(groundMinimAnimation);
 		// }
+		// console.log('arrayOfGroundMinims: ' + defenseGame.groundMinimManager.arrayOfGroundMinims);
+		// console.log("AFTER: ground minim animations restart");
+		let groundMinimAnimation0 = setInterval(function() {defenseGame.groundMinimManager.arrayOfGroundMinims[0].cycleImages()},100);
+		defenseGame.arrayOfIntervals.push(groundMinimAnimation0);
+		let groundMinimAnimation1 = setInterval(function() {defenseGame.groundMinimManager.arrayOfGroundMinims[1].cycleImages()},100);
+		defenseGame.arrayOfIntervals.push(groundMinimAnimation1);
+		let groundMinimAnimation2 = setInterval(function() {defenseGame.groundMinimManager.arrayOfGroundMinims[2].cycleImages()},100);
+		defenseGame.arrayOfIntervals.push(groundMinimAnimation2);
+		let groundMinimAnimation3 = setInterval(function() {defenseGame.groundMinimManager.arrayOfGroundMinims[3].cycleImages()},100);
+		defenseGame.arrayOfIntervals.push(groundMinimAnimation3);
+		let groundMinimAnimation4 = setInterval(function() {defenseGame.groundMinimManager.arrayOfGroundMinims[4].cycleImages()},100);
+		defenseGame.arrayOfIntervals.push(groundMinimAnimation4);
+
+		// window.NPCBigAntAnimationInterval = 
+		// setInterval(function () {_this.cycleBigAntImages()},100);
+		
+		// defenseGame.arrayOfIntervals.push(window.NPCBigAntAnimationInterval);
+
+		for (let i = 0; i < defenseGame.bigAntManager.arrayOfBigAnts.length; i++)
+		{
+			let bigAntAnimation = setInterval(function() {defenseGame.bigAntManager.arrayOfBigAnts[i].cycleBigAntImages()},100);
+			defenseGame.arrayOfIntervals.push(bigAntAnimation);
+		}
+
+		let NPCBigAnt2Animation = setInterval(function() {defenseGame.NPCBigAnt2.cycleBigAntImages()},100);
+		defenseGame.arrayOfIntervals.push(NPCBigAnt2Animation);
+
+		for (let i = 0; i < defenseGame.bigAntManager.arrayOfBigAnts.length; i++)
+		{
+			let leafMinimAnimation = setInterval(function() {defenseGame.bigAntManager.arrayOfBigAnts[i].cycleSmallAntImages(),250});
+			defenseGame.arrayOfIntervals.push(leafMinimAnimation);
+		}
+		// let leafMinimAnimation = setInterval(function() {defenseGame.parentAntObject.cycleSmallAntImages(),250})
+		// defenseGame.arrayOfIntervals.push(leafMinimAnimation);
 		
 	}
 }

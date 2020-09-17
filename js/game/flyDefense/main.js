@@ -73,6 +73,8 @@ window.onload = function()
       }
     };
     defenseGame.countdownInterval = new frameInterval(defenseGame.decreaseCounter,1000);
+    defenseGame.arrayOfFrameIntervals.push(defenseGame.countdownInterval);
+    console.log('defenseGame.arrayOfFrameIntervals: ' + defenseGame.arrayOfFrameIntervals);
     
     defenseGame.eggHasBeenPlanted = false;
   }

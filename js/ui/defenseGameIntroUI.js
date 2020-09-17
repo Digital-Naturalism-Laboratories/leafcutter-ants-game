@@ -84,6 +84,12 @@ function defenseGameIntroUICustomEvents(deltaTime) {
       defenseIntroStartDelay = 60;
       defenseCurrentScreen = DEFENSE_INFO_SCREEN;
       ui.stateIndex = DEFENSEGAMEUI;
+      if (defenseGame.hasBeenPlayedOnce)
+      {
+        defenseGame.restartIntervals();
+        defenseGame.background.slowDownRateFromInfections = 0;
+        console.log('restart intervals called');
+      }
       defenseGame.audioManager.sfxManager.populateArrayOfEatingFungusSounds();
       defenseGame.audioManager.sfxManager.populateArrayOfFlyChasedSounds();
       defenseGame.audioManager.ambienceManager.startAmbience();

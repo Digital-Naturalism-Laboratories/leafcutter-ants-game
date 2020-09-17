@@ -198,7 +198,8 @@ function Fly(name,status)
 					if (this.x + this.width > this.currentTarget.x * 0.96 && this.x < this.currentTarget.x * 1.04 && 
 						this.y > this.currentTarget.y * 0.96 && this.y < this.currentTarget.y * 1.04)//target reached
 					{
-
+						if (!isOutOfTime)
+						{
 							if (defenseGame.bigAntManager.currentActiveAnt.name < -1)
 							{
 								let bigAntWidth = renderer.canvas.width*0.5;
@@ -220,75 +221,77 @@ function Fly(name,status)
 
 							defenseGame.arrayOfIntervals.push(window.parentAntSpriteSheetToggleInterval);
 						
-						defenseGame.flyManager.updateStatusesAfterInfection();
+							defenseGame.flyManager.updateStatusesAfterInfection();
+
+
 						
-						defenseGame.background.bigAntTallyOfInfections++;
-						defenseGame.background.calculateSlowDownRateFromInfections();
-						defenseGame.eggHasBeenPlanted = true;
-						defenseGame.audioManager.sfxManager.antInfectionSound.play();
-						if (!defenseGame.infectionAlertMessage.shouldBeVisible)
-						{
-							defenseGame.infectionAlertMessage.toggleVisibility();
-							setTimeout(
-								function() 
+							defenseGame.background.bigAntTallyOfInfections++;
+							defenseGame.background.calculateSlowDownRateFromInfections();
+							defenseGame.eggHasBeenPlanted = true;
+							defenseGame.audioManager.sfxManager.antInfectionSound.play();
+							if (!defenseGame.infectionAlertMessage.shouldBeVisible)
+							{
+								defenseGame.infectionAlertMessage.toggleVisibility();
+								setTimeout(
+									function() 
+									{
+										defenseGame.infectionAlertMessage.toggleVisibility();
+										//console.log('defenseGame.bigAntManager.currentActiveAnt: ' + defenseGame.bigAntManager.currentActiveAnt);
+									},2000);
+							}
+							
+							defenseGame.transitioningToUninfectedAnt = true;
+							defenseGame.background.transitionOveride = -1.1;
+
+							defenseGame.bigAntManager.updateCurrentActiveAnt();
+							defenseGame.flyManager.updateTargets();
+
+
+							defenseGame.background.stuckOnPheremoneGap = false;
+							if (defenseGame.background.currentPheremoneGap !== undefined)
+							{
+								defenseGame.background.currentPheremoneGap.isFilledIn = true;
+								defenseGame.background.currentPheremoneGapArrayIndex++;
+								defenseGame.background.currentPheremoneGap = defenseGame.background.pheremoneGapManager.arrayOfPheremoneGaps[defenseGame.background.currentPheremoneGapArrayIndex];
+							}
+							
+							defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.pause();
+							defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.currentTime = 0;
+							defenseGame.audioManager.sfxManager.beefUpTrailFeedback.play();
+							defenseGame.audioManager.sfxManager.fliesSwarming.pause();
+							defenseGame.audioManager.sfxManager.flyBuzzingNormal.play();
+							defenseGame.audioManager.sfxManager.groundMinimFootstepsAccelerated.pause();
+							defenseGame.audioManager.sfxManager.groundMinimFootstepsAccelerated.currentTime = 0;
+							defenseGame.audioManager.sfxManager.groundMinimFootsteps.play();
+							for (let i = 0; i < defenseGame.groundMinimManager.arrayOfGroundMinims.length; i++)
+							{
+								defenseGame.groundMinimManager.arrayOfGroundMinims[i].coinFlipAMeanderDirection();
+								defenseGame.groundMinimManager.arrayOfGroundMinims[i].velocity = getRandomIntInclusive(1,4);
+							}
+							 defenseGame.flyManager.currentStatus = 'normal';
+							// defenseGame.flyManager.arrayOfFlies[0].status = 'swatted';
+							// defenseGame.flyManager.arrayOfFlies[1].status = 'swatted';
+							// defenseGame.flyManager.arrayOfFlies[2].status = 'swatted';
+							// defenseGame.flyManager.arrayOfFlies[3].status = 'swatted';
+							// defenseGame.flyManager.currentFlyIndex = -1;
+
+							defenseGame.background.flashAlertInterval.stop();
+
+							for (let i = 0; i < defenseGame.bigAntManager.arrayOfBigAnts.length; i++)
+							{
+								if (defenseGame.bigAntManager.arrayOfBigAnts[i].hasBeenInfected)
 								{
-									defenseGame.infectionAlertMessage.toggleVisibility();
-									//console.log('defenseGame.bigAntManager.currentActiveAnt: ' + defenseGame.bigAntManager.currentActiveAnt);
-								},2000);
-						}
-						
-						defenseGame.transitioningToUninfectedAnt = true;
-						defenseGame.background.transitionOveride = -1.1;
-
-						defenseGame.bigAntManager.updateCurrentActiveAnt();
-						defenseGame.flyManager.updateTargets();
-
-
-						defenseGame.background.stuckOnPheremoneGap = false;
-						if (defenseGame.background.currentPheremoneGap !== undefined)
-						{
-							defenseGame.background.currentPheremoneGap.isFilledIn = true;
-							defenseGame.background.currentPheremoneGapArrayIndex++;
-							defenseGame.background.currentPheremoneGap = defenseGame.background.pheremoneGapManager.arrayOfPheremoneGaps[defenseGame.background.currentPheremoneGapArrayIndex];
-						}
-						
-						defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.pause();
-						defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.currentTime = 0;
-						defenseGame.audioManager.sfxManager.beefUpTrailFeedback.play();
-						defenseGame.audioManager.sfxManager.fliesSwarming.pause();
-						defenseGame.audioManager.sfxManager.flyBuzzingNormal.play();
-						defenseGame.audioManager.sfxManager.groundMinimFootstepsAccelerated.pause();
-						defenseGame.audioManager.sfxManager.groundMinimFootstepsAccelerated.currentTime = 0;
-						defenseGame.audioManager.sfxManager.groundMinimFootsteps.play();
-						for (let i = 0; i < defenseGame.groundMinimManager.arrayOfGroundMinims.length; i++)
-						{
-							defenseGame.groundMinimManager.arrayOfGroundMinims[i].coinFlipAMeanderDirection();
-							defenseGame.groundMinimManager.arrayOfGroundMinims[i].velocity = getRandomIntInclusive(1,4);
-						}
-						 defenseGame.flyManager.currentStatus = 'normal';
-						// defenseGame.flyManager.arrayOfFlies[0].status = 'swatted';
-						// defenseGame.flyManager.arrayOfFlies[1].status = 'swatted';
-						// defenseGame.flyManager.arrayOfFlies[2].status = 'swatted';
-						// defenseGame.flyManager.arrayOfFlies[3].status = 'swatted';
-						// defenseGame.flyManager.currentFlyIndex = -1;
-
-						defenseGame.background.flashAlertInterval.stop();
-
-						for (let i = 0; i < defenseGame.bigAntManager.arrayOfBigAnts.length; i++)
-						{
-							if (defenseGame.bigAntManager.arrayOfBigAnts[i].hasBeenInfected)
-							{
-								defenseGame.bigAntManager.arrayOfBigAnts[i].currentSpriteSheet = bigAntWalkingInfectedSpriteSheet;
-							}
-							else if (!defenseGame.bigAntManager.arrayOfBigAnts[i].hasBeenInfected)
-							{
-								defenseGame.bigAntManager.arrayOfBigAnts[i].currentSpriteSheet = bigAntWalkingSpriteSheet;
-							}
-						}
-						
-					}
-					
-				}
+									defenseGame.bigAntManager.arrayOfBigAnts[i].currentSpriteSheet = bigAntWalkingInfectedSpriteSheet;
+								}
+								else if (!defenseGame.bigAntManager.arrayOfBigAnts[i].hasBeenInfected)
+								{
+									defenseGame.bigAntManager.arrayOfBigAnts[i].currentSpriteSheet = bigAntWalkingSpriteSheet;
+								}
+							}// end of for loop to switch sprite sheets of big ants
+						}//end of isOutOfTime check
+					}//end of target reached				
+				}//end of planting
+			
 				else if (this.status === 'swatted')
 				{
 					if (this.y + this.height > 0)

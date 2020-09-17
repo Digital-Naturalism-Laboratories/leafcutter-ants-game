@@ -85,6 +85,13 @@ function ParentAntObject()
 		renderer.drawImage(this.currentSpriteSheet, 
 			this.bigAntWalkingSourceWidth*this.currentBigAntWalkingImageIndex,0, this.bigAntWalkingSourceWidth,this.bigAntWalkingSourceHeight,
 			this.bigAntX,this.bigAntY, this.bigAntWidth,this.bigAntHeight);
+
+		if (defenseGame.debugOn)
+		{
+			renderer.fillStyle = 'blue';
+			renderer.font = '30px Helvetica';
+			renderer.fillText('should be drawing parentAntObject', this.bigAntX,this.bigAntY);
+		}
 	}
 
 	this.leafWidth = this.bigAntWidth*0.7;
@@ -285,7 +292,7 @@ function ParentAntObject()
 			while(this.tallyRaycastIntersectionsWithLeafPolygon(potentialFungusPoint, this.leafPolygonFungusBorderLineSegments) === 0 || 
 				this.tallyRaycastIntersectionsWithLeafPolygon(potentialFungusPoint, this.leafPolygonFungusBorderLineSegments) % 2 === 0)
 			{
-				if (isOutOfTime) break; //added to break out of infinite loop when time runs out
+				//if (isOutOfTime) break; //added to break out of infinite loop when time runs out
 				potentialFungusPoint = {x:Math.floor(getRandomIntInclusive(this.leafX,this.leafX + this.leafWidth)),
 											  y:Math.floor(getRandomIntInclusive(this.leafY,this.leafY + this.leafHeight))};
 			}
