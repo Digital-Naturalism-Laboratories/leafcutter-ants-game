@@ -2,11 +2,13 @@ INFECTION = "ALERT: PHORID FLY INFECTION!";
 
 class ColonyMessageBanner {
     constructor() {
-        this.isActive = false;
+        this.isActive = true;
         this.bannerHeight = 20 * pixelSize;
         this.bannerPosY = gameHeight * 0.60;
         this.message = INFECTION;
         this.messages = [];
+        this.bannerDisplayDuration = 600;
+        this.bannerDisplayTimer = 0;
     }
 
     update(){
@@ -36,16 +38,33 @@ class ColonyMessageBanner {
             this.messages.push (string_GENETIC_DIVERSITY_FROM_MATING[currentLanguage] + Math.floor(colony.geneticDiversity * 100) + "%");
         }
 
-        if (this.messages.length > 0){
-            this.isActive = true;
-        } else {
+        //if (this.messages.length > 0){
+        //    this.isActive = true;
+        //} else {
+        //    this.isActive = false;
+        //    this.bannerDisplayTimer = 0;
+        //}
+
+        if (this.isActive) (
+            this.bannerDisplayTimer++
+        )
+
+        if (this.bannerDisplayTimer >= this.bannerDisplayDuration){
             this.isActive = false;
+            this.messages = [];
         }
 
     }
 
+    reset() {
+        this.isActive = true;
+        this.bannerDisplayTimer = 0;
+        this.messages = [];
+    }
+
     draw() {
-        if (!this.isActive) return;
+        //console.log(this.bannerDisplayTimer);
+        if (this.messages.length == 0) return;
 
         //draw banner background
         renderer.fillStyle = 'orange';

@@ -178,6 +178,7 @@ function resetColonySimGame() {
   totalMilliseconds = 0;
   previousEggTotal += colony.totalEggsLaid
   colony = new Colony();
+  banner = new ColonyMessageBanner();
 
   eggClusters = [];
   colonyWingedQueens = [];
@@ -224,18 +225,20 @@ function colonyGameUICustomDraw(deltaTime) {
   if (queen.movementState == queen.movementStates.IDLE) {
     fungus.draw();
 
-    renderer.fillStyle = 'white';
-    renderer.textAlign = 'center';
-    renderer.font = (20 * pixelSize) + "px SmallBoldPixel";
-    renderer.fillText(string_CLICK_WORKERS[currentLanguage], gameWidth / 2, 65 * pixelSize);
+    //renderer.fillStyle = 'white';
+    //renderer.textAlign = 'center';
+    //renderer.font = (20 * pixelSize) + "px SmallBoldPixel";
+    //renderer.fillText(string_CLICK_WORKERS[currentLanguage], gameWidth / 2, 65 * pixelSize);
   }
 
-  if (colonyWingedQueens.length > 0) {
-    renderer.fillStyle = 'white';
-    renderer.textAlign = 'center';
-    renderer.font = (20 * pixelSize) + "px SmallBoldPixel";
-    renderer.fillText(string_CLICK_QUEEN[currentLanguage], gameWidth / 2, 75 * pixelSize);
-  }
+  /*
+    if (colonyWingedQueens.length > 0) {
+      renderer.fillStyle = 'white';
+      renderer.textAlign = 'center';
+      renderer.font = (20 * pixelSize) + "px SmallBoldPixel";
+      renderer.fillText(string_CLICK_QUEEN[currentLanguage], gameWidth / 2, 75 * pixelSize);
+    }
+  */
 
   for (var i = 0; i < colonyAnts.length; i++) {
     colonyAnts[i].draw();
@@ -261,7 +264,7 @@ function colonyGameUICustomDraw(deltaTime) {
 function colonyGameUICustomUpdate(deltaTime) {
 
   if (queen.movementState == queen.movementStates.IDLE) {
-    
+
     totalMilliseconds += deltaTime;
     totalCycles = Math.floor(totalMilliseconds / cycleLength);
 

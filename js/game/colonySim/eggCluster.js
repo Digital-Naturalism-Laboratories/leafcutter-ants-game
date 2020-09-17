@@ -38,8 +38,11 @@ class EggCluster {
     draw() {
 
         if (this.isVisible) {
-            renderer.drawImage(this.sprite, this.pixelCoord.x - (this.sprite.width * pixelSize / 2) + this.offset, this.pixelCoord.y - (this.sprite.height * pixelSize / 4), this.sprite.width * pixelSize, this.sprite.height * pixelSize);
-            //colorCircle(this.pixelCoord.x, this.pixelCoord.y, 5, 'green');
+            if (this.sprite = egg_pupae_normal){
+                renderer.drawImage(this.sprite, this.pixelCoord.x - (this.sprite.width * 0.5 * pixelSize / 2) + this.offset, this.pixelCoord.y - (this.sprite.height * 0.5 * pixelSize / 4), this.sprite.width * 0.5 * pixelSize, this.sprite.height * 0.5 * pixelSize);
+            } else {
+                renderer.drawImage(this.sprite, this.pixelCoord.x - (this.sprite.width * pixelSize / 2) + this.offset, this.pixelCoord.y - (this.sprite.height * pixelSize / 4), this.sprite.width * pixelSize, this.sprite.height * pixelSize);
+            }
         }
 
     }
