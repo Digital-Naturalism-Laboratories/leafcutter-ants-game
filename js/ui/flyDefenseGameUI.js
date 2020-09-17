@@ -377,6 +377,9 @@ defenseGame.initialize = function()
 		}
 
 		isOutOfTime = false;
+
+		defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.pause();
+		defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.currentTime = 0;
 	}
 
 	this.arrayOfIntervalsToRestart = [];
