@@ -21,8 +21,8 @@ function onResize(ev)
     }
     else
     {
-        sizeFactor = gameWidth - (gameWidth/4);
-        gameHeight = gameWidth - (gameWidth/4);
+        sizeFactor = gameWidth - (gameWidth/5);
+        gameHeight = gameWidth - (gameWidth/5);
     }
 
     pixelSize = sizeFactor / 500.0;
