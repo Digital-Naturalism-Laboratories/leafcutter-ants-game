@@ -35,7 +35,7 @@ var mainMenuSFX = [
 ]
 
 var mainMenuSFXPaths = [
-    "audio/SFX/UI Menu Buttons.wav"
+    "audio/SFX/UI Menu Buttons.mp3"
 ]
 
 var SFX_BUTTON = 0;

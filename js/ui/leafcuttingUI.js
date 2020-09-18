@@ -46,14 +46,14 @@ var leafcuttingSFX = [
     document.createElement('audio')
 ]
 var leafcuttingSFXPaths = [
-    "audio/SFX/Jaw Penalty ALT.wav",
-    "audio/SFX/Positive Feedback - Beef Up Trail.wav",
-    "audio/SFX/Clock Ticking.wav",
-    "audio/SFX/Leaf Minim Footsteps Fast.wav",
-    "audio/SFX/Positive Feedback - Player Wins.wav",
-    "audio/SFX/Game Over.wav",
-    "audio/SFX/Jaw Penalty.wav",
-    "audio/SFX/Positive Feedback - Leaf Cut Success ALT.wav"
+    "audio/SFX/Jaw Penalty ALT.mp3",
+    "audio/SFX/Positive Feedback - Beef Up Trail.mp3",
+    "audio/SFX/Clock Ticking.mp3",
+    "audio/SFX/Leaf Minim Footsteps Fast.mp3",
+    "audio/SFX/Positive Feedback - Player Wins.mp3",
+    "audio/SFX/Game Over.mp3",
+    "audio/SFX/Jaw Penalty.mp3",
+    "audio/SFX/Positive Feedback - Leaf Cut Success ALT.mp3"
 ]
 var SFX_JAWBUTTON = 0;
 var SFX_JAWTIMED = 1;

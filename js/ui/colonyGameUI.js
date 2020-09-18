@@ -32,9 +32,9 @@ var colonyGameSFX = [
 ]
 
 var colonyGameSFXPaths = [
-  "audio/SFX/Digging Sound.wav",
-  "audio/SFX/Eating Fungus.wav",
-  "audio/SFX/Minigame Trigger.wav",
+  "audio/SFX/Digging Sound.mp3",
+  "audio/SFX/Eating Fungus.mp3",
+  "audio/SFX/Minigame Trigger.mp3",
 ]
 
 //SFX Indexes
