@@ -432,6 +432,7 @@ function FlyManager()
 
 	this.updateTargets = function()
 	{
+		console.log('defenseGame.bigAntManager.currentActiveAnt.name: ' + defenseGame.bigAntManager.currentActiveAnt.name);
 		for (let i = 0; i < this.arrayOfFlies.length; i++)
 		{
 			this.arrayOfFlies[i].currentTarget = defenseGame.bigAntManager.currentActiveAnt.headTarget;

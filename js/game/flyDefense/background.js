@@ -160,7 +160,7 @@ function Background()
 		{
 			if (defenseGame.timeLeft < 121 && defenseGame.timeLeft > 0)
 			{
-				
+				console.log('inside scrollGroundImages');
 				this.forageLayerImage1XCoordinate-=gameWidth*0.00025 - (gameWidth*0.00025 * this.slowDownRateFromInfections);
 				this.forageLayerImage2XCoordinate-=gameWidth*0.00025 - (gameWidth*0.00025 * this.slowDownRateFromInfections);
 				

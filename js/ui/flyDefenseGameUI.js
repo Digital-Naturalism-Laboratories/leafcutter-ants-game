@@ -198,7 +198,7 @@ defenseGame.initialize = function()
 			this.reset();
 			
 
-			ui.stateIndex = COLONYGAMEINTROUI;//COLONYGAMEINTROUI
+			ui.stateIndex = DEFENSEGAMEINTROUI;//COLONYGAMEINTROUI
 			
 			this.colonyReached = false;
 			
@@ -410,47 +410,96 @@ defenseGame.initialize = function()
 		defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.pause();
 		defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.currentTime = 0;
 
-
-		this.parentAntObject.leafWidth = this.parentAntObject.bigAntWidth*0.7;
-		this.parentAntObject.leafHeight = this.parentAntObject.bigAntHeight*2;
-		this.parentAntObject.leafX = this.parentAntObject.bigAntX + this.parentAntObject.bigAntWidth*0.55;
-		this.parentAntObject.leafY = this.parentAntObject.bigAntY + this.parentAntObject.bigAntHeight/2 - this.parentAntObject.leafHeight*1.05;
-
+		this.parentAntObject.bigAntX = renderer.canvas.width/2 - this.parentAntObject.bigAntWidth/2;
 		this.NPCBigAnt1.bigAntX = firstBigAntX - bigAntWidth; 
-		this.NPCBigAnt1.leafWidth = this.NPCBigAnt1.bigAntWidth*0.7;
-		this.NPCBigAnt1.leafHeight = this.NPCBigAnt1.bigAntHeight*2;
-		this.NPCBigAnt1.leafX = this.NPCBigAnt1.bigAntX + this.NPCBigAnt1.bigAntWidth*0.55;
-		this.NPCBigAnt1.leafY = this.NPCBigAnt1.bigAntY + this.NPCBigAnt1.bigAntHeight/2 - this.NPCBigAnt1.leafHeight*1.05;
-		
 		this.NPCBigAnt2.bigAntX = renderer.canvas.width - renderer.canvas.width*0.33;
-		this.NPCBigAnt2.leafWidth = this.NPCBigAnt2.bigAntWidth*0.7;
-		this.NPCBigAnt2.leafHeight = this.NPCBigAnt2.bigAntHeight*2;
-		this.NPCBigAnt2.leafX = this.NPCBigAnt2.bigAntX + this.NPCBigAnt2.bigAntWidth*0.55;
-		this.NPCBigAnt2.leafY = this.NPCBigAnt2.bigAntY + this.NPCBigAnt2.bigAntHeight/2 - this.NPCBigAnt2.leafHeight*1.05;
-
 		this.NPCBigAntNegative1.bigAntX = firstBigAntX - (bigAntWidth*2);
-		this.NPCBigAntNegative1.leafWidth = this.NPCBigAntNegative1.bigAntWidth*0.7;
-		this.NPCBigAntNegative1.leafHeight = this.NPCBigAntNegative1.bigAntHeight*2;
-		this.NPCBigAntNegative1.leafX = this.NPCBigAntNegative1.bigAntX + this.NPCBigAntNegative1.bigAntWidth*0.55;
-		this.NPCBigAntNegative1.leafY = this.NPCBigAntNegative1.bigAntY + this.NPCBigAntNegative1.bigAntHeight/2 - this.NPCBigAntNegative1.leafHeight*1.05;
-
 		this.NPCBigAntNegative2.bigAntX = firstBigAntX - (bigAntWidth*3);
-		this.NPCBigAntNegative2.leafWidth = this.NPCBigAntNegative2.bigAntWidth*0.7;
-		this.NPCBigAntNegative2.leafHeight = this.NPCBigAntNegative2.bigAntHeight*2;
-		this.NPCBigAntNegative2.leafX = this.NPCBigAntNegative2.bigAntX + this.NPCBigAntNegative2.bigAntWidth*0.55;
-		this.NPCBigAntNegative2.leafY = this.NPCBigAntNegative2.bigAntY + this.NPCBigAntNegative2.bigAntHeight/2 - this.NPCBigAntNegative2.leafHeight*1.05;
-
 		this.NPCBigAntNegative3.bigAntX = firstBigAntX - (bigAntWidth*4);
-		this.NPCBigAntNegative3.leafWidth = this.NPCBigAntNegative3.bigAntWidth*0.7;
-		this.NPCBigAntNegative3.leafHeight = this.NPCBigAntNegative3.bigAntHeight*2;
-		this.NPCBigAntNegative3.leafX = this.NPCBigAntNegative3.bigAntX + this.NPCBigAntNegative3.bigAntWidth*0.55;
-		this.NPCBigAntNegative3.leafY = this.NPCBigAntNegative3.bigAntY + this.NPCBigAntNegative3.bigAntHeight/2 - this.NPCBigAntNegative3.leafHeight*1.05;
 
 		this.bigAntManager.arrayOfBigAnts = [this.parentAntObject,this.NPCBigAnt1,this.NPCBigAntNegative1,
 											this.NPCBigAntNegative2,this.NPCBigAntNegative3];
 		this.bigAntManager.currentIndex = 0;
 		this.bigAntManager.currentActiveAnt = defenseGame.parentAntObject;
 		//this.parentAntObject.initializeArrayOfFungusSpores();
+
+		for (let i = 0; i < defenseGame.bigAntManager.arrayOfBigAnts.length; i++)
+		{
+			
+			defenseGame.bigAntManager.arrayOfBigAnts[i].leafX = defenseGame.bigAntManager.arrayOfBigAnts[i].bigAntX + defenseGame.bigAntManager.arrayOfBigAnts[i].bigAntWidth*0.55;
+			defenseGame.bigAntManager.arrayOfBigAnts[i].leafY = defenseGame.bigAntManager.arrayOfBigAnts[i].bigAntY + defenseGame.bigAntManager.arrayOfBigAnts[i].bigAntHeight/2 - defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*1.05;
+			defenseGame.bigAntManager.arrayOfBigAnts[i].fungusTangleX = defenseGame.bigAntManager.arrayOfBigAnts[i].leafX - defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.05;
+			defenseGame.bigAntManager.arrayOfBigAnts[i].fungusTangleY = defenseGame.bigAntManager.arrayOfBigAnts[i].leafY - defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.05;
+			defenseGame.bigAntManager.arrayOfBigAnts[i].initializeLineSegments();
+			defenseGame.bigAntManager.arrayOfBigAnts[i].leafPolygonWalkingBorderPoints = 
+		[
+
+			{name:'1',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX-defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.025,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.575},
+			{name:'2',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.275,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.3},
+			{name:'3',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.425,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.025},
+			{name:'4',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.625,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.01},
+			{name:'5',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.825,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.22},
+			{name:'6',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.32},
+			{name:'7',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.5},
+			{name:'8',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.9,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.5},
+			{name:'9',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.9125,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.66},
+			{name:'10',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.775,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.88},
+			{name:'11',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.45,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*1.0125},
+			{name:'12',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.275,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.95},
+			{name:'13',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.15,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.75},
+			{name:'14',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX-defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.025,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.575}
+
+		];
+
+	defenseGame.bigAntManager.arrayOfBigAnts[i].leafPolygonFungusBorderPoints = 
+	[
+
+		{name:'1',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.04,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.575},
+		{name:'2',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.375,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.2},
+		{name:'3',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.425,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.05},
+		{name:'4',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.625,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.05},
+		{name:'5',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.75,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.22},
+		{name:'6',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.975,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.32},
+		{name:'7',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.975,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.48},
+		{name:'8',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.87,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.46},
+		{name:'9',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.86,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.66},
+		{name:'10',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.725,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.88},
+		{name:'11',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.45,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.975},
+		{name:'12',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.35,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.95},
+		{name:'13',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.15,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.7},
+		{name:'14',x:defenseGame.bigAntManager.arrayOfBigAnts[i].leafX+defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.04,y:defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.575}
+
+	];
+			//defenseGame.bigAntManager.arrayOfBigAnts[i].initializeArrayOfFungusSpores();
+
+			defenseGame.bigAntManager.arrayOfBigAnts[i].shouldBeMovingLeftOrRight = false;
+			defenseGame.bigAntManager.arrayOfBigAnts[i].shouldBeMovingUpOrDown = false;
+			defenseGame.bigAntManager.arrayOfBigAnts[i].smallAntMovingRight = false;
+			defenseGame.bigAntManager.arrayOfBigAnts[i].smallAntMovingLeft = false;
+			defenseGame.bigAntManager.arrayOfBigAnts[i].smallAntMovingUp = false;
+			defenseGame.bigAntManager.arrayOfBigAnts[i].smallAntMovingDown = false;
+
+			defenseGame.bigAntManager.arrayOfBigAnts[i].smallAntWidth = defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth*0.3;
+			defenseGame.bigAntManager.arrayOfBigAnts[i].smallAntHeight = defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight*0.3;
+			defenseGame.bigAntManager.arrayOfBigAnts[i].smallAntX = defenseGame.bigAntManager.arrayOfBigAnts[i].leafX + defenseGame.bigAntManager.arrayOfBigAnts[i].leafWidth/2 - defenseGame.bigAntManager.arrayOfBigAnts[i].smallAntWidth/2;
+			defenseGame.bigAntManager.arrayOfBigAnts[i].smallAntY = defenseGame.bigAntManager.arrayOfBigAnts[i].leafY + defenseGame.bigAntManager.arrayOfBigAnts[i].leafHeight/2 - defenseGame.bigAntManager.arrayOfBigAnts[i].smallAntHeight/2;
+			defenseGame.bigAntManager.arrayOfBigAnts[i].smallAntMidPoint = {x:defenseGame.bigAntManager.arrayOfBigAnts[i].smallAntX + defenseGame.bigAntManager.arrayOfBigAnts[i].smallAntWidth/2,y:defenseGame.bigAntManager.arrayOfBigAnts[i].smallAntY + defenseGame.bigAntManager.arrayOfBigAnts[i].smallAntHeight/2};
+
+			defenseGame.bigAntManager.arrayOfBigAnts[i].currentSmallAntDirection = 'up';
+			defenseGame.bigAntManager.arrayOfBigAnts[i].smallAntMoving = false;
+
+			defenseGame.bigAntManager.arrayOfBigAnts[i].currentMovementTargetFromInput = {};
+			console.log('defenseGame.parentAntObject.bigAntX: ' + defenseGame.parentAntObject.bigAntX);
+			defenseGame.bigAntManager.arrayOfBigAnts[i].headTarget.x = defenseGame.bigAntManager.arrayOfBigAnts[i].bigAntX + defenseGame.bigAntManager.arrayOfBigAnts[i].bigAntWidth*0.65 + defenseGame.bigAntManager.arrayOfBigAnts[i].bigAntWidth*0.1;
+		}
+		console.log('defenseGame.parentAntObject.bigAntX: ' + defenseGame.parentAntObject.bigAntX);
+		console.log('defenseGame.parentAntObject.bigAntWidth*0.65: ' + defenseGame.parentAntObject.bigAntWidth*0.65);
+		console.log('defenseGame.parentAntObject.bigAntWidth*0.1: ' + defenseGame.parentAntObject.bigAntWidth*0.1);
+		console.log('defenseGame.parentAntObject.headTarget.x: ' + defenseGame.parentAntObject.headTarget.x);
+		for (let i = 0; i < defenseGame.flyManager.arrayOfFlies.length; i++)
+		{
+			defenseGame.flyManager.arrayOfFlies[i].currentTarget = defenseGame.parentAntObject.headTarget;
+		}
 	}
 
 	this.hasBeenPlayedOnce = false;

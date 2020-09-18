@@ -1,6 +1,6 @@
 function ParentAntObject()
 {
-	this.name = 'big ant';
+	this.name = 'parent ant object';
 	this.bigAntHeight = renderer.canvas.height*0.33;
 	this.bigAntWidth = renderer.canvas.width*0.5;
 	this.bigAntX = renderer.canvas.width/2 - this.bigAntWidth/2;
@@ -144,6 +144,7 @@ function ParentAntObject()
 
 	this.initializeLineSegments = function()
 	{
+		this.leafPolygonFungusBorderLineSegments = [];
 		for (let i = 0; i < this.leafPolygonFungusBorderPoints.length - 1; i++)
 		{
 			let lineSegment = {name:this.leafPolygonFungusBorderPoints[i].name, 
@@ -154,6 +155,7 @@ function ParentAntObject()
 
 		}
 
+		this.leafPolygonWalkingBorderLineSegments = [];
 		for (let i = 0; i < this.leafPolygonWalkingBorderPoints.length - 1; i++)
 		{
 			let lineSegment = {name:this.leafPolygonWalkingBorderPoints[i].name, 
@@ -806,7 +808,7 @@ function ParentAntObject()
 		{
 			return;
 		}
-
+		console.log('parentAnt active');
 		this.currentMovementTargetFromInput = vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY);
 		if (this.currentMovementTargetFromInput.x > this.fungusTangleX && 
 			this.currentMovementTargetFromInput.x < this.fungusTangleX + this.fungusTangleWidth &&
@@ -895,17 +897,19 @@ function ParentAntObject()
 	this.clickInsideFungusTangle = false;
 	this.handleMouseDown = function()
 	{
+		console.log('reaching mouse down of parent ant object');
 		if (this.controlStatus !== 'active')
 		{
 			return;
 		}
-
+		console.log('parentAnt active');
 		this.currentMovementTargetFromInput = vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY);
 		if (this.currentMovementTargetFromInput.x > this.fungusTangleX && 
 			this.currentMovementTargetFromInput.x < this.fungusTangleX + this.fungusTangleWidth &&
 			this.currentMovementTargetFromInput.y > this.fungusTangleY &&
 			this.currentMovementTargetFromInput.y < this.fungusTangleY + this.fungusTangleHeight)
 		{
+			console.log('inside parentAnt fungusTangle');
 			this.clickInsideFungusTangle = true;
 			
 			if (defenseGame.audioManager.sfxManager.leafMinimFootsteps.paused)
