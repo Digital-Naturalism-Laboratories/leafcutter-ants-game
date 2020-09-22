@@ -104,6 +104,7 @@ function colonyGameIntroUICustomEvents(deltaTime) {
     } else {
       colonyGameIntroStartDelay = 60;
       colonyCurrentScreen = COLONY_INFO_SCREEN;
+      banner = new ColonyMessageBanner();
       ui.stateIndex = COLONYGAMEUI;
     }
 
