@@ -377,7 +377,7 @@ function leafcuttingAudioHandling(deltaTime)
                     leafCenterLabel1.text = string_BARELY_ANY[currentLanguage];
                 
                 leafCenterLabel2.text = string_LeavesCollected[currentLanguage];
-                leafCenterLabel1.enabled = centerLabel2.enabled = true;
+                leafCenterLabel1.enabled = leafCenterLabel2.enabled = true;
 
                 leafcuttingDisableBothAnts();
             }
