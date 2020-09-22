@@ -347,7 +347,7 @@ class Leaf
 
                 leafcuttingDisableBothAnts();
             }
-            else if(!leafcuttingSFX[SFX_PLAYERWIN].isPlaying && leafcuttingSFX[SFX_PLAYERWIN].volume <= 0.4)
+            else if(!leafcuttingSFX[SFX_PLAYERWIN].isPlaying && leafcuttingSFX[SFX_PLAYERWIN].volume <= 0.04)
             {
                 leafMaterial += leafcuttingScore * leafcuttingWinBonus;
                 leafcuttingResetGame();
@@ -361,7 +361,7 @@ class Leaf
                 defenseGame.audioManager.sfxManager.flyBuzzingNormal.play();
                 defenseGame.audioManager.sfxManager.groundMinimFootsteps.play();
             }
-            else if(leafcuttingSFX[SFX_PLAYERWIN].volume > 0.4)
+            else if(leafcuttingSFX[SFX_PLAYERWIN].volume > 0.04)
             {
                 leafcuttingSFX[SFX_PLAYERWIN].volume -= 0.00005 * deltaTime;
             }
