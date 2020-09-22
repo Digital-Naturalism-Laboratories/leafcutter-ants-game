@@ -32,7 +32,6 @@ function Fly(name,status)
 
 	this.x = undefined;
 	this.y = undefined;
-	// this.egg = undefined;
 
 	this.currentTarget = defenseGame.parentAntObject.headTarget;
 
@@ -49,38 +48,7 @@ function Fly(name,status)
 			this.x = getRandomIntInclusive(this.currentTarget.x + this.width,renderer.canvas.width + this.width*3);
 			this.currentFacingStatus = 'facing left';
 		}
-		//this.x = getRandomIntInclusive(-this.width*3,renderer.canvas.width + this.width*3);
 		this.y = getRandomIntInclusive( Math.floor( -5*(this.height) ),Math.floor ( -3*(this.height) ) );
-
-		
-		// if (this.egg !== undefined)
-		// {
-		// 	if (this.currentFacingStatus === 'facing left')
-		// 	{
-		// 		this.egg.x = this.x;
-		// 		this.egg.y = this.y + this.height - this.height*0.35;
-		// 	}
-		// 	else
-		// 	{
-		// 		this.egg.x = (this.x + this.width) - this.width*0.15;
-		// 		this.egg.y = this.y + this.height - this.height*0.35;
-		// 	}
-			
-		// }
-		// else
-		// {
-		// 	if (this.currentFacingStatus === 'facing left')
-		// 	{
-		// 		let egg = new Egg(this.x,this.y + this.height - this.height*0.35);
-		// 		this.egg = egg;
-		// 	}
-		// 	else
-		// 	{
-		// 		let egg = new Egg((this.x + this.width) - this.width*0.15,this.y + this.height - this.height*0.35);
-		// 		this.egg = egg;
-				
-		// 	}	
-		// }
 	}
 	
 	this.draw = function()
@@ -89,10 +57,6 @@ function Fly(name,status)
 		renderer.drawImage(this.currentSpriteSheet, 
 			this.currentImageIndex*this.flySourceWidth,0, this.flySourceWidth,this.flySourceHeight,
 			this.x,this.y, this.width,this.height);
-		// if (this.egg !== undefined)
-		// {
-		// 	this.egg.draw();
-		// }
 
 		//collision box
 		if (defenseGame.debugOn)
@@ -134,24 +98,13 @@ function Fly(name,status)
 
 					if (this.x > this.currentTarget.x)//move from right to left closer to targets x
 					{
-						this.x -= this.velocityX;
-						// if (this.egg !== undefined)
-						// {
-							
-						// 	this.egg.x -= this.velocityX;
-							
-						// }			
+						this.x -= this.velocityX;		
 					}
 						
 					
 					else if (this.x + this.width < this.currentTarget.x)//move from left to right closer to targets x
 					{
-						this.x += this.velocityX;
-						// if (this.egg !== undefined)
-						// {
-						// 	this.egg.x += this.velocityX;
-						// }
-									
+						this.x += this.velocityX;									
 					}
 						
 					
@@ -159,20 +112,11 @@ function Fly(name,status)
 					if (Math.abs(this.x - this.currentTarget.x) < renderer.canvas.width*0.005)
 					{
 						this.x = this.currentTarget.x;//stop jittering when x coordinate is very close to targets x
-						// if (this.egg !== undefined)
-						// {
-						// 	this.egg.x = this.currentTarget.x;
-						// }
-						
 					}
 
 					if (this.y < this.currentTarget.y)//descend closer to target if above it
 					{
 						this.y += this.velocityY;
-						// if (this.egg !== undefined)
-						// {
-						// 	this.egg.y += this.velocityY;
-						// }
 					}
 
 					
@@ -198,8 +142,12 @@ function Fly(name,status)
 					if (this.x + this.width > this.currentTarget.x * 0.96 && this.x < this.currentTarget.x * 1.04 && 
 						this.y > this.currentTarget.y * 0.96 && this.y < this.currentTarget.y * 1.04)//target reached
 					{
+						defenseGame.background.stuckOnPheremoneGap = false;
+						console.log('defenseGame.background.stuckOnPheremoneGap: ' + defenseGame.background.stuckOnPheremoneGap);
 						if (!isOutOfTime)
 						{
+							defenseGame.background.stuckOnPheremoneGap = false;
+							
 							if (defenseGame.bigAntManager.currentActiveAnt.name < -1)
 							{
 								let bigAntWidth = renderer.canvas.width*0.5;
@@ -236,7 +184,6 @@ function Fly(name,status)
 									function() 
 									{
 										defenseGame.infectionAlertMessage.toggleVisibility();
-										//console.log('defenseGame.bigAntManager.currentActiveAnt: ' + defenseGame.bigAntManager.currentActiveAnt);
 									},2000);
 							}
 							

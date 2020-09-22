@@ -101,6 +101,7 @@ function AmbienceManager()
 
     this.startAmbience = function()
     {
+    	console.log('start ambience called');
     	this.ambienceWash.play();
     	this.playScatteredBirdChirps();
     	this.playScatteredCicadaMultisound();
@@ -118,7 +119,7 @@ function AmbienceManager()
     this.playScatteredBirdChirps = function()
     {
     	this.setBirdChirpScatterInterval();
-    	
+    	console.log('inside play scattered bird chirp');
     	window.scatteredBirdChirpInterval = 
     	setTimeout
     		(

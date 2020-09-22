@@ -161,8 +161,8 @@ function mainMenuUICustomEvents(deltaTime)
 
     if(menuBigPlayButton.output == UIOUTPUT_SELECT)
     {
-        //ui.stateIndex = COLONYGAMEINTROUI;
-        ui.stateIndex = DEFENSEGAMEINTROUI;
+        ui.stateIndex = COLONYGAMEINTROUI;
+        //ui.stateIndex = DEFENSEGAMEINTROUI;
         //defenseGame.audioManager.startAmbience();
         menuBigPlayButton.resetOutput();
       
@@ -176,8 +176,8 @@ function mainMenuUICustomEvents(deltaTime)
 
     if (!isGameSelectEnabled) {
         if(menuBigPlayButton.output == UIOUTPUT_SELECT) {
-            //ui.stateIndex = COLONYGAMEINTROUI;
-            ui.stateIndex = DEFENSEGAMEINTROUI;
+            ui.stateIndex = COLONYGAMEINTROUI;
+            //ui.stateIndex = DEFENSEGAMEINTROUI;
             //defenseGame.audioManager.startAmbience();
             if (defenseGame.hasBeenPlayedOnce)
             {

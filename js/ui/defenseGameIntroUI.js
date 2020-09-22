@@ -87,13 +87,12 @@ function defenseGameIntroUICustomEvents(deltaTime) {
       if (defenseGame.hasBeenPlayedOnce)
       {
         defenseGame.restartIntervals();
-        //defenseGame.audioManager.restartFlyDefenseAmbience();
         defenseGame.background.slowDownRateFromInfections = 0;
         console.log('restart intervals called');
       }
       defenseGame.audioManager.sfxManager.populateArrayOfEatingFungusSounds();
       defenseGame.audioManager.sfxManager.populateArrayOfFlyChasedSounds();
-      defenseGame.audioManager.ambienceManager.startAmbience();
+      
       defenseGame.audioManager.sfxManager.calculateAndSetAvoidAwkwardSilenceTimestamps();
       defenseGame.audioManager.sfxManager.flyBuzzingNormal.play();
       defenseGame.audioManager.sfxManager.groundMinimFootsteps.play();
@@ -102,7 +101,7 @@ function defenseGameIntroUICustomEvents(deltaTime) {
       defenseGame.hasBeenPlayedOnce = true;
       defenseGame.restartIntervals();
       defenseGame.background.slowDownRateFromInfections = 0;
-
+      defenseGame.audioManager.ambienceManager.startAmbience();
     }
   }
 }

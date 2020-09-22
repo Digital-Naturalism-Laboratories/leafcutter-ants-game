@@ -147,7 +147,7 @@ defenseGame.initialize = function()
 
 			this.reset();
 
-			ui.stateIndex = DEFENSEGAMEINTROUI; //COLONYGAMEINTROUI
+			ui.stateIndex = COLONYGAMEINTROUI; //COLONYGAMEINTROUI
 			this.colonyReached = false;
 
 			this.hasBeenPlayedOnce = true;
@@ -156,21 +156,15 @@ defenseGame.initialize = function()
 		//if (this.ranOutOfTime && isTouched)
 		if (isOutOfTime && isTouched)
 		{
-			console.log(this.background.pheremoneGapManager);
-			console.log(this.background);
-
 			timeToReturnWithLeaves = this.timeLeft;
 			
 			badFungusFromLeaves = 200 - defenseGame.background.fungusTallyDiv.tallyOfEatenFungusSpores;
 			
 			infectedAntsReturning = defenseGame.background.bigAntTallyOfInfections;
-			
-			// for (let i = 0; i < defenseGame.arrayOfTimeouts.length; i++) 
-			// 	{clearTimeout(defenseGame.arrayOfTimeouts[i]);};
 
 			this.reset();
 			
-			ui.stateIndex = DEFENSEGAMEINTROUI;//COLONYGAMEINTROUI
+			ui.stateIndex = COLONYGAMEINTROUI;//COLONYGAMEINTROUI
 			
 			this.colonyReached = false;
 			
@@ -297,7 +291,7 @@ defenseGame.initialize = function()
 		}
 
 		//other settings
-		this.timeLeft = 10;
+		this.timeLeft = 120;
 		//this.colonyReached = false;
 		this.background.slowDownRateFromInfections = 1;
 		this.background.groundImage1xCoordinate = 0;
@@ -437,16 +431,27 @@ defenseGame.initialize = function()
 			defenseGame.bigAntManager.arrayOfBigAnts[i].smallAntMoving = false;
 
 			defenseGame.bigAntManager.arrayOfBigAnts[i].currentMovementTargetFromInput = {};
-			console.log('defenseGame.parentAntObject.bigAntX: ' + defenseGame.parentAntObject.bigAntX);
+			
 			defenseGame.bigAntManager.arrayOfBigAnts[i].headTarget.x = defenseGame.bigAntManager.arrayOfBigAnts[i].bigAntX + defenseGame.bigAntManager.arrayOfBigAnts[i].bigAntWidth*0.65 + defenseGame.bigAntManager.arrayOfBigAnts[i].bigAntWidth*0.1;
 		}
-		console.log('defenseGame.parentAntObject.bigAntX: ' + defenseGame.parentAntObject.bigAntX);
-		console.log('defenseGame.parentAntObject.bigAntWidth*0.65: ' + defenseGame.parentAntObject.bigAntWidth*0.65);
-		console.log('defenseGame.parentAntObject.bigAntWidth*0.1: ' + defenseGame.parentAntObject.bigAntWidth*0.1);
-		console.log('defenseGame.parentAntObject.headTarget.x: ' + defenseGame.parentAntObject.headTarget.x);
+		
 		for (let i = 0; i < defenseGame.flyManager.arrayOfFlies.length; i++)
 		{
 			defenseGame.flyManager.arrayOfFlies[i].currentTarget = defenseGame.parentAntObject.headTarget;
+		}
+
+		for (let i = 0; i < defenseGame.bigAntManager.arrayOfBigAnts.length; i++)
+		{
+			if (defenseGame.bigAntManager.arrayOfBigAnts[i] === defenseGame.parentAntObject)
+			{
+				defenseGame.bigAntManager.arrayOfBigAnts[i].controlStatus = 'active';
+			}
+			else
+			{
+				defenseGame.bigAntManager.arrayOfBigAnts[i].controlStatus = 'inactive';
+			}
+
+			defenseGame.bigAntManager.arrayOfBigAnts[i].hasBeenInfected = false;
 		}
 
 	}

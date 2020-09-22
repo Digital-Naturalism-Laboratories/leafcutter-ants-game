@@ -160,7 +160,6 @@ function Background()
 		{
 			if (defenseGame.timeLeft < 121 && defenseGame.timeLeft > 0)
 			{
-				console.log('inside scrollGroundImages');
 				this.forageLayerImage1XCoordinate-=gameWidth*0.00025 - (gameWidth*0.00025 * this.slowDownRateFromInfections);
 				this.forageLayerImage2XCoordinate-=gameWidth*0.00025 - (gameWidth*0.00025 * this.slowDownRateFromInfections);
 				
@@ -248,9 +247,12 @@ function Background()
 				{
 					this.forageLayerImage2XCoordinate = gameWidth;
 				}
-			}
-			else if (defenseGame.transitioningToUninfectedAnt)
+			}//end of if not stuck on pheremone gap			
+		}
+
+		if (defenseGame.transitioningToUninfectedAnt)
 			{
+					console.log('this.slowDownRateFromInfections: ' + this.slowDownRateFromInfections);
 					this.forageLayerImage1XCoordinate+=gameWidth*0.0006 - (gameWidth*0.0006 * this.slowDownRateFromInfections); 
 					this.forageLayerImage2XCoordinate+=gameWidth*0.0006 - (gameWidth*0.0006 * this.slowDownRateFromInfections);
 					
@@ -275,8 +277,7 @@ function Background()
 					this.pheremoneStrip2ImageXCoordinate+=gameWidth*0.0025 - (gameWidth*0.0025 * this.slowDownRateFromInfections);
 					this.colonyMoundXCoordinate+=gameWidth*0.0025 - (gameWidth*0.0025 * this.slowDownRateFromInfections);
 					this.colonyMoundMidpoint = this.colonyMoundXCoordinate + this.colonyMoundWidth/2;
-			}	
-		}
+			}// end of if for transitioning	
 	}
 
 	this.update = function()
@@ -294,14 +295,8 @@ function Background()
 		label: string_LEAF_CONTAMINANTS_CLEANED[currentLanguage],
 		labelWidth: renderer.measureText(this.label).width,
 		labelHeight: 30,
-// uiContext.fontSize.toString() + "px " + uiContext.fontFamily
 		draw: function()
 		{
-			
-			//div background fill
-			// renderer.fillStyle = 'lawngreen';
-			// renderer.fillRect(this.x,this.y - this.labelHeight*0.7, this.labelWidth*10.1,this.labelHeight);
-			//div text
 			renderer.fillStyle = 'white';
 			renderer.font = '45px SmallBoldPixel';
 			renderer.fillText(this.label + this.tallyOfEatenFungusSpores, this.x,this.y);
@@ -318,10 +313,6 @@ function Background()
 		labelHeight: 30,
 		draw: function()
 		{
-			//div background fill
-			// renderer.fillStyle = 'lawngreen';
-			// renderer.fillRect(this.x,this.y - this.labelHeight*0.7, this.labelWidth*9.25,this.labelHeight);
-			//div text
 			renderer.fillStyle = 'white';//dark violet, medium orchid
 			renderer.font = (45 * pixelSize) + 'px SmallBoldPixel';
 			renderer.textAlign = "left";
@@ -336,9 +327,7 @@ function Background()
 	{
 		this.touchStartCoordinates = vec2(touchPos[0].x - canvasStartX, touchPos[0].y - canvasStartY);
 		
-		//defenseGame.muteButton.handleInput(this.touchStartCoordinates);
 		defenseGame.fullScreenButton.handleInput(this.touchStartCoordinates);
-		//defenseGame.background.exitButton.handleInput(this.touchStartCoordinates);
 		let arrayOfPheremoneGaps = this.pheremoneGapManager.arrayOfPheremoneGaps;
 		for (let i = 0; i < arrayOfPheremoneGaps.length; i++)
 		{
@@ -415,7 +404,6 @@ function Background()
 
 		if (defenseGame.debugOn)
 		{
-			
 			renderer.strokeStyle = 'red';
 			renderer.lineWidth = 5;
 			renderer.moveTo(this.pheremoneStrip1ImageXCoordinate + gameWidth,this.pheremoneStripY - 10);
@@ -474,9 +462,6 @@ function PheremoneGap(x)
 			this.alertMessage.y = this.y;
 
 			this.fontSize = 45;
-
-			// renderer.fillStyle = 'lawngreen';
-			// renderer.fillRect(this.x  - this.alertMessage.width,this.y - this.fontSize*1.25, this.alertMessage.width*1.25,this.fontSize*2);
 
 			renderer.fillStyle = 'white';
 			renderer.font = (24 * pixelSize) + 'px SmallBoldPixel';
@@ -574,7 +559,6 @@ function PheremoneGapManager()
 			if (!this.arrayOfPheremoneGaps[i].isFilledIn && 
 				this.arrayOfPheremoneGaps[i].x - (currentActiveAnt.bigAntX + currentActiveAnt.bigAntWidth) < 5 )
 			{
-				
 				defenseGame.background.stuckOnPheremoneGap = true;
 				if (defenseGame.bigAntManager.currentActiveAnt.hasBeenInfected)
 				{
