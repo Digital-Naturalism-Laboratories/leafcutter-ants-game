@@ -288,6 +288,7 @@ function ParentAntObject()
 		
 		for (let i = 0; i < 200; i++)
 		{
+			console.log('inside initialize array of fungus spores for big ant array index');
 			let potentialFungusPoint = {x:Math.floor(getRandomIntInclusive(this.leafX,this.leafX + this.leafWidth)),
 											  y:Math.floor(getRandomIntInclusive(this.leafY,this.leafY + this.leafHeight))};
 

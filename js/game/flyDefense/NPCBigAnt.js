@@ -125,6 +125,7 @@ function NPCBigAnt(x,name)
 
 	this.initializeLineSegments = function()
 	{
+		this.leafPolygonFungusBorderLineSegments = [];
 		for (let i = 0; i < this.leafPolygonFungusBorderPoints.length - 1; i++)
 		{
 			let lineSegment = {name:this.leafPolygonFungusBorderPoints[i].name, 
@@ -135,6 +136,7 @@ function NPCBigAnt(x,name)
 
 		}
 
+		this.leafPolygonWalkingBorderLineSegments = [];
 		for (let i = 0; i < this.leafPolygonWalkingBorderPoints.length - 1; i++)
 		{
 			let lineSegment = {name:this.leafPolygonWalkingBorderPoints[i].name, 

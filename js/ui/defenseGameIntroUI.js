@@ -87,6 +87,7 @@ function defenseGameIntroUICustomEvents(deltaTime) {
       if (defenseGame.hasBeenPlayedOnce)
       {
         defenseGame.restartIntervals();
+        //defenseGame.audioManager.restartFlyDefenseAmbience();
         defenseGame.background.slowDownRateFromInfections = 0;
         console.log('restart intervals called');
       }
