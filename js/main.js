@@ -64,8 +64,9 @@ function frame()
     {
         if (!gamePaused)
         {
-            canvas.width = gameWidth;
-            canvas.height = gameHeight;
+            //These lines seems to be causing the leaf cutting game to crash.
+            //canvas.width = gameWidth;
+            //canvas.height = gameHeight;
             canvas.style.position = "absolute";
             canvasStartY = (window.innerHeight/2) - (gameHeight/2);
             canvas.style.top = canvasStartY.toString() + "px";

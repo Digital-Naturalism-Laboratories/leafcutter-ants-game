@@ -637,7 +637,7 @@ class Ant
             moveInDir(this.bodySprite, (0.3 * pixelSize) * this.timedJawCutSpeedBonus);
             this.updatingJawTransform();
 
-            var pixelData = renderer.getImageData(this.cutPoint.x, this.cutPoint.y, 1, 1);
+            var pixelData = renderer.getImageData(this.cutPoint.x, this.cutPoint.y, 1, 1).data;
 
             if(this.cutPointTimer <= 0)
             {
