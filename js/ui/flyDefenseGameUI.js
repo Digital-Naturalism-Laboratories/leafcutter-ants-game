@@ -117,6 +117,17 @@ defenseGame.initialize = function()
 		// console.log('inside custom events');
 	}
 
+	this.DefenseGameUIResize = function()
+	{
+		defenseGame.background.resize();
+		defenseGame.parentAntObject.resize();
+		defenseGame.NPCBigAnt1.resize();
+		defenseGame.NPCBigAnt2.resize();
+		defenseGame.NPCBigAntNegative1.resize();
+		defenseGame.NPCBigAntNegative2.resize();
+		defenseGame.NPCBigAntNegative3.resize();
+	}
+
 	this.update = function()
 	{
 		defenseGame.background.update();

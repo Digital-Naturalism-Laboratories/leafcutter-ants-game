@@ -40,6 +40,7 @@ function onResize(ev)
     leafcuttingUIResize();
     leafcuttingIntroUIResize();
     defenseGameIntroUIResize();
+    defenseGame.DefenseGameUIResize();
     flightGameIntroUIResize();
     flightGameUIResize();
     colonyGameIntroUIResize();

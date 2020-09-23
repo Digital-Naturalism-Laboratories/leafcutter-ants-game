@@ -153,6 +153,43 @@ function Background()
 		this.fungusSporeFeedbackAnimationManager = new FungusSporeFeedbackAnimationManager();
 	}
 
+	this.resize = function()
+	{
+		this.groundImage1xCoordinate = 0;
+		this.groundImage2xCoordinate = renderer.canvas.width;
+
+		this.groundImage3xCoordinate = -renderer.canvas.width;
+
+		this.grassLayerImage1XCoordinate = 0;
+		this.grassLayerImage2XCoordinate = renderer.canvas.width;
+
+		this.grassLayerImage3XCoordinate = -renderer.canvas.width;
+
+		this.leavesLayerImage1XCoordinate = 0;
+		this.leavesLayerImage2XCoordinate = renderer.canvas.width;
+
+		this.leavesLayerImage3XCoordinate = -renderer.canvas.width;
+
+		this.forageLayerImage1XCoordinate = 0;
+		this.forageLayerImage2XCoordinate = renderer.canvas.width;
+
+		this.forageLayerImage3XCoordinate = -renderer.canvas.width;
+
+		this.pheremoneStrip1ImageXCoordinate = 0;
+
+		this.pheremoneGapWidth = renderer.canvas.width*0.075;
+		this.pheremoneStripY = renderer.canvas.height*0.875;
+		this.pheremoneStripHeight = renderer.canvas.height*0.075;
+
+		this.pheremoneStrip2ImageXCoordinate = renderer.canvas.width*1.01 + this.pheremoneGapWidth;
+
+		this.colonyMoundWidth = renderer.canvas.width*0.85;
+		this.colonyMoundHeight = renderer.canvas.height*0.7;
+		this.colonyMoundXCoordinate = 2.7*renderer.canvas.width;
+		this.colonyMoundYCoordinate = renderer.canvas.height - this.colonyMoundHeight*0.85;
+		this.colonyMoundMidpoint = this.colonyMoundXCoordinate + this.colonyMoundWidth/2;
+	}
+
 	this.transitionOveride = 1;
 	this.scrollGroundImages = function()
 	{

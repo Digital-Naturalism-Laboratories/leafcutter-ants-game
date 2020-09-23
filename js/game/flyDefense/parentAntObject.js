@@ -57,6 +57,79 @@ function ParentAntObject()
 		
 	}
 
+	this.resize = function()
+	{
+		this.bigAntHeight = renderer.canvas.height*0.33;
+		this.bigAntWidth = renderer.canvas.width*0.5;
+		this.bigAntX = renderer.canvas.width/2 - this.bigAntWidth/2;
+		this.bigAntY = renderer.canvas.height - this.bigAntHeight*1.2;
+		this.bigAntWalkingSourceWidth = 553;
+		this.bigAntWalkingSourceHeight = 320;
+
+		this.x = renderer.canvas.width/2 - this.bigAntWidth/2;
+		this.y = renderer.canvas.height*0.6;
+
+		this.leafWidth = this.bigAntWidth*0.7;
+		this.leafHeight = this.bigAntHeight*2;
+		this.leafX = this.bigAntX + this.bigAntWidth*0.55;
+		this.leafY = this.bigAntY + this.bigAntHeight/2 - this.leafHeight*1.05;
+
+		this.smallAntWidth = this.leafWidth*0.3;
+		this.smallAntHeight = this.leafHeight*0.3;
+		this.smallAntX = this.leafX + this.leafWidth/2 - this.smallAntWidth/2;
+		this.smallAntY = this.leafY + this.leafHeight/2 - this.smallAntHeight/2;
+		this.smallAntMidPoint = {x:this.smallAntX + this.smallAntWidth/2,y:this.smallAntY + this.smallAntHeight/2};
+
+		this.fungusTangleX = this.leafX - this.leafWidth*0.05;
+		this.fungusTangleY = this.leafY - this.leafHeight*0.05;
+		this.fungusTangleWidth = this.leafWidth + this.leafWidth*0.1;
+		this.fungusTangleHeight = this.leafHeight + this.leafHeight*0.1;
+
+		this.leafPolygonWalkingBorderPoints = 
+		[
+
+			{name:'1',x:this.leafX-this.leafWidth*0.025,y:this.leafY + this.leafHeight*0.575},
+			{name:'2',x:this.leafX+this.leafWidth*0.275,y:this.leafY + this.leafHeight*0.3},
+			{name:'3',x:this.leafX+this.leafWidth*0.425,y:this.leafY + this.leafHeight*0.025},
+			{name:'4',x:this.leafX+this.leafWidth*0.625,y:this.leafY + this.leafHeight*0.01},
+			{name:'5',x:this.leafX+this.leafWidth*0.825,y:this.leafY + this.leafHeight*0.22},
+			{name:'6',x:this.leafX+this.leafWidth,y:this.leafY + this.leafHeight*0.32},
+			{name:'7',x:this.leafX+this.leafWidth,y:this.leafY + this.leafHeight*0.5},
+			{name:'8',x:this.leafX+this.leafWidth*0.9,y:this.leafY + this.leafHeight*0.5},
+			{name:'9',x:this.leafX+this.leafWidth*0.9125,y:this.leafY + this.leafHeight*0.66},
+			{name:'10',x:this.leafX+this.leafWidth*0.775,y:this.leafY + this.leafHeight*0.88},
+			{name:'11',x:this.leafX+this.leafWidth*0.45,y:this.leafY + this.leafHeight*1.0125},
+			{name:'12',x:this.leafX+this.leafWidth*0.275,y:this.leafY + this.leafHeight*0.95},
+			{name:'13',x:this.leafX+this.leafWidth*0.15,y:this.leafY + this.leafHeight*0.75},
+			{name:'14',x:this.leafX-this.leafWidth*0.025,y:this.leafY + this.leafHeight*0.575}
+
+		];
+
+		this.leafPolygonFungusBorderPoints = 
+		[
+
+			{name:'1',x:this.leafX+this.leafWidth*0.04,y:this.leafY + this.leafHeight*0.575},
+			{name:'2',x:this.leafX+this.leafWidth*0.375,y:this.leafY + this.leafHeight*0.2},
+			{name:'3',x:this.leafX+this.leafWidth*0.425,y:this.leafY + this.leafHeight*0.05},
+			{name:'4',x:this.leafX+this.leafWidth*0.625,y:this.leafY + this.leafHeight*0.05},
+			{name:'5',x:this.leafX+this.leafWidth*0.75,y:this.leafY + this.leafHeight*0.22},
+			{name:'6',x:this.leafX+this.leafWidth*0.975,y:this.leafY + this.leafHeight*0.32},
+			{name:'7',x:this.leafX+this.leafWidth*0.975,y:this.leafY + this.leafHeight*0.48},
+			{name:'8',x:this.leafX+this.leafWidth*0.87,y:this.leafY + this.leafHeight*0.46},
+			{name:'9',x:this.leafX+this.leafWidth*0.86,y:this.leafY + this.leafHeight*0.66},
+			{name:'10',x:this.leafX+this.leafWidth*0.725,y:this.leafY + this.leafHeight*0.88},
+			{name:'11',x:this.leafX+this.leafWidth*0.45,y:this.leafY + this.leafHeight*0.975},
+			{name:'12',x:this.leafX+this.leafWidth*0.35,y:this.leafY + this.leafHeight*0.95},
+			{name:'13',x:this.leafX+this.leafWidth*0.15,y:this.leafY + this.leafHeight*0.7},
+			{name:'14',x:this.leafX+this.leafWidth*0.04,y:this.leafY + this.leafHeight*0.575}
+
+		];
+
+		this.leafPolygonFungusBorderLineSegments = [];
+		this.leafPolygonWalkingBorderLineSegments = [];
+		this.initialize();
+	}
+
 	this.cycleBigAntImages = function()
 	{
 		this.currentBigAntWalkingImageIndex++;
