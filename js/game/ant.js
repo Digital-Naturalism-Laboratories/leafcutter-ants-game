@@ -75,6 +75,7 @@ class Ant
         this.timedJawCutSpeedBonusFactor = 0.03;
         this.timedJawCutTimeBonus = 0;
         this.timedJawCutTimeBonusFactor = 2.5;
+        this.isJawButtonClickable = false;
 
         this.cutPointLines = [];
         this.cutPointDelay = 150.0;
@@ -306,6 +307,13 @@ class Ant
             //if(redColor <= 0 && greenColor <= 0) { redColor = greenColor = 127 }
             if(redColor > 150) { redColor = 255; greenColor = 0; }
             else if(greenColor > 80) { greenColor = 255; redColor = 0; }
+
+            if (greenColor >= redColor * 0.75){
+                this.isJawButtonClickable = true;
+            } else {
+                this.isJawButtonClickable = false;
+            }
+
             drawCircle(renderer, this.isCuttingJawLed ? this.cuttingJawControlPos : this.leadingJawControlPos,
                 this.timedJawMinRadius, true, "#ffffff44", pixelSize);
             drawCircle(renderer, this.isCuttingJawLed ? this.cuttingJawControlPos : this.leadingJawControlPos,
@@ -532,7 +540,8 @@ class Ant
                     this.timedJawCutSpeedBonus = 1 + ((this.timedJawMaxRadius - this.timedJawRadius) * this.timedJawCutSpeedBonusFactor);
                     
                     //TIMED JAW CUT SPEED PENALTY RULE
-                    if(this.timedJawCutSpeedBonus <= 2.1)
+                    //if(this.timedJawCutSpeedBonus <= 2.1)
+                    if(!this.isJawButtonClickable)
                     {
                         this.timedJawCutSpeedBonus /= 2;
 
@@ -578,7 +587,8 @@ class Ant
                     this.timedJawCutTimeBonus = (this.timedJawMaxRadius - this.timedJawRadius) * this.timedJawCutTimeBonusFactor;
                     
                     //TIMED JAW CUT TIME PENALTY RULE
-                    if(this.timedJawCutTimeBonus <= 90)
+                    //if(this.timedJawCutTimeBonus <= 90)
+                    if(!this.isJawButtonClickable)
                     {
                         this.timedJawCutTimeBonus -= 200;
 
