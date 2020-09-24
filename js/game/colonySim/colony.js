@@ -40,7 +40,10 @@ class Colony {
     }
 
     update() {
-        this.geneticDiversity = geneticDiversity;
+        if (geneticDiversity != 0){
+            this.geneticDiversity = geneticDiversity;
+            geneticDiversity = 0;
+        }
         this.updatePopulationCounts();
         this.updateConversionRates();
         this.updateResourceCounts();
@@ -78,10 +81,10 @@ class Colony {
     }
 
     updateConversionRates() {
-        this.adjustedfungusConversionRate = geneticDiversity > 0 ? this.fungusConversionRate + (this.fungusConversionRate * geneticDiversity) : this.fungusConversionRate;
+        this.adjustedfungusConversionRate = this.geneticDiversity > 0 ? this.fungusConversionRate + (this.fungusConversionRate * this.geneticDiversity) : this.fungusConversionRate;
         //this.adjustedbroodEatingRate;
         //this.adjustedworkerEatingRate;
-        this.adjustedleafCollectionRate = geneticDiversity > 0 ? this.leafCollectionRate + (this.leafCollectionRate * geneticDiversity) : this.leafCollectionRate;
+        this.adjustedleafCollectionRate = this.geneticDiversity > 0 ? this.leafCollectionRate + (this.leafCollectionRate * this.geneticDiversity) : this.leafCollectionRate;
     }
 
     updateResourceCounts() {
