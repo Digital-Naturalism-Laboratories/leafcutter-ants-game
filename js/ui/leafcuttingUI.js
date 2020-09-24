@@ -193,6 +193,13 @@ function leafcuttingUICustomDraw(deltaTime)
 
     ant.draw(deltaTime);
     ant2.draw(deltaTime);
+
+    renderer.textAlign = "left"; //setting this here fixes the incorrect initial position of the onscreen text.
+    //renderer.fillStyle = "white";
+    //renderer.font = (54 * pixelSize) + "px SmallBoldPixel";
+    //renderer.fillText(string_LeavesCollected_COLON[currentLanguage] + leafcuttingScore.toString(), 10 * pixelSize, 30 * pixelSize);
+    //renderer.fillText(string_Time[currentLanguage] + (Math.floor(leafcuttingTimeLeft/1000)).toString(), 10 * pixelSize, 70 * pixelSize);
+
 }
 
 function leafcuttingUICustomUpdate(deltaTime)
