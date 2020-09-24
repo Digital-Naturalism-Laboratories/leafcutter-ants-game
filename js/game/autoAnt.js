@@ -72,6 +72,12 @@ class AutoAnt
                         else
                             this.pointIndex++;
                     }
+
+                    if (typeof this.leaf.borderPoints[this.pointIndex].distance(this.leaf.stemPoint) === "undefined") {
+                        console.log('Break From Loop');
+                        break;
+                    } 
+
                 } while((this.leaf.borderPoints[this.pointIndex].distance(this.leaf.stemPoint) < 112 * pixelSize && this.leaf.borderPoints.length > 25)
                 || (this.leaf.borderPoints[this.pointIndex].x < -9999 || this.leaf.borderPoints[this.pointIndex].y < -9999));
 

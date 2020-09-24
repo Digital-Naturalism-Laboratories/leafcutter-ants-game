@@ -631,8 +631,12 @@ class Ant
     rotationMechanic(deltaTime)
     {
         var bgValueBorder = 100;
+        var loopCount = 0;
         do
         {
+            loopCount++;
+            if (loopCount > 10000) break;
+
             if(!this.alternateRotation)
             {
                 this.bodySprite.transform.rotation -= (0.025 * this.timedJawCutSpeedBonus);
