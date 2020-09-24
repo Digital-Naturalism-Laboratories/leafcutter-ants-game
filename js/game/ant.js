@@ -66,11 +66,11 @@ class Ant
         this.timedJawMinRadius = 40 * pixelSize;
         this.timedJawMaxRadius = 80 * pixelSize;
         this.timedJawRadius = this.timedJawMaxRadius;
-        this.timedJawSpeedFactorDefault = 0.08;
-        this.timedJawSpeedFactorMax = 0.15;
-        this.timedJawSpeedFactorMin = 0.05;
+        this.timedJawSpeedFactorDefault = 0.06;
+        this.timedJawSpeedFactorMax = 0.09;
+        this.timedJawSpeedFactorMin = 0.03;
         this.timedJawSpeedFactor = this.timedJawSpeedFactorDefault;
-        this.timedJawSpeedFactorStep = 0.01;
+        this.timedJawSpeedFactorStep = 0.005;
         this.timedJawCutSpeedBonus = 0;
         this.timedJawCutSpeedBonusFactor = 0.03;
         this.timedJawCutTimeBonus = 0;
