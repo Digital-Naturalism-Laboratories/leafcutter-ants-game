@@ -44,6 +44,7 @@ class Colony {
         this.updateConversionRates();
         this.updateResourceCounts();
         this.reproduction();
+        this.updateInfections();
     }
 
     reproduction() {
@@ -74,6 +75,21 @@ class Colony {
 
             this.reproductionTimerCount = 0;
         }
+    }
+
+    updateInfections(){
+
+        if (infectedAntsReturning != 0){
+            this.newInfections = infectedAntsReturning;
+            infectedAntsReturning = 0;
+        }
+
+        for (i = 0; i < this.newInfections; i++) {
+            colonyAnts[Math.floor(Math.random() * colonyAnts.length)].isInfected = true;
+            console.log("Ant Infected");
+        }
+        this.newInfections = 0;
+
     }
 
     updateConversionRates() {

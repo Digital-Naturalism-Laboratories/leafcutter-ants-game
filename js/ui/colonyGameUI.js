@@ -263,6 +263,8 @@ function colonyGameUICustomDraw(deltaTime) {
 
 function colonyGameUICustomUpdate(deltaTime) {
 
+  banner.update();
+
   if (queen.movementState == queen.movementStates.IDLE) {
 
     totalMilliseconds += deltaTime;
@@ -310,7 +312,6 @@ function colonyGameUICustomUpdate(deltaTime) {
     fungus.update();
 
   }
-  banner.update();
 
 }
 

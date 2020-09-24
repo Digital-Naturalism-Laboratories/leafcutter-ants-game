@@ -97,6 +97,7 @@ class ColonyAnt {
         }
 
         this.updateEnergyLevel();
+        this.updateInfectionLevel();
 
         if (Math.abs(this.speedX) > Math.abs(this.speedY)) { //moving right or left
             if (this.speedX >= 0) {
@@ -120,7 +121,12 @@ class ColonyAnt {
     }
 
     infectOtherAnts() {
-
+        if (Math.random() < 0.4) {
+            for (i = 0; i < 2; i++) {
+                colonyAnts[Math.floor(Math.random() * colonyAnts.length)].isInfected = true;
+                console.log("Infection Spread");
+            }
+        }
     }
 
     updateEnergyLevel() {
@@ -139,8 +145,13 @@ class ColonyAnt {
         }
 
         if (this.infectionTimer <= 0) {
+
+            if (this.isAlive){
+                console.log("Ant died of Infection");
+                this.infectOtherAnts();
+            } 
+            
             this.killAnt();
-            this.infectOtherAnts();
         }
     }
 
