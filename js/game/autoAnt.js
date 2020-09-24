@@ -150,7 +150,7 @@ class AutoAnt
 
             if(this.rotationMode)
             {
-                this.timedJawRadius -= this.timedJawSpeedFactor * deltaTime;
+                this.timedJawRadius -= this.timedJawSpeedFactor * deltaTime * pixelSize;
 
                 if(this.timedJawRadius <= this.timedJawMinRadius)
                     this.timedJawRadius = this.timedJawMaxRadius;

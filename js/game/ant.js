@@ -193,7 +193,7 @@ class Ant
 
             if(this.rotationMode)
             {
-                this.timedJawRadius -= this.timedJawSpeedFactor * deltaTime;
+                this.timedJawRadius -= this.timedJawSpeedFactor * deltaTime * pixelSize;
 
                 if(this.timedJawRadius <= this.timedJawMinRadius)
                     this.timedJawRadius = this.timedJawMaxRadius;
@@ -300,8 +300,8 @@ class Ant
             this.headLeadJawSprite.transform.position = tempPos;
             renderer.globalAlpha = 1;
             
-            var redColor = Math.floor((this.timedJawRadius - this.timedJawMinRadius)*4.0);
-            var greenColor = Math.floor((this.timedJawMaxRadius - this.timedJawRadius)*4.0);
+            var redColor = Math.floor((this.timedJawRadius - this.timedJawMinRadius)* 4.0 / pixelSize);
+            var greenColor = Math.floor((this.timedJawMaxRadius - this.timedJawRadius)* 4.0 / pixelSize);
             //if(redColor > 100 && (greenColor > 100 || greenColor < 0)) { greenColor = 0; }
             //if(redColor <= 0 && greenColor <= 0) { redColor = greenColor = 127 }
             if(redColor > 150) { redColor = 255; greenColor = 0; }
@@ -309,7 +309,7 @@ class Ant
             drawCircle(renderer, this.isCuttingJawLed ? this.cuttingJawControlPos : this.leadingJawControlPos,
                 this.timedJawMinRadius, true, "#ffffff44", pixelSize);
             drawCircle(renderer, this.isCuttingJawLed ? this.cuttingJawControlPos : this.leadingJawControlPos,
-                this.timedJawRadius, false, this.jawSpeedPenalty <= 0 ? rgba(redColor, greenColor, 0, 0.75) : "#99999955", (this.timedJawRadius - this.timedJawMinRadius) * pixelSize);
+                this.timedJawRadius, false, this.jawSpeedPenalty <= 0 ? rgba(redColor, greenColor, 0, 0.75) : "#99999955", (this.timedJawRadius - this.timedJawMinRadius));
             renderer.lineWidth = 1;
         }
     }
