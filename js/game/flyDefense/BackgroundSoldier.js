@@ -12,6 +12,15 @@ function BackgroundSoldier()
 	this.x = getRandomIntInclusive(renderer.canvas.width + this.width, renderer.canvas.width*2) ;
 	this.y = renderer.canvas.height - this.height*1.66;
 
+	this.resize = function()
+	{
+		this.height = renderer.canvas.height*0.25;
+		this.width = renderer.canvas.width*0.5;
+
+		this.x = getRandomIntInclusive(renderer.canvas.width + this.width, renderer.canvas.width*2) ;
+		this.y = renderer.canvas.height - this.height*1.66;
+	}
+	
 	this.cycleImages = function()
 	{
 		this.currentSpritesheetIndex++;

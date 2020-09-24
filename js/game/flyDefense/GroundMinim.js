@@ -13,6 +13,17 @@ function GroundMinim()
 
 	this.currentStatus = undefined;
 
+	this.resize = function()
+	{
+		this.width = renderer.canvas.width*0.15;
+		this.height = renderer.canvas.height*0.1;
+
+		this.startingX = getRandomIntInclusive(0 - this.width*1.8, renderer.canvas.width + this.width*1.8);
+
+		this.x = this.startingX;
+		this.y = renderer.canvas.height*0.88;
+	}
+
 	this.defineMeanderBoundaries = function()
 	{
 		if (this.x <= renderer.canvas.width/2)
@@ -239,6 +250,14 @@ function GroundMinimManager()
 		{
 			this.arrayOfGroundMinims[i].currentStatus = 'en route to repair';
 			this.arrayOfGroundMinims[i].velocity = renderer.canvas.width*0.005;
+		}
+	}
+
+	this.resizeGroundMinims = function()
+	{
+		for (let i = 0; i < this.arrayOfGroundMinims.length; i++)
+		{
+			this.arrayOfGroundMinims[i].resize();
 		}
 	}
 

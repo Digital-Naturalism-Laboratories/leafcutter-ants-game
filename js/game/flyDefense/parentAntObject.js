@@ -1144,7 +1144,11 @@ function ParentAntObject()
 	}
 
 	this.headTarget = new Target('head target', this.bigAntX + this.bigAntWidth*0.65 + this.bigAntWidth*0.1,this.bigAntY + this.bigAntHeight*0.3 + this.bigAntHeight*0.1);
-	
+	this.repositionHeadTarget = function()
+	{
+		this.headTarget.x = this.bigAntX + this.bigAntWidth*0.65 + this.bigAntWidth*0.1;
+		this.headTarget.y = this.bigAntY + this.bigAntHeight*0.3 + this.bigAntHeight*0.1;
+	}
 }
 
 let infectionAlertString = string_ALERT_PHORID_FLY_INFECTION[currentLanguage];
@@ -1228,6 +1232,14 @@ function BigAntManager()
 		this.currentActiveAnt = this.arrayOfBigAnts[this.currentIndex];
 		this.currentActiveAnt.controlStatus = 'active';
 		
+	}
+
+	this.repositionHeadTargets = function()
+	{
+		for (let i = 0; i < this.arrayOfBigAnts.length; i++)
+		{
+			this.arrayOfBigAnts[i].repositionHeadTarget();
+		}
 	}
 
 	this.changeToIdleSpriteSheets = function()

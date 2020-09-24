@@ -1109,6 +1109,11 @@ this.tallyRaycastIntersectionsWithLeafPolygon = function(pointToRaycast, arrayOf
 
 	this.headTarget = new Target('head target', this.bigAntX + this.bigAntWidth*0.65 + this.bigAntWidth*0.1,this.bigAntY + this.bigAntHeight*0.3 + this.bigAntHeight*0.1);
 
+	this.repositionHeadTarget = function()
+	{
+		this.headTarget.x = this.bigAntX + this.bigAntWidth*0.65 + this.bigAntWidth*0.1;
+		this.headTarget.y = this.bigAntY + this.bigAntHeight*0.3 + this.bigAntHeight*0.1;
+	}
 	// this.headTarget = new Target('head target', defenseGame.canvas.width * 0.435,defenseGame.canvas.height * 0.575);
 	// this.thoraxTarget = new Target('thorax target', defenseGame.canvas.width * 0.35,defenseGame.canvas.height * 0.6);
 	// this.abdomenTarget = new Target('abdomen target', defenseGame.canvas.width * 0.285,defenseGame.canvas.height * 0.6);

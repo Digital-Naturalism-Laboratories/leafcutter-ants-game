@@ -126,6 +126,10 @@ defenseGame.initialize = function()
 		defenseGame.NPCBigAntNegative1.resize();
 		defenseGame.NPCBigAntNegative2.resize();
 		defenseGame.NPCBigAntNegative3.resize();
+		defenseGame.backgroundSoldier.resize();
+		defenseGame.groundMinimManager.resizeGroundMinims();
+		defenseGame.flyManager.resizeFlies();
+		defenseGame.bigAntManager.repositionHeadTargets();
 	}
 
 	this.update = function()

@@ -27,6 +27,12 @@ function Fly(name,status)
 	this.width = renderer.canvas.width/15;
 	this.height = renderer.canvas.height * 0.075;
 
+	this.resize = function()
+	{
+		this.width = renderer.canvas.width/15;
+		this.height = renderer.canvas.height * 0.075;
+	}
+
 	this.status = status;
 	this.eggHasBeenPlanted = false;
 
@@ -308,6 +314,14 @@ function FlyManager()
 	this.currentFlyIndex = 0;
 
 	this.currentStatus = 'normal';
+
+	this.resizeFlies = function()
+	{
+		for (let i = 0; i < this.arrayOfFlies.length; i++)
+		{
+			this.arrayOfFlies[i].resize();
+		}
+	}
 
 	this.toggleNextFlysStatusToPlant = function()
 	{
