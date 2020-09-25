@@ -226,7 +226,7 @@ defenseGame.initialize = function()
 			if (this.colonyReached)
 			{
 				renderer.fillStyle = 'white';
-				let fontSize = 80;
+				let fontSize = 80 * pixelSize;
 				let stringedFontSize = fontSize.toString();
 				renderer.font = stringedFontSize + 'px SmallBoldPixel';
 
@@ -236,7 +236,7 @@ defenseGame.initialize = function()
 				renderer.fillText(colonyReachedText, renderer.canvas.width/2 - colonyReachedTextWidth/2,
 													 renderer.canvas.height/2 - fontSize/2);
 
-				let clickToContinueTextFontSize = 80;
+				let clickToContinueTextFontSize = 75 * pixelSize;
 				let stringedClickToContinueTextFontSize = clickToContinueTextFontSize.toString();
 				renderer.font = stringedClickToContinueTextFontSize + 'px SmallBoldPixel';
 				let clickToContinueText = string_CLICK_TO_CONTINUE[currentLanguage];
@@ -250,7 +250,7 @@ defenseGame.initialize = function()
 			if (isOutOfTime)
 			{
 				renderer.fillStyle = 'white';
-				let fontSize = 80;
+				let fontSize = pixelSize * 80;
 				let stringedFontSize = fontSize.toString();
 				renderer.font = stringedFontSize + 'px SmallBoldPixel';
 
@@ -260,7 +260,7 @@ defenseGame.initialize = function()
 				renderer.fillText(noTimeLeftText, renderer.canvas.width/2 - noTimeLeftTextWidth/2,
 												  renderer.canvas.height/2 - fontSize/2);
 
-				let clickToContinueTextFontSize = 80;
+				let clickToContinueTextFontSize = pixelSize * 75;
 				let stringedClickToContinueTextFontSize = clickToContinueTextFontSize.toString();
 				renderer.font = stringedClickToContinueTextFontSize + 'px SmallBoldPixel';
 				let clickToContinueText = string_CLICK_TO_CONTINUE[currentLanguage];
