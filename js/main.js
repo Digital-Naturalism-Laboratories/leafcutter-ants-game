@@ -2,12 +2,20 @@ var bgmIntro = document.createElement('audio');
 var fullScreenActive = false;
 window.onload = function()
 {
+    setInterval(defenseGameAnim,25);
+
     init();
     bgmIntro.setAttribute('src', 'audio/Intro Music.mp3');
     bgmIntro.loop = true;
 
     frame();
 };
+
+var defenseGameFrame = 0;
+function defenseGameAnim()
+{
+    defenseGameFrame++;
+}
 
 function events(deltaTime)
 {

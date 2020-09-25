@@ -1,3 +1,5 @@
+
+
 function NPCBigAnt(x,name)
 {
 	this.name = name;
@@ -961,6 +963,16 @@ function NPCBigAnt(x,name)
 
 	this.update = function()
 	{
+		if (this.globalFrameLastChecked !== defenseGameFrame)
+		{
+			this.globalFrameLastChecked = defenseGameFrame;
+			this.cycleSmallAntImages();
+			if (defenseGameFrame%4 == 0)
+			{
+				this.cycleBigAntImages();
+			}
+		}
+
 		 this.moveSmallAnt();
 		 this.detectFungusSporeCollisions();
 
@@ -1052,14 +1064,14 @@ function NPCBigAnt(x,name)
 	this.initialize = function()
 	{
 		var _this = this;
-		window.NPCBigAntAnimationInterval = 
-		setInterval(function () {_this.cycleBigAntImages()},100);
+		//window.NPCBigAntAnimationInterval = 
+		//setInterval(function () {_this.cycleBigAntImages()},100);
 		
-		defenseGame.arrayOfIntervals.push(window.NPCBigAntAnimationInterval);
-
-		window.smallAntAnimationInterval = 
-		setInterval(function() {_this.cycleSmallAntImages()},25);
-		defenseGame.arrayOfIntervals.push(window.smallAntAnimationInterval);
+		//defenseGame.arrayOfIntervals.push(window.NPCBigAntAnimationInterval);
+		this.globalFrameLastChecked = defenseGameFrame;
+		//window.smallAntAnimationInterval = 
+		//setInterval(function() {_this.cycleSmallAntImages()},25);
+		//defenseGame.arrayOfIntervals.push(window.smallAntAnimationInterval);
 		// this.bigAntWalkingInterval.start();
 		this.initializeLineSegments();
 		this.initializeArrayOfFungusSpores();

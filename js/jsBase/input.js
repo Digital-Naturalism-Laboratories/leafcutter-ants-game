@@ -211,12 +211,7 @@ function onKeyDown(ev)
         ui.stateIndex = DEFENSEGAMEINTROUI;
 
         //copied here from mainmenuUI to fix crash when starting game from leafcutting game rather than the main menu
-	    defenseGame.audioManager.sfxManager.populateArrayOfEatingFungusSounds();
-        defenseGame.audioManager.sfxManager.populateArrayOfFlyChasedSounds();
-        defenseGame.audioManager.ambienceManager.startAmbience();
-        defenseGame.audioManager.sfxManager.calculateAndSetAvoidAwkwardSilenceTimestamps();
-        defenseGame.audioManager.sfxManager.flyBuzzingNormal.play();
-        defenseGame.audioManager.sfxManager.groundMinimFootsteps.play();
+	    
         break;
 
         case 68://d

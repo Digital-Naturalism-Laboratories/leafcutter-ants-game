@@ -130,6 +130,7 @@ defenseGame.initialize = function()
 		defenseGame.groundMinimManager.resizeGroundMinims();
 		defenseGame.flyManager.resizeFlies();
 		defenseGame.bigAntManager.repositionHeadTargets();
+	ui.stateIndex = DEFENSEGAMEINTROUI;
 	}
 
 	this.update = function()
@@ -518,14 +519,14 @@ defenseGame.initialize = function()
 		
 		// defenseGame.arrayOfIntervals.push(window.NPCBigAntAnimationInterval);
 
-		for (let i = 0; i < defenseGame.bigAntManager.arrayOfBigAnts.length; i++)
-		{
-			let bigAntAnimation = setInterval(function() {defenseGame.bigAntManager.arrayOfBigAnts[i].cycleBigAntImages()},100);
-			defenseGame.arrayOfIntervals.push(bigAntAnimation);
-		}
+		// for (let i = 0; i < defenseGame.bigAntManager.arrayOfBigAnts.length; i++)
+		// {
+		// 	let bigAntAnimation = setInterval(function() {defenseGame.bigAntManager.arrayOfBigAnts[i].cycleBigAntImages()},100);
+		// 	defenseGame.arrayOfIntervals.push(bigAntAnimation);
+		// }
 
-		let NPCBigAnt2Animation = setInterval(function() {defenseGame.NPCBigAnt2.cycleBigAntImages()},100);
-		defenseGame.arrayOfIntervals.push(NPCBigAnt2Animation);
+		// let NPCBigAnt2Animation = setInterval(function() {defenseGame.NPCBigAnt2.cycleBigAntImages()},100);
+		// defenseGame.arrayOfIntervals.push(NPCBigAnt2Animation);
 
 		for (let i = 0; i < defenseGame.bigAntManager.arrayOfBigAnts.length; i++)
 		{
