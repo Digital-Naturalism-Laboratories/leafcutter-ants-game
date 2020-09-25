@@ -69,11 +69,14 @@ class AutoAnt
                     {
                         if(this.pointIndex > 0)
                             this.pointIndex--;
-                        else
+                        else if (this.pointIndex < this.leaf.borderPoints.length - 1)
                             this.pointIndex++;
                     }
 
-                    if (typeof this.leaf.borderPoints[this.pointIndex].distance(this.leaf.stemPoint) === "undefined") {
+                    if (typeof this.leaf === "undefined" ||
+                        typeof this.leaf.borderPoints === "undefined" ||
+                        this.leaf.borderPoints.length === 0 ||
+                        typeof this.leaf.borderPoints[this.pointIndex].distance(this.leaf.stemPoint) === "undefined") {
                         console.log('Break From Loop');
                         break;
                     } 
