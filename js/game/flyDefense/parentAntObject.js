@@ -1065,9 +1065,18 @@ function ParentAntObject()
 	
 	this.update = function()
 	{
+		if (this.globalFrameLastChecked !== defenseGameFrame)
+		{
+			this.globalFrameLastChecked = defenseGameFrame;
+			this.cycleSmallAntImages();
+			if (defenseGameFrame%4 == 0)
+			{
+				this.cycleBigAntImages();
+			}
+		}
 		
-			this.moveSmallAnt();
-			this.detectFungusSporeCollisions();
+		this.moveSmallAnt();
+		this.detectFungusSporeCollisions();
 		
 		if (defenseGame.transitioningToUninfectedAnt)
 		{
@@ -1133,14 +1142,14 @@ function ParentAntObject()
 		this.initializeArrayOfFungusSpores();
 		
 		
-		var _this = this;
-		window.parentAntAnimationInterval = 
-		setInterval(function() {_this.cycleBigAntImages()},100);
-		defenseGame.arrayOfIntervals.push(window.parentAntAnimationInterval);
+		// var _this = this;
+		// window.parentAntAnimationInterval = 
+		// setInterval(function() {_this.cycleBigAntImages()},100);
+		// defenseGame.arrayOfIntervals.push(window.parentAntAnimationInterval);
 
-		window.smallAntAnimationInterval = 
-		setInterval(function() {_this.cycleSmallAntImages()},25);
-		defenseGame.arrayOfIntervals.push(window.smallAntAnimationInterval);
+		// window.smallAntAnimationInterval = 
+		// setInterval(function() {_this.cycleSmallAntImages()},25);
+		// defenseGame.arrayOfIntervals.push(window.smallAntAnimationInterval);
 	}
 
 	this.headTarget = new Target('head target', this.bigAntX + this.bigAntWidth*0.65 + this.bigAntWidth*0.1,this.bigAntY + this.bigAntHeight*0.3 + this.bigAntHeight*0.1);

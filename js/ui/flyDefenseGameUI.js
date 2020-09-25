@@ -528,11 +528,11 @@ defenseGame.initialize = function()
 		// let NPCBigAnt2Animation = setInterval(function() {defenseGame.NPCBigAnt2.cycleBigAntImages()},100);
 		// defenseGame.arrayOfIntervals.push(NPCBigAnt2Animation);
 
-		for (let i = 0; i < defenseGame.bigAntManager.arrayOfBigAnts.length; i++)
-		{
-			let leafMinimAnimation = setInterval(function() {defenseGame.bigAntManager.arrayOfBigAnts[i].cycleSmallAntImages(),250});
-			defenseGame.arrayOfIntervals.push(leafMinimAnimation);
-		}
+		// for (let i = 0; i < defenseGame.bigAntManager.arrayOfBigAnts.length; i++)
+		// {
+		// 	let leafMinimAnimation = setInterval(function() {defenseGame.bigAntManager.arrayOfBigAnts[i].cycleSmallAntImages(),250});
+		// 	defenseGame.arrayOfIntervals.push(leafMinimAnimation);
+		// }
 		// let leafMinimAnimation = setInterval(function() {defenseGame.parentAntObject.cycleSmallAntImages(),250})
 		// defenseGame.arrayOfIntervals.push(leafMinimAnimation);
 		
