@@ -226,7 +226,7 @@ function GroundMinimManager()
 
 			if (defenseGame.debugOn)
 			{
-				renderer.font = '30px Helvetica';
+				renderer.font = (pixelSize * 30) + 'px Helvetica';
 				renderer.fillStyle = 'red';
 				renderer.fillText(i, this.arrayOfGroundMinims[i].x,this.arrayOfGroundMinims[i].y);
 			}

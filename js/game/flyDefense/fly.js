@@ -80,7 +80,7 @@ function Fly(name,status)
 		  renderer.stroke();	
 
 		  renderer.fillStyle = 'brown';
-		  renderer.font = '30px Helvetica';
+		  renderer.font = (30 * pixelSize) + 'px Helvetica';
 		  renderer.fillText(this.name, this.x,this.y);					
 		}
 	}

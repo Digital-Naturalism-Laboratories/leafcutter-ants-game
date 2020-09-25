@@ -86,7 +86,7 @@ function NPCBigAnt(x,name)
 		{
 
 			renderer.fillStyle = 'white';
-			renderer.font = '30px Helvetica';
+			renderer.font = (pixelSize * 30) + 'px Helvetica';
 			renderer.fillText('NPCBig Ant ' + this.name, this.bigAntX + this.width,this.bigAntY);
 
 			renderer.strokeStyle = 'white';

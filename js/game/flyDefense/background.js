@@ -335,7 +335,7 @@ function Background()
 		draw: function()
 		{
 			renderer.fillStyle = 'white';
-			renderer.font = '45px SmallBoldPixel';
+			renderer.font = (45 * pixelSize) + 'px SmallBoldPixel';
 			renderer.fillText(this.label + this.tallyOfEatenFungusSpores, this.x,this.y);
 		}
 	}
@@ -640,7 +640,7 @@ function FungusSporeFeedbackAnimation(x,y)
 	this.draw = function()
 	{
 		renderer.fillStyle = 'purple';
-		renderer.font = '30px Helvetica';
+		renderer.font = (30 * pixelSize) + 'px Helvetica';
 		renderer.save();
 		renderer.globalAlpha = this.currentAlpha;
 		renderer.fillText(this.text, this.x,this.y);

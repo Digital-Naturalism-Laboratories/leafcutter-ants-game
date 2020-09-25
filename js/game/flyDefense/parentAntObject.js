@@ -162,7 +162,7 @@ function ParentAntObject()
 		if (defenseGame.debugOn)
 		{
 			renderer.fillStyle = 'blue';
-			renderer.font = '30px Helvetica';
+			renderer.font = (pixelSize * 30) + 'px Helvetica';
 			renderer.fillText('should be drawing parentAntObject', this.bigAntX,this.bigAntY);
 		}
 	}

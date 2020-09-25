@@ -130,7 +130,7 @@ defenseGame.initialize = function()
 		defenseGame.groundMinimManager.resizeGroundMinims();
 		defenseGame.flyManager.resizeFlies();
 		defenseGame.bigAntManager.repositionHeadTargets();
-	ui.stateIndex = DEFENSEGAMEINTROUI;
+		ui.stateIndex = DEFENSEGAMEINTROUI;
 	}
 
 	this.update = function()
