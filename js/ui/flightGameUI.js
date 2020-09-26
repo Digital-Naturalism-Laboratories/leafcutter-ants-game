@@ -180,7 +180,7 @@ function flightGameUICustomDraw(deltaTime) {
 function flightGameUICustomEvents(deltaTime) {
   if (flyingQueen.movementState == flyingQueen.movementStates.FLYING) {
   //if (flyingQueen.destinationReached = false) {
-    energyBarLength -= 0.05;
+    energyBarLength -= 0.08;
   }
 
   if (isTouched) {

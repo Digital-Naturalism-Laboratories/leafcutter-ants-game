@@ -99,7 +99,7 @@ class FlyingQueen {
             } else if (!this.destinationReached) {
 
                 this.angleToDestination = Math.atan2(lastTouchPos.y - this.y, lastTouchPos.x - this.x);
-                energyBarLength -= 0.02;
+                energyBarLength -= 0.04;
 
                 if (!flyingGameSFX[SFX_WINGS].isPlaying) {
                     flyingGameSFX[SFX_WINGS].play();
