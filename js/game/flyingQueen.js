@@ -13,8 +13,10 @@ class FlyingQueen {
             this.y = this.defaultPos.y;
             this.collisionRadius = 20;
         } else {
-            this.x = x;
-            this.y = y;
+            do {
+                this.x = Math.random() * gameWidth;
+                this.y = Math.random() * gameHeight;
+            } while (getDistBtwVec2(flyingQueen.defaultPos, vec2(this.x, this.y)) < 200 * pixelSize);
             this.collisionRadius = 50;
         }
 
@@ -22,8 +24,8 @@ class FlyingQueen {
         this.verticalSpeed = 3;
         this.angleToDestination;
         this.destinationReached = true;
-        this.sprite = new Sprite(tr(vec2(this.x * pixelSize, this.y * pixelSize), vec2(pixelSize / 3, pixelSize / 3)), new ImageObject("images/Animations/Queen_Fly_250px_Spritesheet.png", vec2(128, 128)));
-        this.matingSprite = new Sprite(tr(vec2(this.x * pixelSize, this.y * pixelSize), vec2(pixelSize / 3, pixelSize / 3)), new ImageObject("images/Animations/Queen_Mating_Spritesheet.png", vec2(625, 242)));
+        this.sprite = new Sprite(tr(vec2(this.x, this.y), vec2(pixelSize / 3, pixelSize / 3)), new ImageObject("images/Animations/Queen_Fly_250px_Spritesheet.png", vec2(128, 128)));
+        this.matingSprite = new Sprite(tr(vec2(this.x, this.y), vec2(pixelSize / 3, pixelSize / 3)), new ImageObject("images/Animations/Queen_Mating_Spritesheet.png", vec2(625, 242)));
         this.flyingMomentum = 0;
         this.fallingMomentum = 0;
         this.collisionRadius = 55;
@@ -32,7 +34,7 @@ class FlyingQueen {
         this.matingTimer = 0;
         this.lastMate;
         this.isKnockedBack = false;
-        this.knockbackTimer = 15;
+        this.knockbackTimer = 10;
         this.knockbackTimerCurrent = 0;
 
         this.movementStates = {
@@ -82,15 +84,13 @@ class FlyingQueen {
 
         if (this.isPlayerControlled) {
 
-            //if (this.isMating) return;
-
             if (this.isKnockedBack) {
 
-                energyBarLength -= 0.5;
+                energyBarLength -= 0.1;
 
                 this.knockbackTimerCurrent++;
-                this.x += this.horizontalSpeed * pixelSize * -3;
-                this.y += this.verticalSpeed * pixelSize * -2;
+                this.x += this.horizontalSpeed * pixelSize * -1;
+                this.y += this.verticalSpeed * pixelSize * -1;
                 if (this.knockbackTimerCurrent >= this.knockbackTimer) {
                     this.isKnockedBack = false;
                     this.knockbackTimerCurrent = 0;
@@ -99,55 +99,17 @@ class FlyingQueen {
             } else if (!this.destinationReached) {
 
                 this.angleToDestination = Math.atan2(lastTouchPos.y - this.y, lastTouchPos.x - this.x);
-                //console.log(this.angleToDestination);
+                energyBarLength -= 0.02;
 
-                energyBarLength -= 0.05;
-/*
-                if (this.x < lastTouchPos.x) {
-                    this.x += this.horizontalSpeed * pixelSize;
-                }
-
-                if (this.x > lastTouchPos.x) {
-                    this.x -= this.horizontalSpeed * pixelSize;
-                }
-
-                if (this.y < lastTouchPos.y) {
-                    this.y += this.verticalSpeed * pixelSize;
-                }
-
-                if (this.y > lastTouchPos.y) {
-                    this.y -= this.verticalSpeed * pixelSize;
-                }
-*/
                 if (!flyingGameSFX[SFX_WINGS].isPlaying) {
                     flyingGameSFX[SFX_WINGS].play();
                 }
 
             } else {
-
                 this.angleToDestination = Math.atan2(this.defaultPos.y - this.y, this.defaultPos.x - this.x);
-/*
-                if (this.x < this.defaultPos.x) {
-                    this.x += this.horizontalSpeed * pixelSize;
-                }
-
-                if (this.x > this.defaultPos.x) {
-                    this.x -= this.horizontalSpeed * pixelSize;
-                }
-
-                if (this.y < this.defaultPos.y) {
-                    this.y += this.verticalSpeed * pixelSize;
-                }
-
-                if (this.y > this.defaultPos.y) {
-                    this.y -= this.verticalSpeed * pixelSize;
-                }
- */
                 flyingGameSFX[SFX_WINGS].pause();
-               
             }
 
-       // }
             if (getDistBtwVec2(vec2(this.x, this.y), lastTouchPos) < 10) {
                 this.destinationReached = true;
             }
@@ -164,35 +126,25 @@ class FlyingQueen {
 
         } else {
 
-            switch (this.movementState) {
-                case 'flying':
-
-                    if (this.sprite.transform.position.y < (gameHeight * 0.25)) {
-                        this.movementState = this.movementStates.FALLING;
-                    }
-
-                    if (this.sprite.transform.position.y > 0) {
-                        this.sprite.transform.position.y -= this.verticalSpeed * pixelSize;
-                    }
-                    break;
-                case 'falling':
-
-                    if (this.sprite.transform.position.y > (gameHeight * 0.75)) {
-                        this.movementState = this.movementStates.FLYING;
-                    }
-
-                    if (this.sprite.transform.position.y < gameHeight) {
-                        this.sprite.transform.position.y += this.verticalSpeed * pixelSize;
-                    }
-                    break;
+            //reverse direction after reaching the top or bottom of screen
+            if (this.sprite.transform.position.y + this.verticalSpeed < 0 || this.sprite.transform.position.y + this.verticalSpeed > gameHeight) {
+                this.verticalSpeed *= -1;
             }
 
-            if (this.sprite.transform.position.x > gameWidth || this.sprite.transform.position.x < 0) {
-                this.horizontalSpeed = -this.horizontalSpeed;
+            //reverse direction when reaching the right or left side of the screen
+            if (this.sprite.transform.position.x + this.horizontalSpeed > gameWidth || this.sprite.transform.position.x + this.horizontalSpeed < 0) {
+                this.horizontalSpeed *= -1;
             }
 
+            //reverse direction when nearing the center of the screen
+            if (getDistBtwVec2(flyingQueen.defaultPos, this.sprite.transform.position) < 100 * pixelSize) {
+                this.horizontalSpeed *= -1;
+                this.verticalSpeed *= -1;
+            }
+
+            //update position based on speed
             this.sprite.transform.position.x += this.horizontalSpeed * pixelSize;
-            this.matingSprite.transform.position.x += this.horizontalSpeed * pixelSize;
+            this.sprite.transform.position.y += this.verticalSpeed * pixelSize;
         }
 
     }
@@ -202,15 +154,10 @@ class FlyingQueen {
         if (this.isMating) return;
         if (!this.isPlayerControlled) return;
 
-        //if (this.matingCooldownTimer < this.matingCooldown){
-        //    this.matingCooldownTimer++;
-        //    return;
-        //}
-
         this.lastMate = mate;
         this.isMating = true;
         this.animationFrameCount = this.matingAnimationFrameCount;
-        diversityBarLength += 5;
+        diversityBarLength += (Math.random() * 5) + 1;
         mateCount++;
 
         this.animationFrameLength = this.matingAnimationFrameLength;
@@ -221,7 +168,6 @@ class FlyingQueen {
             flyingGameSFX[SFX_MATING].play();
         }
 
-        //this.matingCooldownTimer = 0;
     }
 
     stopMating() {

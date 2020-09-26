@@ -231,6 +231,10 @@ function onKeyDown(ev)
         defenseGame.timeLeft = 0;
         break;
 
+        case 86://v
+        ui.stateIndex = FLIGHTGAMEINTROUI;
+        break;
+
         case 80://p
         console.log('game paused')
         if (gamePaused)

@@ -1,12 +1,15 @@
 class FlyingMale {
 
     constructor() {
-        this.x = Math.random() * gameWidth;
-        this.y = Math.random() * gameHeight;
+        do {
+            this.x = Math.random() * gameWidth;
+            this.y = Math.random() * gameHeight;
+        } while (getDistBtwVec2(flyingQueen.defaultPos, vec2(this.x, this.y)) < 200 * pixelSize);
+
         this.horizontalSpeed = (Math.random() * 8) + 0.2;
         this.verticalSpeed = (Math.random() * 3) + .25;
         this.direction = 0;
-        this.sprite = new Sprite(tr(vec2(this.x * pixelSize, this.y * pixelSize), vec2(pixelSize / 3, pixelSize / 3)), new ImageObject("images/Animations/Male_Ant_Flying_Spritesheet.png", vec2(96, 96)));
+        this.sprite = new Sprite(tr(vec2(this.x, this.y), vec2(pixelSize / 3, pixelSize / 3)), new ImageObject("images/Animations/Male_Ant_Flying_Spritesheet.png", vec2(96, 96)));
         this.movementStates = {
             FLYING: "flying",
             FALLING: "falling"
@@ -30,73 +33,74 @@ class FlyingMale {
 
     update() {
 
-        switch (this.movementState) {
-            case 'flying':
+        if (!this.hasMated) {
 
-                if (this.sprite.transform.position.y < (gameHeight * 0.25)) {
-                    this.movementState = this.movementStates.FALLING;
-                }
-
-                if (this.sprite.transform.position.y > 0) {
-                    this.sprite.transform.position.y -= this.verticalSpeed * pixelSize;
-                }
-                break;
-            case 'falling':
-
-                if (this.sprite.transform.position.y > (gameHeight * 0.75)) {
-                    if (!this.hasMated) {
-                        this.movementState = this.movementStates.FLYING;
-                    }
-                }
-
-                if (this.sprite.transform.position.y < gameHeight || this.hasMated) {
-                    this.sprite.transform.position.y += this.verticalSpeed * pixelSize;
-                }
-                break;
-        }
-
-        if (this.sprite.transform.position.x > gameWidth) {
-            if (!this.hasMated) {
-                this.direction = 1;
-                this.horizontalSpeed = (Math.random() * -8) + -2.2;
+            //reverse direction after passing the top or bottom of screen
+            if (this.sprite.transform.position.y + this.verticalSpeed < (-40 * pixelSize) || this.sprite.transform.position.y + this.verticalSpeed > gameHeight + (40 * pixelSize)) {
+                this.verticalSpeed *= -1;
             }
-        }
 
-        if (this.sprite.transform.position.x < 0) {
-            if (!this.hasMated) {
-                this.direction = 0;
-                this.horizontalSpeed = (Math.random() * 8) + 0.2;
+            //reverse direction when reaching the right side of the screen
+            if (this.sprite.transform.position.x > gameWidth) {
+                if (!this.hasMated) {
+                    this.horizontalSpeed = (Math.random() * -8) + -2.2;
+                }
             }
+
+            //reverse direction when reaching the left side of the screen
+            if (this.sprite.transform.position.x < 0) {
+                if (!this.hasMated) {
+                    this.horizontalSpeed = (Math.random() * 8) + 0.2;
+                }
+            }
+
+            //reverse direction when nearing the center of the screen
+            if (getDistBtwVec2(flyingQueen.defaultPos, this.sprite.transform.position) < 100 * pixelSize && !this.hasMated) {
+                this.horizontalSpeed *= -1;
+                this.verticalSpeed *= -1;
+            }
+
+            //face the direction it's moving
+            if (this.horizontalSpeed >= 0) {
+                this.direction = FACING_RIGHT;
+            } else {
+                this.direction = FACING_LEFT;
+            }
+
+            //trigger mating when near the queen
+            if (getDistBtwVec2(flyingQueen.sprite.transform.position, this.sprite.transform.position) < flyingQueen.collisionRadius + this.collisionRadius) {
+                if (!flyingQueen.isMating && !this.hasMated) {
+                    flyingQueen.startMating(this);
+                    this.sprite.transform.position.y = 10000;
+                    this.verticalSpeed = 0;
+                    this.horizontalSpeed = -2;
+                }
+            }
+
+            //trigger mating when near a rival queen
+            /*
+            for (var i = 0; i < rivalQueens.length; i++) {
+                if (getDistBtwVec2(rivalQueens[i].sprite.transform.position, this.sprite.transform.position) * pixelSize < ((rivalQueens[i].collisionRadius - 40) + this.collisionRadius) * pixelSize) {
+                    rivalQueens[i].startMating(this);
+                    this.sprite.transform.position.y = 10000;
+                    this.verticalSpeed = 0;
+                    this.horizontalSpeed = -2;
+                }
+            }
+            */
         }
 
+        //update position based on speed
         this.sprite.transform.position.x += this.horizontalSpeed * pixelSize;
-
-        if (getDistBtwVec2(flyingQueen.sprite.transform.position, this.sprite.transform.position) < flyingQueen.collisionRadius + this.collisionRadius) {
-            if (!flyingQueen.isMating && !this.hasMated) {
-                flyingQueen.startMating(this);
-                this.sprite.transform.position.y = 10000;
-                this.verticalSpeed = 0;
-                this.horizontalSpeed = -2;
-            }
-        }
-
-        for (var i = 0; i < rivalQueens.length; i++) {
-            if (getDistBtwVec2(rivalQueens[i].sprite.transform.position, this.sprite.transform.position) * pixelSize < ((rivalQueens[i].collisionRadius - 40 ) + this.collisionRadius) * pixelSize) {
-                rivalQueens[i].startMating(this);
-                this.sprite.transform.position.y = 10000;
-                this.verticalSpeed = 0;
-                this.horizontalSpeed = -2;
-            }
-        }
-
+        this.sprite.transform.position.y += this.verticalSpeed * pixelSize;
     }
 
     stopMating() {
         this.isMating = false;
         this.hasMated = true;
-        this.verticalSpeed = -4;
+        this.verticalSpeed = 4;
         this.horizontalSpeed -= 1;
-        this.direction = 1;
+        this.direction = 0;
         this.sprite.transform.position.x = flyingQueen.x;
         this.sprite.transform.position.y = flyingQueen.y;
     }
