@@ -22,7 +22,7 @@ class AutoAnt
 
         this.isCuttingJawLed = false;
         this.timedJawCutSpeedBonus = 0;
-        this.cutDuration = 115;
+        this.cutDuration = 150;
         this.cutTimer = 0;
         this.rotationMode = false;
         this.alternateRotation = true;
@@ -350,7 +350,7 @@ class AutoAnt
             {
                 while(this.destinationPoints.length < 50)
                 {
-                    if(this.destinationPoints[this.destinationPoints.length - 1].distance(this.destinationPoint) <= distanceBetween2AdjacentPoints * 1.67)
+                    if(this.destinationPoints[this.destinationPoints.length - 1].distance(this.destinationPoint) <= distanceBetween2AdjacentPoints * 2)
                     {
                         this.destinationPoints.push(vec2(this.destinationPoint.x, this.destinationPoint.y));
                         break;
@@ -364,7 +364,7 @@ class AutoAnt
                         {
                             pointToIgnore = i;
                         }
-                        else if(isPointInCircle(this.destinationPoints[this.destinationPoints.length - 1], this.leaf.points[i], distanceBetween2AdjacentPoints * 1.67))
+                        else if(isPointInCircle(this.destinationPoints[this.destinationPoints.length - 1], this.leaf.points[i], distanceBetween2AdjacentPoints * 2))
                         {
                             adjacentPoints.push(vec2(this.leaf.points[i].x, this.leaf.points[i].y));
                         }

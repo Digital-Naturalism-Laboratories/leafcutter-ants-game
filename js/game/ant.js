@@ -57,7 +57,7 @@ class Ant
         this.isCuttingJawLed = false;
         this.jawSpeedPenalty = 0;
         this.jawSpeedPenaltyTotalTurns = 3;
-        this.cutDuration = 85;
+        this.cutDuration = 120;
         this.cutTimer = 0;
         this.rotationMode = false;
         this.alternateRotation = true;

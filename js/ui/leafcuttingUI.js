@@ -13,8 +13,8 @@ var maxAutoAnts = 3;
 
 var leafcuttingScore = 0;
 var leafcuttingTimeLeft = 0;
-var leafcuttingStartTime = 180000;
-var leafcuttingLowTimeAlert = 15000;
+var leafcuttingStartTime = 120000;
+var leafcuttingLowTimeAlert = 10000;
 
 var leafcuttingWinBonus = 2;
 var leafcuttingLosePenalty = 2;
