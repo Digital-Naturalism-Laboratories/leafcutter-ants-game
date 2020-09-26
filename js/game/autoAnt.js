@@ -76,6 +76,8 @@ class AutoAnt
                     if (typeof this.leaf === "undefined" ||
                         typeof this.leaf.borderPoints === "undefined" ||
                         this.leaf.borderPoints.length === 0 ||
+                        this.leaf.stemPoint === "undefined" ||
+                        this.pointIndex === "undefined" ||
                         typeof this.leaf.borderPoints[this.pointIndex].distance(this.leaf.stemPoint) === "undefined") {
                         console.log('Break From Loop');
                         break;
@@ -127,8 +129,14 @@ class AutoAnt
     {
         if(!this.disabled)
         {
-            if(!this.rotationMode && (this.pointIndex > -1 || this.forcedDestination)
-            && this.destinationPoint.distance(this.bodySprite.transform.position) > 5 * pixelSize)
+            if (typeof this.destinationPoint === "undefined") {
+                console.log("destinationPoint undefined");
+            }
+
+            if (!this.rotationMode && 
+                (this.pointIndex > -1 || this.forcedDestination) &&
+                typeof this.destinationPoint != "undefined" && 
+                this.destinationPoint.distance(this.bodySprite.transform.position) > 5 * pixelSize)
             {
                 this.moveToDestination(deltaTime);
             }
