@@ -17,7 +17,7 @@ class Queen {
             DIGGINGRIGHT: "digging right",
             IDLE: "idle"
         }
-        
+
         this.movementState = this.movementStates.IDLE;
         this.currentFacing = FACING_RIGHT;
         this.clickCooldownTime = 60;
@@ -31,6 +31,7 @@ class Queen {
         this.leftWingSprite = new Sprite(tr(vec2(gameWidth * 0.65, 5), vec2(pixelSize * 0.5, pixelSize * 0.5)), new ImageObject("images/wing_left.png", vec2(0, 0)));
         this.rightWingSprite = new Sprite(tr(vec2(gameWidth * 0.65, 5), vec2(pixelSize * 0.5, pixelSize * 0.5)), new ImageObject("images/wing_right.png", vec2(0, 0)));
         this.downwardSprite = new Sprite(tr(vec2(this.pixelCoord.x + 15, this.pixelCoord.y - 15), vec2(pixelSize * 0.3, pixelSize * 0.3)), new ImageObject("images/Animations/queen_idle_updown_spritesheet.png", vec2(0, 0)));
+        this.idleSprite = new Sprite(tr(vec2(this.pixelCoord.x, this.pixelCoord.y - 15), vec2(pixelSize * 0.3, pixelSize * 0.3)), new ImageObject("images/Animations/queen_idle_spritesheet.png", vec2(0, 0)));
 
         this.collisionRadius = 15;
 
@@ -118,12 +119,12 @@ class Queen {
         this.sprite.transform.position.x = this.pixelCoord.x;
         this.sprite.transform.position.y = this.pixelCoord.y - 15;
 
-        if (this.gridCoord.row != fungus_row || this.gridCoord.col != fungus_col){
+        if (this.gridCoord.row != fungus_row || this.gridCoord.col != fungus_col) {
             colonyGridNodes[this.gridCoord.row][this.gridCoord.col].isTunneledByQueen = true;
         }
 
         colonyGridNodes[fungus_row][fungus_col - 1].isTunneledByQueen = false;
-        
+
         switch (this.movementState) {
             case this.movementStates.LANDING:
 
@@ -147,12 +148,12 @@ class Queen {
                 break;
             case this.movementStates.LANDED:
 
-                this.sprite = new Sprite(tr(vec2(this.pixelCoord.x, this.pixelCoord.y - 15), vec2(pixelSize * 0.3, pixelSize * 0.3)), new ImageObject("images/Animations/queen_idle_spritesheet.png", vec2(0, 0)));
+                this.sprite = this.idleSprite;
                 this.leftWingSprite.transform.position.y = this.pixelCoord.y - 15;
                 this.leftWingSprite.transform.position.x = this.pixelCoord.x;
                 this.rightWingSprite.transform.position.y = this.pixelCoord.y - 15;
                 this.rightWingSprite.transform.position.x = this.pixelCoord.x;
-                
+
                 this.inSize = {
                     x: 250,
                     y: 225
@@ -162,7 +163,7 @@ class Queen {
             case this.movementStates.REMOVINGRIGHTWING:
                 this.currentFacing = FACING_LEFT;
 
-                this.sprite = new Sprite(tr(vec2(this.pixelCoord.x, this.pixelCoord.y - 15), vec2(pixelSize * 0.3, pixelSize * 0.3)), new ImageObject("images/Animations/queen_idle_spritesheet.png", vec2(0, 0)));
+                this.sprite = this.idleSprite;
 
                 if (this.rightWingSprite.transform.position.y > this.sprite.transform.position.y - 50) {
                     this.rightWingSprite.transform.position.x -= 4;
@@ -191,7 +192,9 @@ class Queen {
                     row: rowAtYCoord(this.pixelCoord.y / pixelSize)
                 }
 
-                this.sprite = new Sprite(tr(vec2(this.pixelCoord.x + 15, this.pixelCoord.y - 15), vec2(pixelSize * 0.3, pixelSize * 0.3)), new ImageObject("images/Animations/queen_idle_updown_spritesheet.png", vec2(0, 0)));
+                this.sprite = this.downwardSprite;
+                this.sprite.transform.position.x = this.pixelCoord.x + 15;
+                this.sprite.transform.position.y = this.pixelCoord.y - 15;
                 this.currentFacing = 1; //1 for down on this spritesheet
 
                 this.inSize = {
@@ -213,7 +216,8 @@ class Queen {
                     row: rowAtYCoord(this.pixelCoord.y / pixelSize)
                 }
 
-                this.sprite = new Sprite(tr(vec2(this.pixelCoord.x, this.pixelCoord.y), vec2(pixelSize * 0.3, pixelSize * 0.3)), new ImageObject("images/Animations/queen_idle_spritesheet.png", vec2(0, 0)));
+                this.sprite = this.idleSprite;
+                this.sprite.transform.position.y = this.pixelCoord.y;
                 this.currentFacing = FACING_RIGHT;
 
                 this.inSize = {
@@ -235,7 +239,7 @@ class Queen {
                 this.pixelCoord = pixelCoordAtCenterOfTileCoord(this.gridCoord.col, this.gridCoord.row);
                 this.currentFacing = FACING_LEFT
 
-                this.sprite = new Sprite(tr(vec2(this.pixelCoord.x, this.pixelCoord.y - 15), vec2(pixelSize * 0.3, pixelSize * 0.3)), new ImageObject("images/Animations/queen_idle_spritesheet.png", vec2(0, 0)));
+                this.sprite = this.idleSprite;
 
                 this.inSize = {
                     x: 250,
@@ -270,13 +274,13 @@ class Queen {
                 break;
             case this.movementStates.LANDED:
                 this.rightWingSprite.drawSc();
-                renderer.fillText(string_REMOVE_WINGS[currentLanguage], gameWidth/2, (this.pixelCoord.y + 50) * pixelSize)
+                renderer.fillText(string_REMOVE_WINGS[currentLanguage], gameWidth / 2, (this.pixelCoord.y + 50) * pixelSize)
                 drawCustomCircle(this.pixelCoord.x, this.pixelCoord.y, (circleIndicatorTimer / 60) * 40 * pixelSize, 4 * pixelSize, 'green');
                 break;
             case this.movementStates.REMOVINGRIGHTWING:
                 this.rightWingSprite.drawSc();
                 this.leftWingSprite.drawSc();
-                renderer.fillText(string_REMOVE_WINGS[currentLanguage], gameWidth/2, (this.pixelCoord.y + 50) * pixelSize)
+                renderer.fillText(string_REMOVE_WINGS[currentLanguage], gameWidth / 2, (this.pixelCoord.y + 50) * pixelSize)
                 drawCustomCircle(this.pixelCoord.x, this.pixelCoord.y, (circleIndicatorTimer / 60) * 40 * pixelSize, 4 * pixelSize, 'green');
                 break;
             case this.movementStates.REMOVINGLEFTWING:
