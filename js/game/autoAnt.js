@@ -253,7 +253,7 @@ class AutoAnt
         {
             leafcuttingSFX[SFX_ANTWALK].volume = leafcuttingBGMMaxVolume/2.0;
             //leafcuttingSFX[SFX_ANTWALK].currentTime = 0;
-            leafcuttingSFX[SFX_ANTWALK].play();
+            //leafcuttingSFX[SFX_ANTWALK].play();
         }
 
         this.updatingJawTransform();
@@ -328,7 +328,7 @@ class AutoAnt
         this.leaf.getPoints(distanceBetween2AdjacentPoints);
 
         leafcuttingSFX[SFX_LEAFSUCCESS].volume = leafcuttingBGMMaxVolume/5;
-        leafcuttingSFX[SFX_LEAFSUCCESS].play();
+        //leafcuttingSFX[SFX_LEAFSUCCESS].play();
 
         this.antDestionationAfterLeafCutSuccess();
     }

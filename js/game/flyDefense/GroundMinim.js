@@ -245,7 +245,7 @@ function GroundMinimManager()
 	{
 		defenseGame.audioManager.sfxManager.groundMinimFootsteps.pause();
 		defenseGame.audioManager.sfxManager.groundMinimFootsteps.currentTime = 0;
-		defenseGame.audioManager.sfxManager.groundMinimFootstepsAccelerated.play();
+		//defenseGame.audioManager.sfxManager.groundMinimFootstepsAccelerated.play();
 		for (let i = 0; i < this.arrayOfGroundMinims.length; i++)
 		{
 			this.arrayOfGroundMinims[i].currentStatus = 'en route to repair';
@@ -281,12 +281,12 @@ function GroundMinimManager()
 			defenseGame.background.currentPheremoneGap = defenseGame.background.pheremoneGapManager.arrayOfPheremoneGaps[defenseGame.background.currentPheremoneGapArrayIndex];
 			defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.pause();
 			defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.currentTime = 0;
-			defenseGame.audioManager.sfxManager.beefUpTrailFeedback.play();
+			//defenseGame.audioManager.sfxManager.beefUpTrailFeedback.play();
 			defenseGame.audioManager.sfxManager.fliesSwarming.pause();
-			defenseGame.audioManager.sfxManager.flyBuzzingNormal.play();
+			//defenseGame.audioManager.sfxManager.flyBuzzingNormal.play();
 			defenseGame.audioManager.sfxManager.groundMinimFootstepsAccelerated.pause();
 			defenseGame.audioManager.sfxManager.groundMinimFootstepsAccelerated.currentTime = 0;
-			defenseGame.audioManager.sfxManager.groundMinimFootsteps.play();
+			//defenseGame.audioManager.sfxManager.groundMinimFootsteps.play();
 			for (let i = 0; i < this.arrayOfGroundMinims.length; i++)
 			{
 				this.arrayOfGroundMinims[i].coinFlipAMeanderDirection();

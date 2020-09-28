@@ -343,7 +343,7 @@ class Leaf
                 leafCenterLabel1.enabled = leafCenterLabel2.enabled = true;
 
                 leafcuttingSFX[SFX_PLAYERWIN].volume = leafcuttingBGMMaxVolume;
-                leafcuttingSFX[SFX_PLAYERWIN].play();
+                //leafcuttingSFX[SFX_PLAYERWIN].play();
 
                 leafcuttingDisableBothAnts();
             }
@@ -358,8 +358,8 @@ class Leaf
                 defenseGame.audioManager.sfxManager.populateArrayOfFlyChasedSounds();
                 defenseGame.audioManager.ambienceManager.startAmbience();
                 defenseGame.audioManager.sfxManager.calculateAndSetAvoidAwkwardSilenceTimestamps();
-                defenseGame.audioManager.sfxManager.flyBuzzingNormal.play();
-                defenseGame.audioManager.sfxManager.groundMinimFootsteps.play();
+                //defenseGame.audioManager.sfxManager.flyBuzzingNormal.play();
+                //defenseGame.audioManager.sfxManager.groundMinimFootsteps.play();
             }
             else if(leafcuttingSFX[SFX_PLAYERWIN].volume > 0.04)
             {

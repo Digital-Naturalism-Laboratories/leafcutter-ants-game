@@ -29,7 +29,7 @@ defenseGame.initialize = function()
 			}
 			if(defenseGame.timeLeft === 5 && defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.paused)
 			{
-				defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.play();
+				//defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.play();
 			}
 			else if (defenseGame.timeLeft === 0 && !defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.paused)
 			{
@@ -568,8 +568,8 @@ function DefenseGameButton()
       defenseGame.audioManager.sfxManager.populateArrayOfFlyChasedSounds();
       defenseGame.audioManager.ambienceManager.startAmbience();
       defenseGame.audioManager.sfxManager.calculateAndSetAvoidAwkwardSilenceTimestamps();
-      defenseGame.audioManager.sfxManager.flyBuzzingNormal.play();
-      defenseGame.audioManager.sfxManager.groundMinimFootsteps.play();
+      //defenseGame.audioManager.sfxManager.flyBuzzingNormal.play();
+      //defenseGame.audioManager.sfxManager.groundMinimFootsteps.play();
       bgmColony.pause();
 		}
 	}

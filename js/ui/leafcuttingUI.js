@@ -318,7 +318,7 @@ function leafcuttingAudioHandling(deltaTime)
 
         if(!leafcuttingBGM[currentBGM].isPlaying)
         {
-            leafcuttingBGM[currentBGM].play();
+            //leafcuttingBGM[currentBGM].play();
         }
         if(leafcuttingBGM[currentBGM].volume < leafcuttingBGMMaxVolume)
         {
@@ -359,7 +359,7 @@ function leafcuttingAudioHandling(deltaTime)
 
             leafcuttingSFX[SFX_LOWTIME].volume = leafcuttingBGMMaxVolume;
             leafcuttingSFX[SFX_LOWTIME].currentTime = 0;
-            leafcuttingSFX[SFX_LOWTIME].play();
+            //leafcuttingSFX[SFX_LOWTIME].play();
         }
     }
     else
@@ -372,7 +372,7 @@ function leafcuttingAudioHandling(deltaTime)
             if(!areLeafcuttingAntsDisabled())
             {
                 leafcuttingSFX[SFX_TIMEOUT].volume = leafcuttingBGMMaxVolume;
-                leafcuttingSFX[SFX_TIMEOUT].play();
+                //leafcuttingSFX[SFX_TIMEOUT].play();
 
                 if(leafcuttingScore >= 2400)
                     leafCenterLabel1.text = string_AMAZING_AMOUNT_OF[currentLanguage];

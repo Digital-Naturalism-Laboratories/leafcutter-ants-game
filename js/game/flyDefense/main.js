@@ -63,7 +63,7 @@ window.onload = function()
       console.log('defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.paused: ' + defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.paused);
       if(defenseGame.timeLeft === 5 && defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.paused)
       {
-        audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.play();
+        //audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.play();
         console.log('should hear clock ticking');
       }
       else if (defenseGame.timeLeft === 0 && !defenseGame.audioManager.sfxManager.timeIsAlmostOutClockTickingLoop.paused)

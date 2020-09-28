@@ -323,7 +323,7 @@ function colonyGameUICustomEvents(deltaTime) {
   }
 
   if (userInteracted && !bgmColony.isPlaying)
-    bgmColony.play();
+    //bgmColony.play();
 
   if (isTouched) {
     lastTouchPos = {

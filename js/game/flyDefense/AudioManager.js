@@ -102,7 +102,7 @@ function AmbienceManager()
     this.startAmbience = function()
     {
     	console.log('start ambience called');
-    	this.ambienceWash.play();
+    	//this.ambienceWash.play();
     	this.playScatteredBirdChirps();
     	this.playScatteredCicadaMultisound();
     }
@@ -125,7 +125,7 @@ function AmbienceManager()
     		(
     		function()
 
-    		{defenseGame.audioManager.ambienceManager.scatteredBirdChirp.play(); 
+    		{//defenseGame.audioManager.ambienceManager.scatteredBirdChirp.play(); 
     			
     		 defenseGame.audioManager.ambienceManager.setBirdChirpScatterInterval();
     		 defenseGame.audioManager.ambienceManager.playScatteredBirdChirps()}, 
@@ -169,7 +169,7 @@ function AmbienceManager()
 
     		{
     			let randomCicadaSoundArrayIndex = getRandomIntInclusive(0,defenseGame.audioManager.ambienceManager.arrayOfCicadaSounds.length - 1);
-    			defenseGame.audioManager.ambienceManager.arrayOfCicadaSounds[randomCicadaSoundArrayIndex].play(); 
+    			//defenseGame.audioManager.ambienceManager.arrayOfCicadaSounds[randomCicadaSoundArrayIndex].play(); 
     			
     		 defenseGame.audioManager.ambienceManager.setScatteredCicadaInterval();
     		 defenseGame.audioManager.ambienceManager.playScatteredCicadaMultisound()}, 
@@ -217,7 +217,7 @@ function SFXManager()
 
 	this.playEatingFungusSound = function()
 	{
-		this.arrayOfEatingFungusSounds[this.eatingFungusSoundArrayIndex].play();
+		//this.arrayOfEatingFungusSounds[this.eatingFungusSoundArrayIndex].play();
 		this.eatingFungusSoundArrayIndex++;
 		if (this.eatingFungusSoundArrayIndex > this.arrayOfEatingFungusSounds.length - 1)
 		{
@@ -244,7 +244,7 @@ function SFXManager()
 
 	this.playFlyChasedSound = function()
 	{
-		this.arrayOfFlyChasedSounds[this.flyChasedSoundArrayIndex].play();
+		//this.arrayOfFlyChasedSounds[this.flyChasedSoundArrayIndex].play();
 		this.flyChasedSoundArrayIndex++;
 		if (this.flyChasedSoundArrayIndex > this.arrayOfFlyChasedSounds.length - 1)
 		{
@@ -268,7 +268,7 @@ function SFXManager()
 
     this.playPheremoneGapTouchedSound = function()
 	{
-		this.arrayOfPheremoneGapTouchedSounds[this.arrayOfPheremoneGapTouchedSoundsIndex].play();
+		//this.arrayOfPheremoneGapTouchedSounds[this.arrayOfPheremoneGapTouchedSoundsIndex].play();
 		this.arrayOfPheremoneGapTouchedSoundsIndex++;
 		if (this.arrayOfPheremoneGapTouchedSoundsIndex > this.arrayOfPheremoneGapTouchedSounds.length - 1)
 		{
@@ -289,7 +289,7 @@ function SFXManager()
     this.arrayOfLeafTouchedSounds = [this.leafTouchedSound1,this.leafTouchedSound2,this.leafTouchedSound3];
     this.playLeafTouchedSound = function()
     {
-    	this.arrayOfLeafTouchedSounds[this.arrayOfLeafTouchedSoundsIndex].play();
+    	//this.arrayOfLeafTouchedSounds[this.arrayOfLeafTouchedSoundsIndex].play();
 		this.arrayOfLeafTouchedSoundsIndex++;
 		if (this.arrayOfLeafTouchedSoundsIndex > this.arrayOfLeafTouchedSounds.length - 1)
 		{
@@ -310,7 +310,7 @@ function SFXManager()
     this.arrayOfThatDoesNothingSounds = [this.thatDoesNothingSound1,this.thatDoesNothingSound2,this.thatDoesNothingSound3];
     this.playThatDoesNothingSound = function()
     {
-    	this.arrayOfThatDoesNothingSounds[this.arrayOfThatDoesNothingSoundsIndex].play();
+    	//this.arrayOfThatDoesNothingSounds[this.arrayOfThatDoesNothingSoundsIndex].play();
 		this.arrayOfThatDoesNothingSoundsIndex++;
 		if (this.arrayOfThatDoesNothingSoundsIndex > this.arrayOfThatDoesNothingSounds.length - 1)
 		{
