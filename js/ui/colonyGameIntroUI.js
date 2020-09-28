@@ -26,7 +26,7 @@ function setupColonyGameIntroUI() {
   titleESSprite = new Sprite(tr(vec2(gameWidth / 2, 40 * pixelSize), vec2(gameWidth / 1000, gameHeight / 750)),
     new ImageObject("images/Animations/info_screen_colony_spritesheet_ES.png", vec2(1000, 750)));
 
-  bgmColony.setAttribute('src', 'audio/Intro Music.mp3');
+  //bgmColony.setAttribute('src', 'audio/Intro Music.mp3');
   bgmColony.loop = true;
   bgmColony.volume = 0.1;
 }

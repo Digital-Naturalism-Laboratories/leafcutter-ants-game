@@ -29,8 +29,8 @@ var leafcuttingBGM = [
     document.createElement('audio')
 ];
 var leafcuttingBGMPaths = [
-    "audio/Transporting Leaves Scene.mp3",
-    "audio/Slicing Leaves Scene.mp3"
+    //"audio/Transporting Leaves Scene.mp3",
+    //"audio/Slicing Leaves Scene.mp3"
 ]
 var BGM_TRANSPORTING = 0;
 var BGM_SLICING = 1;
@@ -46,14 +46,14 @@ var leafcuttingSFX = [
     document.createElement('audio')
 ]
 var leafcuttingSFXPaths = [
-    "audio/SFX/Jaw Penalty ALT.mp3",
-    "audio/SFX/Positive Feedback - Beef Up Trail.mp3",
-    "audio/SFX/Clock Ticking.mp3",
-    "audio/SFX/Leaf Minim Footsteps Fast.mp3",
-    "audio/SFX/Positive Feedback - Player Wins.mp3",
-    "audio/SFX/Game Over.mp3",
-    "audio/SFX/Jaw Penalty.mp3",
-    "audio/SFX/Positive Feedback - Leaf Cut Success ALT.mp3"
+    //"audio/SFX/Jaw Penalty ALT.mp3",
+    //"audio/SFX/Positive Feedback - Beef Up Trail.mp3",
+    //"audio/SFX/Clock Ticking.mp3",
+    //"audio/SFX/Leaf Minim Footsteps Fast.mp3",
+    //"audio/SFX/Positive Feedback - Player Wins.mp3",
+    //"audio/SFX/Game Over.mp3",
+    //"audio/SFX/Jaw Penalty.mp3",
+    //"audio/SFX/Positive Feedback - Leaf Cut Success ALT.mp3"
 ]
 var SFX_JAWBUTTON = 0;
 var SFX_JAWTIMED = 1;

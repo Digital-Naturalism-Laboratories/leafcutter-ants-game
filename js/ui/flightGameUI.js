@@ -32,11 +32,11 @@ var flyingGameSFX = [
 ]
 
 var flyingGameSFXPaths = [
-  "audio/SFX/Collecting A Mate.mp3",
-  "audio/SFX/Ambience - Birds.mp3",
-  "audio/SFX/Ambience - Cicadas and Birds.mp3",
-  "audio/SFX/Collision With Queen.mp3",
-  "audio/SFX/Wings Buzzing.mp3"
+  //"audio/SFX/Collecting A Mate.mp3",
+  //"audio/SFX/Ambience - Birds.mp3",
+  //"audio/SFX/Ambience - Cicadas and Birds.mp3",
+  //"audio/SFX/Collision With Queen.mp3",
+  //"audio/SFX/Wings Buzzing.mp3"
 ]
 
 //SFX Indexes

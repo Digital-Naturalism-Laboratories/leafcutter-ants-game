@@ -8,7 +8,7 @@ defenseGame.initialize = function()
 	this.arrayOfUIObjects = [];
 
 	this.backgroundMusic = document.createElement('audio');
-    this.backgroundMusic.setAttribute('src', 'audio/Main Nest Scene B.mp3');
+    //this.backgroundMusic.setAttribute('src', 'audio/Main Nest Scene B.mp3');
     //this.backgroundMusic.setAttribute('autoplay', 'autoplay');
     this.backgroundMusic.loop = true;
 
