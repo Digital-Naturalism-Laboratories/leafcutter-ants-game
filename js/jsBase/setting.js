@@ -38,7 +38,9 @@ function init()
     bgRGB = [217, 148, 0];
     bgHEX = "#d99400";
 
-    isFirefox = (navigator.userAgent.indexOf("Firefox") != -1 || typeof InstallTrigger !== 'undefined');
+    //Image manipulation is optimized to work fine with all browsers
+    //So, we no longer need to check for Firefox browser
+    isFirefox = false;//(navigator.userAgent.indexOf("Firefox") != -1 || typeof InstallTrigger !== 'undefined');
 
     loadingAntSprite = new Sprite(tr(vec2(), vec2(pixelSize, pixelSize)), new ImageObject("images/loadingAntAnimation.png", vec2(192, 40)));
     loadingAntFrame = 0;
