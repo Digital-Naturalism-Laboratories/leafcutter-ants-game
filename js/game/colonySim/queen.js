@@ -63,7 +63,7 @@ class Queen {
                     if (getDistBtwVec2(this.pixelCoord, vec2(lastTouchPos.x, lastTouchPos.y)) < 20) {
 
                         if (!colonyGameSFX[SFX_TRIGGER].isPlaying) {
-                            //colonyGameSFX[SFX_TRIGGER].play();
+                            colonyGameSFX[SFX_TRIGGER].play();
                         }
 
                         this.movementState = this.movementStates.REMOVINGRIGHTWING;
@@ -75,7 +75,7 @@ class Queen {
                     if (getDistBtwVec2(this.pixelCoord, vec2(lastTouchPos.x, lastTouchPos.y)) < 20) {
 
                         if (!colonyGameSFX[SFX_TRIGGER].isPlaying) {
-                            //colonyGameSFX[SFX_TRIGGER].play();
+                            colonyGameSFX[SFX_TRIGGER].play();
                         }
 
                         this.movementState = this.movementStates.REMOVINGLEFTWING;
@@ -90,7 +90,7 @@ class Queen {
                     if (getDistBtwVec2(this.pixelCoord, vec2(lastTouchPos.x, lastTouchPos.y)) < 20) {
 
                         if (!colonyGameSFX[SFX_TRIGGER].isPlaying) {
-                            //colonyGameSFX[SFX_TRIGGER].play();
+                            colonyGameSFX[SFX_TRIGGER].play();
                         }
 
                         this.movementState = this.movementStates.DIGGINGDOWN;

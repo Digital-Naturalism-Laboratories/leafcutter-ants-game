@@ -102,7 +102,7 @@ class FlyingQueen {
                 energyBarLength -= 0.04;
 
                 if (!flyingGameSFX[SFX_WINGS].isPlaying) {
-                    //flyingGameSFX[SFX_WINGS].play();
+                    flyingGameSFX[SFX_WINGS].play();
                 }
 
             } else {
@@ -165,7 +165,7 @@ class FlyingQueen {
         this.animationFrameCurrent = 0;
 
         if (!flyingGameSFX[SFX_MATING].isPlaying) {
-            //flyingGameSFX[SFX_MATING].play();
+            flyingGameSFX[SFX_MATING].play();
         }
 
     }
@@ -189,7 +189,7 @@ class FlyingQueen {
                 this.isKnockedBack = true;
 
                 if (!flyingGameSFX[SFX_COLLISION].isPlaying) {
-                    //flyingGameSFX[SFX_COLLISION].play();
+                    flyingGameSFX[SFX_COLLISION].play();
                 }
             }
         }

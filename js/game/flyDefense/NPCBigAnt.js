@@ -776,7 +776,7 @@ function NPCBigAnt(x,name)
 
 			if (defenseGame.audioManager.sfxManager.leafMinimFootsteps.paused)
 			{
-				//defenseGame.audioManager.sfxManager.leafMinimFootsteps.play();
+				defenseGame.audioManager.sfxManager.leafMinimFootsteps.play();
 			}
 
 			this.shouldBeMovingLeftOrRight = true;
@@ -870,7 +870,7 @@ function NPCBigAnt(x,name)
 			
 			if (defenseGame.audioManager.sfxManager.leafMinimFootsteps.paused)
 			{
-				//defenseGame.audioManager.sfxManager.leafMinimFootsteps.play();
+				defenseGame.audioManager.sfxManager.leafMinimFootsteps.play();
 			}
 			this.shouldBeMovingLeftOrRight = true;
 			this.shouldBeMovingUpOrDown = true;

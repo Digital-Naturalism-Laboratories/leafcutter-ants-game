@@ -94,8 +94,8 @@ function defenseGameIntroUICustomEvents(deltaTime) {
       defenseGame.audioManager.sfxManager.populateArrayOfFlyChasedSounds();
       
       defenseGame.audioManager.sfxManager.calculateAndSetAvoidAwkwardSilenceTimestamps();
-      //defenseGame.audioManager.sfxManager.flyBuzzingNormal.play();
-      //defenseGame.audioManager.sfxManager.groundMinimFootsteps.play();
+      defenseGame.audioManager.sfxManager.flyBuzzingNormal.play();
+      defenseGame.audioManager.sfxManager.groundMinimFootsteps.play();
       defenseGame.reset();
       defenseGame.colonyReached = false;
       defenseGame.hasBeenPlayedOnce = true;

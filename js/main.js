@@ -5,8 +5,8 @@ window.onload = function()
     setInterval(defenseGameAnim,25);
 
     init();
-    //bgmIntro.setAttribute('src', 'audio/Intro Music.mp3');
-    //bgmIntro.loop = true;
+    bgmIntro.setAttribute('src', 'audio/Intro Music.mp3');
+    bgmIntro.loop = true;
 
     frame();
 };

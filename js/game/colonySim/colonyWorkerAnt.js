@@ -46,7 +46,7 @@ class ColonyWorkerAnt {
                 ui.stateIndex = this.gameMode;
 
                 if (!colonyGameSFX[SFX_TRIGGER].isPlaying) {
-                    //colonyGameSFX[SFX_TRIGGER].play();
+                    colonyGameSFX[SFX_TRIGGER].play();
                 }
             }
         }

@@ -182,7 +182,7 @@ function Fly(name,status)
 							defenseGame.background.bigAntTallyOfInfections++;
 							defenseGame.background.calculateSlowDownRateFromInfections();
 							defenseGame.eggHasBeenPlanted = true;
-							//defenseGame.audioManager.sfxManager.antInfectionSound.play();
+							defenseGame.audioManager.sfxManager.antInfectionSound.play();
 							if (!defenseGame.infectionAlertMessage.shouldBeVisible)
 							{
 								defenseGame.infectionAlertMessage.toggleVisibility();
@@ -210,12 +210,12 @@ function Fly(name,status)
 							
 							defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.pause();
 							defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.currentTime = 0;
-							//defenseGame.audioManager.sfxManager.beefUpTrailFeedback.play();
+							defenseGame.audioManager.sfxManager.beefUpTrailFeedback.play();
 							defenseGame.audioManager.sfxManager.fliesSwarming.pause();
-							//defenseGame.audioManager.sfxManager.flyBuzzingNormal.play();
+							defenseGame.audioManager.sfxManager.flyBuzzingNormal.play();
 							defenseGame.audioManager.sfxManager.groundMinimFootstepsAccelerated.pause();
 							defenseGame.audioManager.sfxManager.groundMinimFootstepsAccelerated.currentTime = 0;
-							//defenseGame.audioManager.sfxManager.groundMinimFootsteps.play();
+							defenseGame.audioManager.sfxManager.groundMinimFootsteps.play();
 							for (let i = 0; i < defenseGame.groundMinimManager.arrayOfGroundMinims.length; i++)
 							{
 								defenseGame.groundMinimManager.arrayOfGroundMinims[i].coinFlipAMeanderDirection();
@@ -369,7 +369,7 @@ function FlyManager()
 	{
 		this.currentStatus = 'swarming';
 		defenseGame.audioManager.sfxManager.flyBuzzingNormal.pause();
-		//defenseGame.audioManager.sfxManager.fliesSwarming.play();
+		defenseGame.audioManager.sfxManager.fliesSwarming.play();
 		for (let i = 0; i < this.arrayOfFlies.length; i++)
 		{
 			// if (this.arrayOfFlies[i].egg !== undefined)

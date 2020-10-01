@@ -622,7 +622,7 @@ function PheremoneGapManager()
 				defenseGame.background.flashAlertInterval.start();
 				if (defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.paused)
 				{
-					//defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.play();
+					defenseGame.audioManager.sfxManager.stuckSwarmAlertSound.play();
 				}
 			}
 		}

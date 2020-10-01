@@ -268,7 +268,7 @@ class Ant
         {
             leafcuttingSFX[SFX_ANTWALK].volume = leafcuttingBGMMaxVolume/2.0;
             //leafcuttingSFX[SFX_ANTWALK].currentTime = 0;
-            //leafcuttingSFX[SFX_ANTWALK].play();
+            leafcuttingSFX[SFX_ANTWALK].play();
         }
 
         this.updatingJawTransform();
@@ -424,7 +424,7 @@ class Ant
         this.leaf.getPoints(distanceBetween2AdjacentPoints);
 
         leafcuttingSFX[SFX_LEAFSUCCESS].volume = leafcuttingBGMMaxVolume;
-        //leafcuttingSFX[SFX_LEAFSUCCESS].play();
+        leafcuttingSFX[SFX_LEAFSUCCESS].play();
     }
 
     leafBorderTouchInput()
@@ -549,7 +549,7 @@ class Ant
                             this.timedJawSpeedFactor -= this.timedJawSpeedFactorStep;
 
                         leafcuttingSFX[SFX_JAWBUTTON].currentTime = 0;
-                        //leafcuttingSFX[SFX_JAWBUTTON].play();
+                        leafcuttingSFX[SFX_JAWBUTTON].play();
                     }
                     else
                     {
@@ -557,7 +557,7 @@ class Ant
                             this.timedJawSpeedFactor += this.timedJawSpeedFactorStep;
 
                         leafcuttingSFX[SFX_JAWTIMED].currentTime = 0;
-                        //leafcuttingSFX[SFX_JAWTIMED].play();
+                        leafcuttingSFX[SFX_JAWTIMED].play();
                     }
 
                     if(this.jawSpeedPenalty > 0 && this.timedJawCutSpeedBonus > 1) this.timedJawCutSpeedBonus = 1;
@@ -596,7 +596,7 @@ class Ant
                             this.timedJawSpeedFactor -= this.timedJawSpeedFactorStep;
 
                         leafcuttingSFX[SFX_JAWBUTTON].currentTime = 0;
-                        //leafcuttingSFX[SFX_JAWBUTTON].play();
+                        leafcuttingSFX[SFX_JAWBUTTON].play();
                     }
                     else
                     {
@@ -604,7 +604,7 @@ class Ant
                             this.timedJawSpeedFactor += this.timedJawSpeedFactorStep;
 
                         leafcuttingSFX[SFX_JAWTIMED].currentTime = 0;
-                        //leafcuttingSFX[SFX_JAWTIMED].play();
+                        leafcuttingSFX[SFX_JAWTIMED].play();
                     }
 
                     if(this.jawSpeedPenalty > 0 && this.timedJawCutTimeBonus > 0) this.timedJawCutTimeBonus = 0;

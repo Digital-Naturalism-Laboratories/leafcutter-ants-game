@@ -90,7 +90,7 @@ function colonyGameIntroUICustomDraw(deltaTime) {
 
 function colonyGameIntroUICustomEvents(deltaTime) {
   if (userInteracted && !bgmColony.isPlaying)
-    //bgmColony.play();
+    bgmColony.play();
 
   if (isTouched && colonyGameIntroStartDelay <= 0) {
     lastTouchPos = {

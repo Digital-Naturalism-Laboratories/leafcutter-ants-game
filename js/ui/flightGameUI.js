@@ -202,13 +202,13 @@ function flightGameUICustomEvents(deltaTime) {
 
   cicadSFXTimer--;
   if (!flyingGameSFX[SFX_CICADAS].isPlaying && cicadSFXTimer <= 0) {
-    //flyingGameSFX[SFX_CICADAS].play();
+    flyingGameSFX[SFX_CICADAS].play();
     cicadSFXTimer = 600;
   }
 
   birdsSFXTimer--;
   if (!flyingGameSFX[SFX_BIRDS].isPlaying && birdsSFXTimer <= 0) {
-    //flyingGameSFX[SFX_BIRDS].play();
+    flyingGameSFX[SFX_BIRDS].play();
     birdsSFXTimer = 200;
   }
 

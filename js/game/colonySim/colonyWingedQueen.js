@@ -31,7 +31,7 @@ class ColonyWingedQueen {
         if (getDistBtwVec2(this.pixelCoord, vec2(lastTouchPos.x, lastTouchPos.y)) < 20 * pixelSize) {
             ui.stateIndex = FLIGHTGAMEINTROUI;
             if (!colonyGameSFX[SFX_TRIGGER].isPlaying) {
-             //colonyGameSFX[SFX_TRIGGER].play();
+                colonyGameSFX[SFX_TRIGGER].play();
             }
         }
     }

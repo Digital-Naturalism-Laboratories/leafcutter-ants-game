@@ -167,7 +167,7 @@ function mainMenuUICustomEvents(deltaTime)
         menuBigPlayButton.resetOutput();
       
         if (!mainMenuSFX[SFX_BUTTON].isPlaying) {
-          //mainMenuSFX[SFX_BUTTON].play();
+          mainMenuSFX[SFX_BUTTON].play();
         }
     }
     // else if(languageBtn.button.output == UIOUTPUT_SELECT)
@@ -187,7 +187,7 @@ function mainMenuUICustomEvents(deltaTime)
         {
           
           if (!mainMenuSFX[SFX_BUTTON].isPlaying) {
-                //mainMenuSFX[SFX_BUTTON].play();
+                mainMenuSFX[SFX_BUTTON].play();
            }
             var done = false;
             for (let i = 1; i < languages.length; i++) {
