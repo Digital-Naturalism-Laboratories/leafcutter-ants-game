@@ -32,9 +32,9 @@ var colonyGameSFX = [
 ]
 
 var colonyGameSFXPaths = [
-  //"audio/SFX/Digging Sound.mp3",
-  //"audio/SFX/Eating Fungus.mp3",
-  //"audio/SFX/Minigame Trigger.mp3",
+  "audio/SFX/Digging Sound.mp3",
+  "audio/SFX/Eating Fungus.mp3",
+  "audio/SFX/Minigame Trigger.mp3",
 ]
 
 //SFX Indexes
@@ -102,7 +102,7 @@ function setupColonyGameUI() {
   }
 
   //initialize BGM
-  //bgmColony.setAttribute('src', 'audio/Intro Music.mp3');
+  bgmColony.setAttribute('src', 'audio/Intro Music.mp3');
   bgmColony.loop = true;
   bgmColony.volume = 0.1;
 
