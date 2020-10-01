@@ -26,21 +26,21 @@ class ColonyGridNode {
 
     }
 
-    fCost = function () {
+    fCost() {
         var cost = this.gCost + this.hCost
         return cost;
     }
 
-    getIsWalkable = function () {
+    getIsWalkable() {
         return this.isWalkable;
     }
 
-    resize = function () {
+    resize() {
         this.pixelCoord = resizeVec2(this.pixelCoord);
 
     }
 
-    draw = function () {
+    draw() {
 
         if (this.isWalkable && this.distanceFromFungus < colony.population || colonyGridTileMap[this.gridCoord.row][this.gridCoord.col] >= 89) {
             this.isTunneled = true;
