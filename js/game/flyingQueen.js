@@ -12,19 +12,20 @@ class FlyingQueen {
             this.x = this.defaultPos.x;
             this.y = this.defaultPos.y;
             this.collisionRadius = 20;
+            this.sprite = new Sprite(tr(vec2(this.x, this.y), vec2(pixelSize / 3, pixelSize / 3)), new ImageObject("images/Animations/Queen_Fly_250px_Spritesheet.png", vec2(128, 128)));
         } else {
             do {
                 this.x = Math.random() * gameWidth;
                 this.y = Math.random() * gameHeight;
             } while (getDistBtwVec2(flyingQueen.defaultPos, vec2(this.x, this.y)) < 200 * pixelSize);
             this.collisionRadius = 50;
+            this.sprite = new Sprite(tr(vec2(this.x, this.y), vec2(pixelSize / 3, pixelSize / 3)), new ImageObject("images/Animations/Queen_Fly_250px_Spritesheet_Tinted.png", vec2(128, 128)));
         }
 
         this.horizontalSpeed = 3;
         this.verticalSpeed = 3;
         this.angleToDestination;
         this.destinationReached = true;
-        this.sprite = new Sprite(tr(vec2(this.x, this.y), vec2(pixelSize / 3, pixelSize / 3)), new ImageObject("images/Animations/Queen_Fly_250px_Spritesheet.png", vec2(128, 128)));
         this.matingSprite = new Sprite(tr(vec2(this.x, this.y), vec2(pixelSize / 3, pixelSize / 3)), new ImageObject("images/Animations/Queen_Mating_Spritesheet.png", vec2(625, 242)));
         this.flyingMomentum = 0;
         this.fallingMomentum = 0;
