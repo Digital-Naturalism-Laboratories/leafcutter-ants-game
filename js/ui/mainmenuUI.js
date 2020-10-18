@@ -161,8 +161,7 @@ function mainMenuUICustomEvents(deltaTime)
 
     if(menuBigPlayButton.output == UIOUTPUT_SELECT)
     {
-        ui.stateIndex = COLONYGAMEINTROUI;
-        //ui.stateIndex = DEFENSEGAMEINTROUI;
+        ui.stateIndex = FLIGHTGAMEINTROUI;
         //defenseGame.audioManager.startAmbience();
         menuBigPlayButton.resetOutput();
       
@@ -176,8 +175,7 @@ function mainMenuUICustomEvents(deltaTime)
 
     if (!isGameSelectEnabled) {
         if(menuBigPlayButton.output == UIOUTPUT_SELECT) {
-            ui.stateIndex = COLONYGAMEINTROUI;
-            //ui.stateIndex = DEFENSEGAMEINTROUI;
+            ui.stateIndex = FLIGHTGAMEINTROUI;
             //defenseGame.audioManager.startAmbience();
             if (defenseGame.hasBeenPlayedOnce)
             {
@@ -210,7 +208,7 @@ function mainMenuUICustomEvents(deltaTime)
     } else if (playMenuBtn.button.output == UIOUTPUT_SELECT || menuBigPlayButton.output == UIOUTPUT_SELECT) {
 
         if (playMenuBtn.label.text == gameModes[0]) {
-            ui.stateIndex = COLONYGAMEINTROUI;
+            ui.stateIndex = FLIGHTGAMEINTROUI;
         } else if (playMenuBtn.label.text == gameModes[1]) {
             ui.stateIndex = LEAFCUTTINGINTROUI;
         }
