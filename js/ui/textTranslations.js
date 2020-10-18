@@ -2,7 +2,7 @@ const ESPAÑOL = 0;
 const ENGLISH = 1;
 
 var string_Mates = [
-    "PARA: ",
+    "APAREAMIENTO: ",
     "MATES: "
 ]
 
