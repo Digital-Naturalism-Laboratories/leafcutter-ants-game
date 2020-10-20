@@ -1186,7 +1186,8 @@ function InfectionAlertMessage()
 
 				renderer.fillStyle = 'red';
 				renderer.font = '36px SmallBoldPixel';
-				renderer.fillText(infectionAlertString, renderer.canvas.width/2 - this.width*0.75,this.y + this.fontSize*0.75);
+				let infectionAlertStringWidth = renderer.measureText(string_ALERT_PHORID_FLY_INFECTION[currentLanguage]).width;
+				renderer.fillText(string_ALERT_PHORID_FLY_INFECTION[currentLanguage], renderer.canvas.width/2 - infectionAlertStringWidth/2,this.y + this.fontSize*0.675);
 			}
 		}
 

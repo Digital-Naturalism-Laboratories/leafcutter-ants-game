@@ -162,6 +162,8 @@ function mainMenuUICustomEvents(deltaTime)
     if(menuBigPlayButton.output == UIOUTPUT_SELECT)
     {
         ui.stateIndex = FLIGHTGAMEINTROUI;
+        //ui.stateIndex = DEFENSEGAMEINTROUI;
+
         //defenseGame.audioManager.startAmbience();
         menuBigPlayButton.resetOutput();
       
