@@ -11,10 +11,18 @@ class ColonyWorkerAnt {
             row: row
         }
 
+        this.movementStates = {
+            WALKINGRIGHT: "walking right",
+            WALKINGLEFT: "walking left",
+            WALKINGDOWN: "walking down",
+            WALKINGRIGHTTOFUNGUS: "walking right to fungus",
+        }
+
         this.pixelCoord = pixelCoordAtCenterOfTileCoord(col, row);
 
-        this.horizontalSpeed = -0.5;
-        this.verticalSpeed = 2;
+        this.movementState = this.pixelCoord.x > gameWidth * 0.65 ? this.movementStates.WALKINGLEFT : this.movementStates.WALKINGRIGHT;
+        this.horizontalSpeed = this.movementState == this.movementStates.WALKINGLEFT ? -0.5 : 0.5;
+        this.verticalSpeed = 0.5;
         this.sprite = new Sprite(tr(vec2(this.pixelCoord.x, this.pixelCoord.y - 10), vec2(pixelSize * 0.4, pixelSize * 0.4)), new ImageObject("images/Animations/Worker_Walking_Spritesheet.png", vec2(0, 0)));
         this.collisionRadius = 15;
 
@@ -23,8 +31,9 @@ class ColonyWorkerAnt {
         this.animationFrameCurrent = 0;
         this.animationTimer = 0
 
-        this.mode = MODES.NO_LEAF;
+        this.mode = MODES.CARRYING_LEAF;
         this.gameMode = LEAFCUTTINGINTROUI;
+        this.currentFacing = FACING_RIGHT;
 
         colonyGameUI.push(this);
     }
@@ -60,16 +69,51 @@ class ColonyWorkerAnt {
             this.sprite.transform.position.x = gameWidth - 10;
         }
 
-        this.sprite.transform.position.x += this.horizontalSpeed * pixelSize;
-
         this.pixelCoord.x = this.sprite.transform.position.x;
         this.pixelCoord.y = this.sprite.transform.position.y;
 
-        if (this.pixelCoord.x > gameWidth * 0.66) {
-            this.mode = MODES.CARRYING_LEAF;
-        } else {
-            this.mode = MODES.NO_LEAF;
+        switch (this.movementState) {
+            case this.movementStates.WALKINGRIGHT:
+                if (this.pixelCoord.x > gameWidth * 0.65) {
+                    this.movementState = this.movementStates.WALKINGDOWN;
+                    console.log("going down");
+                } else {
+                    this.sprite.transform.position.x += this.horizontalSpeed * pixelSize;
+                }
+                break;
+            case this.movementStates.WALKINGLEFT:
+                if (this.pixelCoord.x < gameWidth * 0.65) {
+                    this.movementState = this.movementStates.WALKINGDOWN;
+                    console.log("going down");
+                } else {
+                    this.sprite.transform.position.x += this.horizontalSpeed * pixelSize;
+                }
+                break;
+            case this.movementStates.WALKINGDOWN:
+                this.currentFacing = FACING_RIGHT;
+                if (rowAtYCoord(this.pixelCoord.y / pixelSize) >= fungus_row) {
+                    this.movementState = this.movementStates.WALKINGRIGHTTOFUNGUS;
+                    this.horizontalSpeed = 0.5;
+                } else {
+                    this.sprite.transform.position.y += this.verticalSpeed * pixelSize;
+                }
+                break;
+            case this.movementStates.WALKINGRIGHTTOFUNGUS:
+                this.currentFacing = FACING_RIGHT;
+                if (colAtXCoord(this.pixelCoord.x / pixelSize) >= fungus_col) {
+                    var respawnCol = Math.random() < 0.5 ? 0 : COLONY_COLS;
+                    this.sprite.transform.position = this.pixelCoord = pixelCoordAtCenterOfTileCoord(respawnCol, this.gridCoord.row);
+                    this.movementState = this.pixelCoord.x > gameWidth * 0.65 ? this.movementStates.WALKINGLEFT : this.movementStates.WALKINGRIGHT;
+                    this.horizontalSpeed = this.movementState == this.movementStates.WALKINGLEFT ? -0.5 : 0.5;
+                } else {
+                    this.sprite.transform.position.x += this.horizontalSpeed * pixelSize;
+                }
+
+                break;
+            default:
         }
+
+        this.currentFacing = this.speed >= 0 ? FACING_RIGHT : FACING_LEFT;
 
     }
 
@@ -92,6 +136,7 @@ class ColonyWorkerAnt {
 
         var inPos = {
             x: (this.animationFrameCurrent * inSize.x),
+            //y: (this.inSize.y * this.currentFacing)
             y: 0
         }
 
