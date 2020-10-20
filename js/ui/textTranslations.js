@@ -125,7 +125,7 @@ var string_TIME_BONUS_FOR_RETURNING_WITH_LEAVES = [
 
 var string_PARASITE_INFECTIONS = [
     "Infecciones de parásitos: ",
-    "Parasite Infections: ",
+    "Parasite Infections: "
 ]
 
 var string_GENETIC_DIVERSITY_FROM_MATING = [

@@ -334,9 +334,10 @@ function Background()
 		labelHeight: 30,
 		draw: function()
 		{
+			console.log('currentLanguage: ' + currentLanguage);
 			renderer.fillStyle = 'white';
 			renderer.font = (45 * pixelSize) + 'px SmallBoldPixel';
-			renderer.fillText(this.label + this.tallyOfEatenFungusSpores, this.x,this.y);
+			renderer.fillText(string_LEAF_CONTAMINANTS_CLEANED[currentLanguage] + this.tallyOfEatenFungusSpores, this.x,this.y);
 		}
 	}
 
@@ -353,7 +354,7 @@ function Background()
 			renderer.fillStyle = 'white';//dark violet, medium orchid
 			renderer.font = (45 * pixelSize) + 'px SmallBoldPixel';
 			renderer.textAlign = "left";
-			renderer.fillText(this.label + defenseGame.background.bigAntTallyOfInfections, this.x,this.y);
+			renderer.fillText(string_PARASITE_INFECTIONS[currentLanguage] + defenseGame.background.bigAntTallyOfInfections, this.x,this.y);
 		}
 	}
 
