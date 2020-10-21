@@ -68,9 +68,9 @@ class ColonyWorkerAnt {
 
         if (queen.movementState != queen.movementStates.IDLE) return;
 
-        if (this.sprite.transform.position.x > gameWidth || this.sprite.transform.position.x < 10) {
-            this.sprite.transform.position.x = gameWidth - 10;
-        }
+        //if (this.sprite.transform.position.x > gameWidth || this.sprite.transform.position.x < 10) {
+        //    this.sprite.transform.position.x = gameWidth - 10;
+        //}
 
         this.pixelCoord.x = this.sprite.transform.position.x;
         this.pixelCoord.y = this.sprite.transform.position.y;
