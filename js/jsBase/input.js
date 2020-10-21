@@ -232,7 +232,7 @@ function onKeyDown(ev)
         break;
 
         case 86://v
-        ui.stateIndex = FLIGHTGAMEINTROUI;
+        ui.stateIndex = COLONYGAMEINTROUI;
         break;
 
         case 80://p

@@ -1,7 +1,10 @@
-const MODES = {
-    CARRYING_LEAF: 'carrying_leaf',
-    NO_LEAF: 'no_leaf'
-}
+//const MODES = {
+    //CARRYING_LEAF: 'carrying_leaf',
+    //NO_LEAF: 'no_leaf'
+//}
+
+const WORKER_FACING_RIGHT = 1;
+const WORKER_FACING_LEFT = 0;
 
 class ColonyWorkerAnt {
     constructor(col, row) {
@@ -31,9 +34,9 @@ class ColonyWorkerAnt {
         this.animationFrameCurrent = 0;
         this.animationTimer = 0
 
-        this.mode = MODES.CARRYING_LEAF;
+        //this.mode = MODES.CARRYING_LEAF;
         this.gameMode = LEAFCUTTINGINTROUI;
-        this.currentFacing = FACING_RIGHT;
+        this.currentFacing = WORKER_FACING_RIGHT;
 
         colonyGameUI.push(this);
     }
@@ -72,9 +75,11 @@ class ColonyWorkerAnt {
         this.pixelCoord.x = this.sprite.transform.position.x;
         this.pixelCoord.y = this.sprite.transform.position.y;
 
+        this.currentFacing = this.horizontalSpeed >= 0 ? WORKER_FACING_RIGHT : WORKER_FACING_LEFT;
+
         switch (this.movementState) {
             case this.movementStates.WALKINGRIGHT:
-                if (this.pixelCoord.x > gameWidth * 0.65) {
+                if (this.pixelCoord.x > gameWidth * 0.66) {
                     this.movementState = this.movementStates.WALKINGDOWN;
                     console.log("going down");
                 } else {
@@ -90,7 +95,8 @@ class ColonyWorkerAnt {
                 }
                 break;
             case this.movementStates.WALKINGDOWN:
-                this.currentFacing = FACING_RIGHT;
+                this.sprite.transform.scale = vec2(pixelSize * 0.3, pixelSize * 0.3);
+                this.currentFacing = WORKER_FACING_RIGHT;
                 if (rowAtYCoord(this.pixelCoord.y / pixelSize) >= fungus_row) {
                     this.movementState = this.movementStates.WALKINGRIGHTTOFUNGUS;
                     this.horizontalSpeed = 0.5;
@@ -99,10 +105,11 @@ class ColonyWorkerAnt {
                 }
                 break;
             case this.movementStates.WALKINGRIGHTTOFUNGUS:
-                this.currentFacing = FACING_RIGHT;
+                this.currentFacing = WORKER_FACING_RIGHT;
                 if (colAtXCoord(this.pixelCoord.x / pixelSize) >= fungus_col) {
-                    var respawnCol = Math.random() < 0.5 ? 0 : COLONY_COLS;
+                    var respawnCol = Math.random() <= 0.5 ? 0 : COLONY_COLS;
                     this.sprite.transform.position = this.pixelCoord = pixelCoordAtCenterOfTileCoord(respawnCol, this.gridCoord.row);
+                    this.sprite.transform.scale = vec2(pixelSize * 0.4, pixelSize * 0.4);
                     this.movementState = this.pixelCoord.x > gameWidth * 0.65 ? this.movementStates.WALKINGLEFT : this.movementStates.WALKINGRIGHT;
                     this.horizontalSpeed = this.movementState == this.movementStates.WALKINGLEFT ? -0.5 : 0.5;
                 } else {
@@ -112,8 +119,6 @@ class ColonyWorkerAnt {
                 break;
             default:
         }
-
-        this.currentFacing = this.speed >= 0 ? FACING_RIGHT : FACING_LEFT;
 
     }
 
@@ -136,20 +141,19 @@ class ColonyWorkerAnt {
 
         var inPos = {
             x: (this.animationFrameCurrent * inSize.x),
-            //y: (this.inSize.y * this.currentFacing)
-            y: 0
+            y: (inSize.y * this.currentFacing)
         }
 
-        switch (this.mode) {
-            case MODES.NO_LEAF:
-                this.gameMode = LEAFCUTTINGINTROUI;
-                inPos.y = inSize.y * 2;
-                break;
-            case MODES.CARRYING_LEAF:
-                this.gameMode = LEAFCUTTINGINTROUI;
-                inPos.y = inSize.y * 0;
-                break;
-        }
+        //switch (this.mode) {
+        //    case MODES.NO_LEAF:
+        //        this.gameMode = LEAFCUTTINGINTROUI;
+        //        inPos.y = inSize.y * 2;
+        //        break;
+        //    case MODES.CARRYING_LEAF:
+        //        this.gameMode = LEAFCUTTINGINTROUI;
+        //        inPos.y = inSize.y * 0;
+        //        break;
+        //}
 
         this.sprite.drawScIn(inPos, inSize);
         drawCustomCircle(this.pixelCoord.x + (10 * pixelSize), this.pixelCoord.y + (10 * pixelSize), (circleIndicatorTimer / 60) * 20 * pixelSize, 4 * pixelSize, '#00FF00');
