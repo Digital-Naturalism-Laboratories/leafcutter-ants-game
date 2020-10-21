@@ -35,7 +35,7 @@ class FlyingQueen {
         this.matingTimer = 0;
         this.lastMate;
         this.isKnockedBack = false;
-        this.knockbackTimer = 10;
+        this.knockbackTimer = 5;
         this.knockbackTimerCurrent = 0;
 
         this.movementStates = {
@@ -58,6 +58,7 @@ class FlyingQueen {
 
     event() {
         if (!this.isPlayerControlled) return;
+        if (gameEndTimer < gameEndTimerLength) return;
         if (this.isMating) return;
 
         if (isTouched) {
@@ -83,6 +84,14 @@ class FlyingQueen {
 
     update() {
 
+        if (gameEndTimer < gameEndTimerLength && !this.isMating) {
+            this.x += Math.abs(this.horizontalSpeed * pixelSize);
+            this.y += Math.abs(this.verticalSpeed * pixelSize);
+            this.sprite.transform.position.x = this.x;
+            this.sprite.transform.position.y = this.y;
+            return;
+        }
+
         if (this.isPlayerControlled) {
 
             if (this.isKnockedBack) {
@@ -90,8 +99,8 @@ class FlyingQueen {
                 energyBarLength -= 0.1;
 
                 this.knockbackTimerCurrent++;
-                this.x += this.horizontalSpeed * pixelSize * -1;
-                this.y += this.verticalSpeed * pixelSize * -1;
+                this.x += this.horizontalSpeed * pixelSize * -0.33;
+                this.y += this.verticalSpeed * pixelSize * -0.33;
                 if (this.knockbackTimerCurrent >= this.knockbackTimer) {
                     this.isKnockedBack = false;
                     this.knockbackTimerCurrent = 0;
@@ -152,6 +161,7 @@ class FlyingQueen {
 
     startMating(mate) {
 
+        if (gameEndTimer < gameEndTimerLength) return;
         if (this.isMating) return;
         if (!this.isPlayerControlled) return;
 

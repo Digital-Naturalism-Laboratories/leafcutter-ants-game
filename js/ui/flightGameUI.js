@@ -10,6 +10,8 @@ var rivalQueenCount = 2;
 var rivalQueens = [];
 var energyBarLength = 100;
 var diversityBarLength = 0;
+var gameEndTimerLength = 300;
+var gameEndTimer = gameEndTimerLength;
 
 var cicadSFXTimer = 0;
 var birdsSFXTimer = 400;
@@ -86,6 +88,12 @@ function resetFlightGame() {
   for (i = 0; i < rivalQueenCount; i++) {
     rivalQueens[i] = new FlyingQueen(Math.random() * gameWidth, Math.random() * gameHeight, false);
   }
+
+  geneticDiversity = diversityBarLength / 100;
+  energyBarLength = 100;
+  diversityBarLength = 0;
+  mateCount = 0;
+  gameEndTimer = 180;
 }
 
 function flightGameUIResize() {
@@ -171,6 +179,23 @@ function flightGameUICustomDraw(deltaTime) {
   renderer.rect(230 * pixelSize, 32 * pixelSize, 100 * pixelSize, 20 * pixelSize);
   renderer.stroke();
 
+  if (gameEndTimer < gameEndTimerLength) {
+    renderer.textAlign = "center";
+    renderer.fillStyle = "white";
+    renderer.font = (60 * pixelSize) + "px SmallBoldPixel";
+    renderer.fillText(string_Mates[currentLanguage] + mateCount, gameWidth/2, gameHeight * 0.33);
+    renderer.fillText(string_GeneticDiversity[currentLanguage] + Math.floor(diversityBarLength) + "%", gameWidth/2, gameHeight * 0.4);
+
+    if (diversityBarLength > 50) {
+      renderer.fillText(string_GreatJob[currentLanguage], gameWidth/2, gameHeight * 0.5);
+    }
+
+  }
+
+  if (gameEndTimer < 0) {
+    renderer.fillText(string_ClickToContinue[currentLanguage], gameWidth/2, gameHeight * 0.66);
+  }
+
   //colorRect(20 * pixelSize, 20 * pixelSize, 100 * pixelSize, 50 * pixelSize, 'white');
   //renderer.fillStyle = "black";
   //renderer.font = (24 * pixelSize) + "px SmallBoldPixel";
@@ -179,11 +204,17 @@ function flightGameUICustomDraw(deltaTime) {
 
 function flightGameUICustomEvents(deltaTime) {
   if (flyingQueen.movementState == flyingQueen.movementStates.FLYING) {
-  //if (flyingQueen.destinationReached = false) {
+    //if (flyingQueen.destinationReached = false) {
     energyBarLength -= 0.08;
   }
 
   if (isTouched) {
+
+    if (gameEndTimer <= 0) {
+      resetColonySimGame();
+      resetFlightGame();
+      ui.stateIndex = COLONYGAMEINTROUI;
+    }
 
     //if (getDistBtwVec2(vec2(70, 45), vec2(lastTouchPos.x, lastTouchPos.y)) < 50) {
     //  ui.stateIndex = COLONYGAMEINTROUI;
@@ -191,14 +222,10 @@ function flightGameUICustomEvents(deltaTime) {
   }
 
   if (energyBarLength <= 0 || diversityBarLength >= 100) {
-    geneticDiversity = diversityBarLength / 100;
-    energyBarLength = 100;
-    diversityBarLength = 0;
-    mateCount = 0;
-    resetColonySimGame();
-    resetFlightGame();
-    ui.stateIndex = COLONYGAMEINTROUI;
+    gameEndTimer--;
   }
+
+  if (energyBarLength < 0) energyBarLength = 0;
 
   cicadSFXTimer--;
   if (!flyingGameSFX[SFX_CICADAS].isPlaying && cicadSFXTimer <= 0) {

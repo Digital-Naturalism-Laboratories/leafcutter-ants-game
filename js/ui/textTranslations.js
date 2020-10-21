@@ -16,6 +16,16 @@ var string_GeneticDiversity = [
     "GENETIIC DIVERSITY: "
 ]
 
+var string_GreatJob = [
+    "¡GRAN TRABAJO!",
+    "GREAT JOB!"
+]
+
+var string_ClickToContinue = [
+    "HAZ CLICK PARA CONTINUAR",
+    "CLICK TO CONTINUE"
+]
+
 var string_LEAVES = [
     "HOJAS: ",
     "LEAVES: "
