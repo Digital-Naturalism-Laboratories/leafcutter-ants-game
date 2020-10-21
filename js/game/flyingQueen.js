@@ -11,14 +11,14 @@ class FlyingQueen {
         if (this.isPlayerControlled) {
             this.x = this.defaultPos.x;
             this.y = this.defaultPos.y;
-            this.collisionRadius = 20;
+            this.collisionRadius = 20 * pixelSize;
             this.sprite = new Sprite(tr(vec2(this.x, this.y), vec2(pixelSize / 3, pixelSize / 3)), new ImageObject("images/Animations/Queen_Fly_250px_Spritesheet.png", vec2(128, 128)));
         } else {
             do {
                 this.x = Math.random() * gameWidth;
                 this.y = Math.random() * gameHeight;
             } while (getDistBtwVec2(flyingQueen.defaultPos, vec2(this.x, this.y)) < 200 * pixelSize);
-            this.collisionRadius = 50;
+            this.collisionRadius = 50 * pixelSize;
             this.sprite = new Sprite(tr(vec2(this.x, this.y), vec2(pixelSize / 3, pixelSize / 3)), new ImageObject("images/Animations/Queen_Fly_250px_Spritesheet_Tinted.png", vec2(128, 128)));
         }
 
@@ -29,7 +29,7 @@ class FlyingQueen {
         this.matingSprite = new Sprite(tr(vec2(this.x, this.y), vec2(pixelSize / 3, pixelSize / 3)), new ImageObject("images/Animations/Queen_Mating_Spritesheet.png", vec2(625, 242)));
         this.flyingMomentum = 0;
         this.fallingMomentum = 0;
-        this.collisionRadius = 55;
+        this.collisionRadius = 55 * pixelSize;
         this.isMating = false;
         this.matingCooldown = 180;
         this.matingTimer = 0;
@@ -138,7 +138,7 @@ class FlyingQueen {
             }
 
             //reverse direction when nearing the center of the screen
-            if (getDistBtwVec2(flyingQueen.defaultPos, this.sprite.transform.position) < 100 * pixelSize) {
+            if (getDistBtwVec2(flyingQueen.defaultPos, this.sprite.transform.position) < 120 * pixelSize) {
                 this.horizontalSpeed *= -1;
                 this.verticalSpeed *= -1;
             }
