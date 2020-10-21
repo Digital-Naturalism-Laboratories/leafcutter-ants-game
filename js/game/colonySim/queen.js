@@ -275,13 +275,13 @@ class Queen {
             case this.movementStates.LANDED:
                 this.rightWingSprite.drawSc();
                 renderer.fillText(string_REMOVE_WINGS[currentLanguage], gameWidth / 2, (this.pixelCoord.y + 50) * pixelSize)
-                drawCustomCircle(this.pixelCoord.x, this.pixelCoord.y, (circleIndicatorTimer / 60) * 40 * pixelSize, 4 * pixelSize, 'green');
+                drawCustomCircle(this.pixelCoord.x, this.pixelCoord.y, (circleIndicatorTimer / 60) * 40 * pixelSize, 4 * pixelSize, '#00FF00');
                 break;
             case this.movementStates.REMOVINGRIGHTWING:
                 this.rightWingSprite.drawSc();
                 this.leftWingSprite.drawSc();
                 renderer.fillText(string_REMOVE_WINGS[currentLanguage], gameWidth / 2, (this.pixelCoord.y + 50) * pixelSize)
-                drawCustomCircle(this.pixelCoord.x, this.pixelCoord.y, (circleIndicatorTimer / 60) * 40 * pixelSize, 4 * pixelSize, 'green');
+                drawCustomCircle(this.pixelCoord.x, this.pixelCoord.y, (circleIndicatorTimer / 60) * 40 * pixelSize, 4 * pixelSize, '#00FF00');
                 break;
             case this.movementStates.REMOVINGLEFTWING:
                 this.rightWingSprite.drawSc();
