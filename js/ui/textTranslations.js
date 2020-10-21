@@ -1,4 +1,4 @@
-const ESPAÑOL = 0;
+﻿const ESPAÑOL = 0;
 const ENGLISH = 1;
 
 var string_Mates = [
@@ -13,7 +13,7 @@ var string_Energy = [
 
 var string_GeneticDiversity = [
     "DIVERSIDAD GENÉTICA: ",
-    "GENETIIC DIVERSITY: "
+    "GENETIC DIVERSITY: "
 ]
 
 var string_GreatJob = [
