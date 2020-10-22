@@ -89,10 +89,6 @@ function setupColonyGameUI() {
   colony = new Colony();
   banner = new ColonyMessageBanner();
 
-  for (i = 0; i < workerCount; i++) {
-    workers[i] = new ColonyWorkerAnt(COLONY_COLS / workerCount * i, 1);
-  }
-
   for (i = 0; i < colony.population; i++) {
     new ColonyAnt(fungus.gridCoord.col, fungus.gridCoord.row, 0);
   }
@@ -271,6 +267,10 @@ function colonyGameUICustomUpdate(deltaTime) {
     totalCycles = Math.floor(totalMilliseconds / cycleLength);
 
     colony.update();
+
+    if (workers.length < colony.workerCount / 5) {
+      workers.push(new ColonyWorkerAnt(0, 1));
+    }
 
     if (colonyWingedQueens.length < colony.femaleReproductiveCount && colony.femaleReproductiveCount < visibleEggClusterCount) {
       for (var i = 0; i < colony.femaleReproductiveCount;) {
