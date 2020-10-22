@@ -256,9 +256,17 @@ class Queen {
 
         this.pixelCoord = resizeVec2(this.pixelCoord);
         this.sprite.transform.scale = vec2(pixelSize * 0.3, pixelSize * 0.3);
+
         this.rightWingSprite.transform.position = resizeVec2(this.rightWingSprite.transform.position);
         this.leftWingSprite.transform.position = resizeVec2(this.leftWingSprite.transform.position);
+        this.downwardSprite.transform.position = resizeVec2(this.downwardSprite.transform.position);
+        this.idleSprite.transform.position = resizeVec2(this.idleSprite.transform.position);
 
+        this.rightWingSprite.transform.scale = vec2(pixelSize * 0.3, pixelSize * 0.3);
+        this.leftWingSprite.transform.scale = vec2(pixelSize * 0.3, pixelSize * 0.3);
+        this.downwardSprite.transform.scale = vec2(pixelSize * 0.3, pixelSize * 0.3);
+        this.idleSprite.transform.scale = vec2(pixelSize * 0.3, pixelSize * 0.3);
+       
     }
 
     draw() {
