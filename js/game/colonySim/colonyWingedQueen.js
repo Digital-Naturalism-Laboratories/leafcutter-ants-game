@@ -61,10 +61,10 @@ class ColonyWingedQueen {
     }
 
     draw() {
+        drawCustomCircle(this.pixelCoord.x, this.pixelCoord.y + (5 * pixelSize), (circleIndicatorTimer / 60) * 20 * pixelSize, 4 * pixelSize, '#FF0096');
 
         this.animateSprite(this.sprite, this.animationFrameLength, this.animationFrameCount, this.inSize);
         this.visibleWing.drawSc();
-        drawCustomCircle(this.pixelCoord.x, this.pixelCoord.y + (5 * pixelSize), (circleIndicatorTimer / 60) * 20 * pixelSize, 4 * pixelSize, '#fe0000');
         //renderer.fillText(this.gridCoord.col + "," + this.gridCoord.row, this.pixelCoord.x, this.pixelCoord.y)
 
     }
