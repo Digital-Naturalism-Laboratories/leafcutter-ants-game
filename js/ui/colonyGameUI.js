@@ -73,7 +73,7 @@ var colonyWingedMales = [];
 
 //var previousTunneledTileCount = 0;
 
-var banner;
+//var banner;
 
 var circleIndicatorTimer = 60;
 
@@ -87,7 +87,7 @@ function setupColonyGameUI() {
   fungus = new Fungus(fungus_col, fungus_row);
   queen = new Queen(fungus_col, fungus_row, (GRID_NODE_SIZE * 11));
   colony = new Colony();
-  banner = new ColonyMessageBanner();
+  //banner = new ColonyMessageBanner();
 
   for (i = 0; i < colony.population; i++) {
     new ColonyAnt(fungus.gridCoord.col, fungus.gridCoord.row, 0);
@@ -174,7 +174,7 @@ function resetColonySimGame() {
   totalMilliseconds = 0;
   previousEggTotal += colony.totalEggsLaid
   colony = new Colony();
-  banner = new ColonyMessageBanner();
+  //banner = new ColonyMessageBanner();
 
   eggClusters = [];
   colonyWingedQueens = [];
@@ -253,13 +253,13 @@ function colonyGameUICustomDraw(deltaTime) {
   }
 
   drawStatsBlock();
-  banner.draw();
+  //banner.draw();
 
 }
 
 function colonyGameUICustomUpdate(deltaTime) {
 
-  banner.update();
+  //banner.update();
 
   if (queen.movementState == queen.movementStates.IDLE) {
 
