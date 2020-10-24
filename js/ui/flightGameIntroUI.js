@@ -34,6 +34,8 @@ function flightAnimateSprite(sprite, frameLength, framerameCount) {
   var animationFrameLength = frameLength;
   var animationFrameCount = framerameCount;
 
+  flightAnimationFrameCount = flightCurrentScreen == FLIGHT_INSTRUCTIONS_SCREEN ? 23 : 29;
+
   var inSize = {
     x: 1000,
     y: 750
