@@ -10,6 +10,11 @@ var animationFrameCount = 29;
 var animationFrameCurrent = 0;
 var animationTimer = 0
 
+const MAINMENU_TITLE_SCREEN = 0;
+const MAINMENU_INTRO_SCREEN = 1;
+var mainMenuCurrentScreen = MAINMENU_TITLE_SCREEN;
+mainMenuIntroStartDelay = 60;
+
 var isGameSelectEnabled = false;
 
 var gameModes = [
@@ -42,24 +47,23 @@ var SFX_BUTTON = 0;
 
 function setupMainMenuUI() {
     titleScreenSprites.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
-        new ImageObject("images/Animations/Title_Screen_Spritesheet_ES.png", vec2(1000, 750))));
+        new ImageObject("images/Animations/Title_Screen_Spritesheet.png", vec2(1000, 750))));
     titleScreenSprites.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
         new ImageObject("images/Animations/Title_Screen_Spritesheet.png", vec2(1000, 750))));
 
     mainMenuFontSize = 34 * pixelSize;
-    
-    menuBigPlayButton = new Button(tr(vec2(gameWidth*0.2,gameHeight*0.67), vec2(gameWidth*0.6, gameHeight*0.2)),
+
+    menuBigPlayButton = new Button(tr(vec2(gameWidth * 0.2, gameHeight * 0.67), vec2(gameWidth * 0.6, gameHeight * 0.2)),
         "#00000000", "#00000000", "#00000000");
     mainMenuUI.push(menuBigPlayButton);
 
-    languageBtn = new TextButton(tr(vec2(1, gameHeight-(btnSize.y*2)), vec2(gameWidth-2, btnSize.y*2)),
+    languageBtn = new TextButton(tr(vec2(1, gameHeight - (btnSize.y * 2)), vec2(gameWidth - 2, btnSize.y * 2)),
         new Label(tr(), string_LANGUAGE[currentLanguage] + (currentLanguage == ENGLISH ? languages[1].text_label : languages[0].text_label), mainMenuFontSize.toString() + "px SmallBoldPixel", "white", 0),
-        new Button(tr(), "#00000044", "#00000044", "#00000044"), 
+        new Button(tr(), "#00000044", "#00000044", "#00000044"),
         "");
     mainMenuUI.push(languageBtn);
 
-    if (isGameSelectEnabled)
-    {
+    if (isGameSelectEnabled) {
         gameModeButtons = [];
 
         emptyMenuBtn = new TextButton(tr(vec2(), btnSize),
@@ -87,39 +91,36 @@ function setupMainMenuUI() {
         gameModeButtons.push(nextMenuBtn);
 
         mainMenuUI.push(
-            new FlexGroup(tr(vec2(0, gameHeight*0.86), vec2(gameWidth, 60 * pixelSize)),
-            new SubState(tr(), gameModeButtons),
-            false, 
-            vec2(), 
-            vec2(5, 1), 
-            true));
+            new FlexGroup(tr(vec2(0, gameHeight * 0.86), vec2(gameWidth, 60 * pixelSize)),
+                new SubState(tr(), gameModeButtons),
+                false,
+                vec2(),
+                vec2(5, 1),
+                true));
     }
-     
+
     for (let i = 0; i < mainMenuSFX.length; i++) {
-      mainMenuSFX[i].setAttribute('src', mainMenuSFXPaths[i]);
-      mainMenuSFX[i].volume = 0.25;
+        mainMenuSFX[i].setAttribute('src', mainMenuSFXPaths[i]);
+        mainMenuSFX[i].volume = 0.25;
     }
 }
 
-function mainMenuUIResize()
-{
+function mainMenuUIResize() {
     mainMenuFontSize = 34 * pixelSize;
 
-    for(let i = 0; i < titleScreenSprites.length; i++)
-    {
-        titleScreenSprites[i].transform.position = vec2(gameWidth/2, gameHeight/2);
-        titleScreenSprites[i].transform.scale = vec2(gameWidth/1000, gameHeight/750);
+    for (let i = 0; i < titleScreenSprites.length; i++) {
+        titleScreenSprites[i].transform.position = vec2(gameWidth / 2, gameHeight / 2);
+        titleScreenSprites[i].transform.scale = vec2(gameWidth / 1000, gameHeight / 750);
     }
 
-    menuBigPlayButton.transform.position = vec2(gameWidth*0.2,gameHeight*0.67);
-    menuBigPlayButton.transform.scale = vec2(gameWidth*0.6, gameHeight*0.2);
+    menuBigPlayButton.transform.position = vec2(gameWidth * 0.2, gameHeight * 0.67);
+    menuBigPlayButton.transform.scale = vec2(gameWidth * 0.6, gameHeight * 0.2);
 
-    languageBtn.transform.position = vec2(1, gameHeight-(btnSize.y*2));
-    languageBtn.transform.scale = vec2(gameWidth-2, btnSize.y*2);
+    languageBtn.transform.position = vec2(1, gameHeight - (btnSize.y * 2));
+    languageBtn.transform.scale = vec2(gameWidth - 2, btnSize.y * 2);
     languageBtn.label.font = mainMenuFontSize.toString() + "px SmallBoldPixel";
 
-    if(isGameSelectEnabled)
-    {
+    if (isGameSelectEnabled) {
         emptyMenuBtn.transform.scale = btnSize;
         emptyMenuBtn.label.font = mainMenuFontSize.toString() + "px SmallBoldPixel";
         prevMenuBtn.transform.scale = btnSize;
@@ -129,66 +130,78 @@ function mainMenuUIResize()
         nextMenuBtn.transform.scale = btnSize;
         nextMenuBtn.label.font = mainMenuFontSize.toString() + "px SmallBoldPixel";
 
-        mainMenuUI[2].transform.position = vec2(0, gameHeight*0.86);
+        mainMenuUI[2].transform.position = vec2(0, gameHeight * 0.86);
         mainMenuUI[2].transform.scale = vec2(gameWidth, 60 * pixelSize);
     }
 }
 
 function mainMenuUICustomDraw(deltaTime) {
+    mainMenuIntroStartDelay--;
+    if (mainMenuCurrentScreen == MAINMENU_INTRO_SCREEN) {
+        languageBtn.transform.scale = vec2(0, 0);
+    }
+    mainMenuAnimateSprite(titleScreenSprites[currentLanguage], animationFrameLength, animationFrameCount);
+}
+
+function mainMenuAnimateSprite(sprite, frameLength, framerameCount) {
+    var animationSprite = sprite;
+    var animationFrameLength = frameLength;
+    var mainMenuAnimationFrameCount = framerameCount;
+
+    mainMenuAnimationFrameCount = mainMenuCurrentScreen == MAINMENU_TITLE_SCREEN ? 29 : 21;
+
     var inSize = {
         x: 1000,
         y: 750
-    }
+    };
     var inPos = {
         x: (animationFrameCurrent * inSize.x),
-        y: 0
-    }
+        y: (mainMenuCurrentScreen * inSize.y)
+    };
     if (animationTimer > animationFrameLength - 1) {
-        animationFrameCurrent++
+        animationFrameCurrent++;
         animationTimer = 0;
     }
-    if (animationFrameCurrent >= animationFrameCount) {
+    if (animationFrameCurrent >= mainMenuAnimationFrameCount) {
         animationFrameCurrent = 0;
     }
-    animationTimer++
-    titleScreenSprites[currentLanguage].drawScIn(inPos, inSize);
+    animationTimer++;
+    animationSprite.drawScIn(inPos, inSize);
 }
 
 function mainMenuUICustomUpdate(deltaTime) {}
 
-function mainMenuUICustomEvents(deltaTime)
-{
+function mainMenuUICustomEvents(deltaTime) {
 
-    if(menuBigPlayButton.output == UIOUTPUT_SELECT)
-    {
-        ui.stateIndex = FLIGHTGAMEINTROUI;
-        //ui.stateIndex = DEFENSEGAMEINTROUI;
+    if (menuBigPlayButton.output == UIOUTPUT_SELECT) {
 
-        //defenseGame.audioManager.startAmbience();
-        menuBigPlayButton.resetOutput();
-      
         if (!mainMenuSFX[SFX_BUTTON].isPlaying) {
-          mainMenuSFX[SFX_BUTTON].play();
+            mainMenuSFX[SFX_BUTTON].play();
         }
     }
-    // else if(languageBtn.button.output == UIOUTPUT_SELECT)
-    // {
-    //     if(currentLanguage == ENGLISH)
 
     if (!isGameSelectEnabled) {
-        if(menuBigPlayButton.output == UIOUTPUT_SELECT) {
-            ui.stateIndex = FLIGHTGAMEINTROUI;
-            //defenseGame.audioManager.startAmbience();
-            if (defenseGame.hasBeenPlayedOnce)
-            {
+        if (menuBigPlayButton.output == UIOUTPUT_SELECT  && mainMenuIntroStartDelay <= 0) {
+
+
+            if (mainMenuCurrentScreen == MAINMENU_TITLE_SCREEN) {
+                mainMenuCurrentScreen = MAINMENU_INTRO_SCREEN;
+                mainMenuIntroStartDelay = 60;
+            } else {
+                ui.stateIndex = FLIGHTGAMEINTROUI;
+                menuBigPlayButton.resetOutput();
+                mainMenuIntroStartDelay = 60;
+            }
+
+            if (defenseGame.hasBeenPlayedOnce) {
                 defenseGame.restartIntervals();
             }
-        } else if(languageBtn.button.output == UIOUTPUT_SELECT)
-        {
-          
-          if (!mainMenuSFX[SFX_BUTTON].isPlaying) {
+        } else if (languageBtn.button.output == UIOUTPUT_SELECT) {
+            if (mainMenuCurrentScreen == MAINMENU_INTRO_SCREEN) return;
+
+            if (!mainMenuSFX[SFX_BUTTON].isPlaying) {
                 mainMenuSFX[SFX_BUTTON].play();
-           }
+            }
             var done = false;
             for (let i = 1; i < languages.length; i++) {
                 if (languageBtn.label.text == string_LANGUAGE[currentLanguage] + languages[i].text_label) {
@@ -213,74 +226,54 @@ function mainMenuUICustomEvents(deltaTime)
             ui.stateIndex = FLIGHTGAMEINTROUI;
         } else if (playMenuBtn.label.text == gameModes[1]) {
             ui.stateIndex = LEAFCUTTINGINTROUI;
-        }
-        else if(playMenuBtn.label.text == gameModes[2])
+        } else if (playMenuBtn.label.text == gameModes[2])
 
         {
             currentLanguage = ESPAÑOL;
             languageBtn.label.text = string_LANGUAGE[0] + languages[0].text_label;
-        }
-        else if(currentLanguage == ESPAÑOL)
-        {
+        } else if (currentLanguage == ESPAÑOL) {
             currentLanguage = ENGLISH;
             languageBtn.label.text = string_LANGUAGE[1] + languages[1].text_label;
         }
         languageBtn.button.resetOutput();
     }
 
-    if(isGameSelectEnabled)
-    {
-        if(playMenuBtn.button.output == UIOUTPUT_SELECT || menuBigPlayButton.output == UIOUTPUT_SELECT)
-        {
-            if(playMenuBtn.label.text == gameModes[0]) 
-            {
+    if (isGameSelectEnabled) {
+        if (playMenuBtn.button.output == UIOUTPUT_SELECT || menuBigPlayButton.output == UIOUTPUT_SELECT) {
+            if (playMenuBtn.label.text == gameModes[0]) {
                 ui.stateIndex = COLONYGAMEINTROUI;
-            }
-            else if(playMenuBtn.label.text == gameModes[1])
-            {
+            } else if (playMenuBtn.label.text == gameModes[1]) {
                 ui.stateIndex = LEAFCUTTINGINTROUI;
-            }
-            else if(playMenuBtn.label.text == gameModes[2])
-            {
+            } else if (playMenuBtn.label.text == gameModes[2]) {
                 ui.stateIndex = DEFENSEGAMEINTROUI;
-            }
-            else if(playMenuBtn.label.text == gameModes[3])
-            {
+            } else if (playMenuBtn.label.text == gameModes[3]) {
                 ui.stateIndex = FLIGHTGAMEINTROUI;
-                
+
             }
             playMenuBtn.button.resetOutput();
             menuBigPlayButton.resetOutput;
-        }
-        else if(prevMenuBtn.button.output == UIOUTPUT_SELECT)
-        {
+        } else if (prevMenuBtn.button.output == UIOUTPUT_SELECT) {
             var done = false;
-            for(let i = 1; i < gameModes.length; i++)
-            {
-                if(playMenuBtn.label.text == gameModes[i])
-                {
+            for (let i = 1; i < gameModes.length; i++) {
+                if (playMenuBtn.label.text == gameModes[i]) {
                     playMenuBtn.label.text = gameModes[i - 1];
                     done = true;
                     break;
                 }
             }
-            if(!done) playMenuBtn.label.text = gameModes[gameModes.length - 1];
+            if (!done) playMenuBtn.label.text = gameModes[gameModes.length - 1];
             prevMenuBtn.button.resetOutput();
-        }
-        else if(nextMenuBtn.button.output == UIOUTPUT_SELECT)
-        {
+        } else if (nextMenuBtn.button.output == UIOUTPUT_SELECT) {
             var done = false;
-            for(let i = 0; i < gameModes.length - 1; i++)
-            {
-                if(playMenuBtn.label.text == gameModes[i])
-                {
+            for (let i = 0; i < gameModes.length - 1; i++) {
+                if (playMenuBtn.label.text == gameModes[i]) {
                     playMenuBtn.label.text = gameModes[i + 1];
                     done = true;
                     break;
                 }
 
             }
-            if(!done) playMenuBtn.label.text = gameModes[0];
+            if (!done) playMenuBtn.label.text = gameModes[0];
             nextMenuBtn.button.resetOutput();
         }
 
