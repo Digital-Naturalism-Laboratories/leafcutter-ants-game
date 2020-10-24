@@ -58,6 +58,7 @@ class FlyingQueen {
 
     event() {
         if (!this.isPlayerControlled) return;
+        if (totalMilliseconds < 300) return;
         if (gameEndTimer < gameEndTimerLength) return;
         if (this.isMating) return;
 
