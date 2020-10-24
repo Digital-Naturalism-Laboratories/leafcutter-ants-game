@@ -218,6 +218,10 @@ function colonyGameUICustomDraw(deltaTime) {
 
   drawColonyTiles();
 
+  for (var i = 0; i < workers.length; i++) {
+    workers[i].customDraw();
+  }
+
   if (queen.movementState == queen.movementStates.IDLE) {
     fungus.draw();
 

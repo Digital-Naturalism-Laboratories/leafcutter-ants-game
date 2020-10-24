@@ -1,6 +1,6 @@
 //const MODES = {
-    //CARRYING_LEAF: 'carrying_leaf',
-    //NO_LEAF: 'no_leaf'
+//CARRYING_LEAF: 'carrying_leaf',
+//NO_LEAF: 'no_leaf'
 //}
 
 const WORKER_FACING_RIGHT = 1;
@@ -81,7 +81,6 @@ class ColonyWorkerAnt {
             case this.movementStates.WALKINGRIGHT:
                 if (this.pixelCoord.x > gameWidth * 0.66) {
                     this.movementState = this.movementStates.WALKINGDOWN;
-                    console.log("going down");
                 } else {
                     this.sprite.transform.position.x += this.horizontalSpeed * pixelSize;
                 }
@@ -89,7 +88,6 @@ class ColonyWorkerAnt {
             case this.movementStates.WALKINGLEFT:
                 if (this.pixelCoord.x < gameWidth * 0.65) {
                     this.movementState = this.movementStates.WALKINGDOWN;
-                    console.log("going down");
                 } else {
                     this.sprite.transform.position.x += this.horizontalSpeed * pixelSize;
                 }
@@ -130,8 +128,7 @@ class ColonyWorkerAnt {
 
     }
 
-    draw() {
-
+    customDraw() {
         if (queen.movementState != queen.movementStates.IDLE) return;
 
         var inSize = {
@@ -144,16 +141,6 @@ class ColonyWorkerAnt {
             y: (inSize.y * this.currentFacing)
         }
 
-        //switch (this.mode) {
-        //    case MODES.NO_LEAF:
-        //        this.gameMode = LEAFCUTTINGINTROUI;
-        //        inPos.y = inSize.y * 2;
-        //        break;
-        //    case MODES.CARRYING_LEAF:
-        //        this.gameMode = LEAFCUTTINGINTROUI;
-        //        inPos.y = inSize.y * 0;
-        //        break;
-        //}
         drawCustomCircle(this.pixelCoord.x + (10 * pixelSize), this.pixelCoord.y + (10 * pixelSize), (circleIndicatorTimer / 60) * 20 * pixelSize, 4 * pixelSize, '#00FF00');
 
         this.sprite.drawScIn(inPos, inSize);
@@ -168,6 +155,9 @@ class ColonyWorkerAnt {
         }
 
         this.animationTimer++;
+    }
+
+    draw() {
 
     }
 
