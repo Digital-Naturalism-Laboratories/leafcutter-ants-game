@@ -116,6 +116,7 @@ class FlyingQueen {
                 }
 
             } else {
+                energyBarLength -= 0.03;
                 this.angleToDestination = Math.atan2(this.defaultPos.y - this.y, this.defaultPos.x - this.x);
                 flyingGameSFX[SFX_WINGS].pause();
             }
