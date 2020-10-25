@@ -16,11 +16,6 @@ var string_GeneticDiversity = [
     "GENETIC DIVERSITY: "
 ]
 
-var string_GreatJob = [
-    "¡GRAN TRABAJO!",
-    "GREAT JOB!"
-]
-
 var string_ClickToContinue = [
     "HAZ CLICK PARA CONTINUAR",
     "CLICK TO CONTINUE"
@@ -201,4 +196,34 @@ var string_CLICK_QUEEN = [
 var string_LANGUAGE = [
     "IDIOMA: ",
     "LANGUAGE: "
+]
+
+var string_INCREDIBLE = [
+    "¡INCREÍBLE!",
+    "INCREDIBLE!"
+]
+
+var string_AMAZING_WORK = [
+    "¡INCREÍBLE TRABAJO!",
+    "AMAZING WORK!"
+]
+
+var string_GreatJob = [
+    "¡GRAN TRABAJO!",
+    "GREAT JOB!"
+]
+
+var string_OK = [
+    "OK",
+    "OK"
+]
+
+var string_KEEP_TRYING = [
+    "¡SIGUE INTENTANDO!",
+    "KEEP TRYING!"
+]
+
+var string_TRY_AGAIN = [
+    "¡INTÉNTALO DE NUEVO!",
+    "TRY AGAIN!"
 ]

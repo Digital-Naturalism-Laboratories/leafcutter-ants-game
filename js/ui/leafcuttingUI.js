@@ -70,6 +70,8 @@ var clickGreenDisplayStart = 1500;
 var topDownSoldierAntImageObject;
 var cutLeafImageObjects = [];
 
+var leafCuttingResults = null;
+
 function loadLeafCuttingGameTextures()
 {
     topDownSoldierAntImageObject = new ImageObject("images/Animations/TopDown_Soldier_Ant_Spritesheet.png", vec2(4950, 150));
@@ -97,6 +99,7 @@ function leafcuttingResetGame()
 {
     leafcuttingScore = 0;
     leafcuttingTimeLeft = leafcuttingStartTime;
+    leafCuttingResults = null;
 
     leaf = new Leaf();
     ant = new Ant(leaf);
@@ -374,17 +377,17 @@ function leafcuttingAudioHandling(deltaTime)
                 leafcuttingSFX[SFX_TIMEOUT].volume = leafcuttingBGMMaxVolume;
                 leafcuttingSFX[SFX_TIMEOUT].play();
 
-                if(leafcuttingScore >= 2400)
-                    leafCenterLabel1.text = string_AMAZING_AMOUNT_OF[currentLanguage];
-                else if(leafcuttingScore >= 1200)
-                    leafCenterLabel1.text = string_GOOD_AMOUNT_OF[currentLanguage];
-                else if(leafcuttingScore >= 600)
-                    leafCenterLabel1.text = string_OK_AMOUNT_OF[currentLanguage];
-                else
-                    leafCenterLabel1.text = string_BARELY_ANY[currentLanguage];
+                //if(leafcuttingScore >= 2400)
+                //    leafCenterLabel1.text = string_AMAZING_AMOUNT_OF[currentLanguage];
+                //else if(leafcuttingScore >= 1200)
+                //    leafCenterLabel1.text = string_GOOD_AMOUNT_OF[currentLanguage];
+                //else if(leafcuttingScore >= 600)
+                //    leafCenterLabel1.text = string_OK_AMOUNT_OF[currentLanguage];
+                //else
+                //    leafCenterLabel1.text = string_BARELY_ANY[currentLanguage];
                 
-                leafCenterLabel2.text = string_LeavesCollected[currentLanguage];
-                leafCenterLabel1.enabled = leafCenterLabel2.enabled = true;
+                //leafCenterLabel2.text = string_LeavesCollected[currentLanguage];
+                //leafCenterLabel1.enabled = leafCenterLabel2.enabled = true;
 
                 leafcuttingDisableBothAnts();
             }
@@ -402,9 +405,26 @@ function leafcuttingAudioHandling(deltaTime)
                     leafcuttingSFX[i].pause();
                 }
 
-                leafMaterial += leafcuttingScore / leafcuttingLosePenalty;
-                leafcuttingResetGame();
-                ui.stateIndex = DEFENSEGAMEINTROUI;
+                //leafcuttingSFX[SFX_PLAYERWIN].volume -= 0.00005 * deltaTime;
+                if (leafCuttingResults == null) leafCuttingResults = new ResultsScreen("cutting");
+
+                if (leafCuttingResults.pauseTimer < 0 && isTouched){
+                    leafMaterial += leafcuttingScore * leafcuttingWinBonus;
+                    leafcuttingResetGame();
+                    ui.stateIndex = DEFENSEGAMEINTROUI;
+
+                    //copied here from mainmenuUI to fix crash when starting game from leafcutting game rather than the main menu
+	                defenseGame.audioManager.sfxManager.populateArrayOfEatingFungusSounds();
+                    defenseGame.audioManager.sfxManager.populateArrayOfFlyChasedSounds();
+                    defenseGame.audioManager.ambienceManager.startAmbience();
+                    defenseGame.audioManager.sfxManager.calculateAndSetAvoidAwkwardSilenceTimestamps();
+                    defenseGame.audioManager.sfxManager.flyBuzzingNormal.play();
+                    defenseGame.audioManager.sfxManager.groundMinimFootsteps.play();
+                }
+
+                //leafMaterial += leafcuttingScore / leafcuttingLosePenalty;
+                //leafcuttingResetGame();
+                //ui.stateIndex = DEFENSEGAMEINTROUI;
             }
             else if(leafcuttingSFX[SFX_TIMEOUT].volume > 0.4)
             {

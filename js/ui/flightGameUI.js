@@ -226,6 +226,7 @@ function flightGameUICustomEvents(deltaTime) {
       resetColonySimGame();
       resetFlightGame();
       ui.stateIndex = COLONYGAMEINTROUI;
+      gameEndTimer = gameEndTimerLength;
     }
 
     //if (getDistBtwVec2(vec2(70, 45), vec2(lastTouchPos.x, lastTouchPos.y)) < 50) {

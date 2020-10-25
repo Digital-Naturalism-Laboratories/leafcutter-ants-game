@@ -232,8 +232,8 @@ function onKeyDown(ev)
         break;
 
         case 86://v
-        //ui.stateIndex = COLONYGAMEINTROUI;
-        colonyAnts = [];
+        ui.stateIndex = LEAFCUTTINGINTROUI;
+        //colonyAnts = [];
         break;
 
         case 80://p
