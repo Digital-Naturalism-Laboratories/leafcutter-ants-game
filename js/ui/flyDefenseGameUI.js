@@ -1,5 +1,6 @@
 const DEFENSEGAMEUI = 4;
 var defenseGame = {};
+var defenseResults = null;
 
 isOutOfTime = false; //added as a workaround to use in place of this.ranOutOfTime, which seems to be getting intentionally reset to false every frame.
 
@@ -135,6 +136,44 @@ defenseGame.initialize = function()
 
 	this.update = function()
 	{
+
+		if (this.colonyReached) 
+	    {
+			if (defenseResults == null) defenseResults = new ResultsScreen("defense");
+			
+            if (defenseResults.pauseTimer < 0 && isTouched) {
+                timeToReturnWithLeaves = this.timeLeft;
+				badFungusFromLeaves = 200 - defenseGame.background.fungusTallyDiv.tallyOfEatenFungusSpores;
+				infectedAntsReturning = defenseGame.background.bigAntTallyOfInfections;
+				this.reset();
+				ui.stateIndex = COLONYGAMEINTROUI;//COLONYGAMEINTROUI
+				this.colonyReached = false;
+				this.hasBeenPlayedOnce = true;
+            }
+		}
+		
+		//if (this.ranOutOfTime && isTouched)
+		if (isOutOfTime)
+		{
+			if (defenseResults == null) defenseResults = new ResultsScreen("defense");
+
+            if (defenseResults.pauseTimer < 0 && isTouched) {
+                timeToReturnWithLeaves = this.timeLeft;
+				badFungusFromLeaves = 200 - defenseGame.background.fungusTallyDiv.tallyOfEatenFungusSpores;
+				infectedAntsReturning = defenseGame.background.bigAntTallyOfInfections;
+				this.reset();
+				ui.stateIndex = COLONYGAMEINTROUI;//COLONYGAMEINTROUI
+				this.colonyReached = false;
+				this.hasBeenPlayedOnce = true;
+            }
+			
+		}
+	
+		if (defenseResults != null){
+			defenseResults.update();
+			return;
+		}
+
 		defenseGame.background.update();
 		defenseGame.background.pheremoneGapManager.updatePheremoneGaps();
 
@@ -155,37 +194,6 @@ defenseGame.initialize = function()
 
 	    this.bigAntManager.updateBigAnts();
 
-	    if (this.colonyReached && isTouched) 
-	    {
-			timeToReturnWithLeaves = this.timeLeft;
-			badFungusFromLeaves = 200 - defenseGame.background.fungusTallyDiv.tallyOfEatenFungusSpores;
-			infectedAntsReturning = defenseGame.background.bigAntTallyOfInfections;
-
-			this.reset();
-
-			ui.stateIndex = COLONYGAMEINTROUI; //COLONYGAMEINTROUI
-			this.colonyReached = false;
-
-			this.hasBeenPlayedOnce = true;
-		}
-		
-		//if (this.ranOutOfTime && isTouched)
-		if (isOutOfTime && isTouched)
-		{
-			timeToReturnWithLeaves = this.timeLeft;
-			
-			badFungusFromLeaves = 200 - defenseGame.background.fungusTallyDiv.tallyOfEatenFungusSpores;
-			
-			infectedAntsReturning = defenseGame.background.bigAntTallyOfInfections;
-
-			this.reset();
-			
-			ui.stateIndex = COLONYGAMEINTROUI;//COLONYGAMEINTROUI
-			
-			this.colonyReached = false;
-			
-			this.hasBeenPlayedOnce = true;
-		}
 	}
 
 	renderer.save();
@@ -221,7 +229,7 @@ defenseGame.initialize = function()
 		  	renderer.fillStyle = 'white';
 			renderer.font = (75 * pixelSize) * 'px SmallBoldPixel';
 			renderer.textAlign = 'left';
-		  	renderer.fillText(string_TIME_LEFT[currentLanguage] + timerNumberConvertedToString, renderer.canvas.width * 0.01,renderer.canvas.height * 0.25);
+			if (defenseResults == null) renderer.fillText(string_TIME_LEFT[currentLanguage] + timerNumberConvertedToString, renderer.canvas.width * 0.01,renderer.canvas.height * 0.25);
 
 			if (this.colonyReached)
 			{
@@ -233,7 +241,7 @@ defenseGame.initialize = function()
 				let colonyReachedText = string_COLONY_REACHED[currentLanguage];
 				let colonyReachedTextWidth = renderer.measureText(colonyReachedText).width;
 				renderer.textAlign = 'left';
-				renderer.fillText(colonyReachedText, renderer.canvas.width/2 - colonyReachedTextWidth/2,
+				if (defenseResults == null) renderer.fillText(colonyReachedText, renderer.canvas.width/2 - colonyReachedTextWidth/2,
 													 renderer.canvas.height/2 - fontSize/2);
 
 				let clickToContinueTextFontSize = 75 * pixelSize;
@@ -242,7 +250,7 @@ defenseGame.initialize = function()
 				let clickToContinueText = string_CLICK_TO_CONTINUE[currentLanguage];
 				let clickToContinueTextWidth = renderer.measureText(clickToContinueText).width;
 				renderer.textAlign = 'left';
-				renderer.fillText(clickToContinueText, renderer.canvas.width/2 - clickToContinueTextWidth/2,
+				if (defenseResults == null) renderer.fillText(clickToContinueText, renderer.canvas.width/2 - clickToContinueTextWidth/2,
 													   renderer.canvas.height/2 + fontSize/2);
 				
 			}
@@ -257,7 +265,7 @@ defenseGame.initialize = function()
 				let noTimeLeftText = string_NO_TIME_LEFT[currentLanguage];
 				let noTimeLeftTextWidth = renderer.measureText(noTimeLeftText).width;
 				renderer.textAlign = 'left';
-				renderer.fillText(noTimeLeftText, renderer.canvas.width/2 - noTimeLeftTextWidth/2,
+				if (defenseResults == null) renderer.fillText(noTimeLeftText, renderer.canvas.width/2 - noTimeLeftTextWidth/2,
 												  renderer.canvas.height/2 - fontSize/2);
 
 				let clickToContinueTextFontSize = pixelSize * 75;
@@ -266,7 +274,7 @@ defenseGame.initialize = function()
 				let clickToContinueText = string_CLICK_TO_CONTINUE[currentLanguage];
 				let clickToContinueTextWidth = renderer.measureText(clickToContinueText).width;
 				renderer.textAlign = 'left';
-				renderer.fillText(clickToContinueText, renderer.canvas.width/2 - clickToContinueTextWidth/2,
+				if (defenseResults == null) renderer.fillText(clickToContinueText, renderer.canvas.width/2 - clickToContinueTextWidth/2,
 													   renderer.canvas.height/2 + fontSize/2);
 			}
 
@@ -274,6 +282,8 @@ defenseGame.initialize = function()
 			{
 				defenseGame.infectionAlertMessage.draw();
 			}
+
+			if (defenseResults != null) defenseResults.draw();
 	}//end of draw
 
 	this.passStats = function()

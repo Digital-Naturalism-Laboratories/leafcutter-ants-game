@@ -337,7 +337,7 @@ function Background()
 			console.log('currentLanguage: ' + currentLanguage);
 			renderer.fillStyle = 'white';
 			renderer.font = (45 * pixelSize) + 'px SmallBoldPixel';
-			renderer.fillText(string_LEAF_CONTAMINANTS_CLEANED[currentLanguage] + this.tallyOfEatenFungusSpores, this.x,this.y);
+			if (defenseResults == null) renderer.fillText(string_LEAF_CONTAMINANTS_CLEANED[currentLanguage] + this.tallyOfEatenFungusSpores, this.x,this.y);
 		}
 	}
 
@@ -354,7 +354,7 @@ function Background()
 			renderer.fillStyle = 'white';//dark violet, medium orchid
 			renderer.font = (45 * pixelSize) + 'px SmallBoldPixel';
 			renderer.textAlign = "left";
-			renderer.fillText(string_PARASITE_INFECTIONS[currentLanguage] + defenseGame.background.bigAntTallyOfInfections, this.x,this.y);
+			if (defenseResults == null) renderer.fillText(string_PARASITE_INFECTIONS[currentLanguage] + defenseGame.background.bigAntTallyOfInfections, this.x,this.y);
 		}
 	}
 
