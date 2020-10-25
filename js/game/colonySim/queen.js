@@ -246,6 +246,13 @@ class Queen {
                     y: 225
                 }
 
+
+                if (!fungusScreenDismissed){
+                    colonyGameCurrentScreen = COLONYGAME_FUNGUS_SCREEN;
+                    colonyGameAnimationFrameCount = 23
+                    infoScreenDismissed = false;
+                }
+                
                 break;
             default:
         }
@@ -266,10 +273,12 @@ class Queen {
         this.leftWingSprite.transform.scale = vec2(pixelSize * 0.3, pixelSize * 0.3);
         this.downwardSprite.transform.scale = vec2(pixelSize * 0.3, pixelSize * 0.3);
         this.idleSprite.transform.scale = vec2(pixelSize * 0.3, pixelSize * 0.3);
-       
+
     }
 
     draw() {
+
+        if (!infoScreenDismissed) return;
 
         this.animateSprite(this.sprite, this.animationFrameLength, this.animationFrameCount, this.inSize);
 

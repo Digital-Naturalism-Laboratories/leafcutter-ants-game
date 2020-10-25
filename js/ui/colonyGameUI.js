@@ -1,11 +1,21 @@
 const COLONYGAMEUI = 2;
 var colonyGameUI = [];
 
-var colonyInfoScreenSprite;
-var colonyAnimationFrameLength = 6;
-var colonyAnimationFrameCount = 29;
-var colonyAnimationFrameCurrent = 0;
-var colonyAnimationTimer = 0
+var colonyGameScreenSprites = [];
+var colonyGameAnimationFrameLength = 6;
+var colonyGameAnimationFrameCount = 23;
+var colonyGameAnimationFrameCurrent = 0;
+var colonyGameAnimationTimer = 0
+const COLONYGAME_FUNGUS_SCREEN = 0;
+const COLONYGAME_WORKER_SCREEN = 1;
+const COLONYGAME_REPRODUCTION_SCREEN = 2;
+const COLONYGAME_GAMEOVER_SCREEN = 3;
+var colonyGameCurrentScreen = COLONYGAME_WORKER_SCREEN;
+
+var infoScreenDismissed = true;
+var fungusScreenDismissed = false;
+var workerScreenDismissed = false;
+var reproductionScreenDismissed = false;
 
 //Image variables
 var groundBG = document.createElement('img');
@@ -79,6 +89,13 @@ var circleIndicatorTimer = 60;
 
 function setupColonyGameUI() {
 
+  colonyGameScreenSprites.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
+    new ImageObject("images/Animations/info_screen_colony_fungus_worker_reproduction.png", vec2(1000, 750))));
+  colonyGameScreenSprites.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
+    new ImageObject("images/Animations/info_screen_colony_fungus_worker_reproduction.png", vec2(1000, 750))));
+  //colonyGameScreenSprites.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
+  //  new ImageObject("images/Animations/info_screen_colony_fungus_spritesheet.png", vec2(1000, 750))));
+
   createGrid();
   setDistFromFungusOnEachColonyNode();
   previousTunneledTileCount = getTunneledTileCount();
@@ -113,6 +130,11 @@ function colonyGameUIResize() {
   queen.resize();
   fungus.resize();
 
+  for (let i = 0; i < colonyInfoScreenSprites.length; i++) {
+    colonyGameScreenSprites[i].transform.position = vec2(gameWidth / 2, gameHeight / 2);
+    colonyGameScreenSprites[i].transform.scale = vec2(gameWidth / 1000, gameHeight / 750);
+  }
+
   if (workers != "undefined") {
     for (var i = 0; i < workers.length; i++) {
       workers[i].resize();
@@ -139,7 +161,7 @@ function colonyGameUIResize() {
     }
   }
 }
-
+/*
 function animateSprite(sprite, frameLength, framerameCount) {
 
   var animationSprite = sprite;
@@ -164,12 +186,18 @@ function animateSprite(sprite, frameLength, framerameCount) {
   colonyAnimationTimer++
   animationSprite.drawScIn(inPos, inSize);
 }
-
+*/
 function resetColonySimGame() {
 
   colonyGrid = [];
   createGrid();
   setDistFromFungusOnEachColonyNode();
+
+  colonyGameCurrentScreen = COLONYGAME_WORKER_SCREEN;
+  infoScreenDismissed = true;
+  fungusScreenDismissed = false;
+  workerScreenDismissed = false;
+  reproductionScreenDismissed = false;
 
   totalMilliseconds = 0;
   previousEggTotal += colony.totalEggsLaid
@@ -179,6 +207,7 @@ function resetColonySimGame() {
   eggClusters = [];
   colonyWingedQueens = [];
   colonyWingedMales = [];
+  workers = [];
 
   for (i = 0; i < colonyAnts.length; i++) {
     colonyAnts[i].killAnt();
@@ -259,6 +288,8 @@ function colonyGameUICustomDraw(deltaTime) {
   drawStatsBlock();
   //banner.draw();
 
+  colonyGameAnimateSprite(colonyGameScreenSprites[currentLanguage], colonyGameAnimationFrameLength, colonyGameAnimationFrameCount);
+
 }
 
 function colonyGameUICustomUpdate(deltaTime) {
@@ -272,24 +303,36 @@ function colonyGameUICustomUpdate(deltaTime) {
 
     colony.update();
 
-    if (workers.length < colony.workerCount / 5) {
+    if (workers.length < colony.workerCount / 5 && workers.length < 10) {
       workers.push(new ColonyWorkerAnt(0, 1));
+
+      if (!workerScreenDismissed) {
+        colonyGameCurrentScreen = COLONYGAME_WORKER_SCREEN;
+        infoScreenDismissed = false;
+      }
+
     }
 
     if (colonyWingedQueens.length < colony.femaleReproductiveCount && colony.femaleReproductiveCount < visibleEggClusterCount) {
       for (var i = 0; i < colony.femaleReproductiveCount;) {
         var randomEggClusterIndex = getRandomInt(0, eggClusters.length);
-        if (eggClusters[randomEggClusterIndex].isVisible) {
+        if (eggClusters[randomEggClusterIndex].isVisible && colonyWingedQueens.length < 10) {
           new ColonyWingedQueen(eggClusters[randomEggClusterIndex].gridCoord.col, eggClusters[randomEggClusterIndex].gridCoord.row);
           i++;
         }
       }
+
+      if (!reproductionScreenDismissed && fungusScreenDismissed && workerScreenDismissed) {
+        colonyGameCurrentScreen = COLONYGAME_REPRODUCTION_SCREEN;
+        colonyGameAnimationFrameCount = 17; //reproduction screen spritesheet only has 17 frames
+        infoScreenDismissed = false;
+      }
     }
 
-    if (colonyWingedMales.length < colony.maleReproductiveCount && colony.maleReproductiveCount < visibleEggClusterCount) {
+    if (colonyWingedMales.length < colony.maleReproductiveCount && colony.maleReproductiveCount < visibleEggClusterCount || colonyWingedMales.length < 10) {
       for (var i = 0; i < colony.maleReproductiveCount;) {
         var randomEggClusterIndex = getRandomInt(0, eggClusters.length);
-        if (eggClusters[randomEggClusterIndex].isVisible) {
+        if (eggClusters[randomEggClusterIndex].isVisible && colonyWingedMales.length < 10) {
           new ColonyWingedMale(eggClusters[randomEggClusterIndex].gridCoord.col, eggClusters[randomEggClusterIndex].gridCoord.row);
           i++;
         }
@@ -314,6 +357,12 @@ function colonyGameUICustomUpdate(deltaTime) {
     }
 
     fungus.update();
+
+    if (colonyAnts.length <= 0 && totalMilliseconds > 600) {
+      colonyGameCurrentScreen = COLONYGAME_GAMEOVER_SCREEN;
+      infoScreenDismissed = false;
+      colonyGameAnimationFrameCount = 17; //game over screen spritesheet only has 17 frames
+    }
 
   }
 
@@ -358,10 +407,73 @@ function colonyGameUICustomEvents(deltaTime) {
 
   }
 
+  if (!infoScreenDismissed) {
+    colonyGameIntroStartDelay--;
+  }
+
+  if (isTouched && colonyGameIntroStartDelay <= 0 && !infoScreenDismissed) {
+    lastTouchPos = {
+      x: touchPos[0].x - canvas.getBoundingClientRect().left,
+      y: touchPos[0].y - canvas.getBoundingClientRect().top
+    }
+
+    colonyGameIntroStartDelay = 60;
+
+    if (colonyGameCurrentScreen == COLONYGAME_FUNGUS_SCREEN) {
+      fungusScreenDismissed = true;
+    }
+
+    if (colonyGameCurrentScreen == COLONYGAME_WORKER_SCREEN) {
+      workerScreenDismissed = true;
+    }
+
+    if (colonyGameCurrentScreen == COLONYGAME_REPRODUCTION_SCREEN) {
+      reproductionScreenDismissed = true;
+    }
+
+    if (colonyGameCurrentScreen == COLONYGAME_GAMEOVER_SCREEN) {
+      location.reload();
+      return false;
+    }
+
+    infoScreenDismissed = true;
+  }
+
   //if (getTunneledTileCount() > previousTunneledTileCount) {
   //  colonyGameSFX[SFX_DIGGING].play();
   //}
   //previousTunneledTileCount = getTunneledTileCount();
+}
+
+function colonyGameAnimateSprite(sprite, frameLength, framerameCount) {
+
+  if (infoScreenDismissed) return;
+
+  var animationSprite = sprite;
+  var animationFrameLength = frameLength;
+  var animationFrameCount = framerameCount;
+
+  var inSize = {
+    x: 1000,
+    y: 750
+  }
+  var inPos = {
+    x: (colonyGameAnimationFrameCurrent * inSize.x),
+    y: (colonyGameCurrentScreen * inSize.y)
+  }
+
+  if (colonyGameAnimationTimer > animationFrameLength - 1) {
+    colonyGameAnimationFrameCurrent++
+    colonyGameAnimationTimer = 0;
+  }
+
+  if (colonyGameAnimationFrameCurrent >= animationFrameCount) {
+    colonyGameAnimationFrameCurrent = 0;
+  }
+
+  colonyGameAnimationTimer++
+  animationSprite.drawScIn(inPos, inSize);
+
 }
 
 //#region Image Loading

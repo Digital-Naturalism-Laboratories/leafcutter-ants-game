@@ -19,7 +19,7 @@ class FlyingMale {
         this.isMating = false;
         this.hasMated = false;
 
-        flightGameUI.push(this);
+        //flightGameUI.push(this);
 
         this.animationFrameLength = 2;
         this.animationFrameCount = 20;

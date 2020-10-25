@@ -10,7 +10,7 @@ var rivalQueenCount = 2;
 var rivalQueens = [];
 var energyBarLength = 100;
 var diversityBarLength = 0;
-var gameEndTimerLength = 300;
+var gameEndTimerLength = 150;
 var gameEndTimer = gameEndTimerLength;
 
 var cicadSFXTimer = 0;
@@ -79,6 +79,9 @@ function setupFlightGameUI() {
 }
 
 function resetFlightGame() {
+  flyingQueen.x = flyingQueen.defaultPos.x;
+  flyingQueen.y = flyingQueen.defaultPos.y;
+
   flyingMales = [];
   for (i = 0; i < flyingMaleCount; i++) {
     flyingMales[i] = new FlyingMale();
@@ -153,6 +156,10 @@ function flightGameUICustomDraw(deltaTime) {
 
   drawParallaxBackgrounds(deltaTime);
 
+  for (i = 0; i < flyingMaleCount; i++) {
+    flyingMales[i].draw();
+  }
+
   flyingQueen.draw(deltaTime);
 
   renderer.textAlign = "left";
@@ -203,6 +210,11 @@ function flightGameUICustomDraw(deltaTime) {
 }
 
 function flightGameUICustomEvents(deltaTime) {
+
+  for (i = 0; i < flyingMaleCount; i++) {
+    flyingMales[i].update();
+  }
+
   if (flyingQueen.movementState == flyingQueen.movementStates.FLYING) {
     //if (flyingQueen.destinationReached = false) {
     energyBarLength -= 0.08;

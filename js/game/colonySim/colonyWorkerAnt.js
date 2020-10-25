@@ -66,6 +66,7 @@ class ColonyWorkerAnt {
 
     update() {
 
+        if (!infoScreenDismissed) return;
         if (queen.movementState != queen.movementStates.IDLE) return;
 
         //if (this.sprite.transform.position.x > gameWidth || this.sprite.transform.position.x < 10) {

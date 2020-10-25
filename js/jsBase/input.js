@@ -232,13 +232,14 @@ function onKeyDown(ev)
         break;
 
         case 86://v
-        ui.stateIndex = COLONYGAMEINTROUI;
+        //ui.stateIndex = COLONYGAMEINTROUI;
+        colonyAnts = [];
         break;
 
         case 80://p
         console.log('game paused')
         if (gamePaused)
-        {
+        {v
             gamePaused = false;
         }
         else

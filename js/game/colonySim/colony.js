@@ -40,6 +40,9 @@ class Colony {
     }
 
     update() {
+
+        if (!infoScreenDismissed) return;
+
         this.updatePopulationCounts();
         this.updateConversionRates();
         this.updateResourceCounts();
