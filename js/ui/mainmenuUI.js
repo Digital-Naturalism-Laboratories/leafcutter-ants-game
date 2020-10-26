@@ -173,7 +173,19 @@ function mainMenuUICustomUpdate(deltaTime) {}
 
 function mainMenuUICustomEvents(deltaTime) {
 
-    if (userInteracted && !bgmColony.isPlaying){
+    if (isTouched && mainMenuIntroStartDelay <= 0 && mainMenuCurrentScreen == MAINMENU_INTRO_SCREEN) {
+        lastTouchPos = {
+            x: touchPos[0].x - canvas.getBoundingClientRect().left,
+            y: touchPos[0].y - canvas.getBoundingClientRect().top
+        }
+
+        ui.stateIndex = FLIGHTGAMEINTROUI;
+        menuBigPlayButton.resetOutput();
+        mainMenuIntroStartDelay = 60;
+
+    }
+
+    if (userInteracted && !bgmColony.isPlaying) {
         bgmColony.play();
     }
 
@@ -185,7 +197,7 @@ function mainMenuUICustomEvents(deltaTime) {
     }
 
     if (!isGameSelectEnabled) {
-        if (menuBigPlayButton.output == UIOUTPUT_SELECT  && mainMenuIntroStartDelay <= 0) {
+        if (menuBigPlayButton.output == UIOUTPUT_SELECT && mainMenuIntroStartDelay <= 0) {
 
 
             if (mainMenuCurrentScreen == MAINMENU_TITLE_SCREEN) {
