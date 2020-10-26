@@ -334,7 +334,7 @@ function Background()
 		labelHeight: 30,
 		draw: function()
 		{
-			console.log('currentLanguage: ' + currentLanguage);
+			//console.log('currentLanguage: ' + currentLanguage);
 			renderer.fillStyle = 'white';
 			renderer.font = (45 * pixelSize) + 'px SmallBoldPixel';
 			if (defenseResults == null) renderer.fillText(string_LEAF_CONTAMINANTS_CLEANED[currentLanguage] + this.tallyOfEatenFungusSpores, this.x,this.y);

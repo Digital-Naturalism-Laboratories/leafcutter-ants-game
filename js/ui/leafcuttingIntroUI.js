@@ -73,6 +73,8 @@ function leafcuttingIntroUICustomDraw(deltaTime)
 
 function leafcuttingIntroUICustomEvents(deltaTime)
 {
+  bgmColony.volume = 0.1;
+
   //if (userInteracted && !bgmCutting.isPlaying)
   //  bgmCutting.play();
   //}

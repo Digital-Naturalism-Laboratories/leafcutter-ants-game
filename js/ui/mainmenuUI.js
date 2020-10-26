@@ -173,6 +173,10 @@ function mainMenuUICustomUpdate(deltaTime) {}
 
 function mainMenuUICustomEvents(deltaTime) {
 
+    if (userInteracted && !bgmColony.isPlaying){
+        bgmColony.play();
+    }
+
     if (menuBigPlayButton.output == UIOUTPUT_SELECT) {
 
         if (!mainMenuSFX[SFX_BUTTON].isPlaying) {

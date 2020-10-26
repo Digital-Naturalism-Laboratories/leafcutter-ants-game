@@ -145,12 +145,12 @@ function setupLeafcuttingUI()
     {
         leafcuttingBGM[i].setAttribute('src', leafcuttingBGMPaths[i]);
         leafcuttingBGM[i].loop = true;
-        leafcuttingBGM[i].volume = 0;
+        leafcuttingBGM[i].volume = 0.1;
     }
     for(let i = 0; i < leafcuttingSFX.length; i++)
     {
         leafcuttingSFX[i].setAttribute('src', leafcuttingSFXPaths[i]);
-        leafcuttingSFX[i].volume = 0.25;
+        leafcuttingSFX[i].volume = 0.1;
     }
 }
 
