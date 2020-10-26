@@ -190,17 +190,32 @@ function flightGameUICustomDraw(deltaTime) {
     renderer.textAlign = "center";
     renderer.fillStyle = "white";
     renderer.font = (60 * pixelSize) + "px SmallBoldPixel";
-    renderer.fillText(string_Mates[currentLanguage] + mateCount, gameWidth/2, gameHeight * 0.33);
-    renderer.fillText(string_GeneticDiversity[currentLanguage] + Math.floor(diversityBarLength) + "%", gameWidth/2, gameHeight * 0.4);
+    renderer.fillText(string_Mates[currentLanguage] + mateCount, gameWidth / 2, gameHeight * 0.33);
+    //renderer.fillText(string_GeneticDiversity[currentLanguage] + Math.floor(diversityBarLength) + "%", gameWidth / 2, gameHeight * 0.4);
 
-    if (diversityBarLength > 50) {
-      renderer.fillText(string_GreatJob[currentLanguage], gameWidth/2, gameHeight * 0.5);
+    if (mateCount >= 9) {
+      renderer.fillText(string_GENETIC_DIVERSITY_VERY_HIGH[currentLanguage], gameWidth / 2, gameHeight * 0.45);
+      renderer.fillText(string_INCREDIBLE[currentLanguage], gameWidth / 2, gameHeight * 0.55);
+    } else if (mateCount >= 6) {
+      renderer.fillText(string_GENETIC_DIVERSITY_HIGH[currentLanguage], gameWidth / 2, gameHeight * 0.45);
+      renderer.fillText(string_AMAZING_WORK[currentLanguage], gameWidth / 2, gameHeight * 0.55);
+    } else if (mateCount >= 4) {
+      renderer.fillText(string_GENETIC_DIVERSITY_MEDIUM[currentLanguage], gameWidth / 2, gameHeight * 0.45);
+      renderer.fillText(string_GreatJob[currentLanguage], gameWidth / 2, gameHeight * 0.55);
+    } else if (mateCount >= 2) {
+      renderer.fillText(string_GENETIC_DIVERSITY_LOW[currentLanguage], gameWidth / 2, gameHeight * 0.45);
+      renderer.fillText(string_OK[currentLanguage], gameWidth / 2, gameHeight * 0.55);
+    } else if (mateCount >= 0) {
+      renderer.fillText(string_GENETIC_DIVERSITY_VERY_LOW[currentLanguage], gameWidth / 2, gameHeight * 0.45);
+      renderer.fillText(string_KEEP_TRYING[currentLanguage], gameWidth / 2, gameHeight * 0.55);
+    } else {
+      renderer.fillText(string_TRY_AGAIN[currentLanguage], gameWidth / 2, gameHeight * 0.55);
     }
 
   }
 
   if (gameEndTimer < 0) {
-    renderer.fillText(string_ClickToContinue[currentLanguage], gameWidth/2, gameHeight * 0.66);
+    renderer.fillText(string_ClickToContinue[currentLanguage], gameWidth / 2, gameHeight * 0.66);
   }
 
   //colorRect(20 * pixelSize, 20 * pixelSize, 100 * pixelSize, 50 * pixelSize, 'white');
