@@ -137,6 +137,12 @@ defenseGame.initialize = function()
 	this.update = function()
 	{
 
+		bgmColony.volume = 0.1;
+
+		if (userInteracted && !bgmColony.isPlaying) {
+			bgmColony.play();
+		}
+
 		if (this.colonyReached) 
 	    {
 			if (defenseResults == null) defenseResults = new ResultsScreen("defense");

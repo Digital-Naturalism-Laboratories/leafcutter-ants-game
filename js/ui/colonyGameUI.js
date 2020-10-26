@@ -316,7 +316,7 @@ function colonyGameUICustomUpdate(deltaTime) {
     if (colonyWingedQueens.length < colony.femaleReproductiveCount && colony.femaleReproductiveCount < visibleEggClusterCount) {
       for (var i = 0; i < colony.femaleReproductiveCount;) {
         var randomEggClusterIndex = getRandomInt(0, eggClusters.length);
-        if (eggClusters[randomEggClusterIndex].isVisible && colonyWingedQueens.length < 10) {
+        if (eggClusters[randomEggClusterIndex].isVisible) {
           new ColonyWingedQueen(eggClusters[randomEggClusterIndex].gridCoord.col, eggClusters[randomEggClusterIndex].gridCoord.row);
           i++;
         }
@@ -329,10 +329,10 @@ function colonyGameUICustomUpdate(deltaTime) {
       }
     }
 
-    if (colonyWingedMales.length < colony.maleReproductiveCount && colony.maleReproductiveCount < visibleEggClusterCount || colonyWingedMales.length < 10) {
+    if (colonyWingedMales.length < colony.maleReproductiveCount && colony.maleReproductiveCount < visibleEggClusterCount) {
       for (var i = 0; i < colony.maleReproductiveCount;) {
         var randomEggClusterIndex = getRandomInt(0, eggClusters.length);
-        if (eggClusters[randomEggClusterIndex].isVisible && colonyWingedMales.length < 10) {
+        if (eggClusters[randomEggClusterIndex].isVisible) {
           new ColonyWingedMale(eggClusters[randomEggClusterIndex].gridCoord.col, eggClusters[randomEggClusterIndex].gridCoord.row);
           i++;
         }
@@ -358,7 +358,7 @@ function colonyGameUICustomUpdate(deltaTime) {
 
     fungus.update();
 
-    if (colonyAnts.length <= 0 && totalMilliseconds > 600) {
+    if (colony.workerCount <= 0 && colony.totalEggsLaid > 30) {
       colonyGameCurrentScreen = COLONYGAME_GAMEOVER_SCREEN;
       infoScreenDismissed = false;
       colonyGameAnimationFrameCount = 17; //game over screen spritesheet only has 17 frames
@@ -369,6 +369,12 @@ function colonyGameUICustomUpdate(deltaTime) {
 }
 
 function colonyGameUICustomEvents(deltaTime) {
+
+  bgmColony.volume = 0.1;
+
+  if (userInteracted && !bgmColony.isPlaying) {
+    bgmColony.play();
+  }
 
   circleIndicatorTimer--
   if (circleIndicatorTimer <= 0) {
