@@ -284,20 +284,24 @@ class Queen {
 
         renderer.fillStyle = 'white';
         renderer.textAlign = 'center';
-        renderer.font = (20 * pixelSize) + "px SmallBoldPixel";
+        renderer.font = (45 * pixelSize) + "px SmallBoldPixel";
 
         switch (this.movementState) {
             case this.movementStates.LANDING:
                 break;
             case this.movementStates.LANDED:
                 this.rightWingSprite.drawSc();
-                renderer.fillText(string_REMOVE_WINGS[currentLanguage], gameWidth / 2, (this.pixelCoord.y + 50) * pixelSize)
+                //renderer.fillText(string_REMOVE_WINGS[currentLanguage], gameWidth / 2, gameHeight / 2)
+                renderer.fillText(string_REMOVE_WINGS_1[currentLanguage], gameWidth / 2, gameHeight * 0.45)
+                renderer.fillText(string_REMOVE_WINGS_2[currentLanguage], gameWidth / 2, gameHeight * 0.55)
                 drawCustomCircle(this.pixelCoord.x, this.pixelCoord.y, (circleIndicatorTimer / 60) * 40 * pixelSize, 4 * pixelSize, '#00FF00');
                 break;
             case this.movementStates.REMOVINGRIGHTWING:
                 this.rightWingSprite.drawSc();
                 this.leftWingSprite.drawSc();
-                renderer.fillText(string_REMOVE_WINGS[currentLanguage], gameWidth / 2, (this.pixelCoord.y + 50) * pixelSize)
+                //renderer.fillText(string_REMOVE_WINGS[currentLanguage], gameWidth / 2,  gameHeight / 2)
+                renderer.fillText(string_REMOVE_WINGS_1[currentLanguage], gameWidth / 2, gameHeight * 0.45)
+                renderer.fillText(string_REMOVE_WINGS_2[currentLanguage], gameWidth / 2, gameHeight * 0.55)
                 drawCustomCircle(this.pixelCoord.x, this.pixelCoord.y, (circleIndicatorTimer / 60) * 40 * pixelSize, 4 * pixelSize, '#00FF00');
                 break;
             case this.movementStates.REMOVINGLEFTWING:
