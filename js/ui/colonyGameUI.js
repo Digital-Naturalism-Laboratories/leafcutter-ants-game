@@ -358,7 +358,7 @@ function colonyGameUICustomUpdate(deltaTime) {
 
     fungus.update();
 
-    if (colonyAnts.length <= 0 && totalMilliseconds > 600) {
+    if (colony.workerCount <= 0 && colony.totalEggsLaid > 30) {
       colonyGameCurrentScreen = COLONYGAME_GAMEOVER_SCREEN;
       infoScreenDismissed = false;
       colonyGameAnimationFrameCount = 17; //game over screen spritesheet only has 17 frames
