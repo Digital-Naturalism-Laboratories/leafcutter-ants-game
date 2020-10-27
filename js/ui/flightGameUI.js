@@ -160,7 +160,7 @@ function flightGameUICustomDraw(deltaTime) {
     flyingMales[i].draw();
   }
 
-  flyingQueen.draw(deltaTime);
+  //flyingQueen.draw(deltaTime);
 
   renderer.textAlign = "left";
   renderer.fillStyle = "white";
@@ -191,8 +191,7 @@ function flightGameUICustomDraw(deltaTime) {
     renderer.fillStyle = "white";
     renderer.font = (60 * pixelSize) + "px SmallBoldPixel";
     renderer.fillText(string_Mates[currentLanguage] + mateCount, gameWidth / 2, gameHeight * 0.33);
-    //renderer.fillText(string_GeneticDiversity[currentLanguage] + Math.floor(diversityBarLength) + "%", gameWidth / 2, gameHeight * 0.4);
-
+    
     if (mateCount >= 9) {
       renderer.fillText(string_GENETIC_DIVERSITY_VERY_HIGH[currentLanguage], gameWidth / 2, gameHeight * 0.45);
       renderer.fillText(string_INCREDIBLE[currentLanguage], gameWidth / 2, gameHeight * 0.55);
@@ -218,10 +217,6 @@ function flightGameUICustomDraw(deltaTime) {
     renderer.fillText(string_ClickToContinue[currentLanguage], gameWidth / 2, gameHeight * 0.66);
   }
 
-  //colorRect(20 * pixelSize, 20 * pixelSize, 100 * pixelSize, 50 * pixelSize, 'white');
-  //renderer.fillStyle = "black";
-  //renderer.font = (24 * pixelSize) + "px SmallBoldPixel";
-  //renderer.fillText("Exit Game", 25 * pixelSize, 50 * pixelSize);
 }
 
 function flightGameUICustomEvents(deltaTime) {
@@ -231,7 +226,6 @@ function flightGameUICustomEvents(deltaTime) {
   }
 
   if (flyingQueen.movementState == flyingQueen.movementStates.FLYING) {
-    //if (flyingQueen.destinationReached = false) {
     energyBarLength -= 0.08;
   }
 
@@ -244,9 +238,6 @@ function flightGameUICustomEvents(deltaTime) {
       gameEndTimer = gameEndTimerLength;
     }
 
-    //if (getDistBtwVec2(vec2(70, 45), vec2(lastTouchPos.x, lastTouchPos.y)) < 50) {
-    //  ui.stateIndex = COLONYGAMEINTROUI;
-    //}
   }
 
   if (energyBarLength <= 0 || diversityBarLength >= 100) {
@@ -267,11 +258,8 @@ function flightGameUICustomEvents(deltaTime) {
     birdsSFXTimer = 200;
   }
 
-
-  //cameraFollow();
-
 }
-
+/*
 function cameraFollow() {
   var cameraFocusCenterX = camPanX + gameWidth / 2;
 
@@ -291,3 +279,4 @@ function colorRect(topLeftX, topLeftY, boxWidth, boxHeight, fillColor) {
   renderer.fillStyle = fillColor;
   renderer.fillRect(topLeftX, topLeftY, boxWidth, boxHeight);
 }
+*/
