@@ -18,6 +18,9 @@ function ParentAntObject()
 
 	this.controlStatus = 'active';
 
+	this.bg_highlight = new Sprite(tr(vec2(this.x, this.y), vec2(pixelSize * 0.5, pixelSize * 0.5)), new ImageObject("images/bg_highlight_ant.png", vec2(128, 128)));
+	this.bg_scale = 1;
+
 	this.currentSpriteSheet = bigAntWalkingSpriteSheet;
 	this.hasBeenInfected = false;
 	this.toggleSpriteSheet = function()
@@ -411,6 +414,11 @@ function ParentAntObject()
 	this.drawSmallAnt = function()
 	{
 		
+		if(this.controlStatus == 'active'){
+			this.bg_scale += 0.06;
+			this.bg_highlight.transform.scale = vec2(pixelSize * 0.4 * Math.sin(this.bg_scale), pixelSize * 0.4 * Math.sin(this.bg_scale));
+			this.bg_highlight.drawSc();
+		}
 
 		if (this.currentSmallAntDirection === 'up')
 		{
@@ -518,6 +526,7 @@ function ParentAntObject()
 			
 		}
 
+
 		if (defenseGame.debugOn)
 		{
 			renderer.lineWidth = 5;
@@ -570,7 +579,6 @@ function ParentAntObject()
 		
 		this.smallAntPreviousMouthColliderX = this.mouthColliderBoxX;
 		this.smallAntPreviousMouthColliderY = this.mouthColliderBoxY;
-		
 		
 		if (this.controlStatus === 'active')
 		{
@@ -775,6 +783,9 @@ function ParentAntObject()
 					}
 			}
 		}
+
+		this.bg_highlight.transform.position.x = this.smallAntMidPoint.x;
+        this.bg_highlight.transform.position.y = this.smallAntMidPoint.y;
 	}
 
 	

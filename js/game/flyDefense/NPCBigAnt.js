@@ -17,6 +17,9 @@ function NPCBigAnt(x,name)
 
 	this.controlStatus = 'inactive';
 
+	this.bg_highlight = new Sprite(tr(vec2(this.x, this.y), vec2(pixelSize * 0.4, pixelSize * 0.4)), new ImageObject("images/bg_highlight_ant.png", vec2(128, 128)));
+	this.bg_scale = 1;
+
 	this.currentBigAntWalkingImageIndex = getRandomIntInclusive(0,10);
 	this.currentSpriteSheet = bigAntWalkingSpriteSheet;
 	
@@ -264,6 +267,13 @@ function NPCBigAnt(x,name)
 	this.currentSmallAntImageArrayIndex = 0;
 	this.drawSmallAnt = function()
 	{
+
+		if(this.controlStatus == 'active'){
+			this.bg_scale += 0.06;
+			this.bg_highlight.transform.scale = vec2(pixelSize * 0.4 * Math.sin(this.bg_scale), pixelSize * 0.4 * Math.sin(this.bg_scale));
+			this.bg_highlight.drawSc();
+		}
+
 		if (this.currentSmallAntDirection === 'up')
 		{
 		//(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
@@ -378,7 +388,7 @@ function NPCBigAnt(x,name)
 
 			renderer.strokeRect(this.smallAntMidPoint.x - 5,this.smallAntMidPoint.y - 5, 5,5);
 		}
-		
+
 	}
 
 	
@@ -658,7 +668,11 @@ function NPCBigAnt(x,name)
 						
 					}
 			}
+
+
 		}
+		this.bg_highlight.transform.position.x = this.smallAntMidPoint.x;
+		this.bg_highlight.transform.position.y = this.smallAntMidPoint.y;
 	}
 	
 	this.redefineMouthColliderPropertiesForFacingUp = function()

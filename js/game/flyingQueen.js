@@ -13,6 +13,7 @@ class FlyingQueen {
             this.y = this.defaultPos.y;
             this.collisionRadius = 20 * pixelSize;
             this.sprite = new Sprite(tr(vec2(this.x, this.y), vec2(pixelSize / 3, pixelSize / 3)), new ImageObject("images/Animations/Queen_Fly_250px_Spritesheet.png", vec2(128, 128)));
+            this.bg_highlight = new Sprite(tr(vec2(this.x, this.y + (40 * pixelSize)), vec2(pixelSize * 0.35, pixelSize * 0.35)), new ImageObject("images/bg_highlight.png", vec2(128, 128)));
         } else {
             do {
                 this.x = Math.random() * gameWidth;
@@ -22,6 +23,7 @@ class FlyingQueen {
             this.sprite = new Sprite(tr(vec2(this.x, this.y), vec2(pixelSize / 3, pixelSize / 3)), new ImageObject("images/Animations/Queen_Fly_250px_Spritesheet_Tinted.png", vec2(128, 128)));
         }
 
+        this.bg_scale = 1;
         this.horizontalSpeed = 3;
         this.verticalSpeed = 3;
         this.angleToDestination;
@@ -85,11 +87,13 @@ class FlyingQueen {
 
     update() {
 
-        if (gameEndTimer < gameEndTimerLength && !this.isMating) {
+        if (gameEndTimer < gameEndTimerLength && !this.isMating && this.isPlayerControlled) {
             this.x += Math.abs(this.horizontalSpeed * pixelSize);
             this.y += Math.abs(this.verticalSpeed * pixelSize);
             this.sprite.transform.position.x = this.x;
             this.sprite.transform.position.y = this.y;
+            this.bg_highlight.transform.position.x = this.x;
+            this.bg_highlight.transform.position.y = this.y + (14 * pixelSize);
             return;
         }
 
@@ -133,8 +137,13 @@ class FlyingQueen {
             this.sprite.transform.position.y = this.y;
             this.matingSprite.transform.position.x = this.x;
             this.matingSprite.transform.position.y = this.y;
+            this.bg_highlight.transform.position.x = this.x;
+            this.bg_highlight.transform.position.y = this.y + (14 * pixelSize);
 
             this.collideWithRivalQueen();
+
+            this.bg_scale += 0.06;
+            this.bg_highlight.transform.scale = vec2(pixelSize * 0.35 * Math.sin(this.bg_scale), pixelSize * 0.35 * Math.sin(this.bg_scale));
 
         } else {
 
@@ -217,6 +226,9 @@ class FlyingQueen {
         this.matingSprite.transform.position = resizeVec2(this.sprite.transform.position);
         this.matingSprite.transform.scale = vec2(pixelSize / 3, pixelSize / 3);
 
+        this.bg_highlight.transform.position = resizeVec2(this.sprite.transform.position);
+        //this.bg_highlight.transform.scale = vec2(pixelSize * 0.35, pixelSize * 0.35);
+
         this.x /= prevGameWidth;
         this.y /= prevGameHeight;
 
@@ -234,6 +246,8 @@ class FlyingQueen {
         renderer.save();
         renderer.translate(-camPanX, 0);
 
+        if (this.bg_highlight != null) this.bg_highlight.drawSc();
+        
         if (this.isMating) {
 
             var inSize = {
