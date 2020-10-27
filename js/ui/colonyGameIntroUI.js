@@ -3,8 +3,10 @@ var colonyGameIntroUI = [];
 
 //var colonyInfoScreenSprite;
 var colonyInfoScreenSprites = [];
+var colonyInfoScreenSprites2 = [];
 var colonyAnimationFrameLength = 6;
 var colonyAnimationFrameCount = 29;
+var newColonyAnimationFrameCount = 23;
 var colonyAnimationFrameCurrent = 0;
 var colonyAnimationTimer = 0
 
@@ -21,6 +23,12 @@ function setupColonyGameIntroUI() {
 
   colonyInfoScreenSprites.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
     new ImageObject("images/Animations/info_screen_colony_new_spritesheet.png", vec2(1000, 750))));
+
+  colonyInfoScreenSprites2.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
+    new ImageObject("images/Animations/info_screen_colony_spritesheet.png", vec2(1000, 750))));
+
+  colonyInfoScreenSprites2.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
+    new ImageObject("images/Animations/info_screen_colony_spritesheet.png", vec2(1000, 750))));
 
   //fix for english title on sencond ES colony info screen
   titleESSprite = new Sprite(tr(vec2(gameWidth / 2, 40 * pixelSize), vec2(gameWidth / 1000, gameHeight / 750)),
@@ -71,7 +79,7 @@ function colonyAnimateSprite(sprite, frameLength, framerameCount) {
   animationSprite.drawScIn(inPos, inSize);
 
   //fix for english title on sencond ES colony info screen
-  if (currentLanguage == ESPAÑOL) titleESSprite.drawScIn(titleInPos, titleInSize);
+  if (currentLanguage == ESPAÑOL && workerScreenDismissed) titleESSprite.drawScIn(titleInPos, titleInSize);
 }
 
 function colonyGameIntroUIResize() {
@@ -85,7 +93,12 @@ function colonyGameIntroUIResize() {
 
 function colonyGameIntroUICustomDraw(deltaTime) {
   colonyGameIntroStartDelay--;
-  colonyAnimateSprite(colonyInfoScreenSprites[currentLanguage], colonyAnimationFrameLength, colonyAnimationFrameCount);
+
+  if (workerScreenDismissed) {
+    colonyAnimateSprite(colonyInfoScreenSprites2[currentLanguage], colonyAnimationFrameLength, colonyAnimationFrameCount);
+  } else {
+    colonyAnimateSprite(colonyInfoScreenSprites[currentLanguage], colonyAnimationFrameLength, newColonyAnimationFrameCount);
+  }
 }
 
 function colonyGameIntroUICustomEvents(deltaTime) {
@@ -98,13 +111,15 @@ function colonyGameIntroUICustomEvents(deltaTime) {
       y: touchPos[0].y - canvas.getBoundingClientRect().top
     }
 
-    if (colonyCurrentScreen === COLONY_INFO_SCREEN) {
+    if (colonyCurrentScreen === COLONY_INFO_SCREEN && !workerScreenDismissed) {
       colonyGameIntroStartDelay = 60;
       //colonyCurrentScreen = COLONY_INSTRUCTIONS_SCREEN;
       ui.stateIndex = COLONYGAMEUI;
-    } else {
+    } else if (colonyCurrentScreen === COLONY_INFO_SCREEN && workerScreenDismissed) {
       colonyGameIntroStartDelay = 60;
-      colonyCurrentScreen = COLONY_INFO_SCREEN;
+      colonyCurrentScreen = COLONY_INSTRUCTIONS_SCREEN;
+    } else if (colonyCurrentScreen === COLONY_INSTRUCTIONS_SCREEN && workerScreenDismissed) {
+      colonyGameIntroStartDelay = 60;
       //banner = new ColonyMessageBanner();
       ui.stateIndex = COLONYGAMEUI;
     }
