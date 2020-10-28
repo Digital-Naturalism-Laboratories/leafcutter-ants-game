@@ -133,6 +133,12 @@ class FlyingQueen {
             this.x = this.x + Math.cos(this.angleToDestination) * this.horizontalSpeed * pixelSize;
             this.y = this.y + Math.sin(this.angleToDestination) * this.verticalSpeed * pixelSize;
 
+            //prevent jittering of flying queen when near the default position
+            if (this.destinationReached && getDistBtwVec2(vec2(this.x, this.y), this.defaultPos) < 4 * pixelSize) {
+                this.x = this.defaultPos.x;
+                this.y = this.defaultPos.y;
+            }
+
             this.sprite.transform.position.x = this.x;
             this.sprite.transform.position.y = this.y;
             this.matingSprite.transform.position.x = this.x;
