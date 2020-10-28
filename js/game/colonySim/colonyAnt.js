@@ -165,6 +165,7 @@ class ColonyAnt {
 
     draw() {
 
+        if (this.state == colonyAntStates.BROOD) return;
         if (queen.movementState != queen.movementStates.IDLE) return;
 
         //if (ui.getActiveState() != COLONYGAMEUI) return;

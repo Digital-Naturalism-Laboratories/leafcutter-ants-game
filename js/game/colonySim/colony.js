@@ -30,7 +30,7 @@ class Colony {
 
         this.reproductionTimerLength = 60;
         this.reproductionTimerCount = 0;
-        this.newAntsPerCycle = Math.floor(1 + (this.leaves * 0.01));
+        this.newAntsPerCycle = Math.floor(this.leaves * 0.015);
 
         //colonyGameUI.push(this);
     }
@@ -52,7 +52,7 @@ class Colony {
 
     reproduction() {
 
-        this.newAntsPerCycle = Math.floor(this.leaves * 0.01);
+        this.newAntsPerCycle = Math.floor(this.leaves * 0.015);
 
         this.reproductionTimerCount++;
         if (this.reproductionTimerCount >= this.reproductionTimerLength) {
