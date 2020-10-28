@@ -33,6 +33,8 @@ class Leaf {
         this.indicationTimer = 0;
         this.currentBorderIndicationIndex = -1;
         this.pointsUpdated = 2;
+
+        this.totalLeafPoints = 0;
     }
 
     resize() {
@@ -181,6 +183,8 @@ class Leaf {
 
         var bgValueBorder = 100;
 
+        var setStartPoints = this.points.length < 1;
+
         var prevPoints = this.points.length;
         this.points = [];
         this.borderPoints = [];
@@ -218,12 +222,15 @@ class Leaf {
             }
         }
 
+        /*
         if (this.noScoreForUnattachedPointsRemoval) {
             this.noScoreForUnattachedPointsRemoval = false;
         } else if (prevPoints > 0) {
             var leafPointsRemoved = this.points.length - prevPoints;
             if (leafPointsRemoved > 0) leafcuttingScore += leafPointsRemoved * 10;
         }
+        */
+        leafcuttingScore = (this.totalLeafPoints - this.points.length) * 10;
 
         var isAnyPointUnattached = false;
         for (let i = 0; i < this.points.length; i++) {
@@ -234,6 +241,10 @@ class Leaf {
         if (isAnyPointUnattached) {
             this.noScoreForUnattachedPointsRemoval = true;
             this.updatePoints = true;
+        }
+
+        if (setStartPoints) {
+            this.totalLeafPoints = this.points.length;
         }
     }
 
@@ -310,7 +321,7 @@ class Leaf {
                 ui.stateIndex = DEFENSEGAMEINTROUI;
 
                 //copied here from mainmenuUI to fix crash when starting game from leafcutting game rather than the main menu
-	            defenseGame.audioManager.sfxManager.populateArrayOfEatingFungusSounds();
+                defenseGame.audioManager.sfxManager.populateArrayOfEatingFungusSounds();
                 defenseGame.audioManager.sfxManager.populateArrayOfFlyChasedSounds();
                 defenseGame.audioManager.ambienceManager.startAmbience();
                 defenseGame.audioManager.sfxManager.calculateAndSetAvoidAwkwardSilenceTimestamps();
