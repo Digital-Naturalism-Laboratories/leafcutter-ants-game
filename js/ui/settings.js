@@ -1,6 +1,5 @@
 
-function uiInit()
-{
+function uiInit() {
     uiSettings();
     setupMainMenuUI();
     setupFlightGameIntroUI();
@@ -27,13 +26,12 @@ function uiInit()
     ui = new UI(uistates, 0);
 }
 
-function uiSettings()
-{
-    if(window.innerWidth > window.innerHeight)
+function uiSettings() {
+    if (window.innerWidth > window.innerHeight)
         scrSizeFactor = window.innerHeight;
     else
         scrSizeFactor = window.innerWidth;
-    
+
     btnSize = vec2(scrSizeFactor * 0.16, scrSizeFactor * 0.04);
     squareBtnSize = vec2(scrSizeFactor * 0.05, scrSizeFactor * 0.05);
     tabSize = vec2(scrSizeFactor * 0.15, scrSizeFactor * 0.08);
