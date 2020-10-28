@@ -90,9 +90,9 @@ var circleIndicatorTimer = 60;
 function setupColonyGameUI() {
 
   colonyGameScreenSprites.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
-    new ImageObject("images/Animations/info_screen_colony_fungus_worker_reproduction.png", vec2(1000, 750))));
+    new ImageObject("images/Animations/info_screen_colony_fungus_worker_reproduction_gameover_spritesheet_ES.png", vec2(1000, 750))));
   colonyGameScreenSprites.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
-    new ImageObject("images/Animations/info_screen_colony_fungus_worker_reproduction.png", vec2(1000, 750))));
+    new ImageObject("images/Animations/info_screen_colony_fungus_worker_reproduction_gameover_spritesheet.png", vec2(1000, 750))));
   //colonyGameScreenSprites.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
   //  new ImageObject("images/Animations/info_screen_colony_fungus_spritesheet.png", vec2(1000, 750))));
 

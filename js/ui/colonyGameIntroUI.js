@@ -19,13 +19,13 @@ var colonyGameIntroStartDelay = 60;
 function setupColonyGameIntroUI() {
 
   colonyInfoScreenSprites.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
-    new ImageObject("images/Animations/info_screen_colony_new_spritesheet.png", vec2(1000, 750))));
+    new ImageObject("images/Animations/info_screen_colony_new_spritesheet_ES.png", vec2(1000, 750))));
 
   colonyInfoScreenSprites.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
     new ImageObject("images/Animations/info_screen_colony_new_spritesheet.png", vec2(1000, 750))));
 
   colonyInfoScreenSprites2.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
-    new ImageObject("images/Animations/info_screen_colony_spritesheet.png", vec2(1000, 750))));
+    new ImageObject("images/Animations/info_screen_colony_spritesheet_ES.png", vec2(1000, 750))));
 
   colonyInfoScreenSprites2.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
     new ImageObject("images/Animations/info_screen_colony_spritesheet.png", vec2(1000, 750))));

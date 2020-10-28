@@ -47,7 +47,7 @@ var SFX_BUTTON = 0;
 
 function setupMainMenuUI() {
     titleScreenSprites.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
-        new ImageObject("images/Animations/Title_Screen_Spritesheet.png", vec2(1000, 750))));
+        new ImageObject("images/Animations/Title_Screen_Spritesheet_ES.png", vec2(1000, 750))));
     titleScreenSprites.push(new Sprite(tr(vec2(gameWidth / 2, gameHeight / 2), vec2(gameWidth / 1000, gameHeight / 750)),
         new ImageObject("images/Animations/Title_Screen_Spritesheet.png", vec2(1000, 750))));
 
