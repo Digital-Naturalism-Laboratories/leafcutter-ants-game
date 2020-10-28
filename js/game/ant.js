@@ -282,7 +282,7 @@ class Ant {
             drawCircle(renderer, this.isCuttingJawLed ? this.cuttingJawControlPos : this.leadingJawControlPos,
                 this.timedJawMinRadius, true, "#ffffff44", pixelSize);
             drawCircle(renderer, this.isCuttingJawLed ? this.cuttingJawControlPos : this.leadingJawControlPos,
-                this.timedJawRadius, false, this.jawSpeedPenalty <= 0 ? rgba(greenColor, greenColor, 0, 0.75) : "#99999955", (this.timedJawRadius - this.timedJawMinRadius));
+                this.timedJawRadius, false, this.jawSpeedPenalty <= 0 ? rgba(0, greenColor, 0, 0.75) : "#99999955", (this.timedJawRadius - this.timedJawMinRadius));
             renderer.lineWidth = 1;
         }
     }
