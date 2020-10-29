@@ -1,3 +1,5 @@
+var gapCircleIndicatorTimer = 60;
+
 function Background()
 {
 	
@@ -319,6 +321,11 @@ function Background()
 
 	this.update = function()
 	{
+		gapCircleIndicatorTimer--
+		if (gapCircleIndicatorTimer <= 0) {
+			gapCircleIndicatorTimer = 60;
+		}
+
 		this.scrollGroundImages();
 		this.fungusSporeFeedbackAnimationManager.update();
 	}
@@ -583,6 +590,9 @@ function PheremoneGapManager()
 			if (defenseGame.background.pheremoneGapManager.alertMessageShouldBeVisible)
 			{
 				defenseGame.background.pheremoneGapManager.arrayOfPheremoneGaps[i].drawAlertMessage();
+			}
+			if (defenseGame.background.stuckOnPheremoneGap && (defenseGame.groundMinimManager.arrayOfGroundMinims[0].currentStatus != 'en route to repair' && defenseGame.groundMinimManager.arrayOfGroundMinims[0].currentStatus != 'repairing')){
+				drawCustomCircle(defenseGame.background.currentPheremoneGap.x + (defenseGame.background.pheremoneGapWidth / 2), defenseGame.background.currentPheremoneGap.y + (defenseGame.background.pheremoneStripHeight / 2), (gapCircleIndicatorTimer / 60) * 30 * pixelSize, 4 * pixelSize, '#00FF00');
 			}
 		}
 	}
