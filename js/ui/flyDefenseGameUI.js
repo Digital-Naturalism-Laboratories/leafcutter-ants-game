@@ -486,6 +486,8 @@ defenseGame.initialize = function()
 			defenseGame.bigAntManager.arrayOfBigAnts[i].hasBeenInfected = false;
 		}
 
+		defenseResults = null;
+
 	}
 
 	this.hasBeenPlayedOnce = false;

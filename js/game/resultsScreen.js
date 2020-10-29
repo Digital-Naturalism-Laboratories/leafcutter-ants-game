@@ -12,7 +12,7 @@ class ResultsScreen {
 
         switch (this.level) {
             case this.levels.CUTTING:
-                leafcuttingUI.push(this);
+                //leafcuttingUI.push(this);
                 break;
             case this.levels.DEFENSE:
                 break;

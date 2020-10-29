@@ -32,6 +32,7 @@ var egg_cluster = document.createElement('img');
 var egg_many = document.createElement('img');
 var egg_pupae_normal = document.createElement('img');
 var egg_pupae_large = document.createElement('img');
+var egg_larva = document.createElement('img');
 
 //SFX variables
 var bgmColony = document.createElement('audio');
@@ -546,6 +547,10 @@ function loadImages() {
     {
       varName: egg_pupae_large,
       fileName: "egg-pupae-large.png"
+    },
+    {
+      varName: egg_larva,
+      fileName: "egg-larva.png"
     },
     {
       tunnelType: COLONY_TUNNEL_VERT,

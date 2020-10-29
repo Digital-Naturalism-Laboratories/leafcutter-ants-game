@@ -8,10 +8,14 @@ class EggCluster {
             row: row
         }
         this.pixelCoord = pixelCoordAtCenterOfTileCoord(col, row);
-        //this.sprite = egg_many;
-        this.sprite = Math.random() > 0.5 ? egg_many : egg_pupae_normal;
+        this.sprite = Math.random() > 0.5 ? egg_larva : egg_pupae_normal;
         this.offset = offset;
         this.isVisible = false;
+
+        this.eggs = [];
+        for (i = 0; i < 15; i++){
+            this.eggs.push(this.pixelCoord.x - (this.sprite.width * pixelSize / 2) + (this.offset * 3) + ((Math.random() - 0.5) * (50 * pixelSize)));
+        }
 
         eggClusters.push(this);
 
@@ -36,15 +40,17 @@ class EggCluster {
     }
 
     draw() {
-
         if (this.isVisible) {
-            if (this.sprite = egg_pupae_normal){
+
+            for (i = 0; i < this.eggs.length; i++){
+                renderer.drawImage(egg_single, this.eggs[i] , this.pixelCoord.y - (this.sprite.height * pixelSize / 4), this.sprite.width * pixelSize, this.sprite.height * pixelSize);
+            }
+
+            if (this.sprite == egg_pupae_normal){
                 renderer.drawImage(this.sprite, this.pixelCoord.x - (this.sprite.width * 0.5 * pixelSize / 2) + this.offset, this.pixelCoord.y - (this.sprite.height * 0.5 * pixelSize / 4), this.sprite.width * 0.5 * pixelSize, this.sprite.height * 0.5 * pixelSize);
             } else {
-                renderer.drawImage(this.sprite, this.pixelCoord.x - (this.sprite.width * pixelSize / 2) + this.offset, this.pixelCoord.y - (this.sprite.height * pixelSize / 4), this.sprite.width * pixelSize, this.sprite.height * pixelSize);
+                renderer.drawImage(this.sprite, this.pixelCoord.x - (this.sprite.width * pixelSize / 2) + this.offset, this.pixelCoord.y, this.sprite.width * 0.5 * pixelSize, this.sprite.height * 0.5 * pixelSize);
             }
         }
-
     }
-
 }
