@@ -232,7 +232,7 @@ class FlyingQueen {
         this.matingSprite.transform.position = resizeVec2(this.sprite.transform.position);
         this.matingSprite.transform.scale = vec2(pixelSize / 3, pixelSize / 3);
 
-        this.bg_highlight.transform.position = resizeVec2(this.sprite.transform.position);
+        if (this.isPlayerControlled) this.bg_highlight.transform.position = resizeVec2(this.bg_highlight.transform.position);
         //this.bg_highlight.transform.scale = vec2(pixelSize * 0.35, pixelSize * 0.35);
 
         this.x /= prevGameWidth;

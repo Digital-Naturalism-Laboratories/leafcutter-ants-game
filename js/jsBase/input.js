@@ -208,7 +208,7 @@ function onKeyDown(ev)
 
         case 67://c
         //defenseGame.colonyReached = true;
-        ui.stateIndex = DEFENSEGAMEINTROUI;
+        ui.stateIndex = FLIGHTGAMEINTROUI;
 
         //copied here from mainmenuUI to fix crash when starting game from leafcutting game rather than the main menu
 	    

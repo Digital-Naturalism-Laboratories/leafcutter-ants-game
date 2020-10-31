@@ -195,6 +195,7 @@ function resetColonySimGame() {
   setDistFromFungusOnEachColonyNode();
 
   colonyGameCurrentScreen = COLONYGAME_WORKER_SCREEN;
+  colonyCurrentScreen = COLONY_INFO_SCREEN;
   infoScreenDismissed = true;
   fungusScreenDismissed = false;
   workerScreenDismissed = false;
@@ -359,7 +360,7 @@ function colonyGameUICustomUpdate(deltaTime) {
 
     fungus.update();
 
-    if (colony.workerCount <= 0 && colony.totalEggsLaid > 30) {
+    if (colony.workerCount <= 0 && workerScreenDismissed) {
       colonyGameCurrentScreen = COLONYGAME_GAMEOVER_SCREEN;
       infoScreenDismissed = false;
       colonyGameAnimationFrameCount = 17; //game over screen spritesheet only has 17 frames
