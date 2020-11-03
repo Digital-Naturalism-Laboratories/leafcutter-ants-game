@@ -55,7 +55,7 @@ var leafcuttingSFXPaths = [
     "audio/SFX/Jaw Penalty.mp3",
     "audio/SFX/Positive Feedback - Leaf Cut Success ALT.mp3"
 ]
-var SFX_JAWBUTTON = 0;
+var SFX_JAWBUTTON = 1;
 var SFX_JAWTIMED = 1;
 var SFX_LOWTIME = 2;
 var SFX_ANTWALK = 3;
